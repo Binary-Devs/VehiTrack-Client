@@ -21,15 +21,15 @@ const Sidebar = () => {
         overflow: "auto",
         height: "100vh",
         position: "sticky",
-        backgroundColor:"white",
-        boxShadow: "10px 0 5px -2px #D1D5DB",
+        backgroundColor: "white",
+        // boxShadow: "10px 0 5px -2px #D1D5DB",
         left: 0,
         top: 0,
         bottom: 0,
       }}
     >
       <div
-     className=""
+        className=""
         style={{
           color: "black",
           fontSize: "2rem",
@@ -40,7 +40,7 @@ const Sidebar = () => {
         }}
       >
         <h1 className="underline">V.T</h1>
-        <hr />
+        <hr className="" />
       </div>
       <Menu
         theme="light"

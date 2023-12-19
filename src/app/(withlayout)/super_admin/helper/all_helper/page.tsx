@@ -90,13 +90,13 @@ const AllHelperList = () => {
 };
 
   const columns = [
-    // {
-    //   title: "",
-    //   render: function (data: any) {
-    //     const fullName = `${data?.profileImage} `;
-    //     return <Image src={fullName} width={150} height={150} alt=""/>;
-    //   },
-    // },
+    {
+      title: "",
+      render: function (data: any) {
+        const fullName = `${data?.profileImage} `;
+        return <Image src={fullName} width={70} height={70} alt=""/>;
+      },
+    },
     {
       title: "Name",
       render: function (data: any) {

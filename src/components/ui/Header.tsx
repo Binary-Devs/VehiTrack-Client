@@ -29,9 +29,11 @@ const Header = () => {
     <AntHeader
       style={{
         background: "#fff",
-        boxShadow: "0 1px 4px gray",
-        borderBottomRightRadius: "10px",
-       borderBottomLeftRadius: "10px",
+      //   boxShadow: "0 1px 4px gray",
+      //   borderBottomRightRadius: "10px",
+      //  borderBottomLeftRadius: "10px",
+
+      marginInline:"5px"
       }}
     >
       <Row
@@ -43,7 +45,7 @@ const Header = () => {
       >
         {/* <section className="flex justify-between items-center mx-1"> */}
         
-            <Link className="font-bold cursor-pointer " href={"/dashboard"}>Dashboard</Link>
+            <p className="font-bold cursor-pointer " ></p>
 
        
           <div className="flex justify-between items-center">
