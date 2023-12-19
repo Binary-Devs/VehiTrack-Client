@@ -1,4 +1,5 @@
 import {
+  DashboardFilled,
   ProfileOutlined,
   ScheduleOutlined,
   TableOutlined,
@@ -12,19 +13,25 @@ export const sidebarItem = (role: string) => {
   console.log(role);
   const defaultSidebarItems: MenuProps["items"] = [
     {
-      label: "Profile",
+     
       key: "profile",
+      label: <Link href={`/${role}`}>Profile</Link>,
       icon: <ProfileOutlined />,
-      children: [
-        {
-          label: <Link href={`/${role}`}>Account Profile</Link>,
-          key: `/${role}/profile`,
-        },
-      ],
+      // children: [
+      //   {
+      //     label: <Link href={`/${role}`}>Account Profile</Link>,
+      //     key: `/${role}/profile`,
+      //   },
+      // ],
     },
   ];
 
   const commonAdminSidebarItems: MenuProps["items"] = [
+    {
+      label: <Link href={`/dashboard`}>Dashboard</Link>,
+      key: "dashboard",
+      icon: <DashboardFilled />,
+    },
     {
       label: "Manage Users",
       key: "manage-user",
@@ -229,10 +236,11 @@ export const sidebarItem = (role: string) => {
     //   ],
     // },
   ];
-
+ 
   const superAdminSidebarItems: MenuProps["items"] = [
-    ...defaultSidebarItems,
+    
     ...commonAdminSidebarItems,
+    ...defaultSidebarItems,
     // {
     //   label: <Link href={`/${role}/admin`}>Manage Admin</Link>,
     //   icon: <TableOutlined />,
