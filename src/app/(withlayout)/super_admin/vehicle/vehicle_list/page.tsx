@@ -159,7 +159,7 @@ const AllVehicleList = () => {
       render: function (data: any) {
         return (
           <>
-            <Link href={`/${SUPER_ADMIN}/general_user/details/${data}`}>
+            <Link href={`/manage_vehicle`}>
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
