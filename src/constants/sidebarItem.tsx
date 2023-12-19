@@ -82,7 +82,7 @@ export const sidebarItem = (role: string) => {
             },
             {
               label: (
-                <Link href={`/${role}/helper/create`}>Create Trainer</Link>
+                <Link href={`/${role}/helper/create`}>Create Helper</Link>
               ),
               key: `${role}/helper/create`,
             },
