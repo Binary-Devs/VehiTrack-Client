@@ -1,4 +1,5 @@
 "use client";
+import { USER_ROLE } from "@/constants/role";
 import { sidebarItem } from "@/constants/sidebarItem";
 import { getUserInfo } from "@/services/auth.service";
 import { Layout, Menu } from "antd";
@@ -8,8 +9,8 @@ const { Sider } = Layout;
 
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
-  //const role = USER_ROLE.SUPER_ADMIN;
-  const { role } = getUserInfo() as any;
+  const role = USER_ROLE.SUPER_ADMIN;
+  // const { role } = getUserInfo() as any;
   return (
     <Sider
       collapsible

@@ -1,9 +1,15 @@
-import { ProfileOutlined, TableOutlined } from "@ant-design/icons";
+import {
+  ProfileOutlined,
+  ScheduleOutlined,
+  TableOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import { MenuProps } from "antd";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
 
 export const sidebarItem = (role: string) => {
+  console.log(role);
   const defaultSidebarItems: MenuProps["items"] = [
     {
       label: "Profile",
@@ -20,86 +26,131 @@ export const sidebarItem = (role: string) => {
 
   const commonAdminSidebarItems: MenuProps["items"] = [
     {
-      label: <Link href={`/${role}/manage-user`}>Manage User</Link>,
-      icon: <TableOutlined />,
-      key: `/${role}/manage-user`,
-        children: [
-          {
-            label: <Link href={`/${role}/academic/semester`}>Admin</Link>,
-            key: `/${role}/academic/semester`,
-          },
+      label: "Manage Users",
+      key: "manage-user",
+      icon: <ScheduleOutlined />,
+      children: [
         {
-          label: <Link href={`/${role}/academic/faculty`}>Driver</Link>,
-          key: `/${role}/academic/faculty`,
+          label: "Admin",
+          key: "Admin",
+          icon: <UserOutlined />,
+          children: [
+            {
+              label: <Link href={`/${role}/admin/all_admin`}>Admin List</Link>,
+              key: `${role}/admin/all_admin`,
+            },
+            {
+              label: <Link href={`/${role}/admin/create`}>Create Admin </Link>,
+              key: `${role}/admin/create`,
+            },
+          ],
         },
         {
-          label: <Link href={`/${role}/academic/department`}>Helper</Link>,
-          key: `/${role}/academic/department`,
+          label: "Driver",
+          key: "Driver",
+          icon: <UserOutlined />,
+          children: [
+            {
+              label: (
+                <Link href={`/${role}/driver/all_driver`}>Driver List</Link>
+              ),
+              key: `${role}/driver/all_driver`,
+            },
+            {
+              label: <Link href={`/${role}/driver/create`}>Create Driver</Link>,
+              key: `${role}/driver/create`,
+            },
+          ],
+        },
+        {
+          label: "Helper",
+          key: "Helper",
+          icon: <UserOutlined />,
+          children: [
+            {
+              label: (
+                <Link href={`/${role}/helper/all_helper`}>Helper List</Link>
+              ),
+              key: `${role}/helper/all-helper`,
+            },
+            {
+              label: (
+                <Link href={`/${role}/helper/create`}>Create Trainer</Link>
+              ),
+              key: `${role}/helper/create`,
+            },
+          ],
         },
       ],
     },
     {
       label: <Link href={`/${role}/manage-Vehicle`}>Manage Vehicle</Link>,
       icon: <TableOutlined />,
-      key: `/${role}/manage-Vehicle`,
-        children: [
-          {
-            label: <Link href={`/${role}/academicD/list`}>Vehicle list</Link>,
-            key: `/${role}/academicD/list`,
-          },
+      key: `vehicle`,
+      children: [
         {
-          label: <Link href={`/${role}/Vehicle/faculty`}>Entry New Vehicle</Link>,
-          key: `/${role}/Vehicle/faculty`,
+          label: <Link href={`/${role}/vehicle/vehicle_list`}>Vehicle list</Link>,
+          key: `/${role}/vehicle/vehicle_list`,
         },
-    
+        {
+          label: (
+            <Link href={`/${role}/vehicle/create`}>Entry New Vehicle</Link>
+          ),
+          key: `/${role}/vehicle/create`,
+        },
       ],
     },
     {
       label: <Link href={`/${role}/manage-Trip`}>Manage Trip</Link>,
       icon: <TableOutlined />,
       key: `/${role}/manage-Trip`,
-        children: [
-          {
-            label: <Link href={`/${role}/academic/Trip`}>Trip List</Link>,
-            key: `/${role}/academicdd/semesterdd`,
-          },
+      children: [
+        {
+          label: <Link href={`/${role}/academic/Trip`}>Trip List</Link>,
+          key: `/${role}/academicdd/semesterdd`,
+        },
         {
           label: <Link href={`/${role}/academic/Trip`}>Pending Trip</Link>,
           key: `/${role}/academddic/Trip`,
         },
-      
       ],
     },
     {
       label: <Link href={`/${role}/manage-Inddcome`}>Income</Link>,
       icon: <TableOutlined />,
       key: `/${role}/manage-Idncomdde`,
-        children: [
-          {
-            label: <Link href={`/${role}/academicIncome/Income`}>Income History</Link>,
-            key: `/${role}/academic/dddd`,
-          },
+      children: [
         {
-          label: <Link href={`/${role}/academiddc/Income`}>Income Sources</Link>,
+          label: (
+            <Link href={`/${role}/academicIncome/Income`}>Income History</Link>
+          ),
+          key: `/${role}/academic/dddd`,
+        },
+        {
+          label: (
+            <Link href={`/${role}/academiddc/Income`}>Income Sources</Link>
+          ),
           key: `/${role}/academiddddc/dd`,
         },
-       
       ],
     },
     {
       label: <Link href={`/${role}/manadge-Ex`}>Expenses</Link>,
       icon: <TableOutlined />,
       key: `/${role}/manage-Incomdde`,
-        children: [
-          {
-            label: <Link href={`/${role}/Expenses/dd`}>Expenses History</Link>,
-            key: `/${role}/acaddddemic/dssddd`,
-          },
+      children: [
         {
-          label: <Link href={`/${role}/academiddddc/Incoddme`}>Expenses Sources</Link>,
+          label: <Link href={`/${role}/Expenses/dd`}>Expenses History</Link>,
+          key: `/${role}/acaddddemic/dssddd`,
+        },
+        {
+          label: (
+            <Link href={`/${role}/academiddddc/Incoddme`}>
+              Expenses Sources
+            </Link>
+          ),
           key: `/${role}/academiddddddc/dd`,
         },
-       
       ],
     },
   ];

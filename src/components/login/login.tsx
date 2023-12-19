@@ -8,6 +8,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { SubmitHandler } from "react-hook-form";
 import loginImage from "../../assets/login-image.png";
+import LoadingForDataFetch from "../Utlis/LoadingForDataFetch";
 
 type FormValues = {
   email: string;
@@ -15,7 +16,7 @@ type FormValues = {
 };
 
 const LoginPage = () => {
-  const [userLogin,{isLoading}] = useUserLoginMutation();
+  const [userLogin, { isLoading }] = useUserLoginMutation();
 
   const router = useRouter();
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
@@ -30,18 +31,8 @@ const LoginPage = () => {
       storeUserInfo({ accessToken: res?.accessToken });
     } catch (error) {}
   };
-  if(isLoading){
-    return <Row
-    justify="center"
-    align="middle"
-    style={{
-      height: "100vh",
-    }}
-  >
-    <Space>
-      <Spin tip="Loading" size="large"></Spin>
-    </Space>
-  </Row>
+  if (isLoading) {
+    return <LoadingForDataFetch />;
   }
   return (
     <Row
@@ -55,42 +46,42 @@ const LoginPage = () => {
         <Image src={loginImage} width={500} alt="login image" />
       </Col>
       {/* <div className="border rounded-xl p-3"> */}
-        <Col sm={12} md={8} lg={8}>
-          <h2
-            style={{
-              margin: "15px 0",
-            }}
-          >
-            First login your account
-          </h2>
-          <div>
-            <Form submitHandler={onSubmit}>
-              <div>
-                <FormInput
-                  name="email"
-                  type="email"
-                  size="large"
-                  label="User Email"
-                />
-              </div>
-              <div
-                style={{
-                  margin: "15px 0",
-                }}
-              >
-                <FormInput
-                  name="password"
-                  type="password"
-                  size="large"
-                  label="User Password"
-                />
-              </div>
-              <Button type="primary" htmlType="submit">
-                Login
-              </Button>
-            </Form>
-          </div>
-        </Col>
+      <Col sm={12} md={8} lg={8}>
+        <h2
+          style={{
+            margin: "15px 0",
+          }}
+        >
+          First login your account
+        </h2>
+        <div>
+          <Form submitHandler={onSubmit}>
+            <div>
+              <FormInput
+                name="email"
+                type="email"
+                size="large"
+                label="User Email"
+              />
+            </div>
+            <div
+              style={{
+                margin: "15px 0",
+              }}
+            >
+              <FormInput
+                name="password"
+                type="password"
+                size="large"
+                label="User Password"
+              />
+            </div>
+            <Button type="primary" htmlType="submit">
+              Login
+            </Button>
+          </Form>
+        </div>
+      </Col>
       {/* </div> */}
     </Row>
   );

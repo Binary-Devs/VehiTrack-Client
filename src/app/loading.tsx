@@ -1,19 +1,8 @@
-import { Row, Space, Spin } from "antd";
+import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
+
 
 const Loading = () => {
-  return (
-    <Row
-      justify="center"
-      align="middle"
-      style={{
-        height: "100vh",
-      }}
-    >
-      <Space>
-        <Spin tip="Loading" size="large"></Spin>
-      </Space>
-    </Row>
-  );
+  return <LoadingForDataFetch />;
 };
 
 export default Loading;
