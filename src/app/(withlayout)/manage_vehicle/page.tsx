@@ -1,6 +1,6 @@
 "use client";
 
-import MyList from "@/components/ui/List";
+import VehicleInfo from "@/components/ui/VehicleInfo";
 import { Carousel, Typography } from "antd";
 import Image from "next/image";
 import { useState } from "react";
@@ -14,7 +14,7 @@ interface ImageType {
 
 const images: ImageType[] = [
   {
-    src: "/assets/images/image1.jpg",
+    src: "/assets/images/image1.png",
     alt: "Image 1 description",
   },
   {
@@ -22,8 +22,12 @@ const images: ImageType[] = [
     alt: "Image 2 description",
   },
   {
-    src: "/assets/images/image3.jpg",
+    src: "/assets/images/image3.png",
     alt: "Image 3 description",
+  },
+  {
+    src: "/assets/images/image4.png",
+    alt: "Image 4 description",
   },
 ];
 
@@ -72,11 +76,13 @@ const ManageVehiclePage = () => {
           Vehicle Information
         </Title>
 
-        <div className="mt-4">
-          <MyList data={data} />
+        <div className="mt-8">
+          {/* <MyList data={data} /> */}
+
+          <VehicleInfo />
         </div>
       </div>
-      <div className="w-2/4 mt-12">
+      <div className="w-2/4 mt-12 bg-">
         <Carousel
           dots={true}
           autoplay
