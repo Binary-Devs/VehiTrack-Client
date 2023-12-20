@@ -1,7 +1,6 @@
 "use client";
 import { USER_ROLE } from "@/constants/role";
 import { sidebarItem } from "@/constants/sidebarItem";
-import { getUserInfo } from "@/services/auth.service";
 import { Layout, Menu } from "antd";
 import { useState } from "react";
 
@@ -15,6 +14,7 @@ const Sidebar = () => {
     <Sider
       collapsible
       collapsed={collapsed}
+      breakpoint="lg"
       onCollapse={(value) => setCollapsed(value)}
       width={280}
       style={{
@@ -28,7 +28,7 @@ const Sidebar = () => {
         bottom: 0,
       }}
     >
-      <div
+      {/* <div
         className=""
         style={{
           color: "black",
@@ -41,6 +41,17 @@ const Sidebar = () => {
       >
         <h1 className="underline">V.T</h1>
         <hr className="" />
+      </div> */}
+      <div
+        style={{
+          color: "Black",
+          fontSize: collapsed ? "1rem" : "2rem",
+          fontWeight: "bold",
+          textAlign: "center",
+          margin: "1rem 0",
+        }}
+      >
+        VehiTrack
       </div>
       <Menu
         theme="light"
