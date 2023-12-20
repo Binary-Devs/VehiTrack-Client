@@ -22,6 +22,43 @@ const CreateVehicle = () => {
   //   if(isLoading){
   //     return message.loading("Loading...")
   //   }
+
+  const driverlist = [
+    {
+      label: "Md korim (D-25141)",
+      value: "dffd",
+    },
+    {
+      label: "Md hasan (D-25414)",
+      value: "ddfsdf",
+    },
+    {
+      label: "Md Mondi (D-74118)",
+      value: "ddsdf",
+    },
+    {
+      label: "Mukbos (D-17411)",
+      value: "dsfd",
+    },
+  ];
+  const helperList = [
+    {
+      label: "Aomie (H-2511)",
+      value: "ddafds",
+    },
+    {
+      label: "Sampod (H-5414)",
+      value: "ddsadf",
+    },
+    {
+      label: "Md timil (H-85118)",
+      value: "ddafd",
+    },
+    {
+      label: "alind (H-1411)",
+      value: "ddasdf",
+    },
+  ];
   return (
     <div>
       <h1 className="text-center my-1 font-bold text-2xl">Create Vehicle</h1>
@@ -45,23 +82,6 @@ const CreateVehicle = () => {
               Vehicle Information
             </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  type="text"
-                  name="name"
-                  size="large"
-                  label="Fast name"
-                  required={true}
-                />
-              </Col>
               <Col
                 className="gutter-row"
                 xs={24}
@@ -113,6 +133,47 @@ const CreateVehicle = () => {
                   required={true}
                 />
               </Col>
+              
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormSelectField
+                  size="large"
+                  name="Driver"
+                  options={driverlist}
+                  // defaultValue={priceTypeOptions[0]}
+                  label="Driver"
+                  // placeholder="Select"
+                  required={true}
+                />
+                {/* //! price type 8 */}
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormSelectField
+                  size="large"
+                  name="Driver"
+                  options={helperList}
+                  // defaultValue={priceTypeOptions[0]}
+                  label="Helper"
+                  // placeholder="Select"
+                  required={true}
+                />
+                {/* //! price type 8 */}
+              </Col>
               <Col
                 className="gutter-row"
                 xs={24}
@@ -127,7 +188,7 @@ const CreateVehicle = () => {
                   name="activityType"
                   options={isActive}
                   // defaultValue={priceTypeOptions[0]}
-                  label="Is active"
+                  label="Status"
                   // placeholder="Select"
                   required={true}
                 />
@@ -144,8 +205,6 @@ const CreateVehicle = () => {
               >
                 <UploadImage /* name="image" */ />
               </Col>
-
-              
             </Row>
           </div>
 
@@ -167,19 +226,18 @@ const CreateVehicle = () => {
               Basic Information
             </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-             
-           
-              <Col span={12} style={{ margin: "10px 0" }}>
-                <FormTextArea name="address" label="Address" rows={4} />
-              </Col>
-              <Col span={12} style={{ margin: "10px 0" }}>
-                <FormTextArea name="description" label="Description" rows={4} />
+              
+              <Col span={24} style={{ margin: "10px 0" }}>
+                <FormTextArea name="description" label="Description" rows={10} />
               </Col>
             </Row>
           </div>
-          <Button htmlType="submit" type="primary">
+          <div style={{display:"flex" ,justifyContent:"center",alignItems:"center"}}>
+
+          <Button  htmlType="submit" type="primary">
             Create
           </Button>
+          </div>
         </Form>
       </div>
     </div>
