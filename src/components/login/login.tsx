@@ -20,44 +20,46 @@ const LoginPage = () => {
   const [userLogin, { isLoading }] = useUserLoginMutation();
 
   const router = useRouter();
-  const handleFormSubmit = async (e:any) => {
+  const handleFormSubmit = async (e: any) => {
     e.preventDefault();
     const userId = e.target.userid.value;
     const password = e.target.password.value;
- 
 
+    // rtk-query method by bayajid
+     userLogin({ userId, password })
+          .then((result:any) => {
+            // Handle success, update UI, etc.
+             Success_model('login success');
+             localStorage.setItem(
+              "accessToken",
+              JSON.stringify("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhbXBvZG5hdGhAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAyNzU3OTQ1LCJleHAiOjE3MzQyOTM5NDV9.0qZqsFgfe36B8XwAtJ2BkzatWr5REzwlyHvSp4nY80E")
+            );
+            router.push("/dashboard");
+            console.log("Post created:", result);
 
-
- // rtk-query method by bayajid
- userLogin({ userId, password })
-      .then((result:any) => {
-        // Handle success, update UI, etc.
-
-
-         Success_model('login success');
-         localStorage.setItem(
-          "accessToken",
-          JSON.stringify("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhbXBvZG5hdGhAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAyNzU3OTQ1LCJleHAiOjE3MzQyOTM5NDV9.0qZqsFgfe36B8XwAtJ2BkzatWr5REzwlyHvSp4nY80E")
-        );
-        router.push("/dashboard");
-     
-        console.log("Post created:", result);
-        
-      })
-      .catch((err) => {
-        localStorage.setItem(
-          "accessToken",
-          JSON.stringify("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhbXBvZG5hdGhAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAyNzU3OTQ1LCJleHAiOjE3MzQyOTM5NDV9.0qZqsFgfe36B8XwAtJ2BkzatWr5REzwlyHvSp4nY80E")
-        );
-        router.push("/dashboard");
-        // Handle error
-        // Error_model_hook("login failed");
-        console.error("Error creating post:", err);
-      }); 
+          })
+          .catch((err) => {
+            localStorage.setItem(
+              "accessToken",
+              JSON.stringify("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhbXBvZG5hdGhAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAyNzU3OTQ1LCJleHAiOjE3MzQyOTM5NDV9.0qZqsFgfe36B8XwAtJ2BkzatWr5REzwlyHvSp4nY80E")
+            );
+            router.push("/dashboard");
+            // Handle error
+            // Error_model_hook("login failed");
+            console.error("Error creating post:", err);
+          });
+    // Success_model("login success");
+    // localStorage.setItem(
+    //   "accessToken",
+    //   JSON.stringify(
+    //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhbXBvZG5hdGhAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAyNzU3OTQ1LCJleHAiOjE3MzQyOTM5NDV9.0qZqsFgfe36B8XwAtJ2BkzatWr5REzwlyHvSp4nY80E"
+    //   )
+    // );
+    // router.push("/dashboard");
   };
-  if (isLoading) {
-    return <LoadingForDataFetch />;
-  }
+  // if (isLoading) {
+  //   return <LoadingForDataFetch />;
+  // }
   return (
     <div className="relative">
       <img
@@ -68,7 +70,6 @@ const LoginPage = () => {
       <div className="relative bg-transparent bg-opacity-75 h-screen">
         <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
           <div className="flex flex-col items-center justify-center mt-[15%]">
-           
             <div className="w-full max-w-xl xl:px-8 xl:w-5/12 ">
               <div className="bg-white rounded shadow-2xl p-7 sm:p-10">
                 <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
@@ -80,7 +81,7 @@ const LoginPage = () => {
                       htmlFor="firstName"
                       className="inline-block mb-1 font-medium"
                     >
-                     User Id
+                      User Id
                     </label>
                     <input
                       placeholder="Please enter a valid email address"
@@ -107,18 +108,27 @@ const LoginPage = () => {
                       name="password"
                     />
                   </div>
-                
+
                   <div className="mt-4 mb-2 sm:mb-4">
                     <button
                       type="submit"
-                      className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide  transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none hover:bg-blue-600 hover:transition-all hover:text-white"
+                      className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide  
+                       rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 border-2 focus:shadow-outline focus:outline-none  hover:transition-all transition ease-in-out delay-150 
+                        hover:-translate-y-1 hover:scale-110 
+                         duration-300"
                     >
-                      Login
+                      {isLoading ? (
+                        <Spin />
+                      ) : (
+                        "Login"
+                      )}
                     </button>
                   </div>
                   <div className="flex justify-end">
-                <a href="" className="text-xs text-blue-500 underline">forget password</a>
-                </div>
+                    <a href="" className="text-xs text-blue-500 underline">
+                      forget password
+                    </a>
+                  </div>
                 </form>
               </div>
             </div>
