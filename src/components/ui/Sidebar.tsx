@@ -16,7 +16,7 @@ const Sidebar = () => {
       collapsed={collapsed}
       breakpoint="lg"
       onCollapse={(value) => setCollapsed(value)}
-      width={280}
+      width={230}
       style={{
         overflow: "auto",
         height: "100vh",
