@@ -1,4 +1,5 @@
 "use client";
+import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import Contents from "@/components/ui/Contents";
 import SideBar from "@/components/ui/Sidebar";
 import { isLoggedIn } from "@/services/auth.service";
@@ -20,17 +21,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
   if (!isLoading) {
     return (
-      <Row
-        justify="center"
-        align="middle"
-        style={{
-          height: "100vh",
-        }}
-      >
-        <Space>
-          <Spin tip="Loading" size="large"></Spin>
-        </Space>
-      </Row>
+      <LoadingForDataFetch/>
     );
   }
   return (
