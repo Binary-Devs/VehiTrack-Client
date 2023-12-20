@@ -61,23 +61,14 @@ const LoginPage = () => {
   return (
     <div className="relative">
       <img
-        src="https://plus.unsplash.com/premium_photo-1685214580428-7eae1a78e7bc?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        src="https://media.giphy.com/media/21QEGwILf5SGDRRHMn/giphy.gif"
         className="absolute inset-0 object-cover w-full h-screen"
         alt=""
       />
-      <div className="relative bg-gray-900 bg-opacity-75 h-screen">
+      <div className="relative bg-transparent bg-opacity-75 h-screen">
         <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
-          <div className="flex flex-col items-center justify-between xl:flex-row">
-            <div className="w-full max-w-xl mb-12 xl:mb-0 xl:pr-16 xl:w-7/12 text-5xl text-white">
-              <Typewriter
-                options={{
-                  strings: ["Please Login validate person", "Do not attempt to login by fraudulent means as it is a punishable offence"],
-                  autoStart: true,
-                  loop: true,
-                }}
-              />
-            
-            </div>
+          <div className="flex flex-col items-center justify-center mt-[15%]">
+           
             <div className="w-full max-w-xl xl:px-8 xl:w-5/12 ">
               <div className="bg-white rounded shadow-2xl p-7 sm:p-10">
                 <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
