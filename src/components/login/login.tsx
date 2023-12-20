@@ -61,15 +61,16 @@ const LoginPage = () => {
   //   return <LoadingForDataFetch />;
   // }
   return (
-    <div className="relative">
+    <div className="relative ">
       <img
         src="https://media.giphy.com/media/21QEGwILf5SGDRRHMn/giphy.gif"
         className="absolute inset-0 object-cover w-full h-screen"
         alt=""
       />
-      <div className="relative bg-transparent bg-opacity-75 h-screen">
-        <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
+      <div className="relative bg-transparent bg-opacity-75 h-screen ">
+        <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20 transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300">
           <div className="flex flex-col items-center justify-center mt-[15%]">
+
             <div className="w-full max-w-xl xl:px-8 xl:w-5/12 ">
               <div className="bg-white rounded shadow-2xl p-7 sm:p-10">
                 <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">

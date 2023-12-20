@@ -53,20 +53,21 @@ export const sidebarItem = (role: string) => {
           children: [
             {
               label: (
-                <Link className="text-sm " href={`/${role}/admin/all_admin`}>
-                  Admin List
-                </Link>
-              ),
-              key: `${role}/admin/all_admin`,
-            },
-            {
-              label: (
                 <Link className="text-sm " href={`/${role}/admin/create`}>
                   Create Admin{" "}
                 </Link>
               ),
               key: `${role}/admin/create`,
             },
+            {
+              label: (
+                <Link className="text-sm " href={`/${role}/admin/all_admin`}>
+                  Admin List
+                </Link>
+              ),
+              key: `${role}/admin/all_admin`,
+            },
+           
           ],
         },
         {
@@ -76,20 +77,21 @@ export const sidebarItem = (role: string) => {
           children: [
             {
               label: (
-                <Link className="text-sm " href={`/${role}/driver/all_driver`}>
-                  Driver List
-                </Link>
-              ),
-              key: `${role}/driver/all_driver`,
-            },
-            {
-              label: (
                 <Link className="text-sm " href={`/${role}/driver/create`}>
                   Create Driver
                 </Link>
               ),
               key: `${role}/driver/create`,
             },
+            {
+              label: (
+                <Link className="text-sm " href={`/${role}/driver/all_driver`}>
+                  Driver List
+                </Link>
+              ),
+              key: `${role}/driver/all_driver`,
+            },
+           
           ],
         },
         {
@@ -99,20 +101,21 @@ export const sidebarItem = (role: string) => {
           children: [
             {
               label: (
-                <Link className="text-sm " href={`/${role}/helper/all_helper`}>
-                  Helper List
-                </Link>
-              ),
-              key: `${role}/helper/all-helper`,
-            },
-            {
-              label: (
                 <Link className="text-sm " href={`/${role}/helper/create`}>
                   Create Helper
                 </Link>
               ),
               key: `${role}/helper/create`,
             },
+            {
+              label: (
+                <Link className="text-sm " href={`/${role}/helper/all_helper`}>
+                  Helper List
+                </Link>
+              ),
+              key: `${role}/helper/all-helper`,
+            },
+          
           ],
         },
       ],
@@ -124,20 +127,21 @@ export const sidebarItem = (role: string) => {
       children: [
         {
           label: (
-            <Link className="text-sm " href={`/${role}/vehicle/vehicle_list`}>
-              Vehicle list
-            </Link>
-          ),
-          key: `/${role}/vehicle/vehicle_list`,
-        },
-        {
-          label: (
             <Link className="text-sm " href={`/${role}/vehicle/create`}>
               Entry New Vehicle
             </Link>
           ),
           key: `/${role}/vehicle/create`,
         },
+        {
+          label: (
+            <Link className="text-sm " href={`/${role}/vehicle/vehicle_list`}>
+              Vehicle list
+            </Link>
+          ),
+          key: `/${role}/vehicle/vehicle_list`,
+        },
+       
       ],
     },
     {
