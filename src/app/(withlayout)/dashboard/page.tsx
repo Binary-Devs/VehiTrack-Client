@@ -1,40 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
-import {
-  Card,
-  Col,
-  Row,
-  Typography,
-  Tooltip,
-  Progress,
-  Upload,
-  message,
-  Button,
-  Timeline,
-  Radio,
-} from "antd";
-import {
-  ToTopOutlined,
-  MenuUnfoldOutlined,
-  RightOutlined,
-} from "@ant-design/icons";
-import Paragraph from "antd/lib/typography/Paragraph";
-import LineChart from "@/components/Charts/LineChart";
 import ColumnChart from "@/components/Charts/ColumnChart";
+import LineChart from "@/components/Charts/LineChart";
+import { Button, Card, Col, Row, Typography, message } from "antd";
+import { useState } from "react";
 
-import ava1 from "@/assets/logo-shopify.svg";
-import ava2 from "@/assets/logo-atlassian.svg";
-import ava3 from "@/assets/logo-slack.svg";
-import ava4 from "@/assets/logo-spotify.svg";
-import ava5 from "@/assets/logo-jira.svg";
-import ava6 from "@/assets/logo-invision.svg";
 import team1 from "@/assets/team-1.jpg";
 import team2 from "@/assets/team-2.jpg";
 import team3 from "@/assets/team-3.jpg";
 import team4 from "@/assets/team-4.jpg";
-import card from "@/assets/info-card-1.jpg";
-import Image from "next/image";
 
 const DashboardPage = () => {
   const { Title, Text } = Typography;
@@ -858,6 +832,10 @@ const DashboardPage = () => {
                 </tbody>
               </table>
             </div>
+          </div>
+
+          <div className="bg-red-100">
+            <Button type="primary">Primary</Button>
           </div>
         </div>
       </div>
