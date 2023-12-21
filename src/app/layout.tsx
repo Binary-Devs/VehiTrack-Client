@@ -1,12 +1,12 @@
 "use client";
 import Providers from "@/lib/Providers";
 // import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { StyleProvider } from "@ant-design/cssinjs";
-// import "@ant-design/flowchart/dist/index.css";
+import ErrorBoundary from "antd/es/alert/ErrorBoundary";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Playfair_Display({ subsets:['cyrillic'],weight:"500"});
 
 // export const metadata: Metadata = {
 //   title: "Next Js Starter",
@@ -20,11 +20,14 @@ export default function RootLayout({
 }) {
   return (
     <StyleProvider hashPriority="high">
+      {/* <ErrorBoundary> */}
+
       <Providers>
         <html lang="en">
           <body className={inter.className}>{children}</body>
         </html>
       </Providers>
+      {/* </ErrorBoundary> */}
     </StyleProvider>
   );
 }

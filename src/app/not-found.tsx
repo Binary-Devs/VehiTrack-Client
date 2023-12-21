@@ -1,16 +1,20 @@
-import { Row } from "antd";
+'use client'
+import { Button, Result, Row } from "antd";
+import { useRouter } from "next/navigation";
 
 const NotFoundPage = () => {
+  const router = useRouter();
   return (
-    <Row
-      justify="center"
-      align="middle"
-      style={{
-        height: "100vh",
-      }}
-    >
-      <h1>404!!! Page Not Found!</h1>
-    </Row>
+    <Result
+      status="403"
+      title="403"
+      subTitle="Sorry, you are not authorized to access this page."
+      extra={
+        <Button type="primary" onClick={() => router.back()}>
+          Back Home
+        </Button>
+      }
+    />
   );
 };
 

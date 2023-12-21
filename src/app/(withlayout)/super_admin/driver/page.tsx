@@ -10,7 +10,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Col, Row } from "antd";
 import React from "react";
 
-const CreateAdmin = () => {
+const CreateDriver = () => {
   const onSubmit = async (values: any) => {
     console.log(values);
     try {
@@ -24,7 +24,7 @@ const CreateAdmin = () => {
   //   }
   return (
     <div>
-      <h1 className="text-center my-1 font-bold text-2xl">Create Admin</h1>
+      <h1 className="text-center my-1 font-bold text-2xl">Create Driver</h1>
       {/*  */}
       <div>
         <Form submitHandler={onSubmit}>
@@ -256,4 +256,4 @@ const CreateAdmin = () => {
   );
 };
 
-export default CreateAdmin;
+export default CreateDriver;

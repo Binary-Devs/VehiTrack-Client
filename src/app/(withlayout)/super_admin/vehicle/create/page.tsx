@@ -10,7 +10,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Col, Row } from "antd";
 import React from "react";
 
-const CreateAdmin = () => {
+const CreateVehicle = () => {
   const onSubmit = async (values: any) => {
     console.log(values);
     try {
@@ -22,9 +22,46 @@ const CreateAdmin = () => {
   //   if(isLoading){
   //     return message.loading("Loading...")
   //   }
+
+  const driverlist = [
+    {
+      label: "Md korim (D-25141)",
+      value: "dffd",
+    },
+    {
+      label: "Md hasan (D-25414)",
+      value: "ddfsdf",
+    },
+    {
+      label: "Md Mondi (D-74118)",
+      value: "ddsdf",
+    },
+    {
+      label: "Mukbos (D-17411)",
+      value: "dsfd",
+    },
+  ];
+  const helperList = [
+    {
+      label: "Aomie (H-2511)",
+      value: "ddafds",
+    },
+    {
+      label: "Sampod (H-5414)",
+      value: "ddsadf",
+    },
+    {
+      label: "Md timil (H-85118)",
+      value: "ddafd",
+    },
+    {
+      label: "alind (H-1411)",
+      value: "ddasdf",
+    },
+  ];
   return (
     <div>
-      <h1 className="text-center my-1 font-bold text-2xl">Create Admin</h1>
+      <h1 className="text-center my-1 font-bold text-2xl">Create Vehicle</h1>
       {/*  */}
       <div>
         <Form submitHandler={onSubmit}>
@@ -42,7 +79,7 @@ const CreateAdmin = () => {
                 marginBottom: "10px",
               }}
             >
-              Admin Information
+              Vehicle Information
             </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
@@ -58,7 +95,7 @@ const CreateAdmin = () => {
                   type="text"
                   name="name"
                   size="large"
-                  label="Fast name"
+                  label="Band name"
                   required={true}
                 />
               </Col>
@@ -73,9 +110,9 @@ const CreateAdmin = () => {
               >
                 <FormInput
                   type="text"
-                  name="name"
+                  name="regNo"
                   size="large"
-                  label="Last Name"
+                  label="Registration Number"
                   required={true}
                 />
               </Col>
@@ -89,13 +126,14 @@ const CreateAdmin = () => {
                 }}
               >
                 <FormInput
-                  type="text"
-                  name="phoneNumber"
+                  type="number"
+                  name="vehicleValue"
                   size="large"
-                  label="Phone Number"
+                  label="Value"
                   required={true}
                 />
               </Col>
+              
               <Col
                 className="gutter-row"
                 xs={24}
@@ -105,15 +143,17 @@ const CreateAdmin = () => {
                   marginBottom: "10px",
                 }}
               >
-                <FormInput
-                  type="password"
-                  name="password"
+                <FormSelectField
                   size="large"
-                  label="Password"
-                  // required={true}
+                  name="Driver"
+                  options={driverlist}
+                  // defaultValue={priceTypeOptions[0]}
+                  label="Driver"
+                  // placeholder="Select"
+                  required={true}
                 />
+                {/* //! price type 8 */}
               </Col>
-
               <Col
                 className="gutter-row"
                 xs={24}
@@ -123,7 +163,47 @@ const CreateAdmin = () => {
                   marginBottom: "10px",
                 }}
               >
-                {/* <UploadImage name="image" /> */}
+                <FormSelectField
+                  size="large"
+                  name="Driver"
+                  options={helperList}
+                  // defaultValue={priceTypeOptions[0]}
+                  label="Helper"
+                  // placeholder="Select"
+                  required={true}
+                />
+                {/* //! price type 8 */}
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormSelectField
+                  size="large"
+                  name="activityType"
+                  options={isActive}
+                  // defaultValue={priceTypeOptions[0]}
+                  label="Status"
+                  // placeholder="Select"
+                  required={true}
+                />
+                {/* //! price type 8 */}
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                // md={12}
+                // lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <UploadImage /* name="image" */ />
               </Col>
             </Row>
           </div>
@@ -146,114 +226,22 @@ const CreateAdmin = () => {
               Basic Information
             </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormSelectField
-                  size="large"
-                  name="gender"
-                  options={genderOption}
-                  label="Gender"
-                  placeholder="Select"
-                  required={true}
-                />
-              </Col>
-
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  type="email"
-                  name="email"
-                  size="large"
-                  label="Email address"
-                  // required={true}
-                />
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormDatePicker
-                  name="dateOfBirth"
-                  label="Date of birth"
-                  size="large"
-                  disablePrevious={false}
-                />
-              </Col>
-
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormSelectField
-                  size="large"
-                  name="activityType"
-                  options={isActive}
-                  // defaultValue={priceTypeOptions[0]}
-                  label="Is active"
-                  // placeholder="Select"
-                  required={true}
-                />
-                {/* //! price type 8 */}
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                 <FormInput
-                  type="text"
-                  name="license"
-                  size="large"
-                  label="License"
-                  placeholder="License"
-                  // required={true}
-                />
-                {/* //! price type 8 */}
-              </Col>
-
-              <Col span={12} style={{ margin: "10px 0" }}>
-                <FormTextArea name="address" label="Address" rows={4} />
-              </Col>
-              <Col span={12} style={{ margin: "10px 0" }}>
-                <FormTextArea name="description" label="Description" rows={4} />
+              
+              <Col span={24} style={{ margin: "10px 0" }}>
+                <FormTextArea name="description" label="Description" rows={10} />
               </Col>
             </Row>
           </div>
-          <Button htmlType="submit" type="primary">
+          <div style={{display:"flex" ,justifyContent:"center",alignItems:"center"}}>
+
+          <Button  htmlType="submit" type="primary">
             Create
           </Button>
+          </div>
         </Form>
       </div>
     </div>
   );
 };
 
-export default CreateAdmin;
+export default CreateVehicle;

@@ -46,3 +46,14 @@ export const bloodGroupOptions = [
     value: "O-",
   },
 ];
+
+export const isActive=[
+  {
+    label: "Active",
+    value: "active",
+  },
+  {
+    label: "Deactivate",
+    value: "deactivate-",
+  },
+]
