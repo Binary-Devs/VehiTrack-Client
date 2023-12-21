@@ -9,8 +9,14 @@ import StyledComponentsRegistry from "./AntdRegistry";
 const Providers = ({ children }: { children: React.ReactNode }) => {
   const customTheme = {
     token: {
-      primaryColor: "#a18dff",
+      colorPrimary: "#1890ff",
+      colorInfo: "#a18dff",
     } as Partial<AliasToken>,
+    components: {
+      Layout: {
+        triggerBg: "#1890ff",
+      },
+    },
   };
 
   return (
