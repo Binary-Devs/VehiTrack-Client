@@ -24,7 +24,7 @@ const Sidebar = () => {
         height: "100vh",
         position: "sticky",
         backgroundColor: "white",
-        // boxShadow: "10px 0 5px -2px #D1D5DB",
+        //  boxShadow: "10px 0 5px -2px #D1D5DB",
         left: 0,
         top: 0,
         bottom: 0,
