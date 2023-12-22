@@ -40,11 +40,17 @@ const ModalComponent = ({
         {buttonText || "Open Modal"}
       </Button>
       <Modal
-        title="Title"
+        // title="Title"
         open={open}
-        // onOk={handleOk}
         confirmLoading={loading}
-        // onCancel={handleCancel}
+        onCancel={handleCancel}
+        footer={(_, { OkBtn, CancelBtn }) => (
+          <>
+            {/* <Button>Custom Button</Button>
+            <CancelBtn />
+            <OkBtn /> */}
+          </>
+        )}
         width={1000}
       >
         <ModalComponentWrapper modalText={modalText}>
