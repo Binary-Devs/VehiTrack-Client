@@ -36,7 +36,7 @@ import card from "@/assets/info-card-1.jpg";
 import Image from "next/image";
 import { Metadata } from "next";
 import ModalComponent from "@/components/ui/Modal";
-import AdminCreate from "@/components/CreateFrom/adminCreate";
+
 // export const metadata: Metadata = {
 //   title: 'vehitrack.netlify.app',
 // };
@@ -500,9 +500,7 @@ const DashboardPage = () => {
   return (
     <>
       <div>
-        <ModalComponent buttonText="44444" >
-         <AdminCreate />
-        </ModalComponent>
+       
         <div className="grid grid-cols-2 xl:grid-cols-4 gap-5 mb-5">
           {count.map((c, index) => (
             <div
