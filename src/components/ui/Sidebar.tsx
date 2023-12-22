@@ -10,6 +10,7 @@ const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
   const role = USER_ROLE.SUPER_ADMIN;
   // const { role } = getUserInfo() as any;
+
   return (
     <section className="absolute md:relative left-0 top-0 z-50">
       <Sider
@@ -43,6 +44,7 @@ const Sidebar = () => {
         <h1 className="underline">V.T</h1>
         <hr className="" />
       </div> */}
+
       <div
         style={{
           color: "Black",

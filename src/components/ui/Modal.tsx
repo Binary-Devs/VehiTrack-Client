@@ -42,9 +42,9 @@ const ModalComponent = ({
       <Modal
         title="Title"
         open={open}
-        onOk={handleOk}
+        // onOk={handleOk}
         confirmLoading={loading}
-        onCancel={handleCancel}
+        // onCancel={handleCancel}
         width={1000}
       >
         <ModalComponentWrapper modalText={modalText}>
