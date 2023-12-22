@@ -23,7 +23,7 @@ const CreateAdmin = ({ modalText }: { modalText?: any }) => {
     <div>
       <div>
         <h1 className="text-center my-1 font-bold text-2xl">
-          Create Admin asd
+          Create Admin
         </h1>
         {/*  */}
         <div>

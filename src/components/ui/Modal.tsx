@@ -8,14 +8,13 @@ const ModalComponent = ({
   buttonText,
   loading = false,
   setSetModel,
-  showModel
-  
+  showModel,
 }: {
-  children: React.ReactElement ;
+  children: React.ReactElement;
   buttonText?: string;
   loading?: boolean;
-  showModel?:any,
-  setSetModel?:any
+  showModel?: any;
+  setSetModel?: any;
 }) => {
   const [open, setOpen] = useState(false);
   //   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -44,6 +43,7 @@ const ModalComponent = ({
         open={open}
         confirmLoading={loading}
         onCancel={handleCancel}
+        //! when i went hidden ok and cancel button then it use
         footer={(_, { OkBtn, CancelBtn }) => (
           <>
             {/* <Button>Custom Button</Button>
@@ -53,11 +53,7 @@ const ModalComponent = ({
         )}
         width={1000}
       >
-        <ModalComponentWrapper modalText={modalText}>
-
         {children}
-        </ModalComponentWrapper>
-        
       </Modal>
     </>
   );
