@@ -11,6 +11,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Override base SVG style to work with Ant Design */
+svg {
+  vertical-align: initial;
+}
+
 /* Dashboard Style */
 .bar-chart {
   background: transparent linear-gradient(62deg, #00369e 0%, #005cfd 53%, #a18dff 100%) 0% 0% no-repeat padding-box;
@@ -22,10 +27,6 @@
 .bar-chart line.apexcharts-xaxis-tick {
   stroke: transparent;
 }
-
-/* .chart-vistior {
-  margin-top: 30px;
-} */
 
 .chart-vistior h5 {
   margin: 0px;
