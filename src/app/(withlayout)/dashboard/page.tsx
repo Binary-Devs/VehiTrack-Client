@@ -1,5 +1,4 @@
-"use client";
-
+'use client'
 import React, { useState } from "react";
 import {
   Card,
@@ -37,9 +36,15 @@ import team3 from "@/assets/team-3.jpg";
 import team4 from "@/assets/team-4.jpg";
 import card from "@/assets/info-card-1.jpg";
 import Image from "next/image";
+import { Metadata } from "next";
+import ModalComponent from "@/components/ui/Modal";
 
+// export const metadata: Metadata = {
+//   title: 'vehitrack.netlify.app',
+// };
 const DashboardPage = () => {
   const { Title, Text } = Typography;
+
   const [recentTabData, setRecentTabData] = useState("trip");
   const [upcomingTabData, setUpcomingTabData] = useState("trip");
 
@@ -49,6 +54,7 @@ const DashboardPage = () => {
   const upcomingTabChange = (e: RadioChangeEvent) => {
     setUpcomingTabData(e.target.value);
   };
+
 
   const dollar = [
     <svg
@@ -512,8 +518,10 @@ const DashboardPage = () => {
   return (
     <>
       <div>
+
         {/* Section 1 */}
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-5">
+
           {count.map((c, index) => (
             <div
               key={index}
@@ -541,6 +549,7 @@ const DashboardPage = () => {
               </div>
             </div>
           ))}
+          ModalComponent
         </div>
 
         {/* Section 2 */}
