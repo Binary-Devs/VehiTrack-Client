@@ -12,7 +12,8 @@ const Sidebar = () => {
   // const { role } = getUserInfo() as any;
 
   return (
-    <Sider
+    <section className="absolute md:relative left-0 top-0 z-50">
+      <Sider
       collapsible
       collapsed={collapsed}
       breakpoint="lg"
@@ -23,7 +24,7 @@ const Sidebar = () => {
         height: "100vh",
         position: "sticky",
         backgroundColor: "white",
-        // boxShadow: "10px 0 5px -2px #D1D5DB",
+        //  boxShadow: "10px 0 5px -2px #D1D5DB",
         left: 0,
         top: 0,
         bottom: 0,
@@ -62,6 +63,7 @@ const Sidebar = () => {
         items={sidebarItem(role)}
       />
     </Sider>
+    </section>
   );
 };
 
