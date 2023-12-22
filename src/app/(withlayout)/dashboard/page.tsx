@@ -487,6 +487,9 @@ const DashboardPage = () => {
       type: "cancel",
       name: "Trip cancel",
       amount: "+$99.99",
+
+
+      //
     },
     {
       type: "expense",
