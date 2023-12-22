@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React from "react";
 import ReactApexChart from "react-apexcharts";
@@ -10,11 +10,11 @@ const LineChart = () => {
   const { Title, Paragraph } = Typography;
 
   return (
-    <>
-      <div className="linechart">
+    <div className="overflow-hidden">
+      <div className="linechart mb-[14px]">
         <div>
           <Title level={5}>Fuel Summery</Title>
-          <Paragraph className="lastweek">
+          <Paragraph className="lastweek !m-0">
             than last year <span className="bnb2">+10%</span>
           </Paragraph>
         </div>
@@ -27,7 +27,6 @@ const LineChart = () => {
       </div>
 
       <ReactApexChart
-        className="h-full w-full"
         // @ts-ignore
         options={lineChart.options}
         series={lineChart.series}
@@ -35,7 +34,7 @@ const LineChart = () => {
         height={300}
         width={"100%"}
       />
-    </>
+    </div>
   );
 };
 
