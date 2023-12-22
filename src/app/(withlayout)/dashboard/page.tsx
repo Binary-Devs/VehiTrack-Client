@@ -507,6 +507,11 @@ const DashboardPage = () => {
       name: "Tire change",
       amount: "-$78.88",
     },
+    {
+      type: "expense",
+      name: "Excel change",
+      amount: "-$78.88",
+    },
   ];
 
   return (
