@@ -1,5 +1,4 @@
-"use client";
-
+'use client'
 import React, { useState } from "react";
 import {
   Card,
@@ -35,14 +34,20 @@ import team3 from "@/assets/team-3.jpg";
 import team4 from "@/assets/team-4.jpg";
 import card from "@/assets/info-card-1.jpg";
 import Image from "next/image";
-
+import { Metadata } from "next";
+import ModalComponent from "@/components/ui/Modal";
+import AdminCreate from "@/components/CreateFrom/adminCreate";
+// export const metadata: Metadata = {
+//   title: 'vehitrack.netlify.app',
+// };
 const DashboardPage = () => {
   const { Title, Text } = Typography;
+  const [showModel, setSetModel] = useState("false")
 
-  const onChange = (e: { target: { value: any } }) =>
-    console.log(`radio checked:${e.target.value}`);
+  // const onChange = (e: { target: { value: any } }) =>
+  //   console.log(`radio checked:${e.target.value}`);
 
-  const [reverse, setReverse] = useState(false);
+  // const [reverse, setReverse] = useState(false);
 
   const dollor = [
     <svg
@@ -495,6 +500,9 @@ const DashboardPage = () => {
   return (
     <>
       <div>
+        <ModalComponent buttonText="44444" >
+         <AdminCreate />
+        </ModalComponent>
         <div className="grid grid-cols-2 xl:grid-cols-4 gap-5 mb-5">
           {count.map((c, index) => (
             <div
@@ -523,6 +531,7 @@ const DashboardPage = () => {
               </div>
             </div>
           ))}
+          ModalComponent
         </div>
 
         <Row gutter={[20, 0]}>

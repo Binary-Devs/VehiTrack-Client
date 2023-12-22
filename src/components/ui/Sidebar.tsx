@@ -11,7 +11,8 @@ const Sidebar = () => {
   const role = USER_ROLE.SUPER_ADMIN;
   // const { role } = getUserInfo() as any;
   return (
-    <Sider
+    <section className="absolute md:relative left-0 top-0 z-50">
+      <Sider
       collapsible
       collapsed={collapsed}
       breakpoint="lg"
@@ -60,6 +61,7 @@ const Sidebar = () => {
         items={sidebarItem(role)}
       />
     </Sider>
+    </section>
   );
 };
 
