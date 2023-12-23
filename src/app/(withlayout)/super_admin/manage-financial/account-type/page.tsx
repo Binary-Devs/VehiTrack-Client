@@ -5,6 +5,7 @@ import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
   EditOutlined,
+  EyeOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
 import { Button, Input } from "antd";
@@ -115,6 +116,13 @@ const AccountTypePage = () => {
         return (
           <>
             <Link
+              href={`/super_admin/manage-financial/account-type/details/${data?.id}`}
+            >
+              <Button onClick={() => console.log(data)} type="primary">
+                <EyeOutlined />
+              </Button>
+            </Link>
+            <Link
               href={`/super_admin/manage-financial/account-type/edit/${data?.id}`}
             >
               <Button
@@ -126,14 +134,10 @@ const AccountTypePage = () => {
               >
                 <EditOutlined />
               </Button>
-              <Button
-                onClick={() => console.log(data?.id)}
-                type="primary"
-                danger
-              >
-                <DeleteOutlined />
-              </Button>
             </Link>
+            <Button onClick={() => console.log(data?.id)} type="primary" danger>
+              <DeleteOutlined />
+            </Button>
           </>
         );
       },

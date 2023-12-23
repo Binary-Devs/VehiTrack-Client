@@ -5,6 +5,7 @@ import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
   EditOutlined,
+  EyeOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
 import { Button, Input } from "antd";
@@ -143,6 +144,13 @@ const AccountHeadsPage = () => {
       render: function (data: any) {
         return (
           <>
+            <Link
+              href={`/super_admin/manage-financial/account-heads/details/${data?.id}`}
+            >
+              <Button onClick={() => console.log(data)} type="primary">
+                <EyeOutlined />
+              </Button>
+            </Link>
             <Link
               href={`/super_admin/manage-financial/account-heads/edit/${data?.id}`}
             >
