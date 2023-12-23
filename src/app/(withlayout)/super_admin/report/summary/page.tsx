@@ -94,8 +94,8 @@ const SummaryPage = () => {
             />
           </div>
         </div>
-        <UMTable columns={columns} dataSource={[]} />
       </Form>
+      <UMTable columns={columns} dataSource={[]} />
     </div>
   );
 };

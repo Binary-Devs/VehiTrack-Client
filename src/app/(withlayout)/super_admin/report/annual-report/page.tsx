@@ -3,6 +3,7 @@ import Form from "@/components/Forms/Form";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormYearPicker from "@/components/Forms/FormYearPicker";
 import ActionBar from "@/components/ui/ActionBar";
+import UMTable from "@/components/ui/Table";
 
 const AnnualReportPage = () => {
   const onSubmit = async (values: any) => {
@@ -19,10 +20,39 @@ const AnnualReportPage = () => {
       value: "BMW",
     },
   ];
+  const columns = [
+    {
+      title: "Month",
+      dataIndex: "month",
+      key: "month",
+    },
+    {
+      title: "Earning",
+      dataIndex: "earning",
+      key: "earning",
+    },
+    {
+      title: "Expense",
+      dataIndex: "expense",
+      key: "expense",
+    },
+    {
+      title: "Maintain",
+      dataIndex: "maintain",
+      key: "maintain",
+    },
+    {
+      title: "Profit",
+      dataIndex: "profit",
+      key: "profit",
+    },
+    {
+      title: "Profit in %",
+      dataIndex: "profit-in-percent",
+      key: "profit-in-percent",
+    },
+  ];
 
-  const onChange = (values: any) => {
-    console.log(values);
-  };
   return (
     <div>
       <ActionBar title="Annual Report" />
@@ -40,6 +70,7 @@ const AnnualReportPage = () => {
           </div>
         </div>
       </Form>
+      <UMTable columns={columns} dataSource={[]} />
     </div>
   );
 };
