@@ -179,6 +179,17 @@ export const sidebarItem = (role: string) => {
           label: (
             <Link
               className="text-sm "
+              href={`/${role}/manage-financial/account-type`}
+            >
+              Account Type
+            </Link>
+          ),
+          key: `/${role}/manage-financial/account-type`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
               href={`/${role}/manage-financial/account-heads`}
             >
               Account Heads
@@ -196,6 +207,17 @@ export const sidebarItem = (role: string) => {
             </Link>
           ),
           key: `/${role}/manage-financial/account-status`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/manage-financial/balance-sheet`}
+            >
+              Balance Sheet
+            </Link>
+          ),
+          key: `/${role}/manage-financial/balance-sheet`,
         },
       ],
     },
