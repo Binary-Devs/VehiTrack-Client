@@ -13,6 +13,7 @@ import {
 } from "@ant-design/icons";
 import { MenuProps } from "antd";
 import Link from "next/link";
+import { TbReportAnalytics } from "react-icons/tb";
 import { USER_ROLE } from "./role";
 
 export const sidebarItem = (role: string) => {
@@ -319,6 +320,29 @@ export const sidebarItem = (role: string) => {
             </Link>
           ),
           key: `/${role}/academiddddddc/dd`,
+        },
+      ],
+    },
+    {
+      label: "Report",
+      icon: <TbReportAnalytics />,
+      key: `/${role}/report`,
+      children: [
+        {
+          label: (
+            <Link className="text-sm " href={`/${role}/report/summary`}>
+              Summary
+            </Link>
+          ),
+          key: `/${role}/report/summary`,
+        },
+        {
+          label: (
+            <Link className="text-sm " href={`/${role}/report/annual-report`}>
+              Annual Report
+            </Link>
+          ),
+          key: `/${role}/report/annual-report`,
         },
       ],
     },
