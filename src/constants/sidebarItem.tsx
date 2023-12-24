@@ -3,8 +3,10 @@ import {
   CreditCardOutlined,
   DashboardFilled,
   MoneyCollectOutlined,
+  PaperClipOutlined,
   ProfileOutlined,
   ScheduleOutlined,
+  StrikethroughOutlined,
   TaobaoOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -22,12 +24,7 @@ export const sidebarItem = (role: string) => {
         </Link>
       ),
       icon: <ProfileOutlined />,
-      // children: [
-      //   {
-      //     label: <Link className="text-sm " href={`/${role}`}>Account Profile</Link>,
-      //     key: `/${role}/profile`,
-      //   },
-      // ],
+      
     },
   ];
 
@@ -67,7 +64,6 @@ export const sidebarItem = (role: string) => {
               ),
               key: `${role}/admin/all_admin`,
             },
-           
           ],
         },
         {
@@ -91,7 +87,6 @@ export const sidebarItem = (role: string) => {
               ),
               key: `${role}/driver/all_driver`,
             },
-           
           ],
         },
         {
@@ -115,7 +110,6 @@ export const sidebarItem = (role: string) => {
               ),
               key: `${role}/helper/all-helper`,
             },
-          
           ],
         },
       ],
@@ -141,7 +135,6 @@ export const sidebarItem = (role: string) => {
           ),
           key: `/${role}/vehicle/vehicle_list`,
         },
-       
       ],
     },
     {
@@ -170,46 +163,168 @@ export const sidebarItem = (role: string) => {
     {
       label: "Income",
       icon: <CreditCardOutlined />,
-      key: `/${role}/manage-Idncomdde`,
+      key: `/${role}/income`,
       children: [
         {
           label: (
-            <Link className="text-sm " href={`/${role}/academicIncome/Income`}>
-              Income History
-            </Link>
-          ),
-          key: `/${role}/academic/dddd`,
-        },
-        {
-          label: (
-            <Link className="text-sm " href={`/${role}/academiddc/Income`}>
+            <Link className="text-sm " href={`/${role}/income/income_sources`}>
               Income Sources
             </Link>
           ),
-          key: `/${role}/academiddddc/dd`,
+          key: `/${role}/income/income_sources`,
+        },
+        {
+          label: (
+            <Link className="text-sm " href={`/${role}/income/income_history`}>
+              Income History
+            </Link>
+          ),
+          key: `/${role}/income/income_history`,
         },
       ],
     },
     {
       label: "Expenses",
       icon: <MoneyCollectOutlined />,
-      key: `/${role}/manage-Incomdde`,
+      key: `/${role}/expenses`,
       children: [
         {
           label: (
-            <Link className="text-sm " href={`/${role}/Expenses/dd`}>
+            <Link
+              className="text-sm "
+              href={`/${role}/expenses/expenses_history`}
+            >
               Expenses History
             </Link>
           ),
-          key: `/${role}/acaddddemic/dssddd`,
+          key: `/${role}/expenses/expenses_history`,
         },
         {
           label: (
-            <Link className="text-sm " href={`/${role}/academiddddc/Incoddme`}>
+            <Link
+              className="text-sm "
+              href={`/${role}/expenses/expenses_sources`}
+            >
               Expenses Sources
             </Link>
           ),
-          key: `/${role}/academiddddddc/dd`,
+          key: `/${role}/expenses/expenses_sources`,
+        },
+      ],
+    },
+    {
+      label: "Store Management",
+      icon: <StrikethroughOutlined />,
+      key: `/${role}/store`,
+      children: [
+        {
+          label: (
+            <Link className="text-sm " href={`/${role}/store/equipment`}>
+              Equipment
+            </Link>
+          ),
+          key: `/${role}/store/equipment`,
+        },
+        {
+          label: (
+            <Link className="text-sm " href={`/${role}/store/equipment_In`}>
+              Equipment In
+            </Link>
+          ),
+          key: `/${role}/store/equipment_In`,
+        },
+        {
+          label: (
+            <Link className="text-sm " href={`/${role}/store/stock_status`}>
+              Stock Status
+            </Link>
+          ),
+          key: `/${role}/store/stock_status`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/store/unit_of_measurement`}
+            >
+              Unit of Measurement
+            </Link>
+          ),
+          key: `/${role}/store/unit_of_measurement`,
+        },
+      ],
+    },
+    {
+      label: "Paper work",
+      icon: <PaperClipOutlined />,
+      key: `/${role}/paper_work`,
+      children: [
+        {
+          label: (
+            <Link className="text-sm " href={`/${role}/paper_work/fitness`}>
+              Fitness
+            </Link>
+          ),
+          key: `/${role}/paper_work/fitness`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/paper_work/registration`}
+            >
+              Registration
+            </Link>
+          ),
+          key: `/${role}/paper_work/registration`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/paper_work/route_permit`}
+            >
+              Route permit
+            </Link>
+          ),
+          key: `/${role}/paper_work/route_permit`,
+        },
+        {
+          label: (
+            <Link className="text-sm " href={`/${role}/paper_work/tax_token`}>
+              Tax token
+            </Link>
+          ),
+          key: `/${role}/paper_work/tax_token`,
+        },
+      ],
+    },
+    {
+      label: "Miscellaneous Expenses",
+      icon: <StrikethroughOutlined />,
+      key: `/${role}/miscellaneous_expenses`,
+      children: [
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/miscellaneous_expenses/expense_heads`}
+            >
+              Expense heads
+            </Link>
+          ),
+          key: `/${role}/miscellaneous_expenses/expense_heads`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/miscellaneous_expenses/expense_list`}
+            >
+              Expense List
+            </Link>
+          ),
+          key: `/${role}/miscellaneous_expenses/expense_list`,
         },
       ],
     },
@@ -218,102 +333,13 @@ export const sidebarItem = (role: string) => {
   const adminSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
     ...commonAdminSidebarItems,
-    // {
-    //   label: "Manage academic",
-    //   key: "manage-academic",
-    //   icon: <TableOutlined />,
-    //   children: [
-    //     {
-    //       label: <Link className="text-sm " href={`/${role}/academic/faculty`}>Faculties</Link>,
-    //       key: `/${role}/academic/faculty`,
-    //     },
-    //     {
-    //       label: <Link className="text-sm " href={`/${role}/academic/department`}>Departments</Link>,
-    //       key: `/${role}/academic/department`,
-    //     },
-    //     {
-    //       label: <Link className="text-sm " href={`/${role}/academic/semester`}>Semesters</Link>,
-    //       key: `/${role}/academic/semester`,
-    //     },
-    //   ],
-    // },
-    // {
-    //   label: "Management",
-    //   key: "management",
-    //   icon: <AppstoreOutlined />,
-    //   children: [
-    //     {
-    //       label: <Link className="text-sm " href={`/${role}/department`}>Department</Link>,
-    //       key: `/${role}/department`,
-    //     },
-    //     {
-    //       label: <Link className="text-sm " href={`/${role}/building`}>Building</Link>,
-    //       key: `/${role}/building`,
-    //     },
-    //     {
-    //       label: <Link className="text-sm " href={`/${role}/room`}>Rooms</Link>,
-    //       key: `/${role}/room`,
-    //     },
-    //     {
-    //       label: <Link className="text-sm " href={`/${role}/course`}>Course</Link>,
-    //       key: `/${role}/course`,
-    //     },
-    //     {
-    //       label: (
-    //         <Link className="text-sm " href={`/${role}/semester-registration`}>
-    //           Semester registration
-    //         </Link>
-    //       ),
-    //       key: `/${role}/semester-registration`,
-    //     },
-    //     {
-    //       label: <Link className="text-sm " href={`/${role}/offered-course`}>Offered courses</Link>,
-    //       key: `/${role}/offered-course`,
-    //     },
-    //     {
-    //       label: (
-    //         <Link className="text-sm " href={`/${role}/offered-course-section`}>
-    //           Course sections
-    //         </Link>
-    //       ),
-    //       key: `/${role}/offered-course-section`,
-    //     },
-    //     {
-    //       label: (
-    //         <Link className="text-sm " href={`/${role}/offered-course-schedule`}>
-    //           Course schedules
-    //         </Link>
-    //       ),
-    //       key: `/${role}/offered-course-schedule`,
-    //     },
-    //   ],
-    // },
+    
   ];
 
   const superAdminSidebarItems: MenuProps["items"] = [
     ...commonAdminSidebarItems,
     ...defaultSidebarItems,
-    // {
-    //   label: <Link className="text-sm " href={`/${role}/admin`}>Manage Admin</Link>,
-    //   icon: <TableOutlined />,
-    //   key: `/${role}/admin`,
-    // },
-    // {
-    //   label: <Link className="text-sm " href={`/${role}/user`}>Manage User</Link>,
-    //   icon: <TableOutlined />,
-    //   key: `/${role}/user`,
-    // },
-    // {
-    //   label: "Management",
-    //   key: "management",
-    //   icon: <AppstoreOutlined />,
-    //   children: [
-    //     {
-    //       label: <Link className="text-sm " href={`/${role}/department`}>Department</Link>,
-    //       key: `/${role}/department`,
-    //     },
-    //   ],
-    // },
+
   ];
 
   if (role === USER_ROLE.SUPER_ADMIN) return superAdminSidebarItems;
