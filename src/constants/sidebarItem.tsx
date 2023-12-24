@@ -1,4 +1,5 @@
 import {
+  BankOutlined,
   CarOutlined,
   CreditCardOutlined,
   DashboardFilled,
@@ -8,10 +9,13 @@ import {
   ScheduleOutlined,
   StrikethroughOutlined,
   TaobaoOutlined,
+  ThunderboltOutlined,
+  ToolOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { MenuProps } from "antd";
 import Link from "next/link";
+import { TbReportAnalytics } from "react-icons/tb";
 import { USER_ROLE } from "./role";
 
 export const sidebarItem = (role: string) => {
@@ -24,7 +28,17 @@ export const sidebarItem = (role: string) => {
         </Link>
       ),
       icon: <ProfileOutlined />,
-      
+
+      // children: [
+      //   {
+      //     label: (
+      //       <Link className="text-sm " href={`/${role}`}>
+      //         Account Profile
+      //       </Link>
+      //     ),
+      //     key: `/${role}/profile`,
+      //   },
+      // ],
     },
   ];
 
@@ -115,7 +129,7 @@ export const sidebarItem = (role: string) => {
       ],
     },
     {
-      label: "Manage Vehicle",
+      label: "Vehicle Management",
       icon: <CarOutlined />,
       key: `vehicle`,
       children: [
@@ -157,6 +171,216 @@ export const sidebarItem = (role: string) => {
             </Link>
           ),
           key: `/${role}/academddic/Trip`,
+        },
+      ],
+    },
+    {
+      label: "Financial  Management",
+      icon: <BankOutlined />,
+      key: `/${role}/manage-financial`,
+      children: [
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/manage-financial/account-type`}
+            >
+              Account Type
+            </Link>
+          ),
+          key: `/${role}/manage-financial/account-type`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/manage-financial/account-heads`}
+            >
+              Account Heads
+            </Link>
+          ),
+          key: `/${role}/manage-financial/account-heads`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/manage-financial/account-status`}
+            >
+              Account Status
+            </Link>
+          ),
+          key: `/${role}/manage-financial/account-status`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/manage-financial/balance-sheet`}
+            >
+              Balance Sheet
+            </Link>
+          ),
+          key: `/${role}/manage-financial/balance-sheet`,
+        },
+      ],
+    },
+    {
+      label: "Fuel Management",
+      icon: <ThunderboltOutlined />,
+      key: `/${role}/manage-fuel`,
+      children: [
+        {
+          label: (
+            <Link className="text-sm " href={`/${role}/manage-fuel/fuel-types`}>
+              Fuel Types
+            </Link>
+          ),
+          key: `/${role}/manage-fuel/fuel-types`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/manage-fuel/pump-station`}
+            >
+              Pump Station
+            </Link>
+          ),
+          key: `/${role}/manage-fuel/pump-station`,
+        },
+        {
+          label: (
+            <Link className="text-sm " href={`/${role}/manage-fuel/refueling`}>
+              Refueling
+            </Link>
+          ),
+          key: `/${role}/manage-fuel/refueling`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/manage-fuel/fuel-status`}
+            >
+              Fuel Status
+            </Link>
+          ),
+          key: `/${role}/manage-financial/fuel-status`,
+        },
+      ],
+    },
+    {
+      label: "Maintenance",
+      icon: <ToolOutlined />,
+      key: `/${role}/maintenance`,
+      children: [
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/maintenance/repair-maintenance`}
+            >
+              Repair Maintenance
+            </Link>
+          ),
+          key: `/${role}/maintenance/repair-maintenance`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/maintenance/accident-history`}
+            >
+              Accident History
+            </Link>
+          ),
+          key: `/${role}/maintenance/accident-history`,
+        },
+      ],
+    },
+    {
+      label: "Paper Work",
+      icon: <PaperClipOutlined />,
+      key: `/${role}/paper-work`,
+      children: [
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/paper-work/registration`}
+            >
+              Registration
+            </Link>
+          ),
+          key: `/${role}/paper-work/repair-paper-work`,
+        },
+        {
+          label: (
+            <Link className="text-sm " href={`/${role}/paper-work/tax-token`}>
+              Tax/Token
+            </Link>
+          ),
+          key: `/${role}/maintenance/tax-token`,
+        },
+        {
+          label: (
+            <Link className="text-sm " href={`/${role}/paper-work/fitness`}>
+              Fitness
+            </Link>
+          ),
+          key: `/${role}/maintenance/fitness`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/paper-work/route-permit`}
+            >
+              Route Permit
+            </Link>
+          ),
+          key: `/${role}/paper-work/route-permit`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/paper-work/paper-work-list`}
+            >
+              Paper Work List
+            </Link>
+          ),
+          key: `/${role}/paper-work/paper-work-list`,
+        },
+      ],
+    },
+    {
+      label: "Miscellaneous Expenses",
+      icon: <MoneyCollectOutlined />,
+      key: `/${role}/miscellaneous-expenses`,
+      children: [
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/miscellaneous-expenses/expense-heads`}
+            >
+              Expense Heads
+            </Link>
+          ),
+          key: `/${role}/miscellaneous-expenses/expense-heads`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/miscellaneous-expenses/expense-list`}
+            >
+              Expense List
+            </Link>
+          ),
+          key: `/${role}/maintenance/list`,
         },
       ],
     },
@@ -328,12 +552,34 @@ export const sidebarItem = (role: string) => {
         },
       ],
     },
+    {
+      label: "Report",
+      icon: <TbReportAnalytics />,
+      key: `/${role}/report`,
+      children: [
+        {
+          label: (
+            <Link className="text-sm " href={`/${role}/report/summary`}>
+              Summary
+            </Link>
+          ),
+          key: `/${role}/report/summary`,
+        },
+        {
+          label: (
+            <Link className="text-sm " href={`/${role}/report/annual-report`}>
+              Annual Report
+            </Link>
+          ),
+          key: `/${role}/report/annual-report`,
+        },
+      ],
+    },
   ];
 
   const adminSidebarItems: MenuProps["items"] = [
-    ...defaultSidebarItems,
     ...commonAdminSidebarItems,
-    
+ 
   ];
 
   const superAdminSidebarItems: MenuProps["items"] = [
