@@ -25,6 +25,8 @@ import { USER_ROLE } from "@/constants/role";
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import UMTable from "@/components/ui/Table";
 import Image from "next/image";
+import ModalComponent from "@/components/ui/Modal";
+import CreateAdmin from "@/components/CreateFrom/AdminCreate";
 
 const AllAdminList = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
@@ -84,17 +86,17 @@ const AllAdminList = () => {
   ];
   //@ts-ignore
   const meta = {
-    "page": 1,
-    "limit": 10,
-    "total": 3
-};
+    page: 1,
+    limit: 10,
+    total: 3,
+  };
 
   const columns = [
     {
       title: "",
       render: function (data: any) {
         const fullName = `${data?.profileImage} `;
-        return <Image src={fullName} width={70} height={70} alt=""/>;
+        return <Image src={fullName} width={70} height={70} alt="" />;
       },
     },
     {
@@ -207,9 +209,9 @@ const AllAdminList = () => {
           }}
         />
         <div>
-          <Link href={`/${SUPER_ADMIN}/general_user/create`}>
-            <Button type="primary">Create Admin</Button>
-          </Link>
+          <ModalComponent buttonText="Create Admin">
+            <CreateAdmin />
+          </ModalComponent>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
@@ -234,14 +236,16 @@ const AllAdminList = () => {
         showPagination={true}
       />
 
-      {/* <UMModal
+      {/*
+      <UMModal
         title="Remove admin"
         isOpen={open}
         closeModal={() => setOpen(false)}
         handleOk={() => deleteGeneralUserHandler(adminId)}
       >
         <p className="my-5">Do you want to remove this admin?</p>
-      </UMModal> */}
+      </UMModal> 
+      */}
     </div>
   );
 };
