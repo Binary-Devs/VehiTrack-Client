@@ -4,6 +4,7 @@ import {
   CreditCardOutlined,
   DashboardFilled,
   MoneyCollectOutlined,
+  PaperClipOutlined,
   ProfileOutlined,
   ScheduleOutlined,
   TaobaoOutlined,
@@ -292,6 +293,62 @@ export const sidebarItem = (role: string) => {
             </Link>
           ),
           key: `/${role}/maintenance/accident-history`,
+        },
+      ],
+    },
+    {
+      label: "Paper Work",
+      icon: <PaperClipOutlined />,
+      key: `/${role}/paper-work`,
+      children: [
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/paper-work/registration`}
+            >
+              Registration
+            </Link>
+          ),
+          key: `/${role}/paper-work/repair-paper-work`,
+        },
+        {
+          label: (
+            <Link className="text-sm " href={`/${role}/paper-work/tax-token`}>
+              Tax/Token
+            </Link>
+          ),
+          key: `/${role}/maintenance/tax-token`,
+        },
+        {
+          label: (
+            <Link className="text-sm " href={`/${role}/paper-work/fitness`}>
+              Fitness
+            </Link>
+          ),
+          key: `/${role}/maintenance/fitness`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/paper-work/route-permit`}
+            >
+              Route Permit
+            </Link>
+          ),
+          key: `/${role}/paper-work/route-permit`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/paper-work/paper-work-list`}
+            >
+              Paper Work List
+            </Link>
+          ),
+          key: `/${role}/paper-work/paper-work-list`,
         },
       ],
     },

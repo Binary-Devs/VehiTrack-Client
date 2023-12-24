@@ -5,6 +5,7 @@ import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormDynamicFields from "@/components/ui/FormDynamicFields";
+import { maintenanceType, workshopType } from "@/constants/global";
 
 import { Button, Col, Row } from "antd";
 
@@ -113,6 +114,28 @@ const CreateRepairMaintenance = () => {
                   name="vehicleId "
                   options={vehicleOptions as any}
                   label="Vehicle"
+                  placeholder="Select"
+                />
+              </div>
+            </Col>
+            <Col>
+              <div>
+                <FormSelectField
+                  size="large"
+                  name="workshopType "
+                  options={workshopType as any}
+                  label="Workshop Type"
+                  placeholder="Select"
+                />
+              </div>
+            </Col>
+            <Col>
+              <div>
+                <FormSelectField
+                  size="large"
+                  name="maintenanceType "
+                  options={maintenanceType as any}
+                  label="Maintenance Type"
                   placeholder="Select"
                 />
               </div>

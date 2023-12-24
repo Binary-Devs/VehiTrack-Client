@@ -13,7 +13,7 @@ import dayjs from "dayjs";
 import Link from "next/link";
 import { useState } from "react";
 
-const RepairMaintenancePage = () => {
+const PaperWorkList = () => {
   const query: Record<string, any> = {};
 
   const [page, setPage] = useState<number>(1);
@@ -37,95 +37,122 @@ const RepairMaintenancePage = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const maintenanceRecords = [
+  const paperworkRecords = [
     {
       id: 1,
-      date: "2023-08-01",
+      date: "2023-09-01",
       vehicleId: 1,
-      odometer: 51000,
-      workshopType: "InHouse",
-      maintenanceType: "Schedule",
-      serviceCharge: 200.0,
-      remarks: "Routine maintenance check",
-      createdAt: "2023-08-01",
-      updatedAt: "2023-08-01",
+      certificateNo: "REG12345",
+      effectiveDate: "2023-09-01",
+      expiryDate: "2024-09-01",
+      daysToRemind: 30,
+      odometer: 52000,
+      paperType: "Registration",
+      fee: 150.0,
+      otherAmount: 20.0,
+      totalAmount: 170.0,
+      remarks: "Renewal of vehicle registration",
+      createdAt: "2023-09-01",
+      updatedAt: "2023-09-01",
     },
     {
       id: 2,
-      date: "2023-08-10",
+      date: "2023-09-10",
       vehicleId: 2,
-      odometer: 61000,
-      workshopType: "Outside",
-      maintenanceType: "Unschedule",
-      serviceCharge: 350.0,
-      remarks: "Engine diagnostics and repair",
-      createdAt: "2023-08-10",
-      updatedAt: "2023-08-10",
+      certificateNo: "TAX56789",
+      effectiveDate: "2023-09-10",
+      expiryDate: "2024-09-10",
+      daysToRemind: 15,
+      odometer: 62000,
+      paperType: "Tax/Token",
+      fee: 80.0,
+      otherAmount: 10.0,
+      totalAmount: 90.0,
+      remarks: "Payment of annual road tax",
+      createdAt: "2023-09-10",
+      updatedAt: "2023-09-10",
     },
     {
       id: 3,
-      date: "2023-08-20",
+      date: "2023-09-15",
       vehicleId: 3,
-      odometer: 76000,
-      workshopType: "Outside",
-      maintenanceType: "Accidental",
-      serviceCharge: 1200.0,
-      remarks: "Body repair after accident",
-      createdAt: "2023-08-20",
-      updatedAt: "2023-08-20",
+      certificateNo: "RPX45678",
+      effectiveDate: "2023-09-15",
+      expiryDate: "2024-09-15",
+      daysToRemind: 30,
+      odometer: 77000,
+      paperType: "Route Permit",
+      fee: 200.0,
+      otherAmount: 30.0,
+      totalAmount: 230.0,
+      remarks: "Renewal of route permit",
+      createdAt: "2023-09-15",
+      updatedAt: "2023-09-15",
     },
     {
       id: 4,
-      date: "2023-08-25",
+      date: "2023-09-20",
       vehicleId: 4,
-      odometer: 56000,
-      workshopType: "InHouse",
-      maintenanceType: "Schedule",
-      serviceCharge: 150.0,
-      remarks: "Tire rotation and alignment",
-      createdAt: "2023-08-25",
-      updatedAt: "2023-08-25",
+      certificateNo: "FIT90123",
+      effectiveDate: "2023-09-20",
+      expiryDate: "2024-09-20",
+      daysToRemind: 15,
+      odometer: 57000,
+      paperType: "Fitness",
+      fee: 120.0,
+      otherAmount: 15.0,
+      totalAmount: 135.0,
+      remarks: "Fitness certification renewal",
+      createdAt: "2023-09-20",
+      updatedAt: "2023-09-20",
     },
     {
       id: 5,
-      date: "2023-08-30",
+      date: "2023-09-25",
       vehicleId: 5,
-      odometer: 71000,
-      workshopType: "Outside",
-      maintenanceType: "Unschedule",
-      serviceCharge: 400.0,
-      remarks: "Transmission fluid change",
-      createdAt: "2023-08-30",
-      updatedAt: "2023-08-30",
+      certificateNo: "REG67890",
+      effectiveDate: "2023-09-25",
+      expiryDate: "2024-09-25",
+      daysToRemind: 30,
+      odometer: 72000,
+      paperType: "Registration",
+      fee: 180.0,
+      otherAmount: 25.0,
+      totalAmount: 205.0,
+      remarks: "Registration renewal and modification",
+      createdAt: "2023-09-25",
+      updatedAt: "2023-09-25",
     },
   ];
+
+  // You can now use this array of `paperworkRecords`
 
   const meta = 100;
 
   const columns = [
     {
-      title: "date",
-      dataIndex: "date",
-    },
-    {
-      title: "vehicleId",
+      title: "vehicle",
       dataIndex: "vehicleId",
     },
     {
-      title: "odometer",
-      dataIndex: "odometer",
+      title: "effectiveDate",
+      dataIndex: "effectiveDate",
     },
     {
-      title: "workshopType",
-      dataIndex: "workshopType",
+      title: "expiryDate",
+      dataIndex: "expiryDate",
     },
     {
-      title: "maintenanceType",
-      dataIndex: "maintenanceType",
+      title: "daysToRemind",
+      dataIndex: "daysToRemind",
     },
     {
-      title: "serviceCharge",
-      dataIndex: "serviceCharge",
+      title: "paperType",
+      dataIndex: "paperType",
+    },
+    {
+      title: "fee",
+      dataIndex: "fee",
     },
     {
       title: "remarks",
@@ -145,14 +172,14 @@ const RepairMaintenancePage = () => {
         return (
           <>
             <Link
-              href={`/super_admin/maintenance/repair-maintenance/details/${data?.id}`}
+              href={`super_admin/paper-work/paper-work-list/details/${data?.id}`}
             >
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
             </Link>
             <Link
-              href={`/super_admin/maintenance/repair-maintenance/edit/${data?.id}`}
+              href={`super_admin/paper-work/paper-work-list/edit/${data?.id}`}
             >
               <Button
                 style={{
@@ -205,7 +232,7 @@ const RepairMaintenancePage = () => {
           }}
         />
         <div>
-          <Link href="/super_admin/maintenance/repair-maintenance/create">
+          <Link href="super_admin/paper-work/paper-work-list/create">
             <Button type="primary">Create</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
@@ -222,7 +249,7 @@ const RepairMaintenancePage = () => {
 
       <UMTable
         columns={columns}
-        dataSource={maintenanceRecords}
+        dataSource={paperworkRecords}
         pageSize={size}
         totalPages={meta}
         showSizeChanger={true}
@@ -234,4 +261,4 @@ const RepairMaintenancePage = () => {
   );
 };
 
-export default RepairMaintenancePage;
+export default PaperWorkList;

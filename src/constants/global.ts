@@ -47,7 +47,7 @@ export const bloodGroupOptions = [
   },
 ];
 
-export const isActive=[
+export const isActive = [
   {
     label: "Active",
     value: "active",
@@ -56,4 +56,52 @@ export const isActive=[
     label: "Deactivate",
     value: "deactivate-",
   },
-]
+];
+export const workshopType = [
+  {
+    label: "In House",
+    value: "InHouse",
+  },
+  {
+    label: "Outside",
+    value: "Outside-",
+  },
+];
+export const maintenanceType = [
+  {
+    label: "Schedule",
+    value: "Schedule",
+  },
+  {
+    label: "Unschedule",
+    value: "Unschedule-",
+  },
+  {
+    label: "Accidental",
+    value: "Accidental-",
+  },
+];
+export const paperTypeFitness = [
+  {
+    label: "Fitness",
+    value: "fitness",
+  },
+];
+export const paperTypeRegistration = [
+  {
+    label: "Registration",
+    value: "registration",
+  },
+];
+export const paperTypeTaxToken = [
+  {
+    label: "Tax/Token",
+    value: "tax-token",
+  },
+];
+export const paperTypeRoutePermit = [
+  {
+    label: "Route Permit",
+    value: "route -permit",
+  },
+];
