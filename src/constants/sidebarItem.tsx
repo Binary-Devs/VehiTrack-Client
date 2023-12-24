@@ -4,6 +4,7 @@ import {
   CreditCardOutlined,
   DashboardFilled,
   MoneyCollectOutlined,
+  PaperClipOutlined,
   ProfileOutlined,
   ScheduleOutlined,
   TaobaoOutlined,
@@ -180,6 +181,17 @@ export const sidebarItem = (role: string) => {
           label: (
             <Link
               className="text-sm "
+              href={`/${role}/manage-financial/account-type`}
+            >
+              Account Type
+            </Link>
+          ),
+          key: `/${role}/manage-financial/account-type`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
               href={`/${role}/manage-financial/account-heads`}
             >
               Account Heads
@@ -197,6 +209,17 @@ export const sidebarItem = (role: string) => {
             </Link>
           ),
           key: `/${role}/manage-financial/account-status`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/manage-financial/balance-sheet`}
+            >
+              Balance Sheet
+            </Link>
+          ),
+          key: `/${role}/manage-financial/balance-sheet`,
         },
       ],
     },
@@ -271,6 +294,91 @@ export const sidebarItem = (role: string) => {
             </Link>
           ),
           key: `/${role}/maintenance/accident-history`,
+        },
+      ],
+    },
+    {
+      label: "Paper Work",
+      icon: <PaperClipOutlined />,
+      key: `/${role}/paper-work`,
+      children: [
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/paper-work/registration`}
+            >
+              Registration
+            </Link>
+          ),
+          key: `/${role}/paper-work/repair-paper-work`,
+        },
+        {
+          label: (
+            <Link className="text-sm " href={`/${role}/paper-work/tax-token`}>
+              Tax/Token
+            </Link>
+          ),
+          key: `/${role}/maintenance/tax-token`,
+        },
+        {
+          label: (
+            <Link className="text-sm " href={`/${role}/paper-work/fitness`}>
+              Fitness
+            </Link>
+          ),
+          key: `/${role}/maintenance/fitness`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/paper-work/route-permit`}
+            >
+              Route Permit
+            </Link>
+          ),
+          key: `/${role}/paper-work/route-permit`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/paper-work/paper-work-list`}
+            >
+              Paper Work List
+            </Link>
+          ),
+          key: `/${role}/paper-work/paper-work-list`,
+        },
+      ],
+    },
+    {
+      label: "Miscellaneous Expenses",
+      icon: <MoneyCollectOutlined />,
+      key: `/${role}/miscellaneous-expenses`,
+      children: [
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/miscellaneous-expenses/expense-heads`}
+            >
+              Expense Heads
+            </Link>
+          ),
+          key: `/${role}/miscellaneous-expenses/expense-heads`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/miscellaneous-expenses/expense-list`}
+            >
+              Expense List
+            </Link>
+          ),
+          key: `/${role}/maintenance/list`,
         },
       ],
     },
