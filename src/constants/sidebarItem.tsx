@@ -202,17 +202,6 @@ export const sidebarItem = (role: string) => {
           label: (
             <Link
               className="text-sm "
-              href={`/${role}/manage-financial/account-status`}
-            >
-              Account Status
-            </Link>
-          ),
-          key: `/${role}/manage-financial/account-status`,
-        },
-        {
-          label: (
-            <Link
-              className="text-sm "
               href={`/${role}/manage-financial/balance-sheet`}
             >
               Balance Sheet
