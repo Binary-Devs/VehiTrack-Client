@@ -353,6 +353,35 @@ export const sidebarItem = (role: string) => {
       ],
     },
     {
+      label: "Miscellaneous Expenses",
+      icon: <MoneyCollectOutlined />,
+      key: `/${role}/miscellaneous-expenses`,
+      children: [
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/miscellaneous-expenses/expense-heads`}
+            >
+              Expense Heads
+            </Link>
+          ),
+          key: `/${role}/miscellaneous-expenses/expense-heads`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/miscellaneous-expenses/expense-list`}
+            >
+              Expense List
+            </Link>
+          ),
+          key: `/${role}/maintenance/list`,
+        },
+      ],
+    },
+    {
       label: "Income",
       icon: <CreditCardOutlined />,
       key: `/${role}/manage-Idncomdde`,
