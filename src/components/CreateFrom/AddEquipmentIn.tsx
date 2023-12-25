@@ -1,6 +1,8 @@
 import { Button, Col, Row } from "antd";
 import Form from "../Forms/Form";
+import FormDatePicker from "../Forms/FormDatePicker";
 import FormInput from "../Forms/FormInput";
+import FormSelectField from "../Forms/FormSelectField";
 
 const AddEquipmentIn = () => {
   return (
@@ -26,11 +28,39 @@ const AddEquipmentIn = () => {
                   marginBottom: "10px",
                 }}
               >
-                <FormInput
-                  type="text"
+                <FormDatePicker name="date" size="large" label="Date" />
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormSelectField
                   name="name"
                   size="large"
-                  label="Fast name"
+                  label="Equipment"
+                  required={true}
+                  options={[]}
+                />
+              </Col>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormInput
+                  type="number"
+                  name="quantity"
+                  size="large"
+                  label="Quantity"
                   required={true}
                 />
               </Col>
@@ -44,28 +74,26 @@ const AddEquipmentIn = () => {
                 }}
               >
                 <FormInput
-                  type="text"
-                  name="name"
+                  type="number"
+                  name="unitPrice"
                   size="large"
-                  label="Last Name"
+                  label="Unit price"
                   required={true}
                 />
               </Col>
               <Col
                 className="gutter-row"
                 xs={24}
-                md={12}
-                lg={8}
+                md={16}
                 style={{
                   marginBottom: "10px",
                 }}
               >
                 <FormInput
                   type="text"
-                  name="phoneNumber"
+                  name="remarks"
                   size="large"
-                  label="Phone Number"
-                  required={true}
+                  label="Remarks"
                 />
               </Col>
             </Row>
@@ -73,7 +101,7 @@ const AddEquipmentIn = () => {
 
           <div className="flex justify-center items-center">
             <Button htmlType="submit" type="primary">
-              Add
+              Add Equipment In
             </Button>
           </div>
         </Form>
