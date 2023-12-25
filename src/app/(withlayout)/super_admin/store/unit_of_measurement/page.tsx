@@ -1,6 +1,6 @@
 "use client";
 
-import AddEquipmentIn from "@/components/CreateFrom/AddEquipmentIn";
+import AddUnitOfMeasurement from "@/components/CreateFrom/AddUnitOfMeasurement";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
@@ -48,7 +48,7 @@ const UnitOfMeasurement = () => {
     <div>
       <ActionBar title="Unit of measurement" inline>
         <ModalComponent buttonText="Add Unit">
-          <AddEquipmentIn />
+          <AddUnitOfMeasurement />
         </ModalComponent>
       </ActionBar>
       <UMTable columns={columns} dataSource={dataSource} />
