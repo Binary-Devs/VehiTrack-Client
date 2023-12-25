@@ -1,9 +1,10 @@
 "use client";
 
+import AddEquipment from "@/components/CreateFrom/AddEquipment";
 import ActionBar from "@/components/ui/ActionBar";
+import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { Button } from "antd";
-import { BiBookAdd } from "react-icons/bi";
 import { FaEdit } from "react-icons/fa";
 
 const EquipmentList = () => {
@@ -46,9 +47,9 @@ const EquipmentList = () => {
   return (
     <div>
       <ActionBar title="Equipment" inline>
-        <Button type="primary" icon={<BiBookAdd />}>
-          Create
-        </Button>
+        <ModalComponent buttonText="Add Equipment">
+          <AddEquipment />
+        </ModalComponent>
       </ActionBar>
       <UMTable columns={columns} dataSource={dataSource} />
     </div>
