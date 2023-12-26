@@ -1,29 +1,23 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 
-import { Button, Input, message } from "antd";
-import Link from "next/link";
+import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
   EditOutlined,
-  FilterOutlined,
-  ReloadOutlined,
   EyeOutlined,
+  ReloadOutlined,
 } from "@ant-design/icons";
+import { Button, Input } from "antd";
+import Link from "next/link";
 import { useState } from "react";
-import { useDebounced } from "@/redux/hooks";
 
 import dayjs from "dayjs";
 
-import {
-  Error_model_hook,
-  Success_model,
-  confirm_modal,
-} from "@/utils/modalHook";
-
-import { USER_ROLE } from "@/constants/role";
-import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
+import CreateAdmin from "@/components/CreateFrom/AdminCreate";
+import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
+import { USER_ROLE } from "@/constants/role";
 import Image from "next/image";
 
 const AllAdminList = () => {
@@ -84,17 +78,17 @@ const AllAdminList = () => {
   ];
   //@ts-ignore
   const meta = {
-    "page": 1,
-    "limit": 10,
-    "total": 3
-};
+    page: 1,
+    limit: 10,
+    total: 3,
+  };
 
   const columns = [
     {
       title: "",
       render: function (data: any) {
         const fullName = `${data?.profileImage} `;
-        return <Image src={fullName} width={70} height={70} alt=""/>;
+        return <Image src={fullName} width={70} height={70} alt="" />;
       },
     },
     {
@@ -196,7 +190,7 @@ const AllAdminList = () => {
   //     return <LoadingForDataFetch />;
   //   }
   return (
-    <div>
+    <div className="rounded-xl bg-white p-5 shadow-xl">
       <ActionBar title="Admin List">
         <Input
           size="large"
@@ -207,9 +201,9 @@ const AllAdminList = () => {
           }}
         />
         <div>
-          <Link href={`/${SUPER_ADMIN}/general_user/create`}>
-            <Button type="primary">Create Admin</Button>
-          </Link>
+          <ModalComponent buttonText="Create Admin">
+            <CreateAdmin />
+          </ModalComponent>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
@@ -234,14 +228,16 @@ const AllAdminList = () => {
         showPagination={true}
       />
 
-      {/* <UMModal
+      {/*
+      <UMModal
         title="Remove admin"
         isOpen={open}
         closeModal={() => setOpen(false)}
         handleOk={() => deleteGeneralUserHandler(adminId)}
       >
         <p className="my-5">Do you want to remove this admin?</p>
-      </UMModal> */}
+      </UMModal> 
+      */}
     </div>
   );
 };
