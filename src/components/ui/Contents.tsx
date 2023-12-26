@@ -14,7 +14,7 @@ const Contents = ({ children }: { children: React.ReactNode }) => {
       }}
     >
       <Header />
-      <div className="p-8">{children}</div>
+      <div className="p-2">{children}</div>
     </Content>
   );
 };

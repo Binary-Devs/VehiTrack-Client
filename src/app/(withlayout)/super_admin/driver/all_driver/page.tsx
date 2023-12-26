@@ -94,6 +94,7 @@ const AllDriverList = () => {
   const columns = [
     {
       title: "",
+      width: 100,
       render: function (data: any) {
         const fullName = `${data?.profileImage} `;
         return <Image src={fullName} width={70} height={70} alt=""/>;
@@ -101,7 +102,7 @@ const AllDriverList = () => {
     },
     {
       title: "Name",
-      width: 150,
+    
       ellipsis: true,
       render: function (data: any) {
         const fullName = `${data?.name} `;
@@ -111,7 +112,7 @@ const AllDriverList = () => {
     {
       title: "Email",
       dataIndex: "email",
-      width: 150,
+    
       
     },
 
@@ -126,7 +127,7 @@ const AllDriverList = () => {
     {
       title: "Contact no.",
       dataIndex: "phoneNumber",
-      width: 150,
+    
     },
     {
       title: "Action",

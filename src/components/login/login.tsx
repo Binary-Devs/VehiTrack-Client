@@ -68,11 +68,11 @@ const LoginPage = () => {
         alt=""
       />
       <div className="relative bg-transparent bg-opacity-75 h-screen ">
-        <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20 transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300">
+        <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20 ">
           <div className="flex flex-col items-center justify-center mt-[15%]">
 
             <div className="w-full max-w-xl xl:px-8 xl:w-5/12 ">
-              <div className="bg-white rounded shadow-2xl p-7 sm:p-10">
+              <div className="bg-white rounded shadow-2xl p-7 sm:p-10 transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300">
                 <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
                   Login Dashboard
                 </h3>
@@ -113,7 +113,7 @@ const LoginPage = () => {
                   <div className="mt-4 mb-2 sm:mb-4">
                     <button
                       type="submit"
-                      className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide  
+                      className="inline-flex items-center justify-center bg-blue-600 text-white w-full h-12 px-6 font-medium tracking-wide  
                        rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 border-2 focus:shadow-outline focus:outline-none  hover:transition-all transition ease-in-out delay-150 
                         hover:-translate-y-1 hover:scale-110 
                          duration-300"

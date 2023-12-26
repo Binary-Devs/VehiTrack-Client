@@ -23,7 +23,11 @@ export default function RootLayout({
 
       <Providers>
         <html lang="en">
-          <body className={inter.className}>{children}</body>
+          <body style={{ maxWidth: "1990px" ,marginInline:"auto",boxShadow:
+          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+}} className={inter.className}>
+            {children}
+          </body>
         </html>
       </Providers>
       {/* </ErrorBoundary> */}
