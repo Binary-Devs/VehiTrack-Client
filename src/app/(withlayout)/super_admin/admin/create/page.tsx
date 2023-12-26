@@ -8,9 +8,9 @@ export const metadata: Metadata = {
 };
 const AdminCreatePage = () => {
   return (
-    <>
+    <div className="rounded-xl bg-white p-5 shadow-xl">
       <CreateAdmin />
-    </>
+    </div>
   );
 };
 
