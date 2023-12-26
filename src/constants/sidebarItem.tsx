@@ -52,82 +52,83 @@ export const sidebarItem = (role: string) => {
       key: "dashboard",
       icon: <DashboardFilled />,
     },
-    {
-      label: "Manage Users",
-      key: "manage-user",
-      icon: <ScheduleOutlined />,
-      children: [
-        {
-          label: "Admin",
-          key: "Admin",
-          icon: <UserOutlined />,
-          children: [
-            {
-              label: (
-                <Link className="text-sm " href={`/${role}/admin/create`}>
-                  Create Admin{" "}
-                </Link>
-              ),
-              key: `${role}/admin/create`,
-            },
-            {
-              label: (
-                <Link className="text-sm " href={`/${role}/admin/all_admin`}>
-                  Admin List
-                </Link>
-              ),
-              key: `${role}/admin/all_admin`,
-            },
-          ],
-        },
-        {
-          label: "Driver",
-          key: "Driver",
-          icon: <UserOutlined />,
-          children: [
-            {
-              label: (
-                <Link className="text-sm " href={`/${role}/driver/create`}>
-                  Create Driver
-                </Link>
-              ),
-              key: `${role}/driver/create`,
-            },
-            {
-              label: (
-                <Link className="text-sm " href={`/${role}/driver/all_driver`}>
-                  Driver List
-                </Link>
-              ),
-              key: `${role}/driver/all_driver`,
-            },
-          ],
-        },
-        {
-          label: "Helper",
-          key: "Helper",
-          icon: <UserOutlined />,
-          children: [
-            {
-              label: (
-                <Link className="text-sm " href={`/${role}/helper/create`}>
-                  Create Helper
-                </Link>
-              ),
-              key: `${role}/helper/create`,
-            },
-            {
-              label: (
-                <Link className="text-sm " href={`/${role}/helper/all_helper`}>
-                  Helper List
-                </Link>
-              ),
-              key: `${role}/helper/all-helper`,
-            },
-          ],
-        },
-      ],
-    },
+   
+    // {
+    //   label: "Manage Users",
+    //   key: "manage-user",
+    //   icon: <ScheduleOutlined />,
+    //   children: [
+    //     {
+    //       label: "Admin",
+    //       key: "Admin",
+    //       icon: <UserOutlined />,
+    //       children: [
+    //         {
+    //           label: (
+    //             <Link className="text-sm " href={`/${role}/admin/create`}>
+    //               Create Admin{" "}
+    //             </Link>
+    //           ),
+    //           key: `${role}/admin/create`,
+    //         },
+    //         {
+    //           label: (
+    //             <Link className="text-sm " href={`/${role}/admin/all_admin`}>
+    //               Admin List
+    //             </Link>
+    //           ),
+    //           key: `${role}/admin/all_admin`,
+    //         },
+    //       ],
+    //     },
+    //     {
+    //       label: "Driver",
+    //       key: "Driver",
+    //       icon: <UserOutlined />,
+    //       children: [
+    //         {
+    //           label: (
+    //             <Link className="text-sm " href={`/${role}/driver/create`}>
+    //               Create Driver
+    //             </Link>
+    //           ),
+    //           key: `${role}/driver/create`,
+    //         },
+    //         {
+    //           label: (
+    //             <Link className="text-sm " href={`/${role}/driver/all_driver`}>
+    //               Driver List
+    //             </Link>
+    //           ),
+    //           key: `${role}/driver/all_driver`,
+    //         },
+    //       ],
+    //     },
+    //     {
+    //       label: "Helper",
+    //       key: "Helper",
+    //       icon: <UserOutlined />,
+    //       children: [
+    //         {
+    //           label: (
+    //             <Link className="text-sm " href={`/${role}/helper/create`}>
+    //               Create Helper
+    //             </Link>
+    //           ),
+    //           key: `${role}/helper/create`,
+    //         },
+    //         {
+    //           label: (
+    //             <Link className="text-sm " href={`/${role}/helper/all_helper`}>
+    //               Helper List
+    //             </Link>
+    //           ),
+    //           key: `${role}/helper/all-helper`,
+    //         },
+    //       ],
+    //     },
+    //   ],
+    // },
     {
       label: "Vehicle Management",
       icon: <CarOutlined />,
@@ -148,6 +149,52 @@ export const sidebarItem = (role: string) => {
             </Link>
           ),
           key: `/${role}/vehicle/vehicle_list`,
+        },
+      ],
+    },
+    {
+      label: "Driver",
+      key: "Driver",
+      icon: <UserOutlined />,
+      children: [
+        {
+          label: (
+            <Link className="text-sm " href={`/${role}/driver/create`}>
+              Create Driver
+            </Link>
+          ),
+          key: `${role}/driver/create`,
+        },
+        {
+          label: (
+            <Link className="text-sm " href={`/${role}/driver/all_driver`}>
+              Driver List
+            </Link>
+          ),
+          key: `${role}/driver/all_driver`,
+        },
+      ],
+    },
+    {
+      label: "Helper",
+      key: "Helper",
+      icon: <UserOutlined />,
+      children: [
+        {
+          label: (
+            <Link className="text-sm " href={`/${role}/helper/create`}>
+              Create Helper
+            </Link>
+          ),
+          key: `${role}/helper/create`,
+        },
+        {
+          label: (
+            <Link className="text-sm " href={`/${role}/helper/all_helper`}>
+              Helper List
+            </Link>
+          ),
+          key: `${role}/helper/all-helper`,
         },
       ],
     },
@@ -572,6 +619,29 @@ export const sidebarItem = (role: string) => {
             </Link>
           ),
           key: `/${role}/report/annual-report`,
+        },
+      ],
+    },
+    {
+      label: "Admin",
+      key: "Admin",
+      icon: <UserOutlined />,
+      children: [
+        {
+          label: (
+            <Link className="text-sm " href={`/${role}/admin/create`}>
+              Create Admin{" "}
+            </Link>
+          ),
+          key: `${role}/admin/create`,
+        },
+        {
+          label: (
+            <Link className="text-sm " href={`/${role}/admin/all_admin`}>
+              Admin List
+            </Link>
+          ),
+          key: `${role}/admin/all_admin`,
         },
       ],
     },

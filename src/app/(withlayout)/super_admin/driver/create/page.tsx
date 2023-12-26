@@ -8,9 +8,9 @@ export const metadata: Metadata = {
 }
 const DriveCreate = () => {
   return (
-    <>
+    <div className='rounded-xl bg-white p-5 shadow-xl'>
       <CreateDriver/>
-    </>
+    </div>
   );
 };
 

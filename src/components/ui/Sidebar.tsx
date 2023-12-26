@@ -12,13 +12,13 @@ const Sidebar = () => {
   // const { role } = getUserInfo() as any;
 
   return (
-    <section className="absolute md:relative left-0 top-0 z-50">
+    <section className="">
       <Sider
         collapsible
         collapsed={collapsed}
         breakpoint="lg"
         onCollapse={(value) => setCollapsed(value)}
-        width={230}
+        width={250}
         style={{
           overflow: "auto",
           height: "100vh",

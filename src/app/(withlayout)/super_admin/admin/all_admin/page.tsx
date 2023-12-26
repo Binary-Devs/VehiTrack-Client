@@ -190,7 +190,7 @@ const AllAdminList = () => {
   //     return <LoadingForDataFetch />;
   //   }
   return (
-    <div>
+    <div className="rounded-xl bg-white p-5 shadow-xl">
       <ActionBar title="Admin List">
         <Input
           size="large"

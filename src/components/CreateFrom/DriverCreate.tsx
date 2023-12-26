@@ -60,6 +60,7 @@ const CreateDriver = () => {
                   size="large"
                   label="Fast name"
                   required={true}
+                  placeholder="Please enter fast name"
                 />
               </Col>
               <Col
@@ -77,6 +78,7 @@ const CreateDriver = () => {
                   size="large"
                   label="Last Name"
                   required={true}
+                  placeholder="Please enter last name"
                 />
               </Col>
               <Col
@@ -94,6 +96,7 @@ const CreateDriver = () => {
                   size="large"
                   label="Phone Number"
                   required={true}
+                  placeholder="Please enter a phone number"
                 />
               </Col>
               <Col
@@ -111,6 +114,7 @@ const CreateDriver = () => {
                   size="large"
                   label="Password"
                   // required={true}
+                  placeholder="Please enter  password"
                 />
               </Col>
 
@@ -159,6 +163,7 @@ const CreateDriver = () => {
                   size="large"
                   name="gender"
                   options={genderOption}
+
                   label="Gender"
                   placeholder="Select"
                   required={true}
@@ -180,6 +185,7 @@ const CreateDriver = () => {
                   size="large"
                   label="Email address"
                   // required={true}
+              placeholder="Please enter a valid email address"
                 />
               </Col>
               <Col
@@ -228,7 +234,7 @@ const CreateDriver = () => {
                   marginBottom: "10px",
                 }}
               >
-                 <FormInput
+                <FormInput
                   type="text"
                   name="license"
                   size="large"
@@ -239,19 +245,19 @@ const CreateDriver = () => {
                 {/* //! price type 8 */}
               </Col>
 
-              <Col span={12} style={{ margin: "10px 0" }}>
+              <Col xs={24} lg={12} style={{ margin: "10px 0" }}>
                 <FormTextArea name="address" label="Address" rows={4} />
               </Col>
-              <Col span={12} style={{ margin: "10px 0" }}>
+              <Col xs={24} lg={12} style={{ margin: "10px 0" }}>
                 <FormTextArea name="description" label="Description" rows={4} />
               </Col>
             </Row>
           </div>
           <div className="flex justify-center items-center">
-              <Button htmlType="submit" type="primary">
-                Create
-              </Button>
-            </div>
+            <Button htmlType="submit" type="primary">
+              Create
+            </Button>
+          </div>
         </Form>
       </div>
     </div>
