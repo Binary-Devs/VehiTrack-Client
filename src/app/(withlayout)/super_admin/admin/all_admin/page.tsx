@@ -1,32 +1,24 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 
-import { Button, Input, message } from "antd";
-import Link from "next/link";
+import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
   EditOutlined,
-  FilterOutlined,
-  ReloadOutlined,
   EyeOutlined,
+  ReloadOutlined,
 } from "@ant-design/icons";
+import { Button, Input } from "antd";
+import Link from "next/link";
 import { useState } from "react";
-import { useDebounced } from "@/redux/hooks";
 
 import dayjs from "dayjs";
 
-import {
-  Error_model_hook,
-  Success_model,
-  confirm_modal,
-} from "@/utils/modalHook";
-
-import { USER_ROLE } from "@/constants/role";
-import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
-import UMTable from "@/components/ui/Table";
-import Image from "next/image";
-import ModalComponent from "@/components/ui/Modal";
 import CreateAdmin from "@/components/CreateFrom/AdminCreate";
+import ModalComponent from "@/components/ui/Modal";
+import UMTable from "@/components/ui/Table";
+import { USER_ROLE } from "@/constants/role";
+import Image from "next/image";
 
 const AllAdminList = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
