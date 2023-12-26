@@ -229,7 +229,7 @@ const CreateRefueling = () => {
       <h1>Create Pump Station</h1>
       <Form submitHandler={onSubmit}>
         <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
-          <Col span={8}>
+          <Col xs={24} md={12} lg={8}>
             <div style={{ margin: "10px 0px" }}>
               <FormSelectField
                 size="large"
@@ -240,7 +240,7 @@ const CreateRefueling = () => {
               />
             </div>
           </Col>
-          <Col span={8}>
+          <Col xs={24} md={12} lg={8}>
             <div style={{ margin: "10px 0px" }}>
               <FormSelectField
                 size="large"
@@ -251,7 +251,7 @@ const CreateRefueling = () => {
               />
             </div>
           </Col>
-          <Col span={8}>
+          <Col xs={24} md={12} lg={8}>
             <div style={{ margin: "10px 0px" }}>
               <FormSelectField
                 size="large"
@@ -262,7 +262,7 @@ const CreateRefueling = () => {
               />
             </div>
           </Col>
-          <Col span={8}>
+          <Col xs={24} md={12} lg={8}>
             <div>
               <FormSelectField
                 size="large"
@@ -289,16 +289,16 @@ const CreateRefueling = () => {
               disablePrevious={false}
             />
           </Col>
-          <Col span={8}>
+          <Col xs={24} md={12} lg={8}>
             <FormInput name="odometer" label="Odometer" />
           </Col>
-          <Col span={8}>
+          <Col xs={24} md={12} lg={8}>
             <FormInput name="quantity" label="Quantity" />
           </Col>
-          <Col span={8}>
+          <Col xs={24} md={12} lg={8}>
             <FormInput name="amount" label="Amount" />
           </Col>
-          <Col span={8}>
+          <Col xs={24} md={12} lg={8}>
             <FormInput name="remarks" label="Remarks" />
           </Col>
         </Row>

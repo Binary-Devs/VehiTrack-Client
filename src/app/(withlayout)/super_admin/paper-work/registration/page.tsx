@@ -105,7 +105,7 @@ const RegistrationPage = () => {
               disablePrevious={false}
             />
           </Col>
-          <Col span={8}>
+          <Col xs={24} md={12} lg={8}>
             <div style={{ margin: "10px 0px" }}>
               <FormSelectField
                 size="large"
@@ -116,7 +116,7 @@ const RegistrationPage = () => {
               />
             </div>
           </Col>
-          <Col span={8}>
+          <Col xs={24} md={12} lg={8}>
             <div style={{ margin: "10px 0px" }}>
               <FormSelectField
                 size="large"
@@ -127,19 +127,19 @@ const RegistrationPage = () => {
               />
             </div>
           </Col>
-          <Col span={8}>
+          <Col xs={24} md={12} lg={8}>
             <FormInput name="odometer" label="Odometer" />
           </Col>
-          <Col span={8}>
+          <Col xs={24} md={12} lg={8}>
             <FormInput name="fee" label="Fee" />
           </Col>
-          <Col span={8}>
+          <Col xs={24} md={12} lg={8}>
             <FormInput name="otherAmount" label="Other Amount" />
           </Col>
-          <Col span={8}>
+          <Col xs={24} md={12} lg={8}>
             <FormInput name="totalAmount" label="Total Amount" />
           </Col>
-          <Col span={8}>
+          <Col xs={24} md={12} lg={8}>
             <FormInput name="remarks" label="Remarks" />
           </Col>
         </Row>
