@@ -25,6 +25,8 @@ import { USER_ROLE } from "@/constants/role";
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import UMTable from "@/components/ui/Table";
 import Image from "next/image";
+import ModalComponent from "@/components/ui/Modal";
+import CreateDriver from "../page";
 
 const AllDriverList = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
@@ -92,6 +94,7 @@ const AllDriverList = () => {
   const columns = [
     {
       title: "",
+      width: 100,
       render: function (data: any) {
         const fullName = `${data?.profileImage} `;
         return <Image src={fullName} width={70} height={70} alt=""/>;
@@ -99,6 +102,8 @@ const AllDriverList = () => {
     },
     {
       title: "Name",
+    
+      ellipsis: true,
       render: function (data: any) {
         const fullName = `${data?.name} `;
         return <>{fullName}</>;
@@ -107,6 +112,8 @@ const AllDriverList = () => {
     {
       title: "Email",
       dataIndex: "email",
+    
+      
     },
 
     {
@@ -120,6 +127,7 @@ const AllDriverList = () => {
     {
       title: "Contact no.",
       dataIndex: "phoneNumber",
+    
     },
     {
       title: "Action",
@@ -196,7 +204,7 @@ const AllDriverList = () => {
   //     return <LoadingForDataFetch />;
   //   }
   return (
-    <div>
+    <div className="rounded-xl bg-white p-5 shadow-xl">
       <ActionBar title="Driver List">
         <Input
           size="large"
@@ -207,9 +215,9 @@ const AllDriverList = () => {
           }}
         />
         <div>
-          <Link href={`/${SUPER_ADMIN}/general_user/create`}>
-            <Button type="primary">Create Admin</Button>
-          </Link>
+          <ModalComponent buttonText="Create Driver">
+            <CreateDriver/>
+          </ModalComponent>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}

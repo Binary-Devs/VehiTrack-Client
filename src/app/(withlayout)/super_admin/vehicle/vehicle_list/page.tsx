@@ -25,6 +25,8 @@ import { USER_ROLE } from "@/constants/role";
 import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import UMTable from "@/components/ui/Table";
 import Image from "next/image";
+import ModalComponent from "@/components/ui/Modal";
+import CreateVehicle from "@/components/CreateFrom/VehicleCreate";
 
 const AllVehicleList = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
@@ -228,7 +230,7 @@ const AllVehicleList = () => {
   //     return <LoadingForDataFetch />;
   //   }
   return (
-    <div>
+    <div className="rounded-xl bg-white p-5 shadow-xl">
       <ActionBar title="Vehicle List">
         <Input
           size="large"
@@ -239,9 +241,9 @@ const AllVehicleList = () => {
           }}
         />
         <div>
-          <Link href={`/${SUPER_ADMIN}/general_user/create`}>
-            <Button type="primary">Create Vehicle</Button>
-          </Link>
+        <ModalComponent buttonText="Create Vehicle">
+            <CreateVehicle/>
+          </ModalComponent>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}

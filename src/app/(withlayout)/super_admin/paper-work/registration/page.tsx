@@ -215,6 +215,7 @@ const RegistrationPage = () => {
     setSearchTerm("");
   };
   return (
+<<<<<<< HEAD
     <div>
       <ActionBar title="Registration List">
         <Input
@@ -257,6 +258,76 @@ const RegistrationPage = () => {
         onTableChange={onTableChange}
         showPagination={true}
       />
+=======
+    <div
+      style={{
+        boxShadow:
+          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+        borderRadius: "1rem",
+        backgroundColor: "white",
+        padding: "1rem",
+      }}
+    >
+      <h1>Create Registration</h1>
+      <Form submitHandler={onSubmit}>
+        <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
+          <Col
+            className="gutter-row"
+            xs={24}
+            md={12}
+            lg={8}
+            style={{ margin: "10px 0px" }}
+          >
+            <FormDatePicker
+              name="date"
+              label="Date"
+              size="large"
+              disablePrevious={false}
+            />
+          </Col>
+          <Col span={8}>
+            <div style={{ margin: "10px 0px" }}>
+              <FormSelectField
+                size="large"
+                name="vehicleId "
+                options={vehicleOptions as any}
+                label="Vehicle"
+                placeholder="Select"
+              />
+            </div>
+          </Col>
+          <Col span={8}>
+            <div style={{ margin: "10px 0px" }}>
+              <FormSelectField
+                size="large"
+                name="paperType"
+                options={paperTypeRegistration as any}
+                label="Paper Type"
+                placeholder="Select"
+              />
+            </div>
+          </Col>
+          <Col span={8}>
+            <FormInput name="odometer" label="Odometer" />
+          </Col>
+          <Col span={8}>
+            <FormInput name="fee" label="Fee" />
+          </Col>
+          <Col span={8}>
+            <FormInput name="otherAmount" label="Other Amount" />
+          </Col>
+          <Col span={8}>
+            <FormInput name="totalAmount" label="Total Amount" />
+          </Col>
+          <Col span={8}>
+            <FormInput name="remarks" label="Remarks" />
+          </Col>
+        </Row>
+        <Button style={{ margin: "10px 0px" }} type="primary" htmlType="submit">
+          registration
+        </Button>
+      </Form>
+>>>>>>> 7f9148d3623f0e5676611d72fb32daeaee1f299d
     </div>
   );
 };

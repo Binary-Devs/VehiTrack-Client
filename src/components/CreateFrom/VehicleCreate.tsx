@@ -97,6 +97,7 @@ const CreateVehicle = () => {
                   size="large"
                   label="Band name"
                   required={true}
+                  placeholder="Please enter band name"
                 />
               </Col>
               <Col
@@ -113,6 +114,7 @@ const CreateVehicle = () => {
                   name="regNo"
                   size="large"
                   label="Registration Number"
+                  placeholder="Please enter a valid registration number"
                   required={true}
                 />
               </Col>
@@ -131,6 +133,7 @@ const CreateVehicle = () => {
                   size="large"
                   label="Value"
                   required={true}
+                  placeholder="Please enter vehicle value"
                 />
               </Col>
 
@@ -226,7 +229,7 @@ const CreateVehicle = () => {
               Basic Information
             </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-              <Col span={24} style={{ margin: "10px 0" }}>
+              <Col xs={24} style={{ margin: "10px 0" }}>
                 <FormTextArea
                   name="description"
                   label="Description"
