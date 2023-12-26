@@ -1,7 +1,6 @@
 import {
   BankOutlined,
   CarOutlined,
-  CreditCardOutlined,
   DashboardFilled,
   MoneyCollectOutlined,
   PaperClipOutlined,
@@ -381,58 +380,6 @@ export const sidebarItem = (role: string) => {
             </Link>
           ),
           key: `/${role}/maintenance/list`,
-        },
-      ],
-    },
-    {
-      label: "Income",
-      icon: <CreditCardOutlined />,
-      key: `/${role}/income`,
-      children: [
-        {
-          label: (
-            <Link className="text-sm " href={`/${role}/income/income_sources`}>
-              Income Sources
-            </Link>
-          ),
-          key: `/${role}/income/income_sources`,
-        },
-        {
-          label: (
-            <Link className="text-sm " href={`/${role}/income/income_history`}>
-              Income History
-            </Link>
-          ),
-          key: `/${role}/income/income_history`,
-        },
-      ],
-    },
-    {
-      label: "Expenses",
-      icon: <MoneyCollectOutlined />,
-      key: `/${role}/expenses`,
-      children: [
-        {
-          label: (
-            <Link
-              className="text-sm "
-              href={`/${role}/expenses/expenses_history`}
-            >
-              Expenses History
-            </Link>
-          ),
-          key: `/${role}/expenses/expenses_history`,
-        },
-        {
-          label: (
-            <Link
-              className="text-sm "
-              href={`/${role}/expenses/expenses_sources`}
-            >
-              Expenses Sources
-            </Link>
-          ),
-          key: `/${role}/expenses/expenses_sources`,
         },
       ],
     },
