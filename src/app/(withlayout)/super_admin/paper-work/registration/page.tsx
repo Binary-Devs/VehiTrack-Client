@@ -1,152 +1,262 @@
 "use client";
-import Form from "@/components/Forms/Form";
-import FormDatePicker from "@/components/Forms/FormDatePicker";
-import FormInput from "@/components/Forms/FormInput";
-import FormSelectField from "@/components/Forms/FormSelectField";
-import { paperTypeRegistration } from "@/constants/global";
-import { Button, Col, Row } from "antd";
+import AddRegistration from "@/components/CreateFrom/AddRegistration";
+import ActionBar from "@/components/ui/ActionBar";
+import ModalComponent from "@/components/ui/Modal";
+import UMTable from "@/components/ui/Table";
+import { useDebounced } from "@/redux/hooks";
+import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import { Button, Input } from "antd";
+import dayjs from "dayjs";
+import Link from "next/link";
+import { useState } from "react";
 
 const RegistrationPage = () => {
-  const vehicles = [
+  const query: Record<string, any> = {};
+
+  const [page, setPage] = useState<number>(1);
+  const [size, setSize] = useState<number>(10);
+  const [sortBy, setSortBy] = useState<string>("");
+  const [sortOrder, setSortOrder] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
+  query["limit"] = size;
+  query["page"] = page;
+  query["sortBy"] = sortBy;
+  query["sortOrder"] = sortOrder;
+  // query["searchTerm"] = searchTerm;
+
+  const debouncedTerm = useDebounced({
+    searchQuery: searchTerm,
+    delay: 600,
+  });
+
+  if (!!debouncedTerm) {
+    query["searchTerm"] = debouncedTerm;
+  }
+
+  const paperworkRecords = [
     {
       id: 1,
-      vehicleId: "VEH1001",
-      regNo: "ABC123",
-      brandId: 1,
-      modelId: 1,
-      vehicleValue: 25000.0,
-      driverId: 1,
-      helperId: 2,
-      isActive: true,
-      createdAt: "2023-01-01",
-      updatedAt: "2023-01-01",
+      date: "2023-09-01",
+      vehicleId: 1,
+      certificateNo: "REG12345",
+      effectiveDate: "2023-09-01",
+      expiryDate: "2024-09-01",
+      daysToRemind: 30,
+      odometer: 52000,
+      paperType: "Registration",
+      fee: 150.0,
+      otherAmount: 20.0,
+      totalAmount: 170.0,
+      remarks: "Renewal of vehicle registration",
+      createdAt: "2023-09-01",
+      updatedAt: "2023-09-01",
     },
     {
       id: 2,
-      vehicleId: "VEH1002",
-      regNo: "XYZ456",
-      brandId: 2,
-      modelId: 2,
-      vehicleValue: 30000.0,
-      driverId: 2,
-      helperId: 3,
-      isActive: true,
-      createdAt: "2023-01-02",
-      updatedAt: "2023-01-02",
+      date: "2023-09-10",
+      vehicleId: 2,
+      certificateNo: "TAX56789",
+      effectiveDate: "2023-09-10",
+      expiryDate: "2024-09-10",
+      daysToRemind: 15,
+      odometer: 62000,
+      paperType: "Tax/Token",
+      fee: 80.0,
+      otherAmount: 10.0,
+      totalAmount: 90.0,
+      remarks: "Payment of annual road tax",
+      createdAt: "2023-09-10",
+      updatedAt: "2023-09-10",
     },
     {
       id: 3,
-      vehicleId: "VEH1003",
-      regNo: "LMN789",
-      brandId: 3,
-      modelId: 3,
-      vehicleValue: 20000.0,
-      driverId: 3,
-      helperId: 4,
-      isActive: true,
-      createdAt: "2023-01-03",
-      updatedAt: "2023-01-03",
+      date: "2023-09-15",
+      vehicleId: 3,
+      certificateNo: "RPX45678",
+      effectiveDate: "2023-09-15",
+      expiryDate: "2024-09-15",
+      daysToRemind: 30,
+      odometer: 77000,
+      paperType: "Route Permit",
+      fee: 200.0,
+      otherAmount: 30.0,
+      totalAmount: 230.0,
+      remarks: "Renewal of route permit",
+      createdAt: "2023-09-15",
+      updatedAt: "2023-09-15",
     },
     {
       id: 4,
-      vehicleId: "VEH1004",
-      regNo: "PQR321",
-      brandId: 1,
-      modelId: 2,
-      vehicleValue: 28000.0,
-      driverId: 4,
-      helperId: 5,
-      isActive: false,
-      createdAt: "2023-01-04",
-      updatedAt: "2023-01-04",
+      date: "2023-09-20",
+      vehicleId: 4,
+      certificateNo: "FIT90123",
+      effectiveDate: "2023-09-20",
+      expiryDate: "2024-09-20",
+      daysToRemind: 15,
+      odometer: 57000,
+      paperType: "Fitness",
+      fee: 120.0,
+      otherAmount: 15.0,
+      totalAmount: 135.0,
+      remarks: "Fitness certification renewal",
+      createdAt: "2023-09-20",
+      updatedAt: "2023-09-20",
     },
     {
       id: 5,
-      vehicleId: "VEH1005",
-      regNo: "JKL987",
-      brandId: 2,
-      modelId: 1,
-      vehicleValue: 32000.0,
-      driverId: 5,
-      helperId: 1,
-      isActive: true,
-      createdAt: "2023-01-05",
-      updatedAt: "2023-01-05",
+      date: "2023-09-25",
+      vehicleId: 5,
+      certificateNo: "REG67890",
+      effectiveDate: "2023-09-25",
+      expiryDate: "2024-09-25",
+      daysToRemind: 30,
+      odometer: 72000,
+      paperType: "Registration",
+      fee: 180.0,
+      otherAmount: 25.0,
+      totalAmount: 205.0,
+      remarks: "Registration renewal and modification",
+      createdAt: "2023-09-25",
+      updatedAt: "2023-09-25",
     },
   ];
 
-  const vehicleOptions = vehicles?.map((vehicle) => {
-    return {
-      label: vehicle?.regNo,
-      value: vehicle?.id,
-    };
-  });
+  // You can now use this array of `paperworkRecords`
 
-  const onSubmit = async (data: any) => {
-    console.log(data);
+  const meta = 100;
+
+  const columns = [
+    {
+      title: "vehicle",
+      dataIndex: "vehicleId",
+    },
+    {
+      title: "effectiveDate",
+      dataIndex: "effectiveDate",
+    },
+    {
+      title: "expiryDate",
+      dataIndex: "expiryDate",
+    },
+    {
+      title: "daysToRemind",
+      dataIndex: "daysToRemind",
+    },
+    {
+      title: "paperType",
+      dataIndex: "paperType",
+    },
+    {
+      title: "fee",
+      dataIndex: "fee",
+    },
+    {
+      title: "remarks",
+      dataIndex: "remarks",
+    },
+    {
+      title: "CreatedAt",
+      dataIndex: "createdAt",
+      render: function (data: any) {
+        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+      },
+      sorter: true,
+    },
+    {
+      title: "Action",
+      render: function (data: any) {
+        return (
+          <>
+            <Link
+              href={`super_admin/paper-work/paper-work-list/details/${data?.id}`}
+            >
+              <Button onClick={() => console.log(data)} type="primary">
+                <EyeOutlined />
+              </Button>
+            </Link>
+            <Link
+              href={`super_admin/paper-work/paper-work-list/edit/${data?.id}`}
+            >
+              <Button
+                style={{
+                  margin: "0px 5px",
+                }}
+                onClick={() => console.log(data)}
+                type="primary"
+              >
+                <EditOutlined />
+              </Button>
+            </Link>
+            <Button onClick={() => console.log(data?.id)} type="primary" danger>
+              <DeleteOutlined />
+            </Button>
+          </>
+        );
+      },
+    },
+  ];
+
+  const onPaginationChange = (page: number, pageSize: number) => {
+    console.log("Page:", page, "PageSize:", pageSize);
+    setPage(page);
+    setSize(pageSize);
+  };
+  const onTableChange = (pagination: any, filter: any, sorter: any) => {
+    const { order, field } = sorter;
+    // console.log(order, field);
+    setSortBy(field as string);
+    setSortOrder(order === "ascend" ? "asc" : "desc");
   };
 
+  const resetFilters = () => {
+    setSortBy("");
+    setSortOrder("");
+    setSearchTerm("");
+  };
   return (
     <div>
-      <h1>Create Registration</h1>
-      <Form submitHandler={onSubmit}>
-        <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
-          <Col
-            className="gutter-row"
-            xs={24}
-            md={12}
-            lg={8}
-            style={{ margin: "10px 0px" }}
-          >
-            <FormDatePicker
-              name="date"
-              label="Date"
-              size="large"
-              disablePrevious={false}
-            />
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <div style={{ margin: "10px 0px" }}>
-              <FormSelectField
-                size="large"
-                name="vehicleId "
-                options={vehicleOptions as any}
-                label="Vehicle"
-                placeholder="Select"
-              />
-            </div>
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <div style={{ margin: "10px 0px" }}>
-              <FormSelectField
-                size="large"
-                name="paperType"
-                options={paperTypeRegistration as any}
-                label="Paper Type"
-                placeholder="Select"
-              />
-            </div>
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <FormInput name="odometer" label="Odometer" />
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <FormInput name="fee" label="Fee" />
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <FormInput name="otherAmount" label="Other Amount" />
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <FormInput name="totalAmount" label="Total Amount" />
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <FormInput name="remarks" label="Remarks" />
-          </Col>
-        </Row>
-        <Button style={{ margin: "10px 0px" }} type="primary" htmlType="submit">
-          registration
-        </Button>
-      </Form>
+      <ActionBar title="Registration List">
+        <Input
+          type="text"
+          size="large"
+          placeholder="Search..."
+          style={{
+            width: "20%",
+          }}
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+          }}
+        />
+        {/* <div>
+          <Link href="super_admin/paper-work/paper-work-list/create">
+            <Button type="primary">Create</Button>
+          </Link>
+          {(!!sortBy || !!sortOrder || !!searchTerm) && (
+            <Button
+              onClick={resetFilters}
+              type="primary"
+              style={{ margin: "0px 5px" }}
+            >
+              <ReloadOutlined />
+            </Button>
+          )}
+        </div> */}
+        <ModalComponent buttonText="Add Registration">
+          <AddRegistration />
+        </ModalComponent>
+      </ActionBar>
+
+      <UMTable
+        columns={columns}
+        dataSource={paperworkRecords}
+        pageSize={size}
+        totalPages={meta}
+        showSizeChanger={true}
+        onPaginationChange={onPaginationChange}
+        onTableChange={onTableChange}
+        showPagination={true}
+      />
     </div>
   );
 };
