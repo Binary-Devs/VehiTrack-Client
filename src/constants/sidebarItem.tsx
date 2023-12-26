@@ -153,7 +153,7 @@ export const sidebarItem = (role: string) => {
       ],
     },
     {
-      label: "Driver",
+      label: "Driver Management",
       key: "Driver",
       icon: <UserOutlined />,
       children: [
@@ -176,7 +176,7 @@ export const sidebarItem = (role: string) => {
       ],
     },
     {
-      label: "Helper",
+      label: "Helper Management",
       key: "Helper",
       icon: <UserOutlined />,
       children: [
