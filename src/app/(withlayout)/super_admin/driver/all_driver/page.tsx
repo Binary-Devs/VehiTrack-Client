@@ -101,6 +101,8 @@ const AllDriverList = () => {
     },
     {
       title: "Name",
+      width: 150,
+      ellipsis: true,
       render: function (data: any) {
         const fullName = `${data?.name} `;
         return <>{fullName}</>;
@@ -109,6 +111,8 @@ const AllDriverList = () => {
     {
       title: "Email",
       dataIndex: "email",
+      width: 150,
+      
     },
 
     {
@@ -122,6 +126,7 @@ const AllDriverList = () => {
     {
       title: "Contact no.",
       dataIndex: "phoneNumber",
+      width: 150,
     },
     {
       title: "Action",
