@@ -10,11 +10,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Col, Row } from "antd";
 import React from "react";
 
-const CreateHelper = () => {
+const Createhelper = () => {
   const onSubmit = async (values: any) => {
     console.log(values);
     try {
-      // message.success("Admin created successfully!");
+      // message.success("Driver created successfully!");
     } catch (err: any) {
       console.error(err.message);
     }
@@ -24,7 +24,7 @@ const CreateHelper = () => {
   //   }
   return (
     <div>
-      <h1 className="text-center my-1 font-bold text-2xl">Create Helper</h1>
+      <h1 className="text-center my-1 font-bold text-2xl">Create Driver</h1>
       {/*  */}
       <div>
         <Form submitHandler={onSubmit}>
@@ -42,7 +42,7 @@ const CreateHelper = () => {
                 marginBottom: "10px",
               }}
             >
-              Helper Information
+              Driver Information
             </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
@@ -60,6 +60,7 @@ const CreateHelper = () => {
                   size="large"
                   label="Fast name"
                   required={true}
+                  placeholder="Please enter fast name"
                 />
               </Col>
               <Col
@@ -77,6 +78,7 @@ const CreateHelper = () => {
                   size="large"
                   label="Last Name"
                   required={true}
+                  placeholder="Please enter last name"
                 />
               </Col>
               <Col
@@ -94,6 +96,7 @@ const CreateHelper = () => {
                   size="large"
                   label="Phone Number"
                   required={true}
+                  placeholder="Please enter a phone number"
                 />
               </Col>
               <Col
@@ -111,6 +114,7 @@ const CreateHelper = () => {
                   size="large"
                   label="Password"
                   // required={true}
+                  placeholder="Please enter  password"
                 />
               </Col>
 
@@ -159,6 +163,7 @@ const CreateHelper = () => {
                   size="large"
                   name="gender"
                   options={genderOption}
+
                   label="Gender"
                   placeholder="Select"
                   required={true}
@@ -180,6 +185,7 @@ const CreateHelper = () => {
                   size="large"
                   label="Email address"
                   // required={true}
+              placeholder="Please enter a valid email address"
                 />
               </Col>
               <Col
@@ -228,7 +234,7 @@ const CreateHelper = () => {
                   marginBottom: "10px",
                 }}
               >
-                 <FormInput
+                <FormInput
                   type="text"
                   name="license"
                   size="large"
@@ -239,23 +245,23 @@ const CreateHelper = () => {
                 {/* //! price type 8 */}
               </Col>
 
-              <Col span={12} style={{ margin: "10px 0" }}>
+              <Col xs={24} lg={12} style={{ margin: "10px 0" }}>
                 <FormTextArea name="address" label="Address" rows={4} />
               </Col>
-              <Col span={12} style={{ margin: "10px 0" }}>
+              <Col xs={24} lg={12} style={{ margin: "10px 0" }}>
                 <FormTextArea name="description" label="Description" rows={4} />
               </Col>
             </Row>
           </div>
           <div className="flex justify-center items-center">
-              <Button htmlType="submit" type="primary">
-                Create
-              </Button>
-            </div>
+            <Button htmlType="submit" type="primary">
+              Create
+            </Button>
+          </div>
         </Form>
       </div>
     </div>
   );
 };
 
-export default CreateHelper;
+export default Createhelper;
