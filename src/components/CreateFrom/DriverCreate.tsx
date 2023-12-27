@@ -37,10 +37,7 @@ const CreateDriver = () => {
             }}
           >
             <p
-              style={{
-                fontSize: "18px",
-                marginBottom: "10px",
-              }}
+              className="text-base lg:text-lg font-normal"
             >
               Driver Information
             </p>

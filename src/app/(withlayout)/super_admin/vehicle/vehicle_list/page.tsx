@@ -103,6 +103,8 @@ const AllVehicleList = () => {
   const columns = [
     {
       title: "",
+      // fixed: "left",
+      width: 80,
       render: function (data: any) {
         const fullName = `${data?.image} `;
         return (
@@ -237,7 +239,8 @@ const AllVehicleList = () => {
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            width: "20%",
+            minWidth:"150px",
+            maxWidth:"300px",
           }}
         />
         <div>
