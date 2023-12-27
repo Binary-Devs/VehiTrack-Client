@@ -86,6 +86,7 @@ const AllAdminList = () => {
   const columns = [
     {
       title: "",
+      
       render: function (data: any) {
         const fullName = `${data?.profileImage} `;
         return <Image src={fullName} width={70} height={70} alt="" />;
