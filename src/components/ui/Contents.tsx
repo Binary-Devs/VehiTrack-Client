@@ -11,10 +11,11 @@ const Contents = ({ children }: { children: React.ReactNode }) => {
       style={{
         minHeight: "100vh",
         color: "black",
+        backgroundColor: ""
       }}
     >
       <Header />
-      <div className="p-2">{children}</div>
+      <div className="p-5">{children}</div>
     </Content>
   );
 };
