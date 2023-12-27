@@ -73,12 +73,7 @@ const CreateVehicle = () => {
               marginBottom: "10px",
             }}
           >
-            <p
-              style={{
-                fontSize: "18px",
-                marginBottom: "10px",
-              }}
-            >
+            <p className="text-base lg:text-lg font-normal">
               Vehicle Information
             </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>

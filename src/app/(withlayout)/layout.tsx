@@ -1,5 +1,6 @@
 "use client";
-import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
+import Loader from "@/components/Utlis/Loader";
+// import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
 import Contents from "@/components/ui/Contents";
 import SideBar from "@/components/ui/Sidebar";
 import { isLoggedIn } from "@/services/auth.service";
@@ -20,13 +21,17 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   }, [router, isLoading]);
 
   if (!isLoading) {
-    return <LoadingForDataFetch />;
+    return (
+      <>
+        {/* <LoadingForDataFetch /> */}
+        <Loader className="h-[50vh] flex items-end justify-center" size="large" />
+      </>
+    );
   }
 
   return (
     <Layout hasSider>
       <SideBar />
-
       <Contents>{children}</Contents>
     </Layout>
   );

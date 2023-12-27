@@ -130,12 +130,12 @@ export const sidebarItem = (role: string) => {
     {
       label: "Vehicle Management",
       icon: <CarOutlined />,
-      key: `vehicle`,
+      key: `Vehicle`,
       children: [
         {
           label: (
             <Link className="text-sm " href={`/${role}/vehicle/create`}>
-              Entry New Vehicle
+              Add New Vehicle
             </Link>
           ),
           key: `/${role}/vehicle/create`,
@@ -143,7 +143,7 @@ export const sidebarItem = (role: string) => {
         {
           label: (
             <Link className="text-sm " href={`/${role}/vehicle/vehicle_list`}>
-              Vehicle list
+              Vehicle List
             </Link>
           ),
           key: `/${role}/vehicle/vehicle_list`,
@@ -197,25 +197,33 @@ export const sidebarItem = (role: string) => {
       ],
     },
     {
-      label: "Manage Trip",
+      label: "Trip Management",
       icon: <TaobaoOutlined />,
-      key: `/${role}/manage-Trip`,
+      key: "Trip",
       children: [
         {
           label: (
-            <Link className="text-sm " href={`/${role}/academic/Trip`}>
-              Trip List
+            <Link className="text-sm " href={`/${role}/trip/party_list`}>
+              Party List
             </Link>
           ),
-          key: `/${role}/academicdd/semesterdd`,
+          key: `/${role}/trip/party_list`,
         },
         {
           label: (
-            <Link className="text-sm " href={`/${role}/academic/Trip`}>
-              Pending Trip
+            <Link className="text-sm " href={`/${role}/trip/trip_expense_head`}>
+              Trip Expense Head
             </Link>
           ),
-          key: `/${role}/academddic/Trip`,
+          key: `/${role}/trip/trip_expense_head`,
+        },
+        {
+          label: (
+            <Link className="text-sm " href={`/${role}/trip/trip_list`}>
+              Trip List
+            </Link>
+          ),
+          key: `/${role}/trip/trip_list`,
         },
       ],
     },

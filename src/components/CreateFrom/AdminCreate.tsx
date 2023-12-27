@@ -23,8 +23,10 @@ const CreateAdmin = () => {
   //     return message.loading("Loading...")
   //   }
   return (
-    <div className="">
-      <h1 className="text-center my-1 font-bold text-2xl">Create Driver</h1>
+    <div className="rounded-xl bg-white p-3">
+      <h1 className="text-center my-1 font-bold text-lg lg:text-2xl">
+        Create Admin
+      </h1>
       {/*  */}
       <div>
         <Form submitHandler={onSubmit}>
@@ -36,12 +38,7 @@ const CreateAdmin = () => {
               marginBottom: "10px",
             }}
           >
-            <p
-              style={{
-                fontSize: "18px",
-                marginBottom: "10px",
-              }}
-            >
+            <p className="text-base lg:text-lg font-normal">
               Driver Information
             </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
