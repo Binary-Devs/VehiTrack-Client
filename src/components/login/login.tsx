@@ -50,7 +50,7 @@ const LoginPage = () => {
                       name="userName"
                       type="text"
                       size="large"
-                      label="User Name"
+                      label="User Id"
                       required
                     />
                   </div>
