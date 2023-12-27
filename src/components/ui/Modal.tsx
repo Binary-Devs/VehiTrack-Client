@@ -2,6 +2,7 @@
 import React, { ReactElement, useState } from "react";
 import { Button, Modal } from "antd";
 import ModalComponentWrapper from "./ModalComponentWrapper";
+import { PlusOutlined } from "@ant-design/icons";
 
 const ModalComponent = ({
   children,
@@ -35,9 +36,20 @@ const ModalComponent = ({
 
   return (
     <>
-      <Button type="primary" onClick={showModal}>
-        {buttonText || "Open Modal"}
+      <div>
+      
+        <div className="lg:hidden px-2 py-1 rounded-lg border ml-1  flex justify-center items-center">
+        <Button onClick={showModal} type="primary" >
+
+          <PlusOutlined />
       </Button>
+        </div>
+        <div className="hidden lg:block">
+          <Button type="primary" onClick={showModal}>
+            {buttonText || "Open Modal"}
+          </Button>
+        </div>
+      </div>
       <Modal
         // title="Title"
         open={open}
