@@ -5,7 +5,6 @@ import {
   MoneyCollectOutlined,
   PaperClipOutlined,
   ProfileOutlined,
-  ScheduleOutlined,
   StrikethroughOutlined,
   TaobaoOutlined,
   ThunderboltOutlined,
@@ -51,7 +50,7 @@ export const sidebarItem = (role: string) => {
       key: "dashboard",
       icon: <DashboardFilled />,
     },
-   
+
     // {
     //   label: "Manage Users",
     //   key: "manage-user",
@@ -376,17 +375,6 @@ export const sidebarItem = (role: string) => {
             </Link>
           ),
           key: `/${role}/paper-work/route-permit`,
-        },
-        {
-          label: (
-            <Link
-              className="text-sm "
-              href={`/${role}/paper-work/paper-work-list`}
-            >
-              Paper Work List
-            </Link>
-          ),
-          key: `/${role}/paper-work/paper-work-list`,
         },
       ],
     },

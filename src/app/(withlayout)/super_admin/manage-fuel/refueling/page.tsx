@@ -1,13 +1,11 @@
 "use client";
+import AddRefueling from "@/components/CreateFrom/AddRefueling";
 import ActionBar from "@/components/ui/ActionBar";
+import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
+import { useGetAllFuelQuery } from "@/redux/api/fuel/fuelApi";
 import { useDebounced } from "@/redux/hooks";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  EyeOutlined,
-  ReloadOutlined,
-} from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
 import Link from "next/link";
@@ -22,11 +20,11 @@ const RefuelingPage = () => {
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  query["limit"] = size;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
-  // query["searchTerm"] = searchTerm;
+  // query["limit"] = size;
+  // query["page"] = page;
+  // query["sortBy"] = sortBy;
+  // query["sortOrder"] = sortOrder;
+  query["searchTerm"] = searchTerm;
 
   const debouncedTerm = useDebounced({
     searchQuery: searchTerm,
@@ -37,97 +35,34 @@ const RefuelingPage = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const fuels = [
-    {
-      id: 1,
-      date: "2023-01-01",
-      vehicleId: 1,
-      driverId: 1,
-      fuelPumpId: 1,
-      fuelTypeId: 1,
-      odometer: 50000,
-      quantity: 30,
-      amount: 50.0,
-      remarks: "Regular refueling",
-      createdAt: "2023-01-01",
-      updatedAt: "2023-01-01",
-    },
-    {
-      id: 2,
-      date: "2023-01-05",
-      vehicleId: 2,
-      driverId: 2,
-      fuelPumpId: 3,
-      fuelTypeId: 2,
-      odometer: 60000,
-      quantity: 25,
-      amount: 45.0,
-      remarks: "Long highway drive",
-      createdAt: "2023-01-05",
-      updatedAt: "2023-01-05",
-    },
-    {
-      id: 3,
-      date: "2023-01-10",
-      vehicleId: 3,
-      driverId: 3,
-      fuelPumpId: 2,
-      fuelTypeId: 3,
-      odometer: 75000,
-      quantity: 15,
-      amount: 30.0,
-      remarks: "Charged electric vehicle",
-      createdAt: "2023-01-10",
-      updatedAt: "2023-01-10",
-    },
-    {
-      id: 4,
-      date: "2023-01-15",
-      vehicleId: 4,
-      driverId: 4,
-      fuelPumpId: 4,
-      fuelTypeId: 4,
-      odometer: 55000,
-      quantity: 20,
-      amount: 40.0,
-      remarks: "Hybrid mode on",
-      createdAt: "2023-01-15",
-      updatedAt: "2023-01-15",
-    },
-    {
-      id: 5,
-      date: "2023-01-20",
-      vehicleId: 5,
-      driverId: 5,
-      fuelPumpId: 5,
-      fuelTypeId: 5,
-      odometer: 70000,
-      quantity: 18,
-      amount: 35.0,
-      remarks: "CNG refueling",
-      createdAt: "2023-01-20",
-      updatedAt: "2023-01-20",
-    },
-  ];
+  const { data } = useGetAllFuelQuery({ ...query });
 
-  const meta = 100;
+  const fuels = data?.fuels;
+  console.log(fuels);
+  const meta = data?.meta;
 
   const columns = [
     {
-      title: "vehicleId",
-      dataIndex: "vehicleId",
+      title: "vehicle",
+      dataIndex: "vehicle",
+      render: (vehicle: any) => <span>{vehicle && vehicle.regNo}</span>,
     },
     {
-      title: "driverId",
-      dataIndex: "driverId",
+      title: "driver",
+      dataIndex: "driver",
+      render: (driver: any) => <span>{driver && driver.fullName}</span>,
     },
     {
-      title: "fuelPumpId",
-      dataIndex: "fuelPumpId",
+      title: "fuel Station",
+      dataIndex: "fuelStation",
+      render: (fuelStation: any) => (
+        <span>{fuelStation && fuelStation.label}</span>
+      ),
     },
     {
-      title: "fuelTypeId",
-      dataIndex: "fuelTypeId",
+      title: "fuelType",
+      dataIndex: "fuelType",
+      render: (fuelType: any) => <span>{fuelType && fuelType.label}</span>,
     },
     {
       title: "odometer",
@@ -216,27 +151,16 @@ const RefuelingPage = () => {
             setSearchTerm(e.target.value);
           }}
         />
-        <div>
-          <Link href="/super_admin/manage-fuel/refueling/create">
-            <Button type="primary">Create</Button>
-          </Link>
-          {(!!sortBy || !!sortOrder || !!searchTerm) && (
-            <Button
-              onClick={resetFilters}
-              type="primary"
-              style={{ margin: "0px 5px" }}
-            >
-              <ReloadOutlined />
-            </Button>
-          )}
-        </div>
+        <ModalComponent buttonText="Add Refueling">
+          <AddRefueling />
+        </ModalComponent>
       </ActionBar>
 
       <UMTable
         columns={columns}
         dataSource={fuels}
         pageSize={size}
-        totalPages={meta}
+        totalPages={meta?.total}
         showSizeChanger={true}
         onPaginationChange={onPaginationChange}
         onTableChange={onTableChange}
