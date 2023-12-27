@@ -37,6 +37,9 @@ const UMTable = ({
 
   return (
     <Table
+      scroll={{
+        x: 1200,
+      }}
       loading={loading}
       columns={columns}
       dataSource={dataSource}

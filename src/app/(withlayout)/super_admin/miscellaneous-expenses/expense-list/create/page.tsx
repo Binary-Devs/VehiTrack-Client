@@ -310,7 +310,7 @@ const CreateExpense = () => {
       <h1>Create Expense</h1>
       <Form submitHandler={onSubmit}>
         <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
-          <Col span={8}>
+          <Col xs={24} md={12} lg={8}>
             <div style={{ margin: "10px 0px" }}>
               <FormSelectField
                 size="large"
@@ -321,7 +321,7 @@ const CreateExpense = () => {
               />
             </div>
           </Col>
-          <Col span={8}>
+          <Col xs={24} md={12} lg={8}>
             <div style={{ margin: "10px 0px" }}>
               <FormSelectField
                 size="large"
@@ -332,7 +332,7 @@ const CreateExpense = () => {
               />
             </div>
           </Col>
-          <Col span={8}>
+          <Col xs={24} md={12} lg={8}>
             <div style={{ margin: "10px 0px" }}>
               <FormSelectField
                 size="large"
@@ -343,7 +343,7 @@ const CreateExpense = () => {
               />
             </div>
           </Col>
-          <Col span={8}>
+          <Col xs={24} md={12} lg={8}>
             <div>
               <FormSelectField
                 size="large"
@@ -370,13 +370,13 @@ const CreateExpense = () => {
               disablePrevious={false}
             />
           </Col>
-          <Col span={8}>
+          <Col xs={24} md={12} lg={8}>
             <FormInput name="amount" label="Amount" />
           </Col>
-          <Col span={8}>
+          <Col xs={24} md={12} lg={8}>
             <FormInput name="remarks" label="Remarks" />
           </Col>
-          <Col span={8}>
+          <Col xs={24} md={12} lg={8}>
             <FormInput name="isMisc" label="isMisc" />
           </Col>
         </Row>

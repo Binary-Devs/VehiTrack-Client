@@ -1,12 +1,10 @@
 import {
   BankOutlined,
   CarOutlined,
-  CreditCardOutlined,
   DashboardFilled,
   MoneyCollectOutlined,
   PaperClipOutlined,
   ProfileOutlined,
-  ScheduleOutlined,
   StrikethroughOutlined,
   TaobaoOutlined,
   ThunderboltOutlined,
@@ -52,7 +50,7 @@ export const sidebarItem = (role: string) => {
       key: "dashboard",
       icon: <DashboardFilled />,
     },
-   
+
     // {
     //   label: "Manage Users",
     //   key: "manage-user",
@@ -153,7 +151,7 @@ export const sidebarItem = (role: string) => {
       ],
     },
     {
-      label: "Driver",
+      label: "Driver Management",
       key: "Driver",
       icon: <UserOutlined />,
       children: [
@@ -176,7 +174,7 @@ export const sidebarItem = (role: string) => {
       ],
     },
     {
-      label: "Helper",
+      label: "Helper Management",
       key: "Helper",
       icon: <UserOutlined />,
       children: [
@@ -378,17 +376,6 @@ export const sidebarItem = (role: string) => {
           ),
           key: `/${role}/paper-work/route-permit`,
         },
-        {
-          label: (
-            <Link
-              className="text-sm "
-              href={`/${role}/paper-work/paper-work-list`}
-            >
-              Paper Work List
-            </Link>
-          ),
-          key: `/${role}/paper-work/paper-work-list`,
-        },
       ],
     },
     {
@@ -417,58 +404,6 @@ export const sidebarItem = (role: string) => {
             </Link>
           ),
           key: `/${role}/maintenance/list`,
-        },
-      ],
-    },
-    {
-      label: "Income",
-      icon: <CreditCardOutlined />,
-      key: `/${role}/income`,
-      children: [
-        {
-          label: (
-            <Link className="text-sm " href={`/${role}/income/income_sources`}>
-              Income Sources
-            </Link>
-          ),
-          key: `/${role}/income/income_sources`,
-        },
-        {
-          label: (
-            <Link className="text-sm " href={`/${role}/income/income_history`}>
-              Income History
-            </Link>
-          ),
-          key: `/${role}/income/income_history`,
-        },
-      ],
-    },
-    {
-      label: "Expenses",
-      icon: <MoneyCollectOutlined />,
-      key: `/${role}/expenses`,
-      children: [
-        {
-          label: (
-            <Link
-              className="text-sm "
-              href={`/${role}/expenses/expenses_history`}
-            >
-              Expenses History
-            </Link>
-          ),
-          key: `/${role}/expenses/expenses_history`,
-        },
-        {
-          label: (
-            <Link
-              className="text-sm "
-              href={`/${role}/expenses/expenses_sources`}
-            >
-              Expenses Sources
-            </Link>
-          ),
-          key: `/${role}/expenses/expenses_sources`,
         },
       ],
     },
@@ -514,80 +449,80 @@ export const sidebarItem = (role: string) => {
         },
       ],
     },
-    {
-      label: "Paper work",
-      icon: <PaperClipOutlined />,
-      key: `/${role}/paper_work`,
-      children: [
-        {
-          label: (
-            <Link className="text-sm " href={`/${role}/paper_work/fitness`}>
-              Fitness
-            </Link>
-          ),
-          key: `/${role}/paper_work/fitness`,
-        },
-        {
-          label: (
-            <Link
-              className="text-sm "
-              href={`/${role}/paper_work/registration`}
-            >
-              Registration
-            </Link>
-          ),
-          key: `/${role}/paper_work/registration`,
-        },
-        {
-          label: (
-            <Link
-              className="text-sm "
-              href={`/${role}/paper_work/route_permit`}
-            >
-              Route permit
-            </Link>
-          ),
-          key: `/${role}/paper_work/route_permit`,
-        },
-        {
-          label: (
-            <Link className="text-sm " href={`/${role}/paper_work/tax_token`}>
-              Tax token
-            </Link>
-          ),
-          key: `/${role}/paper_work/tax_token`,
-        },
-      ],
-    },
-    {
-      label: "Miscellaneous Expenses",
-      icon: <StrikethroughOutlined />,
-      key: `/${role}/miscellaneous_expenses`,
-      children: [
-        {
-          label: (
-            <Link
-              className="text-sm "
-              href={`/${role}/miscellaneous_expenses/expense_heads`}
-            >
-              Expense heads
-            </Link>
-          ),
-          key: `/${role}/miscellaneous_expenses/expense_heads`,
-        },
-        {
-          label: (
-            <Link
-              className="text-sm "
-              href={`/${role}/miscellaneous_expenses/expense_list`}
-            >
-              Expense List
-            </Link>
-          ),
-          key: `/${role}/miscellaneous_expenses/expense_list`,
-        },
-      ],
-    },
+    // {
+    //   label: "Paper work",
+    //   icon: <PaperClipOutlined />,
+    //   key: `/${role}/paper_work`,
+    //   children: [
+    //     {
+    //       label: (
+    //         <Link className="text-sm " href={`/${role}/paper_work/fitness`}>
+    //           Fitness
+    //         </Link>
+    //       ),
+    //       key: `/${role}/paper_work/fitness`,
+    //     },
+    //     {
+    //       label: (
+    //         <Link
+    //           className="text-sm "
+    //           href={`/${role}/paper_work/registration`}
+    //         >
+    //           Registration
+    //         </Link>
+    //       ),
+    //       key: `/${role}/paper_work/registration`,
+    //     },
+    //     {
+    //       label: (
+    //         <Link
+    //           className="text-sm "
+    //           href={`/${role}/paper_work/route_permit`}
+    //         >
+    //           Route permit
+    //         </Link>
+    //       ),
+    //       key: `/${role}/paper_work/route_permit`,
+    //     },
+    //     {
+    //       label: (
+    //         <Link className="text-sm " href={`/${role}/paper_work/tax_token`}>
+    //           Tax token
+    //         </Link>
+    //       ),
+    //       key: `/${role}/paper_work/tax_token`,
+    //     },
+    //   ],
+    // },
+    // {
+    //   label: "Miscellaneous Expenses",
+    //   icon: <StrikethroughOutlined />,
+    //   key: `/${role}/miscellaneous_expenses`,
+    //   children: [
+    //     {
+    //       label: (
+    //         <Link
+    //           className="text-sm "
+    //           href={`/${role}/miscellaneous_expenses/expense_heads`}
+    //         >
+    //           Expense heads
+    //         </Link>
+    //       ),
+    //       key: `/${role}/miscellaneous_expenses/expense_heads`,
+    //     },
+    //     {
+    //       label: (
+    //         <Link
+    //           className="text-sm "
+    //           href={`/${role}/miscellaneous_expenses/expense_list`}
+    //         >
+    //           Expense List
+    //         </Link>
+    //       ),
+    //       key: `/${role}/miscellaneous_expenses/expense_list`,
+    //     },
+    //   ],
+    // },
     {
       label: "Report",
       icon: <TbReportAnalytics />,
@@ -636,15 +571,11 @@ export const sidebarItem = (role: string) => {
     },
   ];
 
-  const adminSidebarItems: MenuProps["items"] = [
-    ...commonAdminSidebarItems,
- 
-  ];
+  const adminSidebarItems: MenuProps["items"] = [...commonAdminSidebarItems];
 
   const superAdminSidebarItems: MenuProps["items"] = [
     ...commonAdminSidebarItems,
     ...defaultSidebarItems,
-
   ];
 
   if (role === USER_ROLE.SUPER_ADMIN) return superAdminSidebarItems;

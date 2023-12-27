@@ -1,13 +1,11 @@
 "use client";
+import AddFuelTypes from "@/components/CreateFrom/AddFuelTypes";
 import ActionBar from "@/components/ui/ActionBar";
+import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
+import { useGetAllFuelTypeQuery } from "@/redux/api/fuelType/fuelTypeApi";
 import { useDebounced } from "@/redux/hooks";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  EyeOutlined,
-  ReloadOutlined,
-} from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
 import Link from "next/link";
@@ -22,11 +20,11 @@ const FuelTypesPage = () => {
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  query["limit"] = size;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
-  // query["searchTerm"] = searchTerm;
+  // query["limit"] = size;
+  // query["page"] = page;
+  // query["sortBy"] = sortBy;
+  // query["sortOrder"] = sortOrder;
+  query["searchTerm"] = searchTerm;
 
   const debouncedTerm = useDebounced({
     searchQuery: searchTerm,
@@ -37,39 +35,13 @@ const FuelTypesPage = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const fuelTypes = [
-    {
-      id: 1,
-      label: "Petrol",
-      createdAt: "2023-01-01",
-      updatedAt: "2023-01-01",
-    },
-    {
-      id: 2,
-      label: "Diesel",
-      createdAt: "2023-01-02",
-      updatedAt: "2023-01-02",
-    },
-    {
-      id: 3,
-      label: "Electric",
-      createdAt: "2023-01-03",
-      updatedAt: "2023-01-03",
-    },
-    {
-      id: 4,
-      label: "Hybrid",
-      createdAt: "2023-01-04",
-      updatedAt: "2023-01-04",
-    },
-    {
-      id: 5,
-      label: "CNG (Compressed Natural Gas)",
-      createdAt: "2023-01-05",
-      updatedAt: "2023-01-05",
-    },
-  ];
-  const meta = 100;
+  const { data, isLoading } = useGetAllFuelTypeQuery({
+    ...query,
+  });
+  console.log("data: " + data);
+  const fuelTypes = data?.fuelTypes;
+
+  const meta = data?.meta;
 
   const columns = [
     {
@@ -147,7 +119,7 @@ const FuelTypesPage = () => {
             setSearchTerm(e.target.value);
           }}
         />
-        <div>
+        {/* <div>
           <Link href="/super_admin/manage-fuel/fuel-types/create">
             <Button type="primary">Create</Button>
           </Link>
@@ -160,14 +132,17 @@ const FuelTypesPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-        </div>
+        </div> */}
+        <ModalComponent buttonText="Add Fuel Types">
+          <AddFuelTypes />
+        </ModalComponent>
       </ActionBar>
 
       <UMTable
         columns={columns}
         dataSource={fuelTypes}
         pageSize={size}
-        totalPages={meta}
+        totalPages={meta?.total}
         showSizeChanger={true}
         onPaginationChange={onPaginationChange}
         onTableChange={onTableChange}

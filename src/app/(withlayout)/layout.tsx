@@ -20,14 +20,13 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   }, [router, isLoading]);
 
   if (!isLoading) {
-    return (
-      <LoadingForDataFetch/>
-    );
+    return <LoadingForDataFetch />;
   }
-  
+
   return (
     <Layout hasSider>
       <SideBar />
+
       <Contents>{children}</Contents>
     </Layout>
   );

@@ -84,24 +84,38 @@ export const maintenanceType = [
 export const paperTypeFitness = [
   {
     label: "Fitness",
-    value: "fitness",
+    value: "Fitness",
   },
 ];
 export const paperTypeRegistration = [
   {
     label: "Registration",
-    value: "registration",
+    value: "Registration",
   },
 ];
 export const paperTypeTaxToken = [
   {
     label: "Tax/Token",
-    value: "tax-token",
+    value: "Tax",
   },
 ];
 export const paperTypeRoutePermit = [
   {
     label: "Route Permit",
-    value: "route -permit",
+    value: "Route",
+  },
+];
+export const accidentPaymentStatus = [
+  {
+    label: "Paid",
+    value: "Paid",
+  },
+  {
+    label: "Received",
+    value: "Received",
+  },
+  {
+    label: "Nothing",
+    value: "Nothing",
   },
 ];
