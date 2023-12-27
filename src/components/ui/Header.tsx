@@ -2,7 +2,6 @@ import { authKey } from "@/constants/storageKey";
 import { getUserInfo, removeUserInfo } from "@/services/auth.service";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Dropdown, Layout, MenuProps, Row, Space } from "antd";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 const { Header: AntHeader } = Layout;
 
@@ -33,7 +32,10 @@ const Header = () => {
         //   borderBottomRightRadius: "10px",
         //  borderBottomLeftRadius: "10px",
 
-        marginLeft: "5px",
+        // marginLeft: "5px",
+        position: "sticky",
+        top: "0px",
+        zIndex: 40,
       }}
     >
       <Row
