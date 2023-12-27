@@ -1,17 +1,27 @@
 "use client";
+<<<<<<< HEAD
 import { useUserLoginMutation } from "@/redux/api/authApi";
 import { Success_model } from "@/utils/modalHook";
 import { useRouter } from "next/navigation";
 import Loader from "../Utlis/Loader";
+=======
+import { useLoginMutation } from "@/redux/api/auth/authApi";
+import { storeUserInfo } from "@/services/auth.service";
+import { Button, message } from "antd";
+import { useRouter } from "next/navigation";
+import { SubmitHandler } from "react-hook-form";
+import Form from "../Forms/Form";
+import FormInput from "../Forms/FormInput";
+>>>>>>> origin
 type FormValues = {
-  email: string;
+  userName: string;
   password: string;
 };
 
 const LoginPage = () => {
-  const [userLogin, { isLoading }] = useUserLoginMutation();
-
+  const [login] = useLoginMutation();
   const router = useRouter();
+<<<<<<< HEAD
   const handleFormSubmit = async (e: any) => {
     e.preventDefault();
     const userId = e.target.userid.value;
@@ -51,10 +61,23 @@ const LoginPage = () => {
     //   )
     // );
     // router.push("/dashboard");
+=======
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    try {
+      const res = await login({ ...data }).unwrap();
+      if (res.accessToken) {
+        router.push("/profile");
+        message.success("User logged in successfully");
+      } else {
+        message.error("not valid user");
+      }
+      storeUserInfo({ accessToken: res?.accessToken });
+    } catch (error: any) {
+      message.error(error.message);
+    }
+>>>>>>> origin
   };
-  // if (isLoading) {
-  //   return <LoadingForDataFetch />;
-  // }
+
   return (
     <div className="relative ">
       <img
@@ -70,18 +93,12 @@ const LoginPage = () => {
                 <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
                   Login Dashboard
                 </h3>
-                <form onSubmit={handleFormSubmit}>
-                  <div className="mb-1 sm:mb-2">
-                    <label
-                      htmlFor="firstName"
-                      className="inline-block mb-1 font-medium"
-                    >
-                      User Id
-                    </label>
-                    <input
-                      placeholder="Please enter a valid email address"
-                      required
+                <Form submitHandler={onSubmit}>
+                  <div>
+                    <FormInput
+                      name="userName"
                       type="text"
+<<<<<<< HEAD
                       className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-blue-200 rounded shadow-sm appearance-none focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
                       id="userid"
                       name="userid"
@@ -118,6 +135,30 @@ const LoginPage = () => {
                     </a>
                   </div>
                 </form>
+=======
+                      size="large"
+                      label="User Name"
+                      required
+                    />
+                  </div>
+                  <div
+                    style={{
+                      margin: "15px 0",
+                    }}
+                  >
+                    <FormInput
+                      name="password"
+                      type="password"
+                      size="large"
+                      label="User Password"
+                      required
+                    />
+                  </div>
+                  <Button type="primary" htmlType="submit">
+                    Login
+                  </Button>
+                </Form>
+>>>>>>> origin
               </div>
             </div>
           </div>

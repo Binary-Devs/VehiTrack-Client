@@ -5,7 +5,6 @@ import {
   MoneyCollectOutlined,
   PaperClipOutlined,
   ProfileOutlined,
-  ScheduleOutlined,
   StrikethroughOutlined,
   TaobaoOutlined,
   ThunderboltOutlined,
@@ -259,17 +258,6 @@ export const sidebarItem = (role: string) => {
           label: (
             <Link
               className="text-sm "
-              href={`/${role}/manage-financial/account-status`}
-            >
-              Account Status
-            </Link>
-          ),
-          key: `/${role}/manage-financial/account-status`,
-        },
-        {
-          label: (
-            <Link
-              className="text-sm "
               href={`/${role}/manage-financial/balance-sheet`}
             >
               Balance Sheet
@@ -395,17 +383,6 @@ export const sidebarItem = (role: string) => {
             </Link>
           ),
           key: `/${role}/paper-work/route-permit`,
-        },
-        {
-          label: (
-            <Link
-              className="text-sm "
-              href={`/${role}/paper-work/paper-work-list`}
-            >
-              Paper Work List
-            </Link>
-          ),
-          key: `/${role}/paper-work/paper-work-list`,
         },
       ],
     },

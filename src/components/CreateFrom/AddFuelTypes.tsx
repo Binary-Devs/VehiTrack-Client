@@ -1,11 +1,21 @@
 "use client";
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
-import { Button, Col, Row } from "antd";
+import { useCreateFuelTypeMutation } from "@/redux/api/fuelType/fuelTypeApi";
+import { Button, Col, Row, message } from "antd";
 
-const CreateFuelTypes = () => {
+const AddFuelTypes = () => {
+  const [createFuelType] = useCreateFuelTypeMutation();
   const onSubmit = async (data: any) => {
-    console.log(data);
+    message.loading("creating.............");
+    try {
+      const res = await createFuelType({ ...data }).unwrap();
+      if (res.id) {
+        message.success(" create fuel type in successfully");
+      }
+    } catch (err: any) {
+      message.error(err.message);
+    }
   };
 
   return (
@@ -25,4 +35,4 @@ const CreateFuelTypes = () => {
   );
 };
 
-export default CreateFuelTypes;
+export default AddFuelTypes;

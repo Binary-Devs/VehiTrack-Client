@@ -1,13 +1,11 @@
 "use client";
+import AddAccidentHistory from "@/components/CreateFrom/AddAccidentHistory";
 import ActionBar from "@/components/ui/ActionBar";
+import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
+import { useGetAllAccidentHistoriesQuery } from "@/redux/api/accidentHistory/accidentHistoryApi";
 import { useDebounced } from "@/redux/hooks";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  EyeOutlined,
-  ReloadOutlined,
-} from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
 import Link from "next/link";
@@ -22,11 +20,11 @@ const AccidentHistoryPage = () => {
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  query["limit"] = size;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
-  // query["searchTerm"] = searchTerm;
+  // query["limit"] = size;
+  // query["page"] = page;
+  // query["sortBy"] = sortBy;
+  // query["sortOrder"] = sortOrder;
+  query["searchTerm"] = searchTerm;
 
   const debouncedTerm = useDebounced({
     searchQuery: searchTerm,
@@ -37,96 +35,28 @@ const AccidentHistoryPage = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const accidentHistories = [
-    {
-      id: 1,
-      date: "2023-02-01",
-      vehicleId: 1,
-      driverId: 1,
-      details: "Minor collision with another vehicle",
-      location: "Intersection of Oak Street and Elm Avenue",
-      odometer: 50500,
-      paymentStatus: "Given",
-      amount: 1000.0,
-      createdAt: "2023-02-01",
-      updatedAt: "2023-02-01",
-    },
-    {
-      id: 2,
-      date: "2023-03-10",
-      vehicleId: 2,
-      driverId: 2,
-      details: "Hit by a falling tree branch during a storm",
-      location: "123 Main Street, Cityville",
-      odometer: 60500,
-      paymentStatus: "Nothing",
-      amount: 0.0,
-      createdAt: "2023-03-10",
-      updatedAt: "2023-03-10",
-    },
-    {
-      id: 3,
-      date: "2023-04-15",
-      vehicleId: 3,
-      driverId: 3,
-      details: "Rear-end collision at a traffic signal",
-      location: "456 Elm Avenue, Townsville",
-      odometer: 75500,
-      paymentStatus: "Taken",
-      amount: 2500.0,
-      createdAt: "2023-04-15",
-      updatedAt: "2023-04-15",
-    },
-    {
-      id: 4,
-      date: "2023-05-20",
-      vehicleId: 4,
-      driverId: 4,
-      details: "Side collision while changing lanes",
-      location: "789 Oak Lane, Villagetown",
-      odometer: 55500,
-      paymentStatus: "Given",
-      amount: 1500.0,
-      createdAt: "2023-05-20",
-      updatedAt: "2023-05-20",
-    },
-    {
-      id: 5,
-      date: "2023-06-25",
-      vehicleId: 5,
-      driverId: 5,
-      details: "Parking lot fender bender",
-      location: "101 Pine Street, Hamletville",
-      odometer: 70500,
-      paymentStatus: "Taken",
-      amount: 2000.0,
-      createdAt: "2023-06-25",
-      updatedAt: "2023-06-25",
-    },
-  ];
-
-  const meta = 100;
+  const { data } = useGetAllAccidentHistoriesQuery({ ...query });
+  const accidentHistories = data?.accidentHistories;
+  const meta = data?.meta;
 
   const columns = [
     {
       title: "Vehicle",
-      dataIndex: "vehicleId",
+      dataIndex: "vehicle",
+      render: (vehicle: any) => <span>{vehicle && vehicle.regNo}</span>,
     },
     {
       title: "Driver",
-      dataIndex: "driverId",
-    },
-    {
-      title: "Details",
-      dataIndex: "details",
+      dataIndex: "driver",
+      render: (driver: any) => <span>{driver && driver.fullName}</span>,
     },
     {
       title: "Location",
       dataIndex: "location",
     },
     {
-      title: "Odometer",
-      dataIndex: "odometer",
+      title: "Odo Meter",
+      dataIndex: "odoMeter",
     },
     {
       title: "Payment Status",
@@ -135,6 +65,10 @@ const AccidentHistoryPage = () => {
     {
       title: "Amount",
       dataIndex: "amount",
+    },
+    {
+      title: "Details",
+      dataIndex: "details",
     },
     {
       title: "CreatedAt",
@@ -209,27 +143,16 @@ const AccidentHistoryPage = () => {
             setSearchTerm(e.target.value);
           }}
         />
-        <div>
-          <Link href="/super_admin/maintenance/accident-history/create">
-            <Button type="primary">Create</Button>
-          </Link>
-          {(!!sortBy || !!sortOrder || !!searchTerm) && (
-            <Button
-              onClick={resetFilters}
-              type="primary"
-              style={{ margin: "0px 5px" }}
-            >
-              <ReloadOutlined />
-            </Button>
-          )}
-        </div>
+        <ModalComponent buttonText="add accident">
+          <AddAccidentHistory />
+        </ModalComponent>
       </ActionBar>
 
       <UMTable
         columns={columns}
         dataSource={accidentHistories}
         pageSize={size}
-        totalPages={meta}
+        totalPages={meta?.total}
         showSizeChanger={true}
         onPaginationChange={onPaginationChange}
         onTableChange={onTableChange}

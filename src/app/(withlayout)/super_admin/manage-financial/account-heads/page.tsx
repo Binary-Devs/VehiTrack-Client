@@ -1,13 +1,11 @@
 "use client";
+import AddAccountHeads from "@/components/CreateFrom/AddAccountHeads";
 import ActionBar from "@/components/ui/ActionBar";
+import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
+import { useGetAllAccountHeadQuery } from "@/redux/api/accountHead/accountHeadApi";
 import { useDebounced } from "@/redux/hooks";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  EyeOutlined,
-  ReloadOutlined,
-} from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
 import Link from "next/link";
@@ -22,11 +20,11 @@ const AccountHeadsPage = () => {
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  query["limit"] = size;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
-  // query["searchTerm"] = searchTerm;
+  // query["limit"] = size;
+  // query["page"] = page;
+  // query["sortBy"] = sortBy;
+  // query["sortOrder"] = sortOrder;
+  query["searchTerm"] = searchTerm;
 
   const debouncedTerm = useDebounced({
     searchQuery: searchTerm,
@@ -37,83 +35,10 @@ const AccountHeadsPage = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const accountHeads = [
-    {
-      id: 1,
-      accountTypeId: 1,
-      label: "Primary Savings",
-      createdAt: "2023-01-01",
-      updatedAt: "2023-01-01",
-    },
-    {
-      id: 2,
-      accountTypeId: 2,
-      label: "Main Checking",
-      createdAt: "2023-01-02",
-      updatedAt: "2023-01-02",
-    },
-    {
-      id: 3,
-      accountTypeId: 3,
-      label: "Visa Credit Card",
-      createdAt: "2023-01-03",
-      updatedAt: "2023-01-03",
-    },
-    {
-      id: 4,
-      accountTypeId: 4,
-      label: "Investment Portfolio",
-      createdAt: "2023-01-04",
-      updatedAt: "2023-01-04",
-    },
-    {
-      id: 5,
-      accountTypeId: 5,
-      label: "Business Operating Account",
-      createdAt: "2023-01-05",
-      updatedAt: "2023-01-05",
-    },
-    {
-      id: 6,
-      accountTypeId: 6,
-      label: "Personal Loan - John",
-      createdAt: "2023-01-06",
-      updatedAt: "2023-01-06",
-    },
-    {
-      id: 7,
-      accountTypeId: 7,
-      label: "Mortgage - Home",
-      createdAt: "2023-01-07",
-      updatedAt: "2023-01-07",
-    },
-    {
-      id: 8,
-      accountTypeId: 8,
-      label: "Auto Loan - Car",
-      createdAt: "2023-01-08",
-      updatedAt: "2023-01-08",
-    },
-    {
-      id: 9,
-      accountTypeId: 9,
-      label: "Fixed Deposit - Term 1",
-      createdAt: "2023-01-09",
-      updatedAt: "2023-01-09",
-    },
-    {
-      id: 10,
-      accountTypeId: 10,
-      label: "Emergency Fund - Savings",
-      createdAt: "2023-01-10",
-      updatedAt: "2023-01-10",
-    },
-  ];
-
-  // You can now use this array of `accountHeads`
-
-  const meta = 100;
-
+  const { data } = useGetAllAccountHeadQuery({ ...query });
+  const accountHeads = data?.accountHeads;
+  const meta = data?.meta;
+  console.log(accountHeads);
   const deleteHandler = async (id: string) => {
     console.log(id);
   };
@@ -209,27 +134,16 @@ const AccountHeadsPage = () => {
             setSearchTerm(e.target.value);
           }}
         />
-        <div>
-          <Link href="/super_admin/manage-financial/account-heads/create">
-            <Button type="primary">Create</Button>
-          </Link>
-          {(!!sortBy || !!sortOrder || !!searchTerm) && (
-            <Button
-              onClick={resetFilters}
-              type="primary"
-              style={{ margin: "0px 5px" }}
-            >
-              <ReloadOutlined />
-            </Button>
-          )}
-        </div>
+        <ModalComponent buttonText="Add Account Head">
+          <AddAccountHeads />
+        </ModalComponent>
       </ActionBar>
 
       <UMTable
         columns={columns}
         dataSource={accountHeads}
         pageSize={size}
-        totalPages={meta}
+        totalPages={meta?.total}
         showSizeChanger={true}
         onPaginationChange={onPaginationChange}
         onTableChange={onTableChange}
