@@ -61,7 +61,7 @@ const FormDynamicFields = () => {
           fields.map((item, index) => {
             return (
               <div
-                key={index}
+                key={item.id}
                 style={{
                   marginBottom: "5px",
                   padding: "20px",

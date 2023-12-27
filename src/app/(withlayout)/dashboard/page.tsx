@@ -243,6 +243,114 @@ const DashboardPage = () => {
       create_date: new Date().toLocaleDateString(),
     },
   ];
+  const data2 = [
+    {
+      businessDetails: {
+        businessName: "Truck REWK421",
+        businessLogo:
+          "https://plus.unsplash.com/premium_photo-1664695368767-c42483a0bda1?q=80&w=150&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      },
+      address: {
+        city: "dhaka",
+        country: "bangladesh",
+        state: "dkahak",
+        street: "noaklue",
+      },
+      _id: "1dsdfd",
+      create_date: new Date().toLocaleDateString(),
+    },
+    {
+      businessDetails: {
+        businessName: "Truck KJYD097",
+        businessLogo:
+          "https://images.unsplash.com/photo-1591768793355-74d04bb6608f?q=80&w=150&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      },
+      address: {
+        city: "dhaka",
+        country: "bangladesh",
+        state: "dkahak",
+        street: "noaklue",
+      },
+      _id: "1dsdfsdd",
+      create_date: new Date().toLocaleDateString(),
+    },
+    {
+      businessDetails: {
+        businessName: "Truck KJUY563",
+        businessLogo:
+          "https://images.unsplash.com/photo-1501700493788-fa1a4fc9fe62?q=80&w=150&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      },
+      address: {
+        city: "dhaka",
+        country: "bangladesh",
+        state: "dkahak",
+        street: "noaklue",
+      },
+      _id: "1dsdfsdd",
+      create_date: new Date().toLocaleDateString(),
+    },
+    {
+      businessDetails: {
+        businessName: "BMW DKIU765",
+        businessLogo:
+          "https://images.unsplash.com/photo-1601362840469-51e4d8d58785?q=80&w=150&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      },
+      address: {
+        city: "dhaka",
+        country: "bangladesh",
+        state: "dkahak",
+        street: "noaklue",
+      },
+      _id: "1dsfdsdd",
+      create_date: new Date().toLocaleDateString(),
+    },
+    {
+      businessDetails: {
+        businessName: "BMW HSFRE876",
+        businessLogo:
+          "https://images.unsplash.com/flagged/photo-1553505192-acca7d4509be?q=80&w=150&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      },
+      address: {
+        city: "dhaka",
+        country: "bangladesh",
+        state: "dkahak",
+        street: "noaklue",
+      },
+      _id: "1dddsfdd",
+      create_date: new Date().toLocaleDateString(),
+    },
+    {
+      businessDetails: {
+        businessName: "Bus HYFOI5603",
+        businessLogo:
+          "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=150&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      },
+      address: {
+        city: "dhaka",
+        country: "bangladesh",
+        state: "dkahak",
+        street: "noaklue",
+      },
+      _id: "1dddd",
+      create_date: new Date().toLocaleDateString(),
+    },
+
+    {
+      businessDetails: {
+        businessName: "Bus KHSYG56",
+        businessLogo:
+          "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=150&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      },
+      address: {
+        city: "dhaka",
+        country: "Bangladesh",
+        state: "dkahak",
+        street: "noaklue",
+      },
+      _id: "1",
+      create_date: new Date().toLocaleDateString(),
+    },
+  ];
 
   const data2 = [
     {

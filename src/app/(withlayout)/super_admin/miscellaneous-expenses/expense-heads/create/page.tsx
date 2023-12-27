@@ -91,7 +91,7 @@ const CreateExpenseHeads = () => {
       <h1>Create ExpenseHeads</h1>
       <Form submitHandler={onSubmit}>
         <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
-          <Col span={8} style={{ margin: "10px 0" }}>
+          <Col xs={24} md={12} lg={8} style={{ margin: "10px 0" }}>
             <div style={{ margin: "10px 0px" }}>
               <FormInput name="Label" label="Label" />
             </div>

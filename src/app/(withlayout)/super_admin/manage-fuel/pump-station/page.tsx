@@ -1,13 +1,11 @@
 "use client";
+import AddPumpStation from "@/components/CreateFrom/AddPumpStation";
 import ActionBar from "@/components/ui/ActionBar";
+import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
+import { useGetAllFuelStationQuery } from "@/redux/api/fuelStation/fuelStationApi";
 import { useDebounced } from "@/redux/hooks";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  EyeOutlined,
-  ReloadOutlined,
-} from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
 import Link from "next/link";
@@ -22,11 +20,11 @@ const PumpStationPage = () => {
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  query["limit"] = size;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
-  // query["searchTerm"] = searchTerm;
+  // query["limit"] = size;
+  // query["page"] = page;
+  // query["sortBy"] = sortBy;
+  // query["sortOrder"] = sortOrder;
+  query["searchTerm"] = searchTerm;
 
   const debouncedTerm = useDebounced({
     searchQuery: searchTerm,
@@ -37,45 +35,13 @@ const PumpStationPage = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const fuelPumps = [
-    {
-      id: 1,
-      label: "City Fuel Station",
-      address: "123 Main Street, Cityville",
-      createdAt: "2023-01-01",
-      updatedAt: "2023-01-01",
-    },
-    {
-      id: 2,
-      label: "Highway Fuel Stop",
-      address: "456 Interstate Avenue, Highway Town",
-      createdAt: "2023-01-02",
-      updatedAt: "2023-01-02",
-    },
-    {
-      id: 3,
-      label: "Green Energy Hub",
-      address: "789 Eco Lane, Sustainaville",
-      createdAt: "2023-01-03",
-      updatedAt: "2023-01-03",
-    },
-    {
-      id: 4,
-      label: "Urban Gas & Go",
-      address: "101 Downtown Plaza, Metro City",
-      createdAt: "2023-01-04",
-      updatedAt: "2023-01-04",
-    },
-    {
-      id: 5,
-      label: "Suburban Fuels",
-      address: "222 Suburb Street, Tranquil Town",
-      createdAt: "2023-01-05",
-      updatedAt: "2023-01-05",
-    },
-  ];
+  const { data, isLoading } = useGetAllFuelStationQuery({
+    ...query,
+  });
 
-  const meta = 100;
+  const fuelStations = data?.fuelStations;
+
+  const meta = data?.meta;
 
   const columns = [
     {
@@ -159,7 +125,7 @@ const PumpStationPage = () => {
             setSearchTerm(e.target.value);
           }}
         />
-        <div>
+        {/* <div>
           <Link href="/super_admin/manage-fuel/pump-station/create">
             <Button type="primary">Create</Button>
           </Link>
@@ -172,14 +138,17 @@ const PumpStationPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-        </div>
+        </div> */}
+        <ModalComponent buttonText="Add Pump Station">
+          <AddPumpStation />
+        </ModalComponent>
       </ActionBar>
 
       <UMTable
         columns={columns}
-        dataSource={fuelPumps}
+        dataSource={fuelStations}
         pageSize={size}
-        totalPages={meta}
+        totalPages={meta?.total}
         showSizeChanger={true}
         onPaginationChange={onPaginationChange}
         onTableChange={onTableChange}
