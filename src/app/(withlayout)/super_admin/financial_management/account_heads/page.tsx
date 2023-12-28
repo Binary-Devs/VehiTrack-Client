@@ -1,5 +1,5 @@
 "use client";
-import AddAccountHeads from "@/components/CreateFrom/AddAccountHeads";
+import AddAccountHeads from "@/components/CreateUpdateFrom/AddAccountHeads";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";

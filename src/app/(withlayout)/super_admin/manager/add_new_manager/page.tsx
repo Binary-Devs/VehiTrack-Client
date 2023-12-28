@@ -1,4 +1,4 @@
-import CreateManager from "@/components/CreateFrom/ManagerCreate";
+import CreateManager from "@/components/CreateUpdateFrom/ManagerCreate";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

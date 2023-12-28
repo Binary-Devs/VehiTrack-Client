@@ -1,5 +1,5 @@
 "use client";
-import AddAccidentHistory from "@/components/CreateFrom/AddAccidentHistory";
+import AddAccidentHistory from "@/components/CreateUpdateFrom/AddAccidentHistory";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";

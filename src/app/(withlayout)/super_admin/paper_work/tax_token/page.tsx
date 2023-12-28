@@ -1,5 +1,5 @@
 "use client";
-import AddTaxToken from "@/components/CreateFrom/AddTaxToken";
+import AddTaxToken from "@/components/CreateUpdateFrom/AddTaxToken";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";

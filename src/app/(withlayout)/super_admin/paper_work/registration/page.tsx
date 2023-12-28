@@ -1,5 +1,5 @@
 "use client";
-import AddRegistration from "@/components/CreateFrom/AddRegistration";
+import AddRegistration from "@/components/CreateUpdateFrom/AddRegistration";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";

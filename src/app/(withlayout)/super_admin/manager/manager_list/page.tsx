@@ -14,7 +14,7 @@ import { useState } from "react";
 
 import dayjs from "dayjs";
 
-import CreateManager from "@/components/CreateFrom/ManagerCreate";
+import CreateManager from "@/components/CreateUpdateFrom/ManagerCreate";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
