@@ -19,8 +19,8 @@ import Loader from "@/components/Utlis/Loader";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
+import { useGetAllBrandQuery } from "@/redux/api/brand/brandApi";
 import { useGetAllModelQuery } from "@/redux/api/model/modelApi";
-import Image from "next/image";
 
 const ModelListPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
@@ -50,8 +50,12 @@ const ModelListPage = () => {
 
   const { data, isLoading } = useGetAllModelQuery({ ...query });
 
-  const brands = data?.models;
+  const models = data?.models;
   const meta = data?.meta;
+
+  const { data: brandData, isLoading: brandLoad } = useGetAllBrandQuery({});
+
+  const brands = brandData?.brands;
 
   //@ts-ignore
   const generalUserData = [
@@ -204,13 +208,13 @@ const ModelListPage = () => {
   //       }
   //     });
   //   };
-  if (isLoading) {
-    return <Loader />;
+  if (isLoading || brandLoad) {
+    return <Loader className="h-[50vh] flex items-end justify-center" />;
   }
 
   return (
     <div className="rounded-xl bg-white p-5">
-      <ActionBar title="Brand List">
+      <ActionBar title="Model List">
         <Input
           size="large"
           placeholder="Search"
@@ -222,7 +226,7 @@ const ModelListPage = () => {
         />
         <div>
           <ModalComponent buttonText="Add Model">
-            <AddUpdateModel />
+            <AddUpdateModel brands={brands} />
           </ModalComponent>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
@@ -239,7 +243,7 @@ const ModelListPage = () => {
       <UMTable
         loading={false}
         columns={columns}
-        dataSource={brands}
+        dataSource={models}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}

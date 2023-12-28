@@ -1,24 +1,20 @@
 "use client";
 import Form from "@/components/Forms/Form";
-import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
-import FormTextArea from "@/components/Forms/FormTextArea";
-import UploadImage from "@/components/ui/uploadImage";
-import { genderOption, isActive } from "@/constants/global";
 import { useCreateModelMutation } from "@/redux/api/model/modelApi";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Col, Row, message } from "antd";
-import React from "react";
 
-const AddUpdateModel = () => {
-  const [createModel] = useCreateModelMutation();
+const AddUpdateModel = ({ brands }: { brands: any }) => {
+  const [createModel, { isLoading }] = useCreateModelMutation();
   const onSubmit = async (values: any) => {
     message.loading("Adding....");
     try {
       const res = await createModel({ ...values }).unwrap();
       if (res.id) {
         message.success("Model added successfully!");
+      } else {
+        message.error(res.message);
       }
     } catch (err: any) {
       message.error(err.message);
@@ -28,42 +24,42 @@ const AddUpdateModel = () => {
   //     return message.loading("Loading...")
   //   }
 
-  const driverlist = [
-    {
-      label: "Md korim (D-25141)",
-      value: "dffd",
-    },
-    {
-      label: "Md hasan (D-25414)",
-      value: "ddfsdf",
-    },
-    {
-      label: "Md Mondi (D-74118)",
-      value: "ddsdf",
-    },
-    {
-      label: "Mukbos (D-17411)",
-      value: "dsfd",
-    },
-  ];
-  const helperList = [
-    {
-      label: "Aomie (H-2511)",
-      value: "ddafds",
-    },
-    {
-      label: "Sampod (H-5414)",
-      value: "ddsadf",
-    },
-    {
-      label: "Md timil (H-85118)",
-      value: "ddafd",
-    },
-    {
-      label: "alind (H-1411)",
-      value: "ddasdf",
-    },
-  ];
+  // const driverlist = [
+  //   {
+  //     label: "Md korim (D-25141)",
+  //     value: "dffd",
+  //   },
+  //   {
+  //     label: "Md hasan (D-25414)",
+  //     value: "ddfsdf",
+  //   },
+  //   {
+  //     label: "Md Mondi (D-74118)",
+  //     value: "ddsdf",
+  //   },
+  //   {
+  //     label: "Mukbos (D-17411)",
+  //     value: "dsfd",
+  //   },
+  // ];
+  // const helperList = [
+  //   {
+  //     label: "Aomie (H-2511)",
+  //     value: "ddafds",
+  //   },
+  //   {
+  //     label: "Sampod (H-5414)",
+  //     value: "ddsadf",
+  //   },
+  //   {
+  //     label: "Md timil (H-85118)",
+  //     value: "ddafd",
+  //   },
+  //   {
+  //     label: "alind (H-1411)",
+  //     value: "ddasdf",
+  //   },
+  // ];
 
   return (
     <div>
@@ -92,13 +88,17 @@ const AddUpdateModel = () => {
                   marginBottom: "10px",
                 }}
               >
-                <FormInput
-                  type="text"
-                  name="label"
+                <FormSelectField
                   size="large"
-                  label="Band name"
+                  name="brandId"
+                  options={brands.map((m: any) => ({
+                    label: m.label,
+                    value: m.id,
+                  }))}
+                  // defaultValue={priceTypeOptions[0]}
+                  label="Brand Name"
+                  // placeholder="Select"
                   required={true}
-                  placeholder="Please enter band name"
                 />
               </Col>
               <Col
@@ -110,21 +110,19 @@ const AddUpdateModel = () => {
                   marginBottom: "10px",
                 }}
               >
-                <FormSelectField
+                <FormInput
+                  type="text"
+                  name="label"
                   size="large"
-                  name="brandId"
-                  options={driverlist}
-                  // defaultValue={priceTypeOptions[0]}
-                  label="Brand Id"
-                  // placeholder="Select"
+                  label="Model name"
                   required={true}
+                  placeholder="Please enter model name"
                 />
-                {/* //! price type 8 */}
               </Col>
             </Row>
           </div>
           <div className="flex justify-center items-center">
-            <Button htmlType="submit" type="primary">
+            <Button htmlType="submit" type="primary" disabled={isLoading}>
               Create
             </Button>
           </div>
