@@ -154,17 +154,17 @@ export const sidebarItem = (role: string) => {
           ),
           key: `/${role}/trip_management/party_list`,
         },
-        {
-          label: (
-            <Link
-              className="text-sm "
-              href={`/${role}/trip_management/trip_expense_head`}
-            >
-              Trip Expense Head
-            </Link>
-          ),
-          key: `/${role}/trip_management/trip_expense_head`,
-        },
+        // {
+        //   label: (
+        //     <Link
+        //       className="text-sm "
+        //       href={`/${role}/trip_management/trip_expense_head`}
+        //     >
+        //       Trip Expense Head
+        //     </Link>
+        //   ),
+        //   key: `/${role}/trip_management/trip_expense_head`,
+        // },
         {
           label: (
             <Link
