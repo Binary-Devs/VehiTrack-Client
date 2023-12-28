@@ -15,7 +15,7 @@ import { useState } from "react";
 
 import dayjs from "dayjs";
 
-import CreateDriver from "@/components/CreateFrom/DriverCreate";
+import CreateDriver from "@/components/CreateUpdateFrom/DriverCreate";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";

@@ -22,7 +22,7 @@ export const sidebarItem = (role: string) => {
     {
       key: "profile",
       label: (
-        <Link className="text-sm " href={`/${role}`}>
+        <Link className="text-sm " href={`/profile`}>
           Profile
         </Link>
       ),

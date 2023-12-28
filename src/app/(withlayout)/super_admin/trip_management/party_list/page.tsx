@@ -1,5 +1,5 @@
 "use client";
-import AddPartyList from "@/components/CreateFrom/AddPartyList";
+import AddPartyList from "@/components/CreateUpdateFrom/AddPartyList";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
