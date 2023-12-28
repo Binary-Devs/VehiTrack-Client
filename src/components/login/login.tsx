@@ -18,7 +18,7 @@ const LoginPage = () => {
     try {
       const res = await login({ ...data }).unwrap();
       if (res.accessToken) {
-        router.push("/profile");
+        router.push("/dashboard");
         message.success("User logged in successfully");
       } else {
         message.error("not valid user");
