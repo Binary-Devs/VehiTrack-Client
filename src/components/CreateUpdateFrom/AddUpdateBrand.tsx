@@ -5,13 +5,15 @@ import { useCreateBrandMutation } from "@/redux/api/brand/brandApi";
 import { Button, Col, Row, message } from "antd";
 
 const AddUpdateBrand = () => {
-  const [createBrand] = useCreateBrandMutation();
+  const [createBrand, { isLoading }] = useCreateBrandMutation();
   const onSubmit = async (values: any) => {
     message.loading("Adding....");
     try {
       const res = await createBrand({ ...values }).unwrap();
       if (res.id) {
         message.success("Brand added successfully!");
+      }else{
+        message.error(res.message);
       }
     } catch (err: any) {
       message.error(err.message);
@@ -97,7 +99,7 @@ const AddUpdateBrand = () => {
             </Row>
           </div>
           <div className="flex justify-center items-center">
-            <Button htmlType="submit" type="primary">
+            <Button htmlType="submit" type="primary" disabled={isLoading}>
               Create
             </Button>
           </div>

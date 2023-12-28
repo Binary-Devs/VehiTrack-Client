@@ -206,7 +206,7 @@ const BrandListPage = () => {
   //   };
 
   if (isLoading) {
-    return <Loader />;
+    return <Loader className="h-[50vh] flex items-end justify-center" />;
   }
 
   return (
