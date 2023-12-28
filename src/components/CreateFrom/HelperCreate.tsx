@@ -37,12 +37,9 @@ const Createhelper = () => {
             }}
           >
             <p
-              style={{
-                fontSize: "18px",
-                marginBottom: "10px",
-              }}
+             className="text-base lg:text-lg font-normal"
             >
-              Driver Information
+              Helper Information
             </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col

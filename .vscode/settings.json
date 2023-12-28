@@ -1,5 +1,7 @@
 {
-    "cSpell.words": [
-        "Managment"
-    ]
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.tslint": "explicit",
+    "source.organizeImports": "explicit"
+  }
 }

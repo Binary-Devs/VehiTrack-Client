@@ -1,26 +1,34 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 
-import { useDebounced } from "@/redux/hooks";
+import { Button, Input, message } from "antd";
+import Link from "next/link";
 import {
   DeleteOutlined,
   EditOutlined,
-  EyeOutlined,
+  FilterOutlined,
   ReloadOutlined,
+  EyeOutlined,
 } from "@ant-design/icons";
-import { Button, Input } from "antd";
-import Link from "next/link";
 import { useState } from "react";
+import { useDebounced } from "@/redux/hooks";
 
 import dayjs from "dayjs";
 
-import CreateAdmin from "@/components/CreateFrom/AdminCreate";
-import ModalComponent from "@/components/ui/Modal";
-import UMTable from "@/components/ui/Table";
-import { USER_ROLE } from "@/constants/role";
-import Image from "next/image";
+import {
+  Error_model_hook,
+  Success_model,
+  confirm_modal,
+} from "@/utils/modalHook";
 
-const AllAdminList = () => {
+import { USER_ROLE } from "@/constants/role";
+import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
+import UMTable from "@/components/ui/Table";
+import Image from "next/image";
+import ModalComponent from "@/components/ui/Modal";
+import CreateVehicle from "@/components/CreateFrom/VehicleCreate";
+
+const AllVehicleList = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
   const query: Record<string, any> = {};
 
@@ -50,30 +58,39 @@ const AllAdminList = () => {
   const generalUserData = [
     {
       _id: 1,
-      name: "sampood",
-      email: "sampood@gmail.com",
+      name: "C.N.G",
+      regNo: "DP-01441",
+      bandName: "TATA",
+      vehicleValue: 400000,
+      isActive: true,
       createdAt: "2023-01-01",
       phoneNumber: "014741154151",
-      profileImage:
-        "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      image:
+        "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=150&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
       _id: 2,
-      name: "akahs",
-      email: "kakspood@gmail.com",
+      name: "C.N.G",
+      regNo: "DP-01441",
+      bandName: "TATA",
+      vehicleValue: 400000,
+      isActive: true,
       createdAt: "2023-01-01",
-      phoneNumber: "018044518521",
-      profileImage:
-        "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      phoneNumber: "014741154151",
+      image:
+        "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=150&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
       _id: 3,
-      name: "roihime",
-      email: "roihime@gmail.com",
-      phoneNumber: "018769988521",
+      name: "C.N.G",
+      regNo: "DP-01441",
+      bandName: "TATA",
+      vehicleValue: 400000,
+      isActive: true,
       createdAt: "2023-01-01",
-      profileImage:
-        "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      phoneNumber: "014741154151",
+      image:
+        "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=150&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
   ];
   //@ts-ignore
@@ -86,9 +103,19 @@ const AllAdminList = () => {
   const columns = [
     {
       title: "",
+      // fixed: "left",
+      width: 80,
       render: function (data: any) {
-        const fullName = `${data?.profileImage} `;
-        return <Image src={fullName} width={70} height={70} alt="" />;
+        const fullName = `${data?.image} `;
+        return (
+          <Image
+            src={fullName}
+            width={100}
+            height={100}
+            alt=""
+            style={{ width: "70px", height: "50px" }}
+          />
+        );
       },
     },
     {
@@ -99,10 +126,29 @@ const AllAdminList = () => {
       },
     },
     {
-      title: "Email",
-      dataIndex: "email",
+      title: "Band name",
+      dataIndex: "bandName",
+    },
+    {
+      title: "Reg No",
+      dataIndex: "regNo",
+    },
+    {
+      title: "Value",
+      dataIndex: "vehicleValue",
+    },
+    {
+      title: "Status",
+      render: function (data: any) {
+        const fullName = `${data?.isActive} `;
+        return <>{fullName ? <p className="bg-green-600 text-white rounded-lg text-center">Active</p>:<p className="bg-red-600 text-white rounded-lg text-center">Deactivate</p>}</>;
+      },
     },
 
+    {
+      title: "Contact no.",
+      dataIndex: "phoneNumber",
+    },
     {
       title: "Created at",
       dataIndex: "createdAt",
@@ -112,16 +158,12 @@ const AllAdminList = () => {
       sorter: true,
     },
     {
-      title: "Contact no.",
-      dataIndex: "phoneNumber",
-    },
-    {
       title: "Action",
       dataIndex: "_id",
       render: function (data: any) {
         return (
           <>
-            <Link href={`/${SUPER_ADMIN}/general_user/details/${data}`}>
+            <Link href={`/manage_vehicle`}>
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
@@ -191,18 +233,19 @@ const AllAdminList = () => {
   //   }
   return (
     <div className="rounded-xl bg-white p-5 shadow-xl">
-      <ActionBar title="Admin List">
+      <ActionBar title="Vehicle List">
         <Input
           size="large"
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            width: "20%",
+            minWidth:"150px",
+            maxWidth:"300px",
           }}
         />
         <div>
-          <ModalComponent buttonText="Create Admin">
-            <CreateAdmin />
+        <ModalComponent buttonText="Create Vehicle">
+            <CreateVehicle/>
           </ModalComponent>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
@@ -228,18 +271,16 @@ const AllAdminList = () => {
         showPagination={true}
       />
 
-      {/*
-      <UMModal
+      {/* <UMModal
         title="Remove admin"
         isOpen={open}
         closeModal={() => setOpen(false)}
         handleOk={() => deleteGeneralUserHandler(adminId)}
       >
         <p className="my-5">Do you want to remove this admin?</p>
-      </UMModal> 
-      */}
+      </UMModal> */}
     </div>
   );
 };
 
-export default AllAdminList;
+export default AllVehicleList;
