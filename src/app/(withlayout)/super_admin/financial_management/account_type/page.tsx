@@ -37,7 +37,6 @@ const AccountTypePage = () => {
 
   const { data } = useGetAllAccountTypeQuery({ ...query });
 
-  // const accountTypes = [
   //   {
   //     id: 1,
   //     label: "Savings",
