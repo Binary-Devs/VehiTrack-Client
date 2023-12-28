@@ -8,7 +8,7 @@ import {
   ReloadOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Avatar, Button, Input } from "antd";
+import { Avatar, Button, Input, Tag } from "antd";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -29,7 +29,6 @@ const AllManagerList = () => {
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [open, setOpen] = useState<boolean>(false);
 
   // query["limit"] = size;
   // query["page"] = page;
@@ -47,7 +46,7 @@ const AllManagerList = () => {
 
   const columns = [
     {
-      title: "",
+      title: "Image",
 
       render: function (data: any) {
         return <Avatar size={64} icon={<UserOutlined />} />;
@@ -55,16 +54,22 @@ const AllManagerList = () => {
     },
     {
       title: "Name",
-      render: function (data: any) {
-        const fullName = `${data?.name} `;
-        return <>{fullName}</>;
-      },
+      dataIndex: "fullName",
     },
     {
-      title: "Email",
-      dataIndex: "email",
+      title: "Active",
+      dataIndex: "isActive",
+      render: (isActive: boolean) =>
+        isActive ? (
+          <Tag color="green">Active</Tag>
+        ) : (
+          <Tag color="red">Not Active</Tag>
+        ),
     },
-
+    {
+      title: "Mobile",
+      dataIndex: "mobile",
+    },
     {
       title: "Created at",
       dataIndex: "createdAt",
@@ -74,12 +79,9 @@ const AllManagerList = () => {
       sorter: true,
     },
     {
-      title: "Contact no.",
-      dataIndex: "phoneNumber",
-    },
-    {
       title: "Action",
       dataIndex: "_id",
+      width: "15%",
       render: function (data: any) {
         return (
           <>
@@ -137,31 +139,11 @@ const AllManagerList = () => {
     setSearchTerm("");
   };
 
-  //   const deleteGeneralUserHandler = async (id: string) => {
-  //     console.log(id);
-  //     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
-  //       if (res.isConfirmed) {
-  //         try {
-  //           const res = await deleteGeneralUser(id).unwrap();
-  //           if (res.success == false) {
-  //             // message.success("Admin Successfully Deleted!");
-  //             // setOpen(false);
-  //             Error_model_hook(res?.message);
-  //           } else {
-  //             Success_model("Customer Successfully Deleted");
-  //           }
-  //         } catch (error: any) {
-  //           message.error(error.message);
-  //         }
-  //       }
-  //     });
-  //   };
-  //   if (isLoading) {
-  //     return <LoadingForDataFetch />;
-  //   }
+  console.log(AllAdminData);
 
   return (
     <div className="rounded-xl bg-white p-5 shadow-xl">
+      <br />
       <ActionBar title="Manager List">
         <Input
           size="large"
@@ -186,6 +168,7 @@ const AllManagerList = () => {
           )}
         </div>
       </ActionBar>
+      <br />
 
       <UMTable
         loading={false}
