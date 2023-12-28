@@ -1,11 +1,19 @@
 "use client";
 
-import ColumnChart from "@/components/Charts/ColumnChart";
-import LineChart from "@/components/Charts/LineChart";
+// import ColumnChart from "@/components/Charts/ColumnChart";
+// import LineChart from "@/components/Charts/LineChart";
 import type { RadioChangeEvent } from "antd";
 import { Radio, Typography } from "antd";
+import dynamic from 'next/dynamic';
+import Image from "next/image";
 import { useState } from "react";
 
+const ColumnChart = dynamic(() => import('@/components/Charts/ColumnChart'), {
+  ssr: false,
+});
+const LineChart = dynamic(() => import('@/components/Charts/LineChart'), {
+  ssr: false,
+});
 const DashboardPage = () => {
   const { Title, Text } = Typography;
   const [recentTabData, setRecentTabData] = useState("trip");
@@ -492,13 +500,15 @@ const DashboardPage = () => {
                 </span>
                 <p className="text-3xl font-bold ">
                   {c.title}{" "}
-                  {/* <small
+                  {/* 
+                  <small
                     className={`text-sm font-semibold ${
                       c.bnb === "redtext" ? "text-red-500" : "text-[#52c41a]"
                     }`}
                   >
                     {c.percent}
-                  </small> */}
+                  </small> 
+                  */}
                 </p>
               </div>
               <div>
@@ -570,7 +580,9 @@ const DashboardPage = () => {
                           <tr key={_id} className="hover:bg-slate-50 w-full">
                             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                               <div className="flex items-center gap-x-4 group">
-                                <img
+                                <Image
+                                  width={300}
+                                  height={300}
                                   src={businessDetails?.businessLogo}
                                   alt="Image"
                                   className="h-9 w-9 rounded-full bg-gray-800"
@@ -630,9 +642,11 @@ const DashboardPage = () => {
                           <tr key={_id} className="hover:bg-slate-50 w-full">
                             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                               <div className="flex items-center gap-x-4 group">
-                                <img
+                                <Image
                                   src={businessDetails?.businessLogo}
                                   alt="Image"
+                                  width={300}
+                                  height={300}
                                   className="h-9 w-9 rounded-full bg-gray-800"
                                 />
                                 <div className="truncate font-medium leading-6 text-gray-700 group-hover:text-gray-900 capitalize duration-200">
@@ -788,8 +802,10 @@ const DashboardPage = () => {
                         <tr key={_id} className="hover:bg-slate-50 w-full">
                           <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                             <div className="flex items-center gap-x-4 group">
-                              <img
+                              <Image
                                 src={businessDetails?.businessLogo}
+                                width={300}
+                                height={300}
                                 alt="Image"
                                 className="h-9 w-9 rounded-full bg-gray-800"
                               />
@@ -846,7 +862,9 @@ const DashboardPage = () => {
                         <tr key={_id} className="hover:bg-slate-50 w-full">
                           <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                             <div className="flex items-center gap-x-4 group">
-                              <img
+                              <Image
+                                width={300}
+                                height={300}
                                 src={businessDetails?.businessLogo}
                                 alt="Image"
                                 className="h-9 w-9 rounded-full bg-gray-800"
