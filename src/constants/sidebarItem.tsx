@@ -96,17 +96,17 @@ export const sidebarItem = (role: string) => {
           ),
           key: `${role}/driver_management/driver_list`,
         },
-        {
-          label: (
-            <Link
-              className="text-sm "
-              href={`/${role}/driver_management/driver_status`}
-            >
-              Driver Status
-            </Link>
-          ),
-          key: `${role}/driver_management/driver_status`,
-        },
+        // {
+        //   label: (
+        //     <Link
+        //       className="text-sm "
+        //       href={`/${role}/driver_management/driver_status`}
+        //     >
+        //       Driver Status
+        //     </Link>
+        //   ),
+        //   key: `${role}/driver_management/driver_status`,
+        // },
       ],
     },
     // {
