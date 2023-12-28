@@ -38,7 +38,7 @@ const AddRegistration = () => {
       data.totalAmount = parseInt(data.totalAmount);
       const res = await createPaperWork({ ...data }).unwrap();
       if (res.id) {
-        message.success(" create in successfully");
+        message.success("create in successfully");
       }
     } catch (err: any) {
       message.error(err.message);

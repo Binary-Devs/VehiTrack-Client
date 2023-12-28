@@ -14,13 +14,14 @@ import { useState } from "react";
 
 import dayjs from "dayjs";
 
-import CreateAdmin from "@/components/CreateFrom/AdminCreate";
+import CreateManager from "@/components/CreateFrom/ManagerCreate";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
+import { useGetAllAdminQuery } from "@/redux/api/admin/adminApi";
 import Image from "next/image";
 
-const AllAdminList = () => {
+const AllManagerList = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
   const query: Record<string, any> = {};
 
@@ -30,12 +31,11 @@ const AllAdminList = () => {
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [open, setOpen] = useState<boolean>(false);
-  const [adminId, setAdminId] = useState<string>("");
 
-  query["limit"] = size;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
+  // query["limit"] = size;
+  // query["page"] = page;
+  // query["sortBy"] = sortBy;
+  // query["sortOrder"] = sortOrder;
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -46,47 +46,10 @@ const AllAdminList = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  //@ts-ignore
-  const generalUserData = [
-    {
-      _id: 1,
-      name: "sampood",
-      email: "sampood@gmail.com",
-      createdAt: "2023-01-01",
-      phoneNumber: "014741154151",
-      profileImage:
-        "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      _id: 2,
-      name: "akahs",
-      email: "kakspood@gmail.com",
-      createdAt: "2023-01-01",
-      phoneNumber: "018044518521",
-      profileImage:
-        "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      _id: 3,
-      name: "roihime",
-      email: "roihime@gmail.com",
-      phoneNumber: "018769988521",
-      createdAt: "2023-01-01",
-      profileImage:
-        "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-  ];
-  //@ts-ignore
-  const meta = {
-    page: 1,
-    limit: 10,
-    total: 3,
-  };
-
   const columns = [
     {
       title: "",
-      
+
       render: function (data: any) {
         const fullName = `${data?.profileImage} `;
         return <Image src={fullName} width={70} height={70} alt="" />;
@@ -150,6 +113,14 @@ const AllAdminList = () => {
       },
     },
   ];
+
+  const { data, isLoading } = useGetAllAdminQuery({ ...query });
+  const AllAdminData = data?.admins || [];
+  const meta = data?.meta;
+
+  // const bookings = data?.bookings;
+  // const meta = data?.meta;
+
   const onPaginationChange = (page: number, pageSize: number) => {
     console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
@@ -190,9 +161,10 @@ const AllAdminList = () => {
   //   if (isLoading) {
   //     return <LoadingForDataFetch />;
   //   }
+
   return (
     <div className="rounded-xl bg-white p-5 shadow-xl">
-      <ActionBar title="Admin List">
+      <ActionBar title="Manager List">
         <Input
           size="large"
           placeholder="Search"
@@ -202,8 +174,8 @@ const AllAdminList = () => {
           }}
         />
         <div>
-          <ModalComponent buttonText="Create Admin">
-            <CreateAdmin />
+          <ModalComponent buttonText="Create Manager">
+            <CreateManager />
           </ModalComponent>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
@@ -220,7 +192,7 @@ const AllAdminList = () => {
       <UMTable
         loading={false}
         columns={columns}
-        dataSource={generalUserData}
+        dataSource={AllAdminData}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -228,19 +200,8 @@ const AllAdminList = () => {
         onTableChange={onTableChange}
         showPagination={true}
       />
-
-      {/*
-      <UMModal
-        title="Remove admin"
-        isOpen={open}
-        closeModal={() => setOpen(false)}
-        handleOk={() => deleteGeneralUserHandler(adminId)}
-      >
-        <p className="my-5">Do you want to remove this admin?</p>
-      </UMModal> 
-      */}
     </div>
   );
 };
 
-export default AllAdminList;
+export default AllManagerList;
