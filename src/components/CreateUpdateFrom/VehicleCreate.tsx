@@ -11,6 +11,7 @@ import { Button, Col, Row } from "antd";
 import React from "react";
 
 const CreateVehicle = () => {
+  
   const onSubmit = async (values: any) => {
     console.log(values);
     try {
@@ -59,6 +60,8 @@ const CreateVehicle = () => {
       value: "ddasdf",
     },
   ];
+
+
   return (
     <div>
       <h1 className="text-center my-1 font-bold text-2xl">Create Vehicle</h1>

@@ -1,5 +1,4 @@
-import CreateAdmin from "@/components/CreateFrom/AdminCreate";
-import React from "react";
+import CreateAdmin from "@/components/CreateUpdateFrom/AdminCreate";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

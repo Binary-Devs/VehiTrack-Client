@@ -14,7 +14,7 @@ import { useState } from "react";
 
 import dayjs from "dayjs";
 
-import CreateAdmin from "@/components/CreateFrom/AdminCreate";
+import CreateAdmin from "@/components/CreateUpdateFrom/AdminCreate";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
@@ -86,7 +86,7 @@ const AllAdminList = () => {
   const columns = [
     {
       title: "",
-      
+
       render: function (data: any) {
         const fullName = `${data?.profileImage} `;
         return <Image src={fullName} width={70} height={70} alt="" />;

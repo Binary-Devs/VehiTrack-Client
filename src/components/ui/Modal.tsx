@@ -1,8 +1,7 @@
 "use client";
-import React, { ReactElement, useState } from "react";
-import { Button, Modal } from "antd";
-import ModalComponentWrapper from "./ModalComponentWrapper";
 import { PlusOutlined } from "@ant-design/icons";
+import { Button, Modal } from "antd";
+import React, { useState } from "react";
 
 const ModalComponent = ({
   children,
@@ -36,13 +35,11 @@ const ModalComponent = ({
 
   return (
     <>
-      <div>
-      
+      <div className="w-full">
         <div className="lg:hidden px-2 py-1 rounded-lg border ml-1  flex justify-center items-center">
-        <Button onClick={showModal} type="primary" >
-
-          <PlusOutlined />
-      </Button>
+          <Button onClick={showModal} type="primary">
+            <PlusOutlined />
+          </Button>
         </div>
         <div className="hidden lg:block">
           <Button type="primary" onClick={showModal}>
@@ -63,7 +60,8 @@ const ModalComponent = ({
             <OkBtn /> */}
           </>
         )}
-        width={1000}
+        // width="max-content"
+        width={900}
       >
         {children}
       </Modal>

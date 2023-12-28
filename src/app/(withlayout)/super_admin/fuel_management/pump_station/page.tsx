@@ -1,5 +1,5 @@
 "use client";
-import AddPumpStation from "@/components/CreateFrom/AddPumpStation";
+import AddPumpStation from "@/components/CreateUpdateFrom/AddPumpStation";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";

@@ -1,6 +1,6 @@
 "use client";
 
-import AddEquipment from "@/components/CreateFrom/AddEquipment";
+import AddEquipment from "@/components/CreateUpdateFrom/AddEquipment";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";

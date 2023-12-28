@@ -38,7 +38,9 @@ const UMTable = ({
   return (
     <Table
       scroll={{
-        x: 1200,
+        // x: 1200,
+        x: "max-content",
+        // y: "min-content",
       }}
       loading={loading}
       columns={columns}
