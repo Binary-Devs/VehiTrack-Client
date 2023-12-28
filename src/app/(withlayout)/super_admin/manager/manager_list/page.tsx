@@ -1,14 +1,14 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
-
 import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
   EditOutlined,
   EyeOutlined,
   ReloadOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
-import { Button, Input } from "antd";
+import { Avatar, Button, Input } from "antd";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -19,7 +19,6 @@ import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
 import { useGetAllAdminQuery } from "@/redux/api/admin/adminApi";
-import Image from "next/image";
 
 const AllManagerList = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
@@ -51,8 +50,7 @@ const AllManagerList = () => {
       title: "",
 
       render: function (data: any) {
-        const fullName = `${data?.profileImage} `;
-        return <Image src={fullName} width={70} height={70} alt="" />;
+        return <Avatar size={64} icon={<UserOutlined />} />;
       },
     },
     {
