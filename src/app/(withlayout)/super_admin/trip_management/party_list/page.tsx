@@ -6,7 +6,7 @@ import UMTable from "@/components/ui/Table";
 import { useGetAllPartiesQuery } from "@/redux/api/party/partyApi";
 import { useDebounced } from "@/redux/hooks";
 import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
-import { Button, Input } from "antd";
+import { Button, Input, Tag } from "antd";
 import dayjs from "dayjs";
 import Link from "next/link";
 import { useState } from "react";
@@ -55,12 +55,12 @@ const PartyListPage = () => {
     },
     {
       title: "Active",
-      dataIndex: "isActive ",
+      dataIndex: "isActive",
       render: (isActive: boolean) =>
         isActive ? (
-          <span style={{ color: "green" }}>Active</span>
+          <Tag color="green">Active</Tag>
         ) : (
-          <span style={{ color: "red" }}>Not Active</span>
+          <Tag color="red">Not Active</Tag>
         ),
     },
     {
