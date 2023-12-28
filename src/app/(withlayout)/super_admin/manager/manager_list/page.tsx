@@ -1,26 +1,26 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
-
 import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
   EditOutlined,
   EyeOutlined,
   ReloadOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
-import { Button, Input } from "antd";
+import { Avatar, Button, Input, Tag } from "antd";
 import Link from "next/link";
 import { useState } from "react";
 
 import dayjs from "dayjs";
 
-import CreateAdmin from "@/components/CreateFrom/AdminCreate";
+import CreateManager from "@/components/CreateFrom/ManagerCreate";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
-import Image from "next/image";
+import { useGetAllAdminQuery } from "@/redux/api/admin/adminApi";
 
-const AllAdminList = () => {
+const AllManagerList = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
   const query: Record<string, any> = {};
 
@@ -29,13 +29,11 @@ const AllAdminList = () => {
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [open, setOpen] = useState<boolean>(false);
-  const [adminId, setAdminId] = useState<string>("");
 
-  query["limit"] = size;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
+  // query["limit"] = size;
+  // query["page"] = page;
+  // query["sortBy"] = sortBy;
+  // query["sortOrder"] = sortOrder;
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -46,64 +44,32 @@ const AllAdminList = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  //@ts-ignore
-  const generalUserData = [
-    {
-      _id: 1,
-      name: "sampood",
-      email: "sampood@gmail.com",
-      createdAt: "2023-01-01",
-      phoneNumber: "014741154151",
-      profileImage:
-        "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      _id: 2,
-      name: "akahs",
-      email: "kakspood@gmail.com",
-      createdAt: "2023-01-01",
-      phoneNumber: "018044518521",
-      profileImage:
-        "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      _id: 3,
-      name: "roihime",
-      email: "roihime@gmail.com",
-      phoneNumber: "018769988521",
-      createdAt: "2023-01-01",
-      profileImage:
-        "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-  ];
-  //@ts-ignore
-  const meta = {
-    page: 1,
-    limit: 10,
-    total: 3,
-  };
-
   const columns = [
     {
-      title: "",
-      
+      title: "Image",
+
       render: function (data: any) {
-        const fullName = `${data?.profileImage} `;
-        return <Image src={fullName} width={70} height={70} alt="" />;
+        return <Avatar size={64} icon={<UserOutlined />} />;
       },
     },
     {
       title: "Name",
-      render: function (data: any) {
-        const fullName = `${data?.name} `;
-        return <>{fullName}</>;
-      },
+      dataIndex: "fullName",
     },
     {
-      title: "Email",
-      dataIndex: "email",
+      title: "Active",
+      dataIndex: "isActive",
+      render: (isActive: boolean) =>
+        isActive ? (
+          <Tag color="green">Active</Tag>
+        ) : (
+          <Tag color="red">Not Active</Tag>
+        ),
     },
-
+    {
+      title: "Mobile",
+      dataIndex: "mobile",
+    },
     {
       title: "Created at",
       dataIndex: "createdAt",
@@ -113,12 +79,9 @@ const AllAdminList = () => {
       sorter: true,
     },
     {
-      title: "Contact no.",
-      dataIndex: "phoneNumber",
-    },
-    {
       title: "Action",
       dataIndex: "_id",
+      width: "15%",
       render: function (data: any) {
         return (
           <>
@@ -150,6 +113,14 @@ const AllAdminList = () => {
       },
     },
   ];
+
+  const { data, isLoading } = useGetAllAdminQuery({ ...query });
+  const AllAdminData = data?.admins || [];
+  const meta = data?.meta;
+
+  // const bookings = data?.bookings;
+  // const meta = data?.meta;
+
   const onPaginationChange = (page: number, pageSize: number) => {
     console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
@@ -168,31 +139,12 @@ const AllAdminList = () => {
     setSearchTerm("");
   };
 
-  //   const deleteGeneralUserHandler = async (id: string) => {
-  //     console.log(id);
-  //     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
-  //       if (res.isConfirmed) {
-  //         try {
-  //           const res = await deleteGeneralUser(id).unwrap();
-  //           if (res.success == false) {
-  //             // message.success("Admin Successfully Deleted!");
-  //             // setOpen(false);
-  //             Error_model_hook(res?.message);
-  //           } else {
-  //             Success_model("Customer Successfully Deleted");
-  //           }
-  //         } catch (error: any) {
-  //           message.error(error.message);
-  //         }
-  //       }
-  //     });
-  //   };
-  //   if (isLoading) {
-  //     return <LoadingForDataFetch />;
-  //   }
+  console.log(AllAdminData);
+
   return (
     <div className="rounded-xl bg-white p-5 shadow-xl">
-      <ActionBar title="Admin List">
+      <br />
+      <ActionBar title="Manager List">
         <Input
           size="large"
           placeholder="Search"
@@ -202,8 +154,8 @@ const AllAdminList = () => {
           }}
         />
         <div>
-          <ModalComponent buttonText="Create Admin">
-            <CreateAdmin />
+          <ModalComponent buttonText="Create Manager">
+            <CreateManager />
           </ModalComponent>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
@@ -216,11 +168,12 @@ const AllAdminList = () => {
           )}
         </div>
       </ActionBar>
+      <br />
 
       <UMTable
         loading={false}
         columns={columns}
-        dataSource={generalUserData}
+        dataSource={AllAdminData}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -228,19 +181,8 @@ const AllAdminList = () => {
         onTableChange={onTableChange}
         showPagination={true}
       />
-
-      {/*
-      <UMModal
-        title="Remove admin"
-        isOpen={open}
-        closeModal={() => setOpen(false)}
-        handleOk={() => deleteGeneralUserHandler(adminId)}
-      >
-        <p className="my-5">Do you want to remove this admin?</p>
-      </UMModal> 
-      */}
     </div>
   );
 };
 
-export default AllAdminList;
+export default AllManagerList;

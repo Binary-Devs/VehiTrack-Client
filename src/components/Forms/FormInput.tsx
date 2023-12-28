@@ -2,8 +2,7 @@
 
 import { getErrorMessageByPropertyName } from "@/utils/schema-validator";
 import { Input, InputNumber } from "antd";
-import { spawn } from "child_process";
-import { useFormContext, Controller } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 interface IInput {
   name: string;
   type?: string;
@@ -29,7 +28,7 @@ const FormInput = ({
   label,
   required,
   disabled = false,
-  readOnly=false,
+  readOnly = false,
 }: IInput) => {
   const {
     control,
@@ -59,13 +58,14 @@ const FormInput = ({
               disabled={disabled}
               type={type}
               size={size}
+              required={required}
               readOnly={readOnly}
               placeholder={placeholder}
               {...field}
               value={value ? value : field.value}
             />
           ) : type === "number" ? (
-            <div className="flex flex-col" >
+            <div className="flex flex-col">
               <h1>
                 {required ? (
                   <span
@@ -80,7 +80,7 @@ const FormInput = ({
               </h1>
               <InputNumber
                 type={type}
-                style={{width: "100%", marginRight:"2px"}}
+                style={{ width: "100%", marginRight: "2px" }}
                 readOnly={readOnly}
                 disabled={disabled}
                 min={0}

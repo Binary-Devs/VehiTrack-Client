@@ -457,25 +457,28 @@ export const sidebarItem = (role: string) => {
       key: `/${role}/accident_history`,
     },
     {
-      label: "Admin",
-      key: `/${role}/admin`,
+      label: "Manger Management",
+      key: `/${role}/manager`,
       icon: <UserOutlined />,
       children: [
         {
           label: (
-            <Link className="text-sm " href={`/${role}/admin/add_new_admin`}>
-              Add New Admin
+            <Link
+              className="text-sm "
+              href={`/${role}/manager/add_new_manager`}
+            >
+              Add New Manager
             </Link>
           ),
-          key: `${role}/admin/add_new_admin`,
+          key: `${role}/manager/add_new_manager`,
         },
         {
           label: (
-            <Link className="text-sm " href={`/${role}/admin/admin_list`}>
-              Admin List
+            <Link className="text-sm " href={`/${role}/manager/manager_list`}>
+              Manager List
             </Link>
           ),
-          key: `${role}/admin/admin_list`,
+          key: `${role}/manager/manager_list`,
         },
       ],
     },
