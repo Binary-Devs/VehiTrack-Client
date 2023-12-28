@@ -109,35 +109,35 @@ export const sidebarItem = (role: string) => {
         },
       ],
     },
-    {
-      label: "Helper Management",
-      key: `/${role}/helper_management`,
-      icon: <UserOutlined />,
-      children: [
-        {
-          label: (
-            <Link
-              className="text-sm "
-              href={`/${role}/helper_management/add_new_helper`}
-            >
-              Add New Helper
-            </Link>
-          ),
-          key: `${role}/helper_management/add_new_helper`,
-        },
-        {
-          label: (
-            <Link
-              className="text-sm "
-              href={`/${role}/helper_management/helper_list`}
-            >
-              Helper List
-            </Link>
-          ),
-          key: `${role}/helper_management/helper_list`,
-        },
-      ],
-    },
+    // {
+    //   label: "Helper Management",
+    //   key: `/${role}/helper_management`,
+    //   icon: <UserOutlined />,
+    //   children: [
+    //     {
+    //       label: (
+    //         <Link
+    //           className="text-sm "
+    //           href={`/${role}/helper_management/add_new_helper`}
+    //         >
+    //           Add New Helper
+    //         </Link>
+    //       ),
+    //       key: `${role}/helper_management/add_new_helper`,
+    //     },
+    //     {
+    //       label: (
+    //         <Link
+    //           className="text-sm "
+    //           href={`/${role}/helper_management/helper_list`}
+    //         >
+    //           Helper List
+    //         </Link>
+    //       ),
+    //       key: `${role}/helper_management/helper_list`,
+    //     },
+    //   ],
+    // },
     {
       label: "Trip Management",
       icon: <TaobaoOutlined />,
@@ -205,17 +205,17 @@ export const sidebarItem = (role: string) => {
           ),
           key: `/${role}/financial_management/account_heads`,
         },
-        {
-          label: (
-            <Link
-              className="text-sm "
-              href={`/${role}/financial_management/balance_sheet`}
-            >
-              Balance Sheet
-            </Link>
-          ),
-          key: `/${role}/financial_management/balance_sheet`,
-        },
+        // {
+        //   label: (
+        //     <Link
+        //       className="text-sm "
+        //       href={`/${role}/financial_management/balance_sheet`}
+        //     >
+        //       Balance Sheet
+        //     </Link>
+        //   ),
+        //   key: `/${role}/financial_management/balance_sheet`,
+        // },
       ],
     },
     {
