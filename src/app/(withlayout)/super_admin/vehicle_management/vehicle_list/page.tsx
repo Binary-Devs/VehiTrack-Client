@@ -233,9 +233,9 @@ const AllVehicleList = () => {
   //       }
   //     });
   //   };
-  if (isLoading) {
-    return <Loader className="h-[50vh] flex items-end justify-center" />;
-  }
+  // if (isLoading) {
+  //   return <Loader className="h-[50vh] flex items-end justify-center" />;
+  // }
   return (
     <div className="rounded-xl bg-white p-5 shadow-xl">
       <ActionBar title="Vehicle List">
@@ -265,7 +265,7 @@ const AllVehicleList = () => {
       </ActionBar>
 
       <UMTable
-        loading={false}
+        loading={isLoading}
         columns={columns}
         dataSource={generalUserData}
         pageSize={size}

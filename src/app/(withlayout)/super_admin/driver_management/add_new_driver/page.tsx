@@ -1,4 +1,4 @@
-import CreateDriver from "@/components/CreateUpdateFrom/DriverCreate";
+import CreateDriver from "@/components/CreateUpdateFrom/AddUpdateDriver";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

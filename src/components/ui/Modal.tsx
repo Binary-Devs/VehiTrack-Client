@@ -35,8 +35,8 @@ const ModalComponent = ({
 
   return (
     <>
-      <div className="w-full">
-        <div className="lg:hidden px-2 py-1 rounded-lg border ml-1  flex justify-center items-center">
+      <div>
+        <div className="lg:hidden">
           <Button onClick={showModal} type="primary">
             <PlusOutlined />
           </Button>

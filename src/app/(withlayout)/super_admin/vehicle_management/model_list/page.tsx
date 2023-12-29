@@ -208,9 +208,9 @@ const ModelListPage = () => {
   //       }
   //     });
   //   };
-  if (isLoading || brandLoad) {
-    return <Loader className="h-[50vh] flex items-end justify-center" />;
-  }
+  // if (isLoading || brandLoad) {
+  //   return <Loader className="h-[50vh] flex items-end justify-center" />;
+  // }
 
   return (
     <div className="rounded-xl bg-white p-5">
@@ -241,7 +241,7 @@ const ModelListPage = () => {
       </ActionBar>
 
       <UMTable
-        loading={false}
+        loading={isLoading}
         columns={columns}
         dataSource={models}
         pageSize={size}

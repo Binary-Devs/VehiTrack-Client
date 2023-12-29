@@ -13,7 +13,7 @@ const AddUpdateVehicle = () => {
   const onSubmit = async (values: any) => {
     message.loading("Adding....");
     try {
-      const res = await createVehicle({ ...values }).unwrap();
+      const res = await createVehicle(values).unwrap();
       if (res.id) {
         message.success("Vehicle added successfully!");
       } else {

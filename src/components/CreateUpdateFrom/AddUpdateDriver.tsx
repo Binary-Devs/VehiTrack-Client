@@ -4,17 +4,21 @@ import FormInput from "@/components/Forms/FormInput";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import { useCreateDriverMutation } from "@/redux/api/user/userApi";
 import { Button, Col, Row, message } from "antd";
+import UploadImage from "../ui/uploadImage";
 
-const CreateDriver = () => {
-  const [createDriver] = useCreateDriverMutation();
+const AddUpdateDriver = () => {
+  const [createDriver, { isLoading }] = useCreateDriverMutation();
 
   const onSubmit = async (values: any) => {
-    message.loading("Creating driver!");
-    // console.log(values);
+    message.loading("Adding driver....");
+    console.log(values);
     try {
-      const res = await createDriver(values);
-      console.log(res);
-      message.success("Manager created successfully!");
+      const res = await createDriver(values).unwrap();
+      if (res.id) {
+        message.success("Driver added successfully!");
+      } else {
+        message.error(res.message);
+      }
     } catch (err: any) {
       console.error(err.message);
     }
@@ -24,14 +28,14 @@ const CreateDriver = () => {
   //   }
   return (
     <div>
-      <h1 className="text-center my-1 font-bold text-2xl">Create Driver</h1>
+      <h1 className="text-center my-1 font-bold text-2xl">Add Driver</h1>
       <div>
         <Form submitHandler={onSubmit}>
           <div
             style={{
               border: "1px solid #d9d9d9",
-              borderRadius: "5px",
-              padding: "15px",
+              borderRadius: "8px",
+              padding: "20px",
               marginBottom: "10px",
             }}
             className="my-4"
@@ -50,30 +54,12 @@ const CreateDriver = () => {
                   type="text"
                   name="userName"
                   size="large"
-                  label="User Id"
+                  label="User Name"
                   required={true}
-                  placeholder="Please enter User ID"
+                  placeholder="Please enter driver user name"
                 />
               </Col>
 
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={12}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  type="text"
-                  name="driver.fullName"
-                  size="large"
-                  label="Name"
-                  required={true}
-                  placeholder="Please enter manager name"
-                />
-              </Col>
               <Col
                 className="gutter-row"
                 xs={24}
@@ -92,6 +78,26 @@ const CreateDriver = () => {
                   placeholder="Please enter a password"
                 />
               </Col>
+
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={12}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormInput
+                  type="text"
+                  name="driver.fullName"
+                  size="large"
+                  label="Full Name"
+                  required={true}
+                  placeholder="Please enter driver full name"
+                />
+              </Col>
+
               <Col
                 className="gutter-row"
                 xs={24}
@@ -110,6 +116,7 @@ const CreateDriver = () => {
                   placeholder="Please enter a mobile number"
                 />
               </Col>
+
               <Col
                 className="gutter-row"
                 xs={24}
@@ -127,7 +134,7 @@ const CreateDriver = () => {
                 />
               </Col>
 
-              {/* <Col
+              <Col
                 className="gutter-row"
                 xs={24}
                 md={12}
@@ -136,14 +143,14 @@ const CreateDriver = () => {
                   marginBottom: "10px",
                 }}
               >
-                <UploadImage name="image" />
-              </Col> */}
+                <UploadImage />
+              </Col>
             </Row>
           </div>
 
           <div className="flex justify-center items-center">
-            <Button htmlType="submit" type="primary">
-              Create
+            <Button htmlType="submit" type="primary" disabled={isLoading}>
+              Add
             </Button>
           </div>
         </Form>
@@ -152,4 +159,4 @@ const CreateDriver = () => {
   );
 };
 
-export default CreateDriver;
+export default AddUpdateDriver;

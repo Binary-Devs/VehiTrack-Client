@@ -15,12 +15,10 @@ import { useState } from "react";
 import dayjs from "dayjs";
 
 import AddUpdateBrand from "@/components/CreateUpdateFrom/AddUpdateBrand";
-import Loader from "@/components/Utlis/Loader";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
 import { useGetAllBrandQuery } from "@/redux/api/brand/brandApi";
-import Image from "next/image";
 
 const BrandListPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
@@ -205,9 +203,9 @@ const BrandListPage = () => {
   //     });
   //   };
 
-  if (isLoading) {
-    return <Loader className="h-[50vh] flex items-end justify-center" />;
-  }
+  // if (isLoading) {
+  //   return <Loader className="h-[50vh] flex items-end justify-center" />;
+  // }
 
   return (
     <div className="rounded-xl bg-white p-5">
@@ -239,7 +237,7 @@ const BrandListPage = () => {
       </ActionBar>
 
       <UMTable
-        loading={false}
+        loading={isLoading}
         columns={columns}
         dataSource={brands}
         pageSize={size}
