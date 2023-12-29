@@ -143,17 +143,6 @@ export const sidebarItem = (role: string) => {
           ),
           key: `/${role}/trip_management/party_list`,
         },
-        // {
-        //   label: (
-        //     <Link
-        //       className="text-sm "
-        //       href={`/${role}/trip_management/trip_expense_head`}
-        //     >
-        //       Trip Expense Head
-        //     </Link>
-        //   ),
-        //   key: `/${role}/trip_management/trip_expense_head`,
-        // },
         {
           label: (
             <Link
@@ -164,6 +153,17 @@ export const sidebarItem = (role: string) => {
             </Link>
           ),
           key: `/${role}/trip_management/trip_list`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/trip_management/trip_expense_head`}
+            >
+              Trip Expense Head
+            </Link>
+          ),
+          key: `/${role}/trip_management/trip_expense_head`,
         },
       ],
     },
@@ -194,17 +194,17 @@ export const sidebarItem = (role: string) => {
           ),
           key: `/${role}/financial_management/account_heads`,
         },
-        // {
-        //   label: (
-        //     <Link
-        //       className="text-sm "
-        //       href={`/${role}/financial_management/balance_sheet`}
-        //     >
-        //       Balance Sheet
-        //     </Link>
-        //   ),
-        //   key: `/${role}/financial_management/balance_sheet`,
-        // },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/financial_management/balance_sheet`}
+            >
+              Balance Sheet
+            </Link>
+          ),
+          key: `/${role}/financial_management/balance_sheet`,
+        },
       ],
     },
     {
@@ -301,17 +301,6 @@ export const sidebarItem = (role: string) => {
           ),
           key: `/${role}/paper_work/route_permit`,
         },
-        {
-          label: (
-            <Link
-              className="text-sm "
-              href={`/${role}/paper_work/paper_work_list`}
-            >
-              Paper Work List
-            </Link>
-          ),
-          key: `/${role}/paper_work/paper_work_list`,
-        },
       ],
     },
     {
@@ -341,17 +330,17 @@ export const sidebarItem = (role: string) => {
           ),
           key: `/${role}/store_management/equipment_in`,
         },
-        // {
-        //   label: (
-        //     <Link
-        //       className="text-sm "
-        //       href={`/${role}/store_management/stock_status`}
-        //     >
-        //       Stock Status
-        //     </Link>
-        //   ),
-        //   key: `/${role}/store_management/stock_status`,
-        // },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/store_management/stock_status`}
+            >
+              Stock Status
+            </Link>
+          ),
+          key: `/${role}/store_management/stock_status`,
+        },
         {
           label: (
             <Link
