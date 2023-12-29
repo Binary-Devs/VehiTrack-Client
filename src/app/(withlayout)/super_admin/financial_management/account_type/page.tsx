@@ -1,5 +1,5 @@
 "use client";
-import AddAccountType from "@/components/CreateFrom/AddAccountType";
+import AddAccountType from "@/components/CreateUpdateFrom/AddAccountType";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
@@ -37,7 +37,6 @@ const AccountTypePage = () => {
 
   const { data } = useGetAllAccountTypeQuery({ ...query });
 
-  // const accountTypes = [
   //   {
   //     id: 1,
   //     label: "Savings",

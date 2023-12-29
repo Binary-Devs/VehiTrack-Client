@@ -22,7 +22,7 @@ export const sidebarItem = (role: string) => {
     {
       key: "profile",
       label: (
-        <Link className="text-sm " href={`/${role}`}>
+        <Link className="text-sm " href={`/profile`}>
           Profile
         </Link>
       ),
@@ -96,17 +96,6 @@ export const sidebarItem = (role: string) => {
           ),
           key: `${role}/driver_management/driver_list`,
         },
-        {
-          label: (
-            <Link
-              className="text-sm "
-              href={`/${role}/driver_management/driver_status`}
-            >
-              Driver Status
-            </Link>
-          ),
-          key: `${role}/driver_management/driver_status`,
-        },
       ],
     },
     {
@@ -158,23 +147,23 @@ export const sidebarItem = (role: string) => {
           label: (
             <Link
               className="text-sm "
-              href={`/${role}/trip_management/trip_expense_head`}
-            >
-              Trip Expense Head
-            </Link>
-          ),
-          key: `/${role}/trip_management/trip_expense_head`,
-        },
-        {
-          label: (
-            <Link
-              className="text-sm "
               href={`/${role}/trip_management/trip_list`}
             >
               Trip List
             </Link>
           ),
           key: `/${role}/trip_management/trip_list`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/trip_management/trip_expense_head`}
+            >
+              Trip Expense Head
+            </Link>
+          ),
+          key: `/${role}/trip_management/trip_expense_head`,
         },
       ],
     },
@@ -312,17 +301,6 @@ export const sidebarItem = (role: string) => {
           ),
           key: `/${role}/paper_work/route_permit`,
         },
-        {
-          label: (
-            <Link
-              className="text-sm "
-              href={`/${role}/paper_work/paper_work_list`}
-            >
-              Paper Work List
-            </Link>
-          ),
-          key: `/${role}/paper_work/paper_work_list`,
-        },
       ],
     },
     {
@@ -352,17 +330,17 @@ export const sidebarItem = (role: string) => {
           ),
           key: `/${role}/store_management/equipment_in`,
         },
-        // {
-        //   label: (
-        //     <Link
-        //       className="text-sm "
-        //       href={`/${role}/store_management/stock_status`}
-        //     >
-        //       Stock Status
-        //     </Link>
-        //   ),
-        //   key: `/${role}/store_management/stock_status`,
-        // },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/store_management/stock_status`}
+            >
+              Stock Status
+            </Link>
+          ),
+          key: `/${role}/store_management/stock_status`,
+        },
         {
           label: (
             <Link
@@ -457,25 +435,28 @@ export const sidebarItem = (role: string) => {
       key: `/${role}/accident_history`,
     },
     {
-      label: "Admin",
-      key: `/${role}/admin`,
+      label: "Manger Management",
+      key: `/${role}/manager`,
       icon: <UserOutlined />,
       children: [
         {
           label: (
-            <Link className="text-sm " href={`/${role}/admin/add_new_admin`}>
-              Add New Admin
+            <Link
+              className="text-sm "
+              href={`/${role}/manager/add_new_manager`}
+            >
+              Add New Manager
             </Link>
           ),
-          key: `${role}/admin/add_new_admin`,
+          key: `${role}/manager/add_new_manager`,
         },
         {
           label: (
-            <Link className="text-sm " href={`/${role}/admin/admin_list`}>
-              Admin List
+            <Link className="text-sm " href={`/${role}/manager/manager_list`}>
+              Manager List
             </Link>
           ),
-          key: `${role}/admin/admin_list`,
+          key: `${role}/manager/manager_list`,
         },
       ],
     },

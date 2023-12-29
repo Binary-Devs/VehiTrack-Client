@@ -1,32 +1,25 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 
-import { Button, Input, message } from "antd";
-import Link from "next/link";
+import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
   EditOutlined,
-  FilterOutlined,
-  ReloadOutlined,
   EyeOutlined,
+  ReloadOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
+import { Avatar, Button, Input, Tag } from "antd";
+import Link from "next/link";
 import { useState } from "react";
-import { useDebounced } from "@/redux/hooks";
 
 import dayjs from "dayjs";
 
-import {
-  Error_model_hook,
-  Success_model,
-  confirm_modal,
-} from "@/utils/modalHook";
-
-import { USER_ROLE } from "@/constants/role";
-import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
-import UMTable from "@/components/ui/Table";
-import Image from "next/image";
+import CreateDriver from "@/components/CreateUpdateFrom/DriverCreate";
 import ModalComponent from "@/components/ui/Modal";
-import CreateDriver from "../page";
+import UMTable from "@/components/ui/Table";
+import { USER_ROLE } from "@/constants/role";
+import { useGetAllDriverQuery } from "@/redux/api/driver/driverApi";
 
 const AllDriverList = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
@@ -37,13 +30,11 @@ const AllDriverList = () => {
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [open, setOpen] = useState<boolean>(false);
-  const [adminId, setAdminId] = useState<string>("");
 
-  query["limit"] = size;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
+  // query["limit"] = size;
+  // query["page"] = page;
+  // query["sortBy"] = sortBy;
+  // query["sortOrder"] = sortOrder;
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -55,67 +46,68 @@ const AllDriverList = () => {
   }
 
   //@ts-ignore
-  const generalUserData = [
-    {
-      _id: 1,
-      name: "sampood",
-      email: "sampood@gmail.com",
-      createdAt: "2023-01-01",
-      phoneNumber: "014741154151",
-      profileImage:
-        "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      _id: 2,
-      name: "akahs",
-      email: "kakspood@gmail.com",
-      createdAt: "2023-01-01",
-      phoneNumber: "018044518521",
-      profileImage:
-        "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      _id: 3,
-      name: "roihime",
-      email: "roihime@gmail.com",
-      phoneNumber: "018769988521",
-      createdAt: "2023-01-01",
-      profileImage:
-        "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-  ];
+  // const AllDriverData = [
+  //   {
+  //     _id: 1,
+  //     name: "sampood",
+  //     email: "sampood@gmail.com",
+  //     createdAt: "2023-01-01",
+  //     phoneNumber: "014741154151",
+  //     profileImage:
+  //       "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //   },
+  //   {
+  //     _id: 2,
+  //     name: "akahs",
+  //     email: "kakspood@gmail.com",
+  //     createdAt: "2023-01-01",
+  //     phoneNumber: "018044518521",
+  //     profileImage:
+  //       "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //   },
+  //   {
+  //     _id: 3,
+  //     name: "roihime",
+  //     email: "roihime@gmail.com",
+  //     phoneNumber: "018769988521",
+  //     createdAt: "2023-01-01",
+  //     profileImage:
+  //       "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //   },
+  // ];
   //@ts-ignore
-  const meta = {
-    "page": 1,
-    "limit": 10,
-    "total": 3
-};
+  //   const meta = {
+  //     "page": 1,
+  //     "limit": 10,
+  //     "total": 3
+  // };
 
   const columns = [
     {
-      title: "",
-      width: 100,
+      title: "Image",
+
       render: function (data: any) {
-        const fullName = `${data?.profileImage} `;
-        return <Image src={fullName} width={70} height={70} alt=""/>;
+        return <Avatar size={64} icon={<UserOutlined />} />;
       },
     },
     {
       title: "Name",
-    
-      ellipsis: true,
-      render: function (data: any) {
-        const fullName = `${data?.name} `;
-        return <>{fullName}</>;
-      },
+      dataIndex: "fullName",
     },
     {
-      title: "Email",
-      dataIndex: "email",
-    
-      
+      title: "Active",
+      dataIndex: "isActive",
+      render: (isActive: boolean) =>
+        isActive ? (
+          <Tag color="green">Active</Tag>
+        ) : (
+          <Tag color="red">Not Active</Tag>
+        ),
     },
-
+    {
+      title: "Mobile",
+      dataIndex: "mobile",
+    },
     {
       title: "Created at",
       dataIndex: "createdAt",
@@ -125,13 +117,9 @@ const AllDriverList = () => {
       sorter: true,
     },
     {
-      title: "Contact no.",
-      dataIndex: "phoneNumber",
-    
-    },
-    {
       title: "Action",
       dataIndex: "_id",
+      width: "15%",
       render: function (data: any) {
         return (
           <>
@@ -163,8 +151,14 @@ const AllDriverList = () => {
       },
     },
   ];
+
+  const { data, isLoading } = useGetAllDriverQuery({ ...query });
+  const AllDriverData = data?.drivers || [];
+  const meta = data?.meta;
+
+  console.log(AllDriverData);
+
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
@@ -216,7 +210,7 @@ const AllDriverList = () => {
         />
         <div>
           <ModalComponent buttonText="Create Driver">
-            <CreateDriver/>
+            <CreateDriver />
           </ModalComponent>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
@@ -233,7 +227,7 @@ const AllDriverList = () => {
       <UMTable
         loading={false}
         columns={columns}
-        dataSource={generalUserData}
+        dataSource={AllDriverData}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}

@@ -1,32 +1,24 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 
-import { Button, Input, message } from "antd";
-import Link from "next/link";
+import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
   EditOutlined,
-  FilterOutlined,
-  ReloadOutlined,
   EyeOutlined,
+  ReloadOutlined,
 } from "@ant-design/icons";
+import { Button, Input } from "antd";
+import Link from "next/link";
 import { useState } from "react";
-import { useDebounced } from "@/redux/hooks";
 
 import dayjs from "dayjs";
 
-import {
-  Error_model_hook,
-  Success_model,
-  confirm_modal,
-} from "@/utils/modalHook";
-
-import { USER_ROLE } from "@/constants/role";
-import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
-import UMTable from "@/components/ui/Table";
-import Image from "next/image";
+import CreateVehicle from "@/components/CreateUpdateFrom/VehicleCreate";
 import ModalComponent from "@/components/ui/Modal";
-import CreateVehicle from "@/components/CreateFrom/VehicleCreate";
+import UMTable from "@/components/ui/Table";
+import { USER_ROLE } from "@/constants/role";
+import Image from "next/image";
 
 const AllVehicleList = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
@@ -141,7 +133,19 @@ const AllVehicleList = () => {
       title: "Status",
       render: function (data: any) {
         const fullName = `${data?.isActive} `;
-        return <>{fullName ? <p className="bg-green-600 text-white rounded-lg text-center">Active</p>:<p className="bg-red-600 text-white rounded-lg text-center">Deactivate</p>}</>;
+        return (
+          <>
+            {fullName ? (
+              <p className="bg-green-600 text-white rounded-lg text-center">
+                Active
+              </p>
+            ) : (
+              <p className="bg-red-600 text-white rounded-lg text-center">
+                Deactivate
+              </p>
+            )}
+          </>
+        );
       },
     },
 
@@ -239,13 +243,13 @@ const AllVehicleList = () => {
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            minWidth:"150px",
-            maxWidth:"300px",
+            minWidth: "150px",
+            maxWidth: "300px",
           }}
         />
         <div>
-        <ModalComponent buttonText="Create Vehicle">
-            <CreateVehicle/>
+          <ModalComponent buttonText="Create Vehicle">
+            <CreateVehicle />
           </ModalComponent>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button

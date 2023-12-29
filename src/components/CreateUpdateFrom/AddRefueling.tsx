@@ -260,7 +260,7 @@ const AddRefueling = () => {
 
   return (
     <div>
-      <h1>Create Pump Station</h1>
+      <h1>Create Refueling</h1>
       <Form submitHandler={onSubmit}>
         <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
           <Col xs={24} md={12} lg={8}>
