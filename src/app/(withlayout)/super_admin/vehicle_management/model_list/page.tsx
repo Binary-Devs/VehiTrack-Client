@@ -53,8 +53,8 @@ const ModelListPage = () => {
   const models = data?.models;
   const meta = data?.meta;
 
+  // BrandData for creating model
   const { data: brandData, isLoading: brandLoad } = useGetAllBrandQuery({});
-
   const brands = brandData?.brands;
 
   //@ts-ignore

@@ -3,22 +3,24 @@ import ActionBar from "@/components/ui/ActionBar";
 
 import { useDebounced } from "@/redux/hooks";
 import {
+  CarOutlined,
   DeleteOutlined,
   EditOutlined,
   EyeOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { Button, Input } from "antd";
+import { Avatar, Button, Input, Tag } from "antd";
 import Link from "next/link";
 import { useState } from "react";
 
 import dayjs from "dayjs";
 
-import CreateVehicle from "@/components/CreateUpdateFrom/VehicleCreate";
+import AddUpdateVehicle from "@/components/CreateUpdateFrom/AddUpdateVehicle";
+import Loader from "@/components/Utlis/Loader";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
-import Image from "next/image";
+import { useGetAllVehicleQuery } from "@/redux/api/vehicle/vehicleApi";
 
 const AllVehicleList = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
@@ -33,7 +35,7 @@ const AllVehicleList = () => {
   const [adminId, setAdminId] = useState<string>("");
 
   query["limit"] = size;
-  query["page"] = page;
+  query["page"] = page - 1;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
 
@@ -45,6 +47,13 @@ const AllVehicleList = () => {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
+
+  const { data, isLoading } = useGetAllVehicleQuery({ ...query });
+
+  const vehicles = data?.vehicles;
+  const meta = data?.meta;
+
+  console.log(vehicles);
 
   //@ts-ignore
   const generalUserData = [
@@ -86,27 +95,28 @@ const AllVehicleList = () => {
     },
   ];
   //@ts-ignore
-  const meta = {
-    page: 1,
-    limit: 10,
-    total: 3,
-  };
+  // const meta = {
+  //   page: 1,
+  //   limit: 10,
+  //   total: 3,
+  // };
 
   const columns = [
     {
       title: "",
       // fixed: "left",
-      width: 80,
+      // width: 80,
       render: function (data: any) {
         const fullName = `${data?.image} `;
         return (
-          <Image
-            src={fullName}
-            width={100}
-            height={100}
-            alt=""
-            style={{ width: "70px", height: "50px" }}
-          />
+          // <Image
+          //   src={fullName}
+          //   width={100}
+          //   height={100}
+          //   alt=""
+          //   style={{ width: "70px", height: "50px" }}
+          // />
+          <Avatar shape="square" size={64} icon={<CarOutlined />} />
         );
       },
     },
@@ -131,22 +141,12 @@ const AllVehicleList = () => {
     },
     {
       title: "Status",
-      render: function (data: any) {
-        const fullName = `${data?.isActive} `;
-        return (
-          <>
-            {fullName ? (
-              <p className="bg-green-600 text-white rounded-lg text-center">
-                Active
-              </p>
-            ) : (
-              <p className="bg-red-600 text-white rounded-lg text-center">
-                Deactivate
-              </p>
-            )}
-          </>
-        );
-      },
+      render: (isActive: boolean) =>
+        isActive ? (
+          <Tag color="green">Active</Tag>
+        ) : (
+          <Tag color="red">Not Active</Tag>
+        ),
     },
 
     {
@@ -195,6 +195,7 @@ const AllVehicleList = () => {
       },
     },
   ];
+
   const onPaginationChange = (page: number, pageSize: number) => {
     console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
@@ -232,9 +233,9 @@ const AllVehicleList = () => {
   //       }
   //     });
   //   };
-  //   if (isLoading) {
-  //     return <LoadingForDataFetch />;
-  //   }
+  if (isLoading) {
+    return <Loader className="h-[50vh] flex items-end justify-center" />;
+  }
   return (
     <div className="rounded-xl bg-white p-5 shadow-xl">
       <ActionBar title="Vehicle List">
@@ -248,8 +249,8 @@ const AllVehicleList = () => {
           }}
         />
         <div>
-          <ModalComponent buttonText="Create Vehicle">
-            <CreateVehicle />
+          <ModalComponent buttonText="Add Vehicle">
+            <AddUpdateVehicle />
           </ModalComponent>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button

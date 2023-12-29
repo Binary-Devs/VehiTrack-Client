@@ -100,7 +100,7 @@ const AddUpdateBrand = () => {
           </div>
           <div className="flex justify-center items-center">
             <Button htmlType="submit" type="primary" disabled={isLoading}>
-              Create
+              Add
             </Button>
           </div>
         </Form>

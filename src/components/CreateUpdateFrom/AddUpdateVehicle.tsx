@@ -1,23 +1,26 @@
 "use client";
 import Form from "@/components/Forms/Form";
-import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import UploadImage from "@/components/ui/uploadImage";
-import { genderOption, isActive } from "@/constants/global";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Col, Row } from "antd";
-import React from "react";
+import { isActive } from "@/constants/global";
+import { useCreateVehicleMutation } from "@/redux/api/vehicle/vehicleApi";
+import { Button, Col, Row, message } from "antd";
 
-const CreateVehicle = () => {
-  
+const AddUpdateVehicle = () => {
+  const [createVehicle, { isLoading }] = useCreateVehicleMutation();
   const onSubmit = async (values: any) => {
-    console.log(values);
+    message.loading("Adding....");
     try {
-      // message.success("Admin created successfully!");
+      const res = await createVehicle({ ...values }).unwrap();
+      if (res.id) {
+        message.success("Vehicle added successfully!");
+      } else {
+        message.error(res.message);
+      }
     } catch (err: any) {
-      console.error(err.message);
+      message.error(err.message);
     }
   };
   //   if(isLoading){
@@ -61,10 +64,9 @@ const CreateVehicle = () => {
     },
   ];
 
-
   return (
     <div>
-      <h1 className="text-center my-1 font-bold text-2xl">Create Vehicle</h1>
+      <h1 className="text-center my-1 font-bold text-2xl">Add Vehicle</h1>
       {/*  */}
       <div>
         <Form submitHandler={onSubmit}>
@@ -237,8 +239,8 @@ const CreateVehicle = () => {
             </Row>
           </div>
           <div className="flex justify-center items-center">
-            <Button htmlType="submit" type="primary">
-              Create
+            <Button htmlType="submit" type="primary" disabled={isLoading}>
+              Add
             </Button>
           </div>
         </Form>
@@ -247,4 +249,4 @@ const CreateVehicle = () => {
   );
 };
 
-export default CreateVehicle;
+export default AddUpdateVehicle;
