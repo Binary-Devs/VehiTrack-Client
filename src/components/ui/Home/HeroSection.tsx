@@ -1,9 +1,11 @@
 export default function HeroSection() {
   return (
-    <section className=" rounded-xl">
+    <section className=" rounded-xl ">
 
-    <div className="relative bg-[url(https://images.unsplash.com/photo-1511350224460-4a95f1cf2e88?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)] bg-cover bg-center bg-no-repeat  my-2 max-h-[80vh] rounded-lg">
-      <div className="absolute inset-0 bg-white/75 sm:bg-transparent sm:from-white/95 sm:to-white/25 ltr:sm:bg-gradient-to-r rtl:sm:bg-gradient-to-l"></div>
+    <div className="relative bg-[url(https://images.unsplash.com/photo-1511350224460-4a95f1cf2e88?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)] bg-cover bg-center bg-no-repeat  my-2 max-h-[50vh] rounded-lg">
+      <div className="absolute inset-0 bg-white/75 sm:bg-transparent sm:from-white/95 sm:to-white/25 ltr:sm:bg-gradient-to-r rtl:sm:bg-gradient-to-l">
+        
+      </div>
 
       <div className="relative mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:flex lg:h-screen lg:items-center lg:px-8">
         <div className="max-w-xl  ltr:sm:text-left rtl:sm:text-right">
