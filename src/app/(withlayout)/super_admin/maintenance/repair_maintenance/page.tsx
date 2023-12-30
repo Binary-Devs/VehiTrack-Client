@@ -192,7 +192,7 @@ const RepairMaintenancePage = () => {
   };
   return (
     <div>
-      <ActionBar title="Refueling List">
+      <ActionBar title="Maintenance List">
         <Input
           type="text"
           size="large"
@@ -205,7 +205,7 @@ const RepairMaintenancePage = () => {
           }}
         />
         <div>
-          <Link href="/super_admin/maintenance/repair-maintenance/create">
+          <Link href="/super_admin/maintenance/repair_maintenance/create">
             <Button type="primary">Create</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (

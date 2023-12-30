@@ -14,6 +14,8 @@ import {
 } from "@ant-design/icons";
 import { MenuProps } from "antd";
 import Link from "next/link";
+import { FaRoadCircleCheck } from "react-icons/fa6";
+import { MdOutlineUpcoming } from "react-icons/md";
 import { TbReportAnalytics } from "react-icons/tb";
 import { USER_ROLE } from "./role";
 
@@ -372,7 +374,6 @@ export const sidebarItem = (role: string) => {
         },
       ],
     },
-
     {
       label: "Miscellaneous Expenses",
       icon: <MoneyCollectOutlined />,
@@ -434,6 +435,73 @@ export const sidebarItem = (role: string) => {
       icon: <HistoryOutlined />,
       key: `/${role}/accident_history`,
     },
+  ];
+
+  const adminSidebarItems: MenuProps["items"] = [...commonAdminSidebarItems];
+  const driverSidebarItems: MenuProps["items"] = [
+    ...defaultSidebarItems,
+    {
+      label: (
+        <Link className="text-sm " href={`/dashboard`}>
+          Dashboard
+        </Link>
+      ),
+      key: "dashboard",
+      icon: <DashboardFilled />,
+    },
+    {
+      label: (
+        <Link className="text-sm " href={`/${role}/accident_history`}>
+          Upcoming Trip
+        </Link>
+      ),
+      icon: <MdOutlineUpcoming />,
+      key: `/${role}/upcoming_trip`,
+    },
+    {
+      label: (
+        <Link className="text-sm " href={`/${role}/accident_history`}>
+          My Trip
+        </Link>
+      ),
+      icon: <FaRoadCircleCheck />,
+      key: `/${role}/my_trip`,
+    },
+  ];
+  const helperSidebarItems: MenuProps["items"] = [
+    ...defaultSidebarItems,
+    {
+      label: (
+        <Link className="text-sm " href={`/dashboard`}>
+          Dashboard
+        </Link>
+      ),
+      key: "dashboard",
+      icon: <DashboardFilled />,
+    },
+    {
+      label: (
+        <Link className="text-sm " href={`/${role}/accident_history`}>
+          Upcoming Trip
+        </Link>
+      ),
+      icon: <MdOutlineUpcoming />,
+      key: `/${role}/upcoming_trip`,
+    },
+    {
+      label: (
+        <Link className="text-sm " href={`/${role}/accident_history`}>
+          My Trip
+        </Link>
+      ),
+      icon: <FaRoadCircleCheck />,
+      key: `/${role}/my_trip`,
+    },
+  ];
+
+  const superAdminSidebarItems: MenuProps["items"] = [
+    ...commonAdminSidebarItems,
+    ...defaultSidebarItems,
     {
       label: "Manger Management",
       key: `/${role}/manager`,
@@ -462,15 +530,10 @@ export const sidebarItem = (role: string) => {
     },
   ];
 
-  const adminSidebarItems: MenuProps["items"] = [...commonAdminSidebarItems];
-
-  const superAdminSidebarItems: MenuProps["items"] = [
-    ...commonAdminSidebarItems,
-    ...defaultSidebarItems,
-  ];
-
   if (role === USER_ROLE.SUPER_ADMIN) return superAdminSidebarItems;
   else if (role === USER_ROLE.ADMIN) return adminSidebarItems;
+  else if (role === USER_ROLE.DRIVER) return driverSidebarItems;
+  else if (role === USER_ROLE.HELPER) return helperSidebarItems;
   else {
     return defaultSidebarItems;
   }

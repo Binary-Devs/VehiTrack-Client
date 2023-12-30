@@ -5,7 +5,7 @@ import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { useGetAllPartiesQuery } from "@/redux/api/party/partyApi";
 import { useDebounced } from "@/redux/hooks";
-import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Button, Input, Tag } from "antd";
 import dayjs from "dayjs";
 import Link from "next/link";
@@ -15,7 +15,7 @@ const PartyListPage = () => {
   const query: Record<string, any> = {};
 
   const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(10);
+  const [size, setSize] = useState<number>(5);
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -35,7 +35,7 @@ const PartyListPage = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const { data } = useGetAllPartiesQuery({ ...query });
+  const { data, isLoading } = useGetAllPartiesQuery({ ...query });
 
   const parties = data?.parties;
   const meta = data?.meta;
@@ -76,13 +76,6 @@ const PartyListPage = () => {
       render: function (data: any) {
         return (
           <>
-            <Link
-              href={`/super_admin/trip_management/party_list/details/${data?.id}`}
-            >
-              <Button onClick={() => console.log(data)} type="primary">
-                <EyeOutlined />
-              </Button>
-            </Link>
             <Link
               href={`/super_admin/trip_management/party_list/edit/${data?.id}`}
             >
@@ -130,11 +123,12 @@ const PartyListPage = () => {
           type="text"
           size="large"
           placeholder="Search..."
-          style={{
-            width: "20%",
-          }}
           onChange={(e) => {
             setSearchTerm(e.target.value);
+          }}
+          style={{
+            width: "100%",
+            maxWidth: "200px",
           }}
         />
         <ModalComponent buttonText="Add Party">
@@ -151,6 +145,7 @@ const PartyListPage = () => {
         onPaginationChange={onPaginationChange}
         onTableChange={onTableChange}
         showPagination={true}
+        loading={isLoading}
       />
     </div>
   );
