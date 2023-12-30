@@ -14,7 +14,7 @@ import { useState } from "react";
 
 import dayjs from "dayjs";
 
-import CreateManager from "@/components/CreateFrom/ManagerCreate";
+import CreateManager from "@/components/CreateUpdateFrom/ManagerCreate";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
@@ -118,9 +118,6 @@ const AllManagerList = () => {
   const AllAdminData = data?.admins || [];
   const meta = data?.meta;
 
-  // const bookings = data?.bookings;
-  // const meta = data?.meta;
-
   const onPaginationChange = (page: number, pageSize: number) => {
     console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
@@ -138,8 +135,6 @@ const AllManagerList = () => {
     setSortOrder("");
     setSearchTerm("");
   };
-
-  console.log(AllAdminData);
 
   return (
     <div className="rounded-xl bg-white p-5 shadow-xl">

@@ -1,6 +1,6 @@
 "use client";
 
-import AddUnitOfMeasurement from "@/components/CreateFrom/AddUnitOfMeasurement";
+import AddUnitOfMeasurement from "@/components/CreateUpdateFrom/AddUnitOfMeasurement";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";

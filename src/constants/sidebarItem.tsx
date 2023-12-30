@@ -22,7 +22,7 @@ export const sidebarItem = (role: string) => {
     {
       key: "profile",
       label: (
-        <Link className="text-sm " href={`/${role}`}>
+        <Link className="text-sm " href={`/profile`}>
           Profile
         </Link>
       ),
@@ -95,17 +95,6 @@ export const sidebarItem = (role: string) => {
             </Link>
           ),
           key: `${role}/driver_management/driver_list`,
-        },
-        {
-          label: (
-            <Link
-              className="text-sm "
-              href={`/${role}/driver_management/driver_status`}
-            >
-              Driver Status
-            </Link>
-          ),
-          key: `${role}/driver_management/driver_status`,
         },
       ],
     },
@@ -205,17 +194,17 @@ export const sidebarItem = (role: string) => {
           ),
           key: `/${role}/financial_management/account_heads`,
         },
-        {
-          label: (
-            <Link
-              className="text-sm "
-              href={`/${role}/financial_management/balance_sheet`}
-            >
-              Balance Sheet
-            </Link>
-          ),
-          key: `/${role}/financial_management/balance_sheet`,
-        },
+        // {
+        //   label: (
+        //     <Link
+        //       className="text-sm "
+        //       href={`/${role}/financial_management/balance_sheet`}
+        //     >
+        //       Balance Sheet
+        //     </Link>
+        //   ),
+        //   key: `/${role}/financial_management/balance_sheet`,
+        // },
       ],
     },
     {

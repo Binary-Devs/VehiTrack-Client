@@ -35,6 +35,15 @@ const FormSelectField = ({
 
   return (
     <>
+      {required && (
+        <span
+          style={{
+            color: "red",
+          }}
+        >
+          *
+        </span>
+      )}
       {label ? label : null}
       <Controller
         control={control}

@@ -1,5 +1,5 @@
 "use client";
-import AddTrip from "@/components/CreateFrom/AddTrip";
+import AddTrip from "@/components/CreateUpdateFrom/AddTrip";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";

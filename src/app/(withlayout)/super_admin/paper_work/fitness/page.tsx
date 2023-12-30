@@ -1,5 +1,5 @@
 "use client";
-import AddFitness from "@/components/CreateFrom/AddFitness";
+import AddFitness from "@/components/CreateUpdateFrom/AddFitness";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
