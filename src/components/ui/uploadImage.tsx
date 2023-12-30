@@ -2,6 +2,7 @@ import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { Upload, message } from "antd";
 import type { UploadChangeParam } from "antd/es/upload";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
+import Image from "next/image";
 import React, { useState } from "react";
 
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
@@ -45,7 +46,7 @@ const UploadImage: React.FC = () => {
   const uploadButton = (
     <div>
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div style={{ marginTop: 8 }}>Upload</div>
+      <div style={{ marginTop: 8 }}>Upload Image</div>
     </div>
   );
 
@@ -61,7 +62,7 @@ const UploadImage: React.FC = () => {
         onChange={handleChange}
       >
         {imageUrl ? (
-          <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
+          <Image src={imageUrl} alt="avatar" width={100} height={100} />
         ) : (
           uploadButton
         )}
