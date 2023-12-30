@@ -16,13 +16,12 @@ import { useState } from "react";
 import dayjs from "dayjs";
 
 import AddUpdateVehicle from "@/components/CreateUpdateFrom/AddUpdateVehicle";
-import Loader from "@/components/Utlis/Loader";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
 import { useGetAllVehicleQuery } from "@/redux/api/vehicle/vehicleApi";
 
-const AllVehicleList = () => {
+const VehicleListPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
   const query: Record<string, any> = {};
 
@@ -237,30 +236,30 @@ const AllVehicleList = () => {
   //   return <Loader className="h-[50vh] flex items-end justify-center" />;
   // }
   return (
-    <div className="rounded-xl bg-white p-5 shadow-xl">
-      <ActionBar title="Vehicle List">
-        <Input
-          size="large"
-          placeholder="Search"
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            minWidth: "150px",
-            maxWidth: "300px",
-          }}
-        />
-        <div>
-          <ModalComponent buttonText="Add Vehicle">
-            <AddUpdateVehicle />
-          </ModalComponent>
+    <div className="bg-white border border-blue-200 rounded-xl shadow-md shadow-blue-200 p-5 space-y-3">
+      <ActionBar inline title="Vehicle List">
+        <div className="flex items-center gap-2">
+          <Input
+            // size="large"
+            placeholder="Search"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            // style={{
+            //   minWidth: "150px",
+            //   maxWidth: "300px",
+            // }}
+          />
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
-              style={{ margin: "0px 5px" }}
+              // style={{ margin: "0px 5px" }}
               type="primary"
               onClick={resetFilters}
             >
               <ReloadOutlined />
             </Button>
           )}
+          <ModalComponent buttonText="Add Vehicle">
+            <AddUpdateVehicle />
+          </ModalComponent>
         </div>
       </ActionBar>
 
@@ -288,4 +287,4 @@ const AllVehicleList = () => {
   );
 };
 
-export default AllVehicleList;
+export default VehicleListPage;

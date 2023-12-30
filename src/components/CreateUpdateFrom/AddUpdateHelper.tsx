@@ -3,21 +3,21 @@ import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import { bloodGroupOptions } from "@/constants/global";
-import { useCreateDriverMutation } from "@/redux/api/user/userApi";
+import { useCreateHelperMutation } from "@/redux/api/user/userApi";
 import { Button, Col, Row, message } from "antd";
 import FormSelectField from "../Forms/FormSelectField";
 import UploadImage from "../ui/uploadImage";
 
-const AddUpdateDriver = () => {
-  const [createDriver, { isLoading }] = useCreateDriverMutation();
+const AddUpdateHelper = () => {
+  const [createHelper, { isLoading }] = useCreateHelperMutation();
 
   const onSubmit = async (values: any) => {
-    message.loading("Adding driver....");
+    message.loading("Adding helper....");
     console.log(values);
     try {
-      const res = await createDriver(values).unwrap();
+      const res = await createHelper(values).unwrap();
       if (res.id) {
-        message.success("Driver added successfully");
+        message.success("Helper added successfully");
       } else {
         message.error(res.message);
       }
@@ -30,7 +30,7 @@ const AddUpdateDriver = () => {
   //   }
   return (
     <div>
-      <h1 className="text-center my-1 font-bold text-2xl">Add Driver</h1>
+      <h1 className="text-center my-1 font-bold text-2xl">Add Helper</h1>
       <div>
         <Form submitHandler={onSubmit}>
           <div
@@ -52,8 +52,7 @@ const AddUpdateDriver = () => {
               <Col
                 className="gutter-row"
                 xs={10}
-                sm={6}
-                md={6}
+                md={4}
                 lg={4}
                 // style={{
                 //   marginBottom: "10px",
@@ -65,8 +64,7 @@ const AddUpdateDriver = () => {
               <Col
                 className="gutter-row"
                 xs={14}
-                sm={18}
-                md={18}
+                md={20}
                 lg={20}
                 style={{
                   marginBottom: "10px",
@@ -84,7 +82,7 @@ const AddUpdateDriver = () => {
                       size="large"
                       label="User Name"
                       required={true}
-                      placeholder="Please enter driver user name"
+                      placeholder="Please enter helper user name"
                     />
                   </Col>
                   <Col
@@ -98,7 +96,7 @@ const AddUpdateDriver = () => {
                       size="large"
                       label="Password"
                       required={true}
-                      placeholder="Please enter driver password"
+                      placeholder="Please enter helper password"
                     />
                   </Col>
                 </div>
@@ -115,11 +113,11 @@ const AddUpdateDriver = () => {
               >
                 <FormInput
                   type="text"
-                  name="driver.fullName"
+                  name="helper.fullName"
                   size="large"
                   label="Full Name"
                   required={true}
-                  placeholder="Please enter driver full name"
+                  placeholder="Please enter helper full name"
                 />
               </Col>
 
@@ -134,14 +132,14 @@ const AddUpdateDriver = () => {
               >
                 <FormInput
                   type="tel"
-                  name="driver.mobile"
+                  name="helper.mobile"
                   size="large"
                   label="Mobile"
                   required={true}
-                  placeholder="Please enter driver mobile number"
+                  placeholder="Please enter helper mobile number"
                 />
               </Col>
-              <Col
+              {/* <Col
                 className="gutter-row"
                 xs={24}
                 md={12}
@@ -151,14 +149,14 @@ const AddUpdateDriver = () => {
                 }}
               >
                 <FormInput
-                  type="text"
-                  name="driver.licenseNo"
+                  type="number"
+                  name="helper.licenseNo"
                   size="large"
                   label="License No"
-                  // required={true}
-                  placeholder="Please enter driver license number"
+                  required={true}
+                  placeholder="Please enter helper license number"
                 />
-              </Col>
+              </Col> */}
               <Col
                 className="gutter-row"
                 xs={24}
@@ -170,11 +168,11 @@ const AddUpdateDriver = () => {
               >
                 <FormSelectField
                   size="large"
-                  name="driver.bloodGroup"
+                  name="helper.bloodGroup"
                   options={bloodGroupOptions}
                   // defaultValue={priceTypeOptions[0]}
                   label="Blood Group"
-                  placeholder="Select driver blood group"
+                  placeholder="Select helper blood group"
                   // required={true}
                 />
               </Col>
@@ -183,21 +181,22 @@ const AddUpdateDriver = () => {
                 className="gutter-row"
                 xs={24}
                 md={12}
-                lg={24}
+                lg={12}
                 style={{
-                  marginBottom: "15px",
+                  marginBottom: "10px",
                 }}
               >
                 <FormTextArea
-                  name="driver.address"
+                  name="helper.address"
+                  size="large"
                   label="Address"
-                  rows={3}
-                  placeholder="Enter driver address"
-                  // required
+                  rows={1}
+                  placeholder="Enter helper address"
+                  required
                 />
               </Col>
             </Row>
-            <div className="flex justify-end items-center">
+            <div className="flex justify-end items-center mt-[5px]">
               <Button htmlType="submit" type="primary" disabled={isLoading}>
                 Add
               </Button>
@@ -209,4 +208,4 @@ const AddUpdateDriver = () => {
   );
 };
 
-export default AddUpdateDriver;
+export default AddUpdateHelper;

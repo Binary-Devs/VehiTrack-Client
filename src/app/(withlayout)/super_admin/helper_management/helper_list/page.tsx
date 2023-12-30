@@ -1,32 +1,27 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 
-import { Button, Input, message } from "antd";
-import Link from "next/link";
+import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
   EditOutlined,
-  FilterOutlined,
-  ReloadOutlined,
   EyeOutlined,
+  ReloadOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
+import { Avatar, Button, Input } from "antd";
+import Link from "next/link";
 import { useState } from "react";
-import { useDebounced } from "@/redux/hooks";
 
 import dayjs from "dayjs";
 
-import {
-  Error_model_hook,
-  Success_model,
-  confirm_modal,
-} from "@/utils/modalHook";
-
-import { USER_ROLE } from "@/constants/role";
-import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
+import AddUpdateHelper from "@/components/CreateUpdateFrom/AddUpdateHelper";
+import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
-import Image from "next/image";
+import { USER_ROLE } from "@/constants/role";
+import { useGetAllHelperQuery } from "@/redux/api/helper/helperApi";
 
-const AllHelperList = () => {
+const HelperListPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
   const query: Record<string, any> = {};
 
@@ -35,11 +30,9 @@ const AllHelperList = () => {
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [open, setOpen] = useState<boolean>(false);
-  const [adminId, setAdminId] = useState<string>("");
 
   query["limit"] = size;
-  query["page"] = page;
+  query["page"] = page - 1;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
 
@@ -53,64 +46,82 @@ const AllHelperList = () => {
   }
 
   //@ts-ignore
-  const generalUserData = [
-    {
-      _id: 1,
-      name: "sampood",
-      email: "sampood@gmail.com",
-      createdAt: "2023-01-01",
-      phoneNumber: "014741154151",
-      profileImage:
-        "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      _id: 2,
-      name: "akahs",
-      email: "kakspood@gmail.com",
-      createdAt: "2023-01-01",
-      phoneNumber: "018044518521",
-      profileImage:
-        "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      _id: 3,
-      name: "roihime",
-      email: "roihime@gmail.com",
-      phoneNumber: "018769988521",
-      createdAt: "2023-01-01",
-      profileImage:
-        "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-  ];
+  // const AllHelperData = [
+  //   {
+  //     _id: 1,
+  //     name: "sampood",
+  //     email: "sampood@gmail.com",
+  //     createdAt: "2023-01-01",
+  //     phoneNumber: "014741154151",
+  //     profileImage:
+  //       "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //   },
+  //   {
+  //     _id: 2,
+  //     name: "akahs",
+  //     email: "kakspood@gmail.com",
+  //     createdAt: "2023-01-01",
+  //     phoneNumber: "018044518521",
+  //     profileImage:
+  //       "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //   },
+  //   {
+  //     _id: 3,
+  //     name: "roihime",
+  //     email: "roihime@gmail.com",
+  //     phoneNumber: "018769988521",
+  //     createdAt: "2023-01-01",
+  //     profileImage:
+  //       "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //   },
+  // ];
   //@ts-ignore
-  const meta = {
-    "page": 1,
-    "limit": 10,
-    "total": 3
-};
+  //   const meta = {
+  //     "page": 1,
+  //     "limit": 10,
+  //     "total": 3
+  // };
 
   const columns = [
     {
       title: "",
+
       render: function (data: any) {
-        const fullName = `${data?.profileImage} `;
-        return <Image src={fullName} width={70} height={70} alt=""/>;
+        return <Avatar size={64} icon={<UserOutlined />} />;
       },
     },
     {
       title: "Name",
-      render: function (data: any) {
-        const fullName = `${data?.name} `;
-        return <>{fullName}</>;
-      },
+      dataIndex: "fullName",
     },
     {
-      title: "Email",
-      dataIndex: "email",
+      title: "User Id",
+      dataIndex: "helperId",
     },
-
+    // {
+    //   title: "Active",
+    //   dataIndex: "isActive",
+    //   render: (isActive: boolean) =>
+    //     isActive ? (
+    //       <Tag color="green">Active</Tag>
+    //     ) : (
+    //       <Tag color="red">Not Active</Tag>
+    //     ),
+    // },
     {
-      title: "Created at",
+      title: "Mobile",
+      dataIndex: "mobile",
+    },
+    {
+      title: "Address",
+      dataIndex: "address",
+    },
+    {
+      title: "Blood Group",
+      dataIndex: "bloodGroup",
+    },
+    {
+      title: "Joined at",
       dataIndex: "createdAt",
       render: function (data: any) {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
@@ -118,12 +129,9 @@ const AllHelperList = () => {
       sorter: true,
     },
     {
-      title: "Contact no.",
-      dataIndex: "phoneNumber",
-    },
-    {
       title: "Action",
       dataIndex: "_id",
+      // width: "15%",
       render: function (data: any) {
         return (
           <>
@@ -135,7 +143,7 @@ const AllHelperList = () => {
             <Link href={`/${SUPER_ADMIN}/general_user/edit/${data}`}>
               <Button
                 style={{
-                  margin: "0px 5px",
+                  margin: "0px 8px",
                 }}
                 onClick={() => console.log(data)}
                 type="primary"
@@ -155,8 +163,14 @@ const AllHelperList = () => {
       },
     },
   ];
+
+  const { data, isLoading } = useGetAllHelperQuery({ ...query });
+  const helpers = data?.helpers;
+  const meta = data?.meta;
+
+  console.log(helpers);
+
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
@@ -192,40 +206,42 @@ const AllHelperList = () => {
   //       }
   //     });
   //   };
-  //   if (isLoading) {
-  //     return <LoadingForDataFetch />;
-  //   }
+  // if (isLoading) {
+  //   return <Loader className="h-[50vh] flex items-end justify-center" />;
+  // }
   return (
-    <div>
-      <ActionBar title="Helper List">
-        <Input
-          size="large"
-          placeholder="Search"
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            width: "20%",
-          }}
-        />
-        <div>
-          <Link href={`/${SUPER_ADMIN}/general_user/create`}>
-            <Button type="primary">Create Admin</Button>
-          </Link>
+    <div className="bg-white border border-blue-200 rounded-xl shadow-md shadow-blue-200 p-5 space-y-3">
+      <ActionBar inline title="Helper List">
+        <div className="flex items-center gap-2">
+          <Input
+            // size="large"
+            placeholder="Search"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            style={
+              {
+                // width: "100%",
+              }
+            }
+          />
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
-              style={{ margin: "0px 5px" }}
+              // style={{ margin: "0px 5px" }}
               type="primary"
               onClick={resetFilters}
             >
               <ReloadOutlined />
             </Button>
           )}
+          <ModalComponent buttonText="Add Helper">
+            <AddUpdateHelper />
+          </ModalComponent>
         </div>
       </ActionBar>
 
       <UMTable
-        loading={false}
+        loading={isLoading}
         columns={columns}
-        dataSource={generalUserData}
+        dataSource={helpers}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -246,4 +262,4 @@ const AllHelperList = () => {
   );
 };
 
-export default AllHelperList;
+export default HelperListPage;

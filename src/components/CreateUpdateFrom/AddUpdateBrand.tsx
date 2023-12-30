@@ -70,13 +70,10 @@ const AddUpdateBrand = () => {
             style={{
               border: "1px solid #d9d9d9",
               borderRadius: "5px",
-              padding: "15px",
+              padding: "20px",
               marginBottom: "10px",
             }}
           >
-            <p className="text-base lg:text-lg font-normal">
-              Brand Information
-            </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
                 className="gutter-row"
@@ -84,7 +81,7 @@ const AddUpdateBrand = () => {
                 md={24}
                 lg={24}
                 style={{
-                  marginBottom: "10px",
+                  marginBottom: "15px",
                 }}
               >
                 <FormInput
@@ -97,11 +94,11 @@ const AddUpdateBrand = () => {
                 />
               </Col>
             </Row>
-          </div>
-          <div className="flex justify-center items-center">
-            <Button htmlType="submit" type="primary" disabled={isLoading}>
-              Add
-            </Button>
+            <div className="flex justify-end items-center">
+              <Button htmlType="submit" type="primary" disabled={isLoading}>
+                Add
+              </Button>
+            </div>
           </div>
         </Form>
       </div>

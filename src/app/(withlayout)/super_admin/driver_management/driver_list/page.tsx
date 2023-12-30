@@ -9,7 +9,7 @@ import {
   ReloadOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Avatar, Button, Input, Tag } from "antd";
+import { Avatar, Button, Input } from "antd";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -95,21 +95,33 @@ const AllDriverList = () => {
       dataIndex: "fullName",
     },
     {
-      title: "Active",
-      dataIndex: "isActive",
-      render: (isActive: boolean) =>
-        isActive ? (
-          <Tag color="green">Active</Tag>
-        ) : (
-          <Tag color="red">Not Active</Tag>
-        ),
+      title: "License No",
+      dataIndex: "licenseNo",
     },
+    // {
+    //   title: "Active",
+    //   dataIndex: "isActive",
+    //   render: (isActive: boolean) =>
+    //     isActive ? (
+    //       <Tag color="green">Active</Tag>
+    //     ) : (
+    //       <Tag color="red">Not Active</Tag>
+    //     ),
+    // },
     {
       title: "Mobile",
       dataIndex: "mobile",
     },
     {
-      title: "Created at",
+      title: "Address",
+      dataIndex: "address",
+    },
+    {
+      title: "Blood Group",
+      dataIndex: "bloodGroup",
+    },
+    {
+      title: "Joined at",
       dataIndex: "createdAt",
       render: function (data: any) {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
@@ -153,10 +165,10 @@ const AllDriverList = () => {
   ];
 
   const { data, isLoading } = useGetAllDriverQuery({ ...query });
-  const Drivers = data?.drivers;
+  const drivers = data?.drivers;
   const meta = data?.meta;
 
-  console.log(Drivers);
+  console.log(drivers);
 
   const onPaginationChange = (page: number, pageSize: number) => {
     setPage(page);
@@ -200,14 +212,16 @@ const AllDriverList = () => {
   return (
     <div className="bg-white border border-blue-200 rounded-xl shadow-md shadow-blue-200 p-5 space-y-3">
       <ActionBar inline title="Driver List">
-        <div className="flex items-center gap-2 ">
+        <div className="flex items-center gap-2">
           <Input
             // size="large"
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
-            style={{
-              // width: "100%",
-            }}
+            style={
+              {
+                // width: "100%",
+              }
+            }
           />
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
@@ -227,7 +241,7 @@ const AllDriverList = () => {
       <UMTable
         loading={isLoading}
         columns={columns}
-        dataSource={Drivers}
+        dataSource={drivers}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
