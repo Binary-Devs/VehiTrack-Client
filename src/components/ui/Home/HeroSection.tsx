@@ -1,44 +1,50 @@
+import { Button, Flex } from "antd";
+import Image from "next/image";
+import vehicle from "../../../assets/car-monochromatic.png";
+
 export default function HeroSection() {
   return (
-    <section className=" rounded-xl ">
-
-    <div className="relative bg-[url(https://images.unsplash.com/photo-1511350224460-4a95f1cf2e88?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)] bg-cover bg-center bg-no-repeat  my-2 max-h-[50vh] rounded-lg">
-      <div className="absolute inset-0 bg-white/75 sm:bg-transparent sm:from-white/95 sm:to-white/25 ltr:sm:bg-gradient-to-r rtl:sm:bg-gradient-to-l">
-        
-      </div>
-
-      <div className="relative mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:flex lg:h-screen lg:items-center lg:px-8">
-        <div className="max-w-xl  ltr:sm:text-left rtl:sm:text-right">
-          <h1 className="text-3xl font-extrabold sm:text-5xl">
-            Let us find your
-            <strong className="block font-extrabold text-rose-700">
-              {" "}
-              Vehicle.{" "}
-            </strong>
-          </h1>
-
-          <p className="mt-7 max-w-lg sm:text-xl/relaxed ">
-          Lobortis pretium si sapien vitae habitant justo adipiscing sagittis vivamus interdum felis magna magnis diam lectus faucibus porta sodales vehicula aptent neque vestibulum rhoncus mollis nunc pellentesque euismod
-          </p>
-
-          <div className="mt-8 flex flex-wrap gap-4 text-center">
-            <a
-              href="#"
-              className="block w-full rounded bg-rose-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-rose-700 focus:outline-none focus:ring active:bg-rose-500 sm:w-auto"
+    <section className="text-center flex flex-col justify-center items-center my-10 space-y-5">
+      <h1 className="text-2xl md:text-5xl max-w-7xl font-semibold ">
+      Vehicle Management System (VMS): A One Stop Fleet Management Solution
+      </h1>
+      <p className="text-lg">
+        Netus proin iaculis ad curabitur si magnis et sollicitudin erat felis
+        parturient adipiscing nam aenean euismod elementum dui id diam nullam
+        commodo habitasse quam auctor urna curae aliquet ut pede
+      </p>
+      <Flex justify="center" align="center" gap="small">
+        <Button>View Demo </Button>
+        <Button type="primary">Buy Now</Button>
+      </Flex>
+      <div className="relative">
+        <Image
+          src={vehicle}
+          width={500}
+          height={500}
+          alt=""
+          style={{ overflow: "hidden", objectFit: "cover" }}
+        />
+        <div className="flex items-center justify-center   absolute top-[10%] inset-0 animate-pulse">
+          <button className="relative flex items-center justify-center w-16 h-16 bg-blue-500 rounded-full focus:outline-none">
+            <span className="absolute w-8 h-8 bg-white rounded-full"></span>
+            <svg
+              className="w-6 h-6 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              Get Started
-            </a>
-
-            <a
-              href="#"
-              className="block w-full rounded bg-white px-12 py-3 text-sm font-medium text-rose-600 shadow hover:text-rose-700 focus:outline-none focus:ring active:text-rose-500 sm:w-auto"
-            >
-              Learn More
-            </a>
-          </div>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 3l14 9-14 9V3z"
+              ></path>
+            </svg>
+          </button>
         </div>
       </div>
-    </div>
     </section>
   );
 }
