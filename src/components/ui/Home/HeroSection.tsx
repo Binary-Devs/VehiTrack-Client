@@ -8,11 +8,14 @@ export default function HeroSection() {
       <h1 className="text-2xl md:text-5xl max-w-7xl font-semibold ">
       Vehicle Management System (VMS): A One Stop Fleet Management Solution
       </h1>
-      <p className="text-lg">
+      <div className="max-w-7xl mx-auto">
+
+      <p className="text-lg ">
         Netus proin iaculis ad curabitur si magnis et sollicitudin erat felis
         parturient adipiscing nam aenean euismod elementum dui id diam nullam
         commodo habitasse quam auctor urna curae aliquet ut pede
       </p>
+      </div>
       <Flex justify="center" align="center" gap="small">
         <Button>View Demo </Button>
         <Button type="primary">Buy Now</Button>
@@ -37,7 +40,7 @@ export default function HeroSection() {
             >
               <path
                 stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinejoin="round"
                 stroke-width="2"
                 d="M5 3l14 9-14 9V3z"
               ></path>
