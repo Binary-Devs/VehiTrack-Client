@@ -37,7 +37,7 @@ export default function HeroSection() {
             >
               <path
                 stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinejoin="round"
                 stroke-width="2"
                 d="M5 3l14 9-14 9V3z"
               ></path>
