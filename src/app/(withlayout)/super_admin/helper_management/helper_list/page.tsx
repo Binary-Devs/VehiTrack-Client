@@ -95,7 +95,7 @@ const HelperListPage = () => {
       dataIndex: "fullName",
     },
     {
-      title: "User Id",
+      title: "User ID",
       dataIndex: "helperId",
     },
     // {

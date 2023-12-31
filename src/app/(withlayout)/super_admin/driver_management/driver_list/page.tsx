@@ -95,6 +95,10 @@ const AllDriverList = () => {
       dataIndex: "fullName",
     },
     {
+      title: "User ID",
+      dataIndex: "driverId",
+    },
+    {
       title: "License No",
       dataIndex: "licenseNo",
     },

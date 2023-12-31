@@ -19,6 +19,10 @@ import AddUpdateVehicle from "@/components/CreateUpdateFrom/AddUpdateVehicle";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
+import { useGetAllBrandQuery } from "@/redux/api/brand/brandApi";
+import { useGetAllDriverQuery } from "@/redux/api/driver/driverApi";
+import { useGetAllHelperQuery } from "@/redux/api/helper/helperApi";
+import { useGetAllModelQuery } from "@/redux/api/model/modelApi";
 import { useGetAllVehicleQuery } from "@/redux/api/vehicle/vehicleApi";
 
 const VehicleListPage = () => {
@@ -53,6 +57,22 @@ const VehicleListPage = () => {
   const meta = data?.meta;
 
   console.log(vehicles);
+
+  // BrandData for creating vehicle
+  const { data: brandData, isLoading: brandLoad } = useGetAllBrandQuery({});
+  const brands = brandData?.brands;
+
+  // ModelData for creating vehicle
+  const { data: modelData, isLoading: modelLoad } = useGetAllModelQuery({});
+  const models = modelData?.models;
+
+  // DriverData for creating vehicle
+  const { data: driverData, isLoading: driverLoad } = useGetAllDriverQuery({});
+  const drivers = driverData?.drivers;
+
+  // HelperData for creating vehicle
+  const { data: helperData, isLoading: helperLoad } = useGetAllHelperQuery({});
+  const helpers = helperData?.helpers;
 
   //@ts-ignore
   const generalUserData = [
@@ -119,16 +139,20 @@ const VehicleListPage = () => {
         );
       },
     },
+    // {
+    //   title: "Name",
+    //   render: function (data: any) {
+    //     const fullName = `${data?.name} `;
+    //     return <>{fullName}</>;
+    //   },
+    // },
     {
-      title: "Name",
-      render: function (data: any) {
-        const fullName = `${data?.name} `;
-        return <>{fullName}</>;
-      },
+      title: "Band Name",
+      dataIndex: "brand.label",
     },
     {
-      title: "Band name",
-      dataIndex: "bandName",
+      title: "Model Name",
+      dataIndex: "model.label",
     },
     {
       title: "Reg No",
@@ -138,20 +162,16 @@ const VehicleListPage = () => {
       title: "Value",
       dataIndex: "vehicleValue",
     },
-    {
-      title: "Status",
-      render: (isActive: boolean) =>
-        isActive ? (
-          <Tag color="green">Active</Tag>
-        ) : (
-          <Tag color="red">Not Active</Tag>
-        ),
-    },
+    // {
+    //   title: "Status",
+    //   render: (isActive: boolean) =>
+    //     isActive ? (
+    //       <Tag color="green">Active</Tag>
+    //     ) : (
+    //       <Tag color="red">Not Active</Tag>
+    //     ),
+    // },
 
-    {
-      title: "Contact no.",
-      dataIndex: "phoneNumber",
-    },
     {
       title: "Created at",
       dataIndex: "createdAt",
@@ -162,7 +182,7 @@ const VehicleListPage = () => {
     },
     {
       title: "Action",
-      dataIndex: "_id",
+      dataIndex: "id",
       render: function (data: any) {
         return (
           <>
@@ -258,15 +278,22 @@ const VehicleListPage = () => {
             </Button>
           )}
           <ModalComponent buttonText="Add Vehicle">
-            <AddUpdateVehicle />
+            <AddUpdateVehicle
+              brands={brands}
+              models={models}
+              drivers={drivers}
+              helpers={helpers}
+            />
           </ModalComponent>
         </div>
       </ActionBar>
 
       <UMTable
-        loading={isLoading}
+        loading={
+          isLoading || brandLoad || modelLoad || driverLoad || helperLoad
+        }
         columns={columns}
-        dataSource={generalUserData}
+        dataSource={vehicles}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}

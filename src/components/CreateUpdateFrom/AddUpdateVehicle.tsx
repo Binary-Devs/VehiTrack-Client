@@ -2,16 +2,24 @@
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
-import FormTextArea from "@/components/Forms/FormTextArea";
 import UploadImage from "@/components/ui/uploadImage";
-import { isActive } from "@/constants/global";
 import { useCreateVehicleMutation } from "@/redux/api/vehicle/vehicleApi";
 import { Button, Col, Row, message } from "antd";
 
-const AddUpdateVehicle = () => {
+const AddUpdateVehicle = ({
+  brands,
+  models,
+  drivers,
+  helpers,
+}: {
+  brands: any;
+  models: any;
+  drivers: any;
+  helpers: any;
+}) => {
   const [createVehicle, { isLoading }] = useCreateVehicleMutation();
   const onSubmit = async (values: any) => {
-    message.loading("Adding....");
+    message.loading("Adding vehicle....");
     try {
       const res = await createVehicle(values).unwrap();
       if (res.id) {
@@ -67,44 +75,92 @@ const AddUpdateVehicle = () => {
   return (
     <div>
       <h1 className="text-center my-1 font-bold text-2xl">Add Vehicle</h1>
-      {/*  */}
       <div>
         <Form submitHandler={onSubmit}>
           <div
             style={{
               border: "1px solid #d9d9d9",
-              borderRadius: "5px",
-              padding: "15px",
+              borderRadius: "8px",
+              padding: "20px",
               marginBottom: "10px",
             }}
+            className="my-4"
           >
-            <p className="text-base lg:text-lg font-normal">
-              Vehicle Information
-            </p>
-            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+            <Row
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+              gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
+            >
               <Col
                 className="gutter-row"
-                xs={24}
-                md={12}
-                lg={8}
+                xs={10}
+                sm={6}
+                md={6}
+                lg={4}
+                // style={{
+                //   marginBottom: "10px",
+                // }}
+              >
+                <UploadImage />
+              </Col>
+
+              <Col
+                className="gutter-row"
+                xs={14}
+                sm={18}
+                md={18}
+                lg={20}
                 style={{
                   marginBottom: "10px",
                 }}
               >
-                <FormInput
-                  type="text"
-                  name="name"
-                  size="large"
-                  label="Band name"
-                  required={true}
-                  placeholder="Please enter band name"
-                />
+                <div className="space-y-[10px]">
+                  <Col
+                    style={{
+                      padding: "0px",
+                    }}
+                  >
+                    <FormSelectField
+                      size="large"
+                      name="brandId"
+                      options={brands.map((b: any) => ({
+                        label: b.label,
+                        value: b.id,
+                      }))}
+                      // defaultValue={priceTypeOptions[0]}
+                      label="Brand"
+                      placeholder="Select vehicle brand"
+                      required={true}
+                    />
+                  </Col>
+                  <Col
+                    style={{
+                      padding: "0px",
+                    }}
+                  >
+                    <FormSelectField
+                      size="large"
+                      name="modelId"
+                      options={models.map((m: any) => ({
+                        label: m.label,
+                        value: m.id,
+                      }))}
+                      // defaultValue={priceTypeOptions[0]}
+                      label="Model"
+                      placeholder="Select vehicle model"
+                      required={true}
+                    />
+                  </Col>
+                </div>
               </Col>
+
               <Col
                 className="gutter-row"
                 xs={24}
                 md={12}
-                lg={8}
+                lg={12}
                 style={{
                   marginBottom: "10px",
                 }}
@@ -113,16 +169,18 @@ const AddUpdateVehicle = () => {
                   type="text"
                   name="regNo"
                   size="large"
-                  label="Registration Number"
-                  placeholder="Please enter a valid registration number"
+                  // value=""
+                  label="Registration No"
                   required={true}
+                  placeholder="Please enter vehicle registration no"
                 />
               </Col>
+
               <Col
                 className="gutter-row"
                 xs={24}
                 md={12}
-                lg={8}
+                lg={12}
                 style={{
                   marginBottom: "10px",
                 }}
@@ -131,12 +189,12 @@ const AddUpdateVehicle = () => {
                   type="number"
                   name="vehicleValue"
                   size="large"
-                  label="Value"
+                  // value=""
+                  label="Vehicle Value"
                   required={true}
                   placeholder="Please enter vehicle value"
                 />
               </Col>
-
               <Col
                 className="gutter-row"
                 xs={24}
@@ -148,14 +206,16 @@ const AddUpdateVehicle = () => {
               >
                 <FormSelectField
                   size="large"
-                  name="Driver"
-                  options={driverlist}
+                  name="driverId"
+                  options={drivers.map((d: any) => ({
+                    label: d.fullName,
+                    value: d.id,
+                  }))}
                   // defaultValue={priceTypeOptions[0]}
                   label="Driver"
-                  // placeholder="Select"
+                  placeholder="Select vehicle driver"
                   required={true}
                 />
-                {/* //! price type 8 */}
               </Col>
               <Col
                 className="gutter-row"
@@ -168,19 +228,22 @@ const AddUpdateVehicle = () => {
               >
                 <FormSelectField
                   size="large"
-                  name="Driver"
-                  options={helperList}
+                  name="helperId"
+                  options={helpers.map((h: any) => ({
+                    label: h.fullName,
+                    value: h.id,
+                  }))}
                   // defaultValue={priceTypeOptions[0]}
                   label="Helper"
-                  // placeholder="Select"
-                  required={true}
+                  placeholder="Select vehicle helper"
+                  // required={true}
                 />
-                {/* //! price type 8 */}
               </Col>
+
               <Col
                 className="gutter-row"
                 xs={24}
-                md={12}
+                md={24}
                 lg={8}
                 style={{
                   marginBottom: "10px",
@@ -188,60 +251,29 @@ const AddUpdateVehicle = () => {
               >
                 <FormSelectField
                   size="large"
-                  name="activityType"
-                  options={isActive}
+                  name="isActive"
+                  options={[
+                    {
+                      label: "Active",
+                      value: true,
+                    },
+                    {
+                      label: "Inactive",
+                      value: false,
+                    },
+                  ]}
                   // defaultValue={priceTypeOptions[0]}
-                  label="Status"
-                  // placeholder="Select"
-                  required={true}
-                />
-                {/* //! price type 8 */}
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                // md={12}
-                // lg={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <UploadImage /* name="image" */ />
-              </Col>
-            </Row>
-          </div>
-
-          {/* basic info */}
-          <div
-            style={{
-              border: "1px solid #d9d9d9",
-              borderRadius: "5px",
-              padding: "15px",
-              marginBottom: "10px",
-            }}
-          >
-            <p
-              style={{
-                fontSize: "18px",
-                marginBottom: "10px",
-              }}
-            >
-              Basic Information
-            </p>
-            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-              <Col xs={24} style={{ margin: "10px 0" }}>
-                <FormTextArea
-                  name="description"
-                  label="Description"
-                  rows={10}
+                  label="Vehicle Status"
+                  placeholder="Select vehicle status"
+                  // required={true}
                 />
               </Col>
             </Row>
-          </div>
-          <div className="flex justify-center items-center">
-            <Button htmlType="submit" type="primary" disabled={isLoading}>
-              Add
-            </Button>
+            <div className="flex justify-end items-center mt-[5px]">
+              <Button htmlType="submit" type="primary" disabled={isLoading}>
+                Add
+              </Button>
+            </div>
           </div>
         </Form>
       </div>

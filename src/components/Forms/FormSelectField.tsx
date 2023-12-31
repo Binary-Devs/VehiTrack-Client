@@ -5,7 +5,7 @@ import { Controller, useFormContext } from "react-hook-form";
 
 export type SelectOptions = {
   label: string;
-  value: string;
+  value: string | boolean;
 };
 
 type SelectFieldProps = {
