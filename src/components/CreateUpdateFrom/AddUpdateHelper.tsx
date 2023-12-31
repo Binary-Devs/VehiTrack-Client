@@ -52,7 +52,8 @@ const AddUpdateHelper = () => {
               <Col
                 className="gutter-row"
                 xs={10}
-                md={4}
+                sm={6}
+                md={6}
                 lg={4}
                 // style={{
                 //   marginBottom: "10px",
@@ -64,7 +65,8 @@ const AddUpdateHelper = () => {
               <Col
                 className="gutter-row"
                 xs={14}
-                md={20}
+                sm={18}
+                md={18}
                 lg={20}
                 style={{
                   marginBottom: "10px",
