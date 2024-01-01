@@ -9,7 +9,7 @@ import {
   EyeOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { Avatar, Button, Input, Tag } from "antd";
+import { Avatar, Button, Input } from "antd";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -34,6 +34,7 @@ const VehicleListPage = () => {
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [brandId, setBrandId] = useState<string>("");
   const [open, setOpen] = useState<boolean>(false);
   const [adminId, setAdminId] = useState<string>("");
 
@@ -63,15 +64,22 @@ const VehicleListPage = () => {
   const brands = brandData?.brands;
 
   // ModelData for creating vehicle
-  const { data: modelData, isLoading: modelLoad } = useGetAllModelQuery({});
+  const { data: modelData, isLoading: modelLoad } = useGetAllModelQuery({
+    brandId,
+    limit: "100",
+  });
   const models = modelData?.models;
 
   // DriverData for creating vehicle
-  const { data: driverData, isLoading: driverLoad } = useGetAllDriverQuery({});
+  const { data: driverData, isLoading: driverLoad } = useGetAllDriverQuery({
+    limit: "100",
+  });
   const drivers = driverData?.drivers;
 
   // HelperData for creating vehicle
-  const { data: helperData, isLoading: helperLoad } = useGetAllHelperQuery({});
+  const { data: helperData, isLoading: helperLoad } = useGetAllHelperQuery({
+    limit: "100",
+  });
   const helpers = helperData?.helpers;
 
   //@ts-ignore
@@ -142,17 +150,23 @@ const VehicleListPage = () => {
     // {
     //   title: "Name",
     //   render: function (data: any) {
-    //     const fullName = `${data?.name} `;
+    //     const fullName = `${data?.name}`;
     //     return <>{fullName}</>;
     //   },
     // },
     {
       title: "Band Name",
-      dataIndex: "brand.label",
+      dataIndex: "brand",
+      render: (data: any) => {
+        return `${data.label}`;
+      },
     },
     {
       title: "Model Name",
-      dataIndex: "model.label",
+      dataIndex: "model",
+      render: (data: any) => {
+        return `${data.label}`;
+      },
     },
     {
       title: "Reg No",
@@ -161,6 +175,20 @@ const VehicleListPage = () => {
     {
       title: "Value",
       dataIndex: "vehicleValue",
+    },
+    {
+      title: "Driver Name",
+      dataIndex: "driver",
+      render: (data: any) => {
+        return `${data.fullName}`;
+      },
+    },
+    {
+      title: "Helper Name",
+      dataIndex: "helper",
+      render: (data: any) => {
+        return `${data ? data.fullName : ""}`;
+      },
     },
     // {
     //   title: "Status",
@@ -280,6 +308,7 @@ const VehicleListPage = () => {
           <ModalComponent buttonText="Add Vehicle">
             <AddUpdateVehicle
               brands={brands}
+              setBrandId={setBrandId}
               models={models}
               drivers={drivers}
               helpers={helpers}

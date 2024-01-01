@@ -8,28 +8,31 @@ import { Button, Col, Row, message } from "antd";
 
 const AddUpdateVehicle = ({
   brands,
+  setBrandId,
   models,
   drivers,
   helpers,
 }: {
   brands: any;
+  setBrandId: any;
   models: any;
   drivers: any;
   helpers: any;
 }) => {
   const [createVehicle, { isLoading }] = useCreateVehicleMutation();
   const onSubmit = async (values: any) => {
+    console.log(values);
     message.loading("Adding vehicle....");
-    try {
-      const res = await createVehicle(values).unwrap();
-      if (res.id) {
-        message.success("Vehicle added successfully!");
-      } else {
-        message.error(res.message);
-      }
-    } catch (err: any) {
-      message.error(err.message);
-    }
+    // try {
+    //   const res = await createVehicle(values).unwrap();
+    //   if (res.id) {
+    //     message.success("Vehicle added successfully!");
+    //   } else {
+    //     message.error(res.message);
+    //   }
+    // } catch (err: any) {
+    //   message.error(err.message);
+    // }
   };
   //   if(isLoading){
   //     return message.loading("Loading...")

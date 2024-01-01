@@ -107,8 +107,8 @@ const AddUpdateHelper = () => {
               <Col
                 className="gutter-row"
                 xs={24}
-                md={12}
-                lg={12}
+                md={8}
+                lg={8}
                 style={{
                   marginBottom: "10px",
                 }}
@@ -126,8 +126,8 @@ const AddUpdateHelper = () => {
               <Col
                 className="gutter-row"
                 xs={24}
-                md={12}
-                lg={12}
+                md={8}
+                lg={8}
                 style={{
                   marginBottom: "10px",
                 }}
@@ -159,11 +159,12 @@ const AddUpdateHelper = () => {
                   placeholder="Please enter helper license number"
                 />
               </Col> */}
+
               <Col
                 className="gutter-row"
                 xs={24}
-                md={12}
-                lg={12}
+                md={8}
+                lg={8}
                 style={{
                   marginBottom: "10px",
                 }}
@@ -182,8 +183,8 @@ const AddUpdateHelper = () => {
               <Col
                 className="gutter-row"
                 xs={24}
-                md={12}
-                lg={12}
+                md={24}
+                lg={24}
                 style={{
                   marginBottom: "10px",
                 }}
@@ -192,9 +193,9 @@ const AddUpdateHelper = () => {
                   name="helper.address"
                   size="large"
                   label="Address"
-                  rows={1}
+                  rows={2}
                   placeholder="Enter helper address"
-                  required
+                  // required
                 />
               </Col>
             </Row>

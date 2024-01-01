@@ -53,7 +53,9 @@ const ModelListPage = () => {
   const meta = data?.meta;
 
   // BrandData for creating model
-  const { data: brandData, isLoading: brandLoad } = useGetAllBrandQuery({});
+  const { data: brandData, isLoading: brandLoad } = useGetAllBrandQuery({
+    limit: "100",
+  });
   const brands = brandData?.brands;
 
   //@ts-ignore
@@ -241,7 +243,7 @@ const ModelListPage = () => {
       </ActionBar>
 
       <UMTable
-        loading={isLoading}
+        loading={isLoading || brandLoad}
         columns={columns}
         dataSource={models}
         pageSize={size}
