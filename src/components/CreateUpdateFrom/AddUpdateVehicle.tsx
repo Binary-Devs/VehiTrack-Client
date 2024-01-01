@@ -8,13 +8,11 @@ import { Button, Col, Row, message } from "antd";
 
 const AddUpdateVehicle = ({
   brands,
-  setBrandId,
   models,
   drivers,
   helpers,
 }: {
   brands: any;
-  setBrandId: any;
   models: any;
   drivers: any;
   helpers: any;

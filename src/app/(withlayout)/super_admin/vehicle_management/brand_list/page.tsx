@@ -11,9 +11,7 @@ import {
 import { Button, Input } from "antd";
 import Link from "next/link";
 import { useState } from "react";
-
 import dayjs from "dayjs";
-
 import AddUpdateBrand from "@/components/CreateUpdateFrom/AddUpdateBrand";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
@@ -33,7 +31,7 @@ const BrandListPage = () => {
   const [adminId, setAdminId] = useState<string>("");
 
   query["limit"] = size;
-  query["page"] = page - 1;
+  query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
 
@@ -51,51 +49,7 @@ const BrandListPage = () => {
   const brands = data?.brands;
   const meta = data?.meta;
 
-  //@ts-ignore
-  const generalUserData = [
-    {
-      _id: 1,
-      name: "C.N.G",
-      regNo: "DP-01441",
-      bandName: "TATA",
-      vehicleValue: 400000,
-      isActive: true,
-      createdAt: "2023-01-01",
-      phoneNumber: "014741154151",
-      image:
-        "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=150&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      _id: 2,
-      name: "C.N.G",
-      regNo: "DP-01441",
-      bandName: "TATA",
-      vehicleValue: 400000,
-      isActive: true,
-      createdAt: "2023-01-01",
-      phoneNumber: "014741154151",
-      image:
-        "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=150&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      _id: 3,
-      name: "C.N.G",
-      regNo: "DP-01441",
-      bandName: "TATA",
-      vehicleValue: 400000,
-      isActive: true,
-      createdAt: "2023-01-01",
-      phoneNumber: "014741154151",
-      image:
-        "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=150&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-  ];
-  //@ts-ignore
-  // const meta = {
-  //   page: 1,
-  //   limit: 10,
-  //   total: 3,
-  // };
+  console.log(brands);
 
   const columns = [
     // {
@@ -164,6 +118,7 @@ const BrandListPage = () => {
       },
     },
   ];
+
   const onPaginationChange = (page: number, pageSize: number) => {
     console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);

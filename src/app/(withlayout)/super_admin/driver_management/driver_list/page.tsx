@@ -32,7 +32,7 @@ const AllDriverList = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   query["limit"] = size;
-  query["page"] = page - 1;
+  query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
 

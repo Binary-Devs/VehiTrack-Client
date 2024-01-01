@@ -34,12 +34,11 @@ const VehicleListPage = () => {
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [brandId, setBrandId] = useState<string>("");
   const [open, setOpen] = useState<boolean>(false);
   const [adminId, setAdminId] = useState<string>("");
 
   query["limit"] = size;
-  query["page"] = page - 1;
+  query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
 
@@ -52,7 +51,10 @@ const VehicleListPage = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  const { data, isLoading } = useGetAllVehicleQuery({ ...query });
+  const { data, isLoading } = useGetAllVehicleQuery({
+    ...query,
+    isActive: true,
+  });
 
   const vehicles = data?.vehicles;
   const meta = data?.meta;
@@ -65,7 +67,6 @@ const VehicleListPage = () => {
 
   // ModelData for creating vehicle
   const { data: modelData, isLoading: modelLoad } = useGetAllModelQuery({
-    brandId,
     limit: "100",
   });
   const models = modelData?.models;
@@ -308,7 +309,6 @@ const VehicleListPage = () => {
           <ModalComponent buttonText="Add Vehicle">
             <AddUpdateVehicle
               brands={brands}
-              setBrandId={setBrandId}
               models={models}
               drivers={drivers}
               helpers={helpers}
