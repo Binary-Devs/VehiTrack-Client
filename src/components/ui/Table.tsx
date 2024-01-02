@@ -40,7 +40,7 @@ const UMTable = ({
       scroll={{
         // x: 1200,
         x: "max-content",
-        // y: "min-content",
+        // y: "max-content",
       }}
       loading={loading}
       columns={columns}

@@ -6,7 +6,7 @@ import React, { useState } from "react";
 const ModalComponent = ({
   children,
   buttonText,
-  loading = false,
+  loading,
   setSetModel,
   showModel,
 }: {
@@ -50,7 +50,7 @@ const ModalComponent = ({
       <Modal
         // title="Title"
         open={open}
-        confirmLoading={loading}
+        confirmLoading={loading ? loading : false}
         onCancel={handleCancel}
         //! when i went hidden ok and cancel button then it use
         footer={(_, { OkBtn, CancelBtn }) => (

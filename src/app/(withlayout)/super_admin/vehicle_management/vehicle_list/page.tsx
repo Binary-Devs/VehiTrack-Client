@@ -3,24 +3,29 @@ import ActionBar from "@/components/ui/ActionBar";
 
 import { useDebounced } from "@/redux/hooks";
 import {
+  CarOutlined,
   DeleteOutlined,
   EditOutlined,
   EyeOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { Button, Input } from "antd";
+import { Avatar, Button, Input } from "antd";
 import Link from "next/link";
 import { useState } from "react";
 
 import dayjs from "dayjs";
 
-import CreateVehicle from "@/components/CreateUpdateFrom/VehicleCreate";
+import AddUpdateVehicle from "@/components/CreateUpdateFrom/AddUpdateVehicle";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
-import Image from "next/image";
+import { useGetAllBrandQuery } from "@/redux/api/brand/brandApi";
+import { useGetAllDriverQuery } from "@/redux/api/driver/driverApi";
+import { useGetAllHelperQuery } from "@/redux/api/helper/helperApi";
+import { useGetAllModelQuery } from "@/redux/api/model/modelApi";
+import { useGetAllVehicleQuery } from "@/redux/api/vehicle/vehicleApi";
 
-const AllVehicleList = () => {
+const VehicleListPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
   const query: Record<string, any> = {};
 
@@ -45,6 +50,38 @@ const AllVehicleList = () => {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
+
+  const { data, isLoading } = useGetAllVehicleQuery({
+    ...query,
+    isActive: true,
+  });
+
+  const vehicles = data?.vehicles;
+  const meta = data?.meta;
+
+  console.log(vehicles);
+
+  // BrandData for creating vehicle
+  const { data: brandData, isLoading: brandLoad } = useGetAllBrandQuery({});
+  const brands = brandData?.brands;
+
+  // ModelData for creating vehicle
+  const { data: modelData, isLoading: modelLoad } = useGetAllModelQuery({
+    limit: "100",
+  });
+  const models = modelData?.models;
+
+  // DriverData for creating vehicle
+  const { data: driverData, isLoading: driverLoad } = useGetAllDriverQuery({
+    limit: "100",
+  });
+  const drivers = driverData?.drivers;
+
+  // HelperData for creating vehicle
+  const { data: helperData, isLoading: helperLoad } = useGetAllHelperQuery({
+    limit: "100",
+  });
+  const helpers = helperData?.helpers;
 
   //@ts-ignore
   const generalUserData = [
@@ -86,40 +123,51 @@ const AllVehicleList = () => {
     },
   ];
   //@ts-ignore
-  const meta = {
-    page: 1,
-    limit: 10,
-    total: 3,
-  };
+  // const meta = {
+  //   page: 1,
+  //   limit: 10,
+  //   total: 3,
+  // };
 
   const columns = [
     {
       title: "",
       // fixed: "left",
-      width: 80,
+      // width: 80,
       render: function (data: any) {
         const fullName = `${data?.image} `;
         return (
-          <Image
-            src={fullName}
-            width={100}
-            height={100}
-            alt=""
-            style={{ width: "70px", height: "50px" }}
-          />
+          // <Image
+          //   src={fullName}
+          //   width={100}
+          //   height={100}
+          //   alt=""
+          //   style={{ width: "70px", height: "50px" }}
+          // />
+          <Avatar shape="square" size={64} icon={<CarOutlined />} />
         );
       },
     },
+    // {
+    //   title: "Name",
+    //   render: function (data: any) {
+    //     const fullName = `${data?.name}`;
+    //     return <>{fullName}</>;
+    //   },
+    // },
     {
-      title: "Name",
-      render: function (data: any) {
-        const fullName = `${data?.name} `;
-        return <>{fullName}</>;
+      title: "Band Name",
+      dataIndex: "brand",
+      render: (data: any) => {
+        return `${data.label}`;
       },
     },
     {
-      title: "Band name",
-      dataIndex: "bandName",
+      title: "Model Name",
+      dataIndex: "model",
+      render: (data: any) => {
+        return `${data.label}`;
+      },
     },
     {
       title: "Reg No",
@@ -130,29 +178,29 @@ const AllVehicleList = () => {
       dataIndex: "vehicleValue",
     },
     {
-      title: "Status",
-      render: function (data: any) {
-        const fullName = `${data?.isActive} `;
-        return (
-          <>
-            {fullName ? (
-              <p className="bg-green-600 text-white rounded-lg text-center">
-                Active
-              </p>
-            ) : (
-              <p className="bg-red-600 text-white rounded-lg text-center">
-                Deactivate
-              </p>
-            )}
-          </>
-        );
+      title: "Driver Name",
+      dataIndex: "driver",
+      render: (data: any) => {
+        return `${data.fullName}`;
       },
     },
-
     {
-      title: "Contact no.",
-      dataIndex: "phoneNumber",
+      title: "Helper Name",
+      dataIndex: "helper",
+      render: (data: any) => {
+        return `${data ? data.fullName : ""}`;
+      },
     },
+    // {
+    //   title: "Status",
+    //   render: (isActive: boolean) =>
+    //     isActive ? (
+    //       <Tag color="green">Active</Tag>
+    //     ) : (
+    //       <Tag color="red">Not Active</Tag>
+    //     ),
+    // },
+
     {
       title: "Created at",
       dataIndex: "createdAt",
@@ -163,7 +211,7 @@ const AllVehicleList = () => {
     },
     {
       title: "Action",
-      dataIndex: "_id",
+      dataIndex: "id",
       render: function (data: any) {
         return (
           <>
@@ -195,6 +243,7 @@ const AllVehicleList = () => {
       },
     },
   ];
+
   const onPaginationChange = (page: number, pageSize: number) => {
     console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
@@ -232,41 +281,48 @@ const AllVehicleList = () => {
   //       }
   //     });
   //   };
-  //   if (isLoading) {
-  //     return <LoadingForDataFetch />;
-  //   }
+  // if (isLoading) {
+  //   return <Loader className="h-[50vh] flex items-end justify-center" />;
+  // }
   return (
-    <div className="rounded-xl bg-white p-5 shadow-xl">
-      <ActionBar title="Vehicle List">
-        <Input
-          size="large"
-          placeholder="Search"
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            minWidth: "150px",
-            maxWidth: "300px",
-          }}
-        />
-        <div>
-          <ModalComponent buttonText="Create Vehicle">
-            <CreateVehicle />
-          </ModalComponent>
+    <div className="bg-white border border-blue-200 rounded-xl shadow-md shadow-blue-200 p-5 space-y-3">
+      <ActionBar inline title="Vehicle List">
+        <div className="flex items-center gap-2">
+          <Input
+            // size="large"
+            placeholder="Search"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            // style={{
+            //   minWidth: "150px",
+            //   maxWidth: "300px",
+            // }}
+          />
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
-              style={{ margin: "0px 5px" }}
+              // style={{ margin: "0px 5px" }}
               type="primary"
               onClick={resetFilters}
             >
               <ReloadOutlined />
             </Button>
           )}
+          <ModalComponent buttonText="Add Vehicle">
+            <AddUpdateVehicle
+              brands={brands}
+              models={models}
+              drivers={drivers}
+              helpers={helpers}
+            />
+          </ModalComponent>
         </div>
       </ActionBar>
 
       <UMTable
-        loading={false}
+        loading={
+          isLoading || brandLoad || modelLoad || driverLoad || helperLoad
+        }
         columns={columns}
-        dataSource={generalUserData}
+        dataSource={vehicles}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -287,4 +343,4 @@ const AllVehicleList = () => {
   );
 };
 
-export default AllVehicleList;
+export default VehicleListPage;

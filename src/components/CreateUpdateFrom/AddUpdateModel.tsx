@@ -71,13 +71,10 @@ const AddUpdateModel = ({ brands }: { brands: any }) => {
             style={{
               border: "1px solid #d9d9d9",
               borderRadius: "5px",
-              padding: "15px",
+              padding: "20px",
               marginBottom: "10px",
             }}
           >
-            <p className="text-base lg:text-lg font-normal">
-              Model Information
-            </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
                 className="gutter-row"
@@ -120,11 +117,11 @@ const AddUpdateModel = ({ brands }: { brands: any }) => {
                 />
               </Col>
             </Row>
-          </div>
-          <div className="flex justify-center items-center">
-            <Button htmlType="submit" type="primary" disabled={isLoading}>
-              Create
-            </Button>
+            <div className="flex justify-end items-center mt-[5px]">
+              <Button htmlType="submit" type="primary" disabled={isLoading}>
+                Add
+              </Button>
+            </div>
           </div>
         </Form>
       </div>

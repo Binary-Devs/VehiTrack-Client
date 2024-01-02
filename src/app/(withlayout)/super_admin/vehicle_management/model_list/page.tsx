@@ -15,7 +15,6 @@ import { useState } from "react";
 import dayjs from "dayjs";
 
 import AddUpdateModel from "@/components/CreateUpdateFrom/AddUpdateModel";
-import Loader from "@/components/Utlis/Loader";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
@@ -35,7 +34,7 @@ const ModelListPage = () => {
   const [adminId, setAdminId] = useState<string>("");
 
   query["limit"] = size;
-  query["page"] = page - 1;
+  query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
 
@@ -53,8 +52,10 @@ const ModelListPage = () => {
   const models = data?.models;
   const meta = data?.meta;
 
-  const { data: brandData, isLoading: brandLoad } = useGetAllBrandQuery({});
-
+  // BrandData for creating model
+  const { data: brandData, isLoading: brandLoad } = useGetAllBrandQuery({
+    limit: "100",
+  });
   const brands = brandData?.brands;
 
   //@ts-ignore
@@ -208,40 +209,41 @@ const ModelListPage = () => {
   //       }
   //     });
   //   };
-  if (isLoading || brandLoad) {
-    return <Loader className="h-[50vh] flex items-end justify-center" />;
-  }
+  // if (isLoading || brandLoad) {
+  //   return <Loader className="h-[50vh] flex items-end justify-center" />;
+  // }
 
   return (
-    <div className="rounded-xl bg-white p-5">
-      <ActionBar title="Model List">
-        <Input
-          size="large"
-          placeholder="Search"
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            minWidth: "150px",
-            maxWidth: "300px",
-          }}
-        />
-        <div>
-          <ModalComponent buttonText="Add Model">
-            <AddUpdateModel brands={brands} />
-          </ModalComponent>
+    <div className="bg-white border border-blue-200 rounded-xl shadow-md shadow-blue-200 p-5 space-y-3">
+      <ActionBar inline title="Model List">
+        <div className="flex items-center gap-2">
+          <Input
+            // size="large"
+            placeholder="Search"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            // style={{
+            //   minWidth: "150px",
+            //   maxWidth: "300px",
+            // }}
+          />
+
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
-              style={{ margin: "0px 5px" }}
+              // style={{ margin: "0px 5px" }}
               type="primary"
               onClick={resetFilters}
             >
               <ReloadOutlined />
             </Button>
           )}
+          <ModalComponent buttonText="Add Model">
+            <AddUpdateModel brands={brands} />
+          </ModalComponent>
         </div>
       </ActionBar>
 
       <UMTable
-        loading={false}
+        loading={isLoading || brandLoad}
         columns={columns}
         dataSource={models}
         pageSize={size}

@@ -11,16 +11,12 @@ import {
 import { Button, Input } from "antd";
 import Link from "next/link";
 import { useState } from "react";
-
 import dayjs from "dayjs";
-
 import AddUpdateBrand from "@/components/CreateUpdateFrom/AddUpdateBrand";
-import Loader from "@/components/Utlis/Loader";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
 import { useGetAllBrandQuery } from "@/redux/api/brand/brandApi";
-import Image from "next/image";
 
 const BrandListPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
@@ -35,7 +31,7 @@ const BrandListPage = () => {
   const [adminId, setAdminId] = useState<string>("");
 
   query["limit"] = size;
-  query["page"] = page - 1;
+  query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
 
@@ -53,51 +49,7 @@ const BrandListPage = () => {
   const brands = data?.brands;
   const meta = data?.meta;
 
-  //@ts-ignore
-  const generalUserData = [
-    {
-      _id: 1,
-      name: "C.N.G",
-      regNo: "DP-01441",
-      bandName: "TATA",
-      vehicleValue: 400000,
-      isActive: true,
-      createdAt: "2023-01-01",
-      phoneNumber: "014741154151",
-      image:
-        "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=150&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      _id: 2,
-      name: "C.N.G",
-      regNo: "DP-01441",
-      bandName: "TATA",
-      vehicleValue: 400000,
-      isActive: true,
-      createdAt: "2023-01-01",
-      phoneNumber: "014741154151",
-      image:
-        "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=150&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      _id: 3,
-      name: "C.N.G",
-      regNo: "DP-01441",
-      bandName: "TATA",
-      vehicleValue: 400000,
-      isActive: true,
-      createdAt: "2023-01-01",
-      phoneNumber: "014741154151",
-      image:
-        "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=150&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-  ];
-  //@ts-ignore
-  // const meta = {
-  //   page: 1,
-  //   limit: 10,
-  //   total: 3,
-  // };
+  console.log(brands);
 
   const columns = [
     // {
@@ -166,6 +118,7 @@ const BrandListPage = () => {
       },
     },
   ];
+
   const onPaginationChange = (page: number, pageSize: number) => {
     console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
@@ -205,41 +158,41 @@ const BrandListPage = () => {
   //     });
   //   };
 
-  if (isLoading) {
-    return <Loader className="h-[50vh] flex items-end justify-center" />;
-  }
+  // if (isLoading) {
+  //   return <Loader className="h-[50vh] flex items-end justify-center" />;
+  // }
 
   return (
-    <div className="rounded-xl bg-white p-5">
-      <ActionBar title="Brand List">
-        <Input
-          size="large"
-          placeholder="Search"
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            minWidth: "150px",
-            maxWidth: "300px",
-          }}
-        />
-        <div>
-          <ModalComponent buttonText="Add Brand">
-            <AddUpdateBrand />
-          </ModalComponent>
+    <div className="bg-white border border-blue-200 rounded-xl shadow-md shadow-blue-200 p-5 space-y-3">
+      <ActionBar inline title="Brand List">
+        <div className="flex items-center gap-2">
+          <Input
+            // size="large"
+            placeholder="Search"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            // style={{
+            //   minWidth: "150px",
+            //   maxWidth: "300px",
+            // }}
+          />
 
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
-              style={{ margin: "0px 5px" }}
+              // style={{ margin: "0px 5px" }}
               type="primary"
               onClick={resetFilters}
             >
               <ReloadOutlined />
             </Button>
           )}
+          <ModalComponent buttonText="Add Brand">
+            <AddUpdateBrand />
+          </ModalComponent>
         </div>
       </ActionBar>
 
       <UMTable
-        loading={false}
+        loading={isLoading}
         columns={columns}
         dataSource={brands}
         pageSize={size}
