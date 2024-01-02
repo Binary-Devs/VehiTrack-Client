@@ -1,9 +1,12 @@
+import FuelStatus from '@/components/FuelManagement/FuelStatus';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'VehiTrack | Fuel Status',
+};
+
 const FuelStatusPage = () => {
-  return (
-    <div>
-      <p>this is fuel status page</p>
-    </div>
-  );
+  return <FuelStatus />;
 };
 
 export default FuelStatusPage;
