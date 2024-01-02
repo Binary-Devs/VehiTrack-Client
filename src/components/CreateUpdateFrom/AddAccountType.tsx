@@ -5,13 +5,15 @@ import { useCreateAccountTypeMutation } from "@/redux/api/accountType/accountTyp
 import { Button, Col, Row, message } from "antd";
 
 const AddAccountType = () => {
-  const [createAccountType] = useCreateAccountTypeMutation();
+  const [createAccountType, { isLoading }] = useCreateAccountTypeMutation();
   const onSubmit = async (data: any) => {
-    message.loading("creating.............");
+    message.loading("Adding.............");
     try {
       const res = await createAccountType({ ...data }).unwrap();
       if (res.id) {
-        message.success(" create account type in successfully");
+        message.success(" Account Type add in successfully");
+      } else {
+        message.error(res.message);
       }
     } catch (err: any) {
       message.error(err.message);
@@ -19,17 +21,46 @@ const AddAccountType = () => {
   };
   return (
     <div>
-      <h1>Create Account Type</h1>
-      <Form submitHandler={onSubmit}>
-        <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
-          <Col xs={24} md={12} lg={8} style={{ margin: "10px 0" }}>
-            <FormInput name="label" label="Label" />
-          </Col>
-        </Row>
-        <Button type="primary" htmlType="submit">
-          add
-        </Button>
-      </Form>
+      <h1 className="text-center my-1 font-bold text-2xl">Add Account Type</h1>
+      <div>
+        <Form submitHandler={onSubmit}>
+          <div
+            style={{
+              border: "1px solid #d9d9d9",
+              borderRadius: "5px",
+              padding: "15px",
+              marginBottom: "10px",
+            }}
+          >
+            <p className="text-base lg:text-lg font-normal">
+              Account Type Information
+            </p>
+            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={24}
+                lg={24}
+                style={{ margin: "10px 0" }}
+              >
+                <FormInput
+                  type="text"
+                  name="label"
+                  label="Label"
+                  size="large"
+                  required={true}
+                  placeholder="Please enter account type name"
+                />
+              </Col>
+            </Row>
+          </div>
+          <div className="flex justify-center items-center">
+            <Button htmlType="submit" type="primary" disabled={isLoading}>
+              Create
+            </Button>
+          </div>
+        </Form>
+      </div>
     </div>
   );
 };

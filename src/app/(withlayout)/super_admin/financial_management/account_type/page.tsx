@@ -1,11 +1,17 @@
 "use client";
 import AddAccountType from "@/components/CreateUpdateFrom/AddAccountType";
+import Loader from "@/components/Utlis/Loader";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { useGetAllAccountTypeQuery } from "@/redux/api/accountType/accountTypeApi";
 import { useDebounced } from "@/redux/hooks";
-import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  EyeOutlined,
+  ReloadOutlined,
+} from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
 import Link from "next/link";
@@ -20,11 +26,10 @@ const AccountTypePage = () => {
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  // query["limit"] = size;
-  // query["page"] = page;
-  // query["sortBy"] = sortBy;
-  // query["sortOrder"] = sortOrder;
-  query["searchTerm"] = searchTerm;
+  query["limit"] = size;
+  query["page"] = page - 1;
+  query["sortBy"] = sortBy;
+  query["sortOrder"] = sortOrder;
 
   const debouncedTerm = useDebounced({
     searchQuery: searchTerm,
@@ -35,65 +40,11 @@ const AccountTypePage = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const { data } = useGetAllAccountTypeQuery({ ...query });
+  const { data, isLoading } = useGetAllAccountTypeQuery({ ...query });
+  if (isLoading) {
+    return <Loader className="h-[50vh] flex items-end justify-center" />;
+  }
 
-  //   {
-  //     id: 1,
-  //     label: "Savings",
-  //     createdAt: "2023-01-01",
-  //     updatedAt: "2023-01-01",
-  //   },
-  //   {
-  //     id: 2,
-  //     label: "Checking",
-  //     createdAt: "2023-01-02",
-  //     updatedAt: "2023-01-02",
-  //   },
-  //   {
-  //     id: 3,
-  //     label: "Credit Card",
-  //     createdAt: "2023-01-03",
-  //     updatedAt: "2023-01-03",
-  //   },
-  //   {
-  //     id: 4,
-  //     label: "Investment",
-  //     createdAt: "2023-01-04",
-  //     updatedAt: "2023-01-04",
-  //   },
-  //   {
-  //     id: 5,
-  //     label: "Business",
-  //     createdAt: "2023-01-05",
-  //     updatedAt: "2023-01-05",
-  //   },
-  //   {
-  //     id: 6,
-  //     label: "Personal Loan",
-  //     createdAt: "2023-01-06",
-  //     updatedAt: "2023-01-06",
-  //   },
-  //   {
-  //     id: 7,
-  //     label: "Mortgage",
-  //     createdAt: "2023-01-07",
-  //     updatedAt: "2023-01-07",
-  //   },
-  //   {
-  //     id: 8,
-  //     label: "Auto Loan",
-  //     createdAt: "2023-01-08",
-  //     updatedAt: "2023-01-08",
-  //   },
-  //   {
-  //     id: 9,
-  //     label: "Fixed Deposit",
-  //     createdAt: "2023-01-09",
-  //     updatedAt: "2023-01-09",
-  //   },
-  // ];
-
-  // const buildings = data?.buildings;
   const accountTypes = data?.accountTypes;
   const meta = data?.meta;
 
@@ -163,25 +114,34 @@ const AccountTypePage = () => {
   };
 
   return (
-    <div>
+    <div className="rounded-xl bg-white p-5">
       <ActionBar title="AccountTypes List">
         <Input
-          type="text"
           size="large"
-          placeholder="Search..."
+          placeholder="Search"
+          onChange={(e) => setSearchTerm(e.target.value)}
           style={{
             width: "20%",
           }}
-          onChange={(e) => {
-            setSearchTerm(e.target.value);
-          }}
         />
-        <ModalComponent buttonText="Add Account Type">
-          <AddAccountType />
-        </ModalComponent>
+        <div>
+          <ModalComponent buttonText="Add Account Type">
+            <AddAccountType />
+          </ModalComponent>
+          {(!!sortBy || !!sortOrder || !!searchTerm) && (
+            <Button
+              style={{ margin: "0px 5px" }}
+              type="primary"
+              onClick={resetFilters}
+            >
+              <ReloadOutlined />
+            </Button>
+          )}
+        </div>
       </ActionBar>
 
       <UMTable
+        loading={false}
         columns={columns}
         dataSource={accountTypes}
         pageSize={size}
