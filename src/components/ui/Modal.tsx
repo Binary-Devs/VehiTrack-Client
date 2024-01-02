@@ -1,10 +1,10 @@
 "use client";
-import { PlusOutlined } from "@ant-design/icons";
 import { Button, Modal } from "antd";
 import React, { useState } from "react";
 
 const ModalComponent = ({
   children,
+  icon,
   buttonText,
   loading,
   setSetModel,
@@ -15,6 +15,7 @@ const ModalComponent = ({
   loading?: boolean;
   showModel?: any;
   setSetModel?: any;
+  icon?: any;
 }) => {
   const [open, setOpen] = useState(false);
   //   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -35,20 +36,24 @@ const ModalComponent = ({
 
   return (
     <>
-      <div className="">
-        <div className="lg:hidden px-2 py-1 rounded-lg border ml-1  flex justify-center items-center">
+      <div style={{ display: "inline-block" }}>
+        <div className="lg:hidden">
           <Button onClick={showModal} type="primary">
-            <PlusOutlined />
+            {icon}
           </Button>
         </div>
         <div className="hidden lg:block">
-          <Button type="primary" onClick={showModal}>
-            {buttonText || "Open Modal"}
+          <Button
+            type="primary"
+            onClick={showModal}
+            className="!flex !items-center !gap-2"
+          >
+            {icon && icon}
+            {buttonText && buttonText}
           </Button>
         </div>
       </div>
       <Modal
-        // title="Title"
         open={open}
         confirmLoading={loading ? loading : false}
         onCancel={handleCancel}
@@ -56,8 +61,8 @@ const ModalComponent = ({
         footer={(_, { OkBtn, CancelBtn }) => (
           <>
             {/* <Button>Custom Button</Button>
-            <CancelBtn />
-            <OkBtn /> */}
+              <CancelBtn />
+              <OkBtn /> */}
           </>
         )}
         // width="max-content"
