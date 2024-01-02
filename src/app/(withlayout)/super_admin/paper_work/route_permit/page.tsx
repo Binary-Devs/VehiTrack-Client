@@ -1,11 +1,17 @@
 "use client";
 import AddRoutePermit from "@/components/CreateUpdateFrom/AddRoutePermit";
+import Loader from "@/components/Utlis/Loader";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { useGetAllPaperWorksQuery } from "@/redux/api/paperWork/paperWorkApi";
 import { useDebounced } from "@/redux/hooks";
-import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  EyeOutlined,
+  ReloadOutlined,
+} from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
 import Link from "next/link";
@@ -20,11 +26,10 @@ const RoutePermitPage = () => {
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  // query["limit"] = size;
-  // query["page"] = page;
-  // query["sortBy"] = sortBy;
-  // query["sortOrder"] = sortOrder;
-  query["searchTerm"] = searchTerm;
+  query["limit"] = size;
+  query["page"] = page;
+  query["sortBy"] = sortBy;
+  query["sortOrder"] = sortOrder;
 
   const debouncedTerm = useDebounced({
     searchQuery: searchTerm,
@@ -35,7 +40,10 @@ const RoutePermitPage = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const { data } = useGetAllPaperWorksQuery({ ...query });
+  const { data, isLoading } = useGetAllPaperWorksQuery({ ...query });
+  if (isLoading) {
+    return <Loader className="h-[50vh] flex items-end justify-center" />;
+  }
   const paperworkRecords = data?.paperWorks;
   console.log(paperworkRecords);
   const meta = data?.meta;
@@ -130,36 +138,31 @@ const RoutePermitPage = () => {
     setSearchTerm("");
   };
   return (
-    <div>
+    <div className="rounded-xl bg-white p-5">
       <ActionBar title="Route Permit List">
         <Input
-          type="text"
           size="large"
-          placeholder="Search..."
+          placeholder="Search"
+          onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            width: "20%",
-          }}
-          onChange={(e) => {
-            setSearchTerm(e.target.value);
+            minWidth: "150px",
+            maxWidth: "300px",
           }}
         />
-        {/* <div>
-          <Link href="super_admin/paper-work/paper-work-list/create">
-            <Button type="primary">Create</Button>
-          </Link>
+        <div>
+          <ModalComponent buttonText="Add Route Permit">
+            <AddRoutePermit />
+          </ModalComponent>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
-              onClick={resetFilters}
-              type="primary"
               style={{ margin: "0px 5px" }}
+              type="primary"
+              onClick={resetFilters}
             >
               <ReloadOutlined />
             </Button>
           )}
-        </div> */}
-        <ModalComponent buttonText="Add Route Permit">
-          <AddRoutePermit />
-        </ModalComponent>
+        </div>
       </ActionBar>
 
       <UMTable

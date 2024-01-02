@@ -146,7 +146,7 @@ const RefuelingPage = () => {
   };
   return (
     <div className="rounded-xl bg-white p-5">
-      <ActionBar title="Pump Station List">
+      <ActionBar title="Refueling List">
         <Input
           size="large"
           placeholder="Search"
