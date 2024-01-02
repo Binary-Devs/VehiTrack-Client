@@ -242,16 +242,18 @@ const AddRefueling = () => {
       value: fuelType?.id,
     };
   });
-  const [createFuel] = useCreateFuelMutation();
+  const [createFuel, { isLoading }] = useCreateFuelMutation();
   const onSubmit = async (data: any) => {
-    message.loading("creating.............");
+    message.loading("Adding.............");
     try {
       data.quantity = parseFloat(data.quantity);
       data.amount = parseInt(data.amount);
       data.odometer = parseInt(data.odometer);
       const res = await createFuel({ ...data }).unwrap();
       if (res.id) {
-        message.success(" create fuel in successfully");
+        message.success(" add fuel in successfully");
+      } else {
+        message.error(res.error);
       }
     } catch (err: any) {
       message.error(err.message);
@@ -260,85 +262,131 @@ const AddRefueling = () => {
 
   return (
     <div>
-      <h1>Create Refueling</h1>
+      <h1 className="text-center my-1 font-bold text-2xl">Add Refueling</h1>
       <Form submitHandler={onSubmit}>
-        <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
-          <Col xs={24} md={12} lg={8}>
-            <div style={{ margin: "10px 0px" }}>
-              <FormSelectField
+        <div
+          style={{
+            border: "1px solid #d9d9d9",
+            borderRadius: "5px",
+            padding: "15px",
+            marginBottom: "10px",
+          }}
+        >
+          <p className="text-base lg:text-lg font-normal">
+            Refueling Information
+          </p>
+          <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
+            <Col xs={24} md={12} lg={8}>
+              <div style={{ margin: "10px 0px" }}>
+                <FormSelectField
+                  size="large"
+                  name="vehicleId"
+                  options={vehicleOptions as any}
+                  label="Vehicle"
+                  placeholder="Select"
+                  required={true}
+                />
+              </div>
+            </Col>
+            <Col xs={24} md={12} lg={8}>
+              <div style={{ margin: "10px 0px" }}>
+                <FormSelectField
+                  size="large"
+                  name="driverId"
+                  options={driverOptions as any}
+                  label="Driver"
+                  placeholder="Select"
+                  required={true}
+                />
+              </div>
+            </Col>
+            <Col xs={24} md={12} lg={8}>
+              <div style={{ margin: "10px 0px" }}>
+                <FormSelectField
+                  size="large"
+                  name="fuelTypeId"
+                  options={fuelTypeOptions as any}
+                  label="Fuel Type"
+                  placeholder="Select"
+                  required={true}
+                />
+              </div>
+            </Col>
+            <Col xs={24} md={12} lg={8}>
+              <div>
+                <FormSelectField
+                  size="large"
+                  name="fuelStationId"
+                  options={pumpOptions as any}
+                  label="Fuel Pump"
+                  placeholder="Select"
+                  required={true}
+                />
+              </div>
+            </Col>
+            <Col
+              className="gutter-row"
+              xs={24}
+              md={12}
+              lg={8}
+              style={{
+                marginBottom: "10px",
+              }}
+            >
+              <FormDatePicker
+                name="date"
+                label="Date"
                 size="large"
-                name="vehicleId"
-                options={vehicleOptions as any}
-                label="Vehicle"
-                placeholder="Select"
+                disablePrevious={false}
               />
-            </div>
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <div style={{ margin: "10px 0px" }}>
-              <FormSelectField
+            </Col>
+            <Col xs={24} md={12} lg={8}>
+              <FormInput
+                name="odometer"
+                label="Odometer"
+                type="number"
                 size="large"
-                name="driverId"
-                options={driverOptions as any}
-                label="Driver"
-                placeholder="Select"
+                required={true}
+                placeholder="enter odometer"
               />
-            </div>
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <div style={{ margin: "10px 0px" }}>
-              <FormSelectField
+            </Col>
+            <Col xs={24} md={12} lg={8}>
+              <FormInput
+                name="quantity"
+                label="Quantity"
+                type="number"
                 size="large"
-                name="fuelTypeId"
-                options={fuelTypeOptions as any}
-                label="Fuel Type"
-                placeholder="Select"
+                required={true}
+                placeholder="enter quantity"
               />
-            </div>
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <div>
-              <FormSelectField
+            </Col>
+            <Col xs={24} md={12} lg={8}>
+              <FormInput
+                name="amount"
+                label="Amount"
+                type="number"
                 size="large"
-                name="fuelStationId"
-                options={pumpOptions as any}
-                label="Fuel Pump"
-                placeholder="Select"
+                required={true}
+                placeholder="enter amount"
               />
-            </div>
-          </Col>
-          <Col
-            className="gutter-row"
-            xs={24}
-            md={12}
-            lg={8}
-            style={{
-              marginBottom: "10px",
-            }}
-          >
-            <FormDatePicker
-              name="date"
-              label="Date"
-              size="large"
-              disablePrevious={false}
-            />
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <FormInput name="odometer" label="Odometer" />
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <FormInput name="quantity" label="Quantity" />
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <FormInput name="amount" label="Amount" />
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <FormInput name="remarks" label="Remarks" />
-          </Col>
-        </Row>
-        <Button style={{ margin: "10px 0px" }} type="primary" htmlType="submit">
-          add
-        </Button>
+            </Col>
+            <Col xs={24} md={12} lg={8}>
+              <FormInput
+                name="remarks"
+                label="Remarks"
+                type="text"
+                size="large"
+                required={true}
+                placeholder="enter odometer"
+              />
+            </Col>
+          </Row>
+        </div>
+        <div className="flex justify-center items-center">
+          <Button htmlType="submit" type="primary" disabled={isLoading}>
+            Create
+          </Button>
+        </div>
       </Form>
     </div>
   );
