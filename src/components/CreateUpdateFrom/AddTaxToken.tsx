@@ -26,9 +26,9 @@ const AddTaxToken = () => {
       value: accountHead?.id,
     };
   });
-  const [createPaperWork] = useCreatePaperWorkMutation();
+  const [createPaperWork, { isLoading }] = useCreatePaperWorkMutation();
   const onSubmit = async (data: any) => {
-    message.loading("creating.............");
+    message.loading("Adding.............");
     try {
       data.daysToRemind = parseFloat(data.daysToRemind);
       data.fee = parseInt(data.fee);
@@ -37,7 +37,9 @@ const AddTaxToken = () => {
       data.totalAmount = parseInt(data.totalAmount);
       const res = await createPaperWork({ ...data }).unwrap();
       if (res.id) {
-        message.success(" create in successfully");
+        message.success(" adding in successfully");
+      } else {
+        message.error(res.error);
       }
     } catch (err: any) {
       message.error(err.message);
@@ -46,109 +48,167 @@ const AddTaxToken = () => {
 
   return (
     <div>
-      <h1>Create Tax</h1>
+      <h1 className="text-center my-1 font-bold text-2xl">Add Tax/Token</h1>
       <Form submitHandler={onSubmit}>
-        <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
-          <Col
-            className="gutter-row"
-            xs={24}
-            md={12}
-            lg={8}
-            style={{ margin: "10px 0px" }}
-          >
-            <FormDatePicker
-              name="date"
-              label="Date"
-              size="large"
-              disablePrevious={false}
-            />
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <div style={{ margin: "10px 0px" }}>
-              <FormSelectField
+        <div
+          style={{
+            border: "1px solid #d9d9d9",
+            borderRadius: "5px",
+            padding: "15px",
+            marginBottom: "10px",
+          }}
+        >
+          <p className="text-base lg:text-lg font-normal">
+            Tax/Token Information
+          </p>
+          <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
+            <Col
+              className="gutter-row"
+              xs={24}
+              md={12}
+              lg={8}
+              style={{ margin: "10px 0px" }}
+            >
+              <FormDatePicker
+                name="date"
+                label="Date"
                 size="large"
-                name="vehicleId"
-                options={vehicleOptions as any}
-                label="Vehicle"
-                placeholder="Select"
+                disablePrevious={false}
               />
-            </div>
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <div style={{ margin: "10px 0px" }}>
-              <FormSelectField
+            </Col>
+            <Col xs={24} md={12} lg={8}>
+              <div style={{ margin: "10px 0px" }}>
+                <FormSelectField
+                  size="large"
+                  name="vehicleId"
+                  options={vehicleOptions as any}
+                  label="Vehicle"
+                  placeholder="Select"
+                  required={true}
+                />
+              </div>
+            </Col>
+            <Col xs={24} md={12} lg={8}>
+              <div style={{ margin: "10px 0px" }}>
+                <FormSelectField
+                  size="large"
+                  name="paperType"
+                  options={paperTypeTaxToken as any}
+                  label="Paper Type"
+                  placeholder="Select"
+                  required={true}
+                />
+              </div>
+            </Col>
+            <Col
+              className="gutter-row"
+              xs={24}
+              md={12}
+              lg={8}
+              style={{ margin: "10px 0px" }}
+            >
+              <FormDatePicker
+                name="effectiveDate"
+                label="Effective Date"
                 size="large"
-                name="paperType"
-                options={paperTypeTaxToken as any}
-                label="Paper Type"
-                placeholder="Select"
+                disablePrevious={false}
               />
-            </div>
-          </Col>
-          <Col
-            className="gutter-row"
-            xs={24}
-            md={12}
-            lg={8}
-            style={{ margin: "10px 0px" }}
-          >
-            <FormDatePicker
-              name="effectiveDate"
-              label="Effective Date"
-              size="large"
-              disablePrevious={false}
-            />
-          </Col>
-          <Col
-            className="gutter-row"
-            xs={24}
-            md={12}
-            lg={8}
-            style={{ margin: "10px 0px" }}
-          >
-            <FormDatePicker
-              name="expiryDate"
-              label="Expiry Date"
-              size="large"
-              disablePrevious={false}
-            />
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <div style={{ margin: "10px 0px" }}>
-              <FormSelectField
+            </Col>
+            <Col
+              className="gutter-row"
+              xs={24}
+              md={12}
+              lg={8}
+              style={{ margin: "10px 0px" }}
+            >
+              <FormDatePicker
+                name="expiryDate"
+                label="Expiry Date"
                 size="large"
-                name="accountHeadId"
-                options={accountHeadOptions as any}
-                label="Account Head"
-                placeholder="Select"
+                disablePrevious={false}
               />
-            </div>
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <FormInput name="certificateNo" label="Certificate No" />
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <FormInput name="odoMeter" label="Odometer" />
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <FormInput name="fee" label="Fee" />
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <FormInput name="daysToRemind" label="daysToRemind" />
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <FormInput name="otherAmount" label="Other Amount" />
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <FormInput name="totalAmount" label="Total Amount" />
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <FormInput name="remarks" label="Remarks" />
-          </Col>
-        </Row>
-        <Button style={{ margin: "10px 0px" }} type="primary" htmlType="submit">
-          registration
-        </Button>
+            </Col>
+            <Col xs={24} md={12} lg={8}>
+              <div style={{ margin: "10px 0px" }}>
+                <FormSelectField
+                  size="large"
+                  name="accountHeadId"
+                  options={accountHeadOptions as any}
+                  label="Account Head"
+                  placeholder="Select"
+                  required={true}
+                />
+              </div>
+            </Col>
+            <Col xs={24} md={12} lg={8}>
+              <FormInput
+                name="certificateNo"
+                label="Certificate No"
+                size="large"
+                required={true}
+              />
+            </Col>
+            <Col xs={24} md={12} lg={8}>
+              <FormInput
+                name="odoMeter"
+                label="Odometer"
+                type="number"
+                size="large"
+                required={true}
+              />
+            </Col>
+            <Col xs={24} md={12} lg={8}>
+              <FormInput
+                name="fee"
+                label="Fee"
+                type="number"
+                size="large"
+                required={true}
+              />
+            </Col>
+            <Col xs={24} md={12} lg={8}>
+              <FormInput
+                name="daysToRemind"
+                label="daysToRemind"
+                type="number"
+                size="large"
+                required={true}
+              />
+            </Col>
+            <Col xs={24} md={12} lg={8}>
+              <FormInput
+                name="otherAmount"
+                label="Other Amount"
+                type="number"
+                size="large"
+                required={true}
+              />
+            </Col>
+            <Col xs={24} md={12} lg={8}>
+              <FormInput
+                name="totalAmount"
+                label="Total Amount"
+                type="number"
+                size="large"
+                required={true}
+              />
+            </Col>
+            <Col xs={24} md={12} lg={8}>
+              <FormInput
+                name="remarks"
+                label="Remarks"
+                type="text"
+                size="large"
+                required={true}
+              />
+            </Col>
+          </Row>
+        </div>
+        <div className="flex justify-center items-center">
+          <Button htmlType="submit" type="primary" disabled={isLoading}>
+            Create
+          </Button>
+        </div>
       </Form>
     </div>
   );

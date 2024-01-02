@@ -1,11 +1,17 @@
 "use client";
 import AddAccidentHistory from "@/components/CreateUpdateFrom/AddAccidentHistory";
+import Loader from "@/components/Utlis/Loader";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { useGetAllAccidentHistoriesQuery } from "@/redux/api/accidentHistory/accidentHistoryApi";
 import { useDebounced } from "@/redux/hooks";
-import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  EyeOutlined,
+  ReloadOutlined,
+} from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
 import Link from "next/link";
@@ -20,11 +26,10 @@ const AccidentHistoryPage = () => {
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  // query["limit"] = size;
-  // query["page"] = page;
-  // query["sortBy"] = sortBy;
-  // query["sortOrder"] = sortOrder;
-  query["searchTerm"] = searchTerm;
+  query["limit"] = size;
+  query["page"] = page;
+  query["sortBy"] = sortBy;
+  query["sortOrder"] = sortOrder;
 
   const debouncedTerm = useDebounced({
     searchQuery: searchTerm,
@@ -35,7 +40,10 @@ const AccidentHistoryPage = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const { data } = useGetAllAccidentHistoriesQuery({ ...query });
+  const { data, isLoading } = useGetAllAccidentHistoriesQuery({ ...query });
+  if (isLoading) {
+    return <Loader className="h-[50vh] flex items-end justify-center" />;
+  }
   const accidentHistories = data?.accidentHistories;
   const meta = data?.meta;
 
@@ -130,26 +138,36 @@ const AccidentHistoryPage = () => {
     setSearchTerm("");
   };
   return (
-    <div>
+    <div className="rounded-xl bg-white p-5">
       <ActionBar title="Accident History List">
         <Input
-          type="text"
           size="large"
-          placeholder="Search..."
+          placeholder="Search"
+          onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            width: "20%",
-          }}
-          onChange={(e) => {
-            setSearchTerm(e.target.value);
+            minWidth: "150px",
+            maxWidth: "300px",
           }}
         />
-        <ModalComponent buttonText="add accident">
-          <AddAccidentHistory />
-        </ModalComponent>
+        <div>
+          <ModalComponent buttonText="Add Accident History">
+            <AddAccidentHistory />
+          </ModalComponent>
+          {(!!sortBy || !!sortOrder || !!searchTerm) && (
+            <Button
+              style={{ margin: "0px 5px" }}
+              type="primary"
+              onClick={resetFilters}
+            >
+              <ReloadOutlined />
+            </Button>
+          )}
+        </div>
       </ActionBar>
 
       <UMTable
         columns={columns}
+        loading={false}
         dataSource={accidentHistories}
         pageSize={size}
         totalPages={meta?.total}

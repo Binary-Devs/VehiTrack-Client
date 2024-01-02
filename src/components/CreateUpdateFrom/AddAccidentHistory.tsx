@@ -37,7 +37,8 @@ const AddAccidentHistory = () => {
     };
   });
 
-  const [createAccidentHistory] = useCreateAccidentHistoryMutation();
+  const [createAccidentHistory, { isLoading }] =
+    useCreateAccidentHistoryMutation();
   const onSubmit = async (data: any) => {
     message.loading("creating.............");
     try {
@@ -45,7 +46,7 @@ const AddAccidentHistory = () => {
       data.amount = parseInt(data.amount);
       const res = await createAccidentHistory({ ...data }).unwrap();
       if (res.id) {
-        message.success(" create in successfully");
+        message.success("add in successfully");
       }
     } catch (err: any) {
       message.error(err.message);
@@ -54,85 +55,123 @@ const AddAccidentHistory = () => {
 
   return (
     <div>
-      <h1>Add Accident History</h1>
+      <h1 className="text-center my-1 font-bold text-2xl">
+        Add Accident History
+      </h1>
       <Form submitHandler={onSubmit}>
-        <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
-          <Col xs={24} md={12} lg={8}>
-            <div>
-              <FormSelectField
+        <div
+          style={{
+            border: "1px solid #d9d9d9",
+            borderRadius: "5px",
+            padding: "15px",
+            marginBottom: "10px",
+          }}
+        >
+          <p className="text-base lg:text-lg font-normal">
+            Accident History Information
+          </p>
+          <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
+            <Col xs={24} md={12} lg={8}>
+              <div>
+                <FormSelectField
+                  size="large"
+                  name="vehicleId"
+                  options={vehicleOptions as any}
+                  label="Vehicle"
+                  placeholder="Select"
+                  required={true}
+                />
+              </div>
+            </Col>
+            <Col xs={24} md={12} lg={8}>
+              <div>
+                <FormSelectField
+                  size="large"
+                  name="driverId"
+                  options={driverOptions as any}
+                  label="Driver"
+                  placeholder="Select"
+                  required={true}
+                />
+              </div>
+            </Col>
+            <Col xs={24} md={12} lg={8}>
+              <div>
+                <FormSelectField
+                  size="large"
+                  name="accountHeadId"
+                  options={accountHeadOptions as any}
+                  label="Account Head"
+                  placeholder="Select"
+                  required={true}
+                />
+              </div>
+            </Col>
+            <Col xs={24} md={12} lg={8}>
+              <div>
+                <FormSelectField
+                  size="large"
+                  name="paymentStatus"
+                  options={accidentPaymentStatus as any}
+                  label="Payment Status"
+                  placeholder="Select"
+                  required={true}
+                />
+              </div>
+            </Col>
+            <Col
+              className="gutter-row"
+              xs={24}
+              md={12}
+              lg={8}
+              style={{
+                marginBottom: "10px",
+              }}
+            >
+              <FormDatePicker
+                name="date"
+                label="Date"
                 size="large"
-                name="vehicleId"
-                options={vehicleOptions as any}
-                label="Vehicle"
-                placeholder="Select"
+                disablePrevious={false}
               />
-            </div>
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <div>
-              <FormSelectField
+            </Col>
+            <Col xs={24} md={12} lg={8}>
+              <FormInput
+                name="location"
+                label="Location"
+                type="text"
                 size="large"
-                name="driverId"
-                options={driverOptions as any}
-                label="Driver"
-                placeholder="Select"
+                required={true}
               />
-            </div>
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <div>
-              <FormSelectField
+            </Col>
+            <Col xs={24} md={12} lg={8}>
+              <FormInput
+                name="odoMeter"
+                label="Odometer"
+                type="number"
                 size="large"
-                name="accountHeadId"
-                options={accountHeadOptions as any}
-                label="Account Head"
-                placeholder="Select"
+                required={true}
               />
-            </div>
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <div>
-              <FormSelectField
+            </Col>
+            <Col xs={24} md={12} lg={8}>
+              <FormInput
+                name="amount"
+                label="Amount"
+                type="number"
                 size="large"
-                name="paymentStatus"
-                options={accidentPaymentStatus as any}
-                label="Payment Status"
-                placeholder="Select"
+                required={true}
               />
-            </div>
-          </Col>
-          <Col
-            className="gutter-row"
-            xs={24}
-            md={12}
-            lg={8}
-            style={{
-              marginBottom: "10px",
-            }}
-          >
-            <FormDatePicker
-              name="date"
-              label="Date"
-              size="large"
-              disablePrevious={false}
-            />
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <FormInput name="location" label="Location" />
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <FormInput name="odoMeter" label="Odometer" />
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <FormInput name="amount" label="Amount" />
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <FormTextArea name="details" label="Details" />
-          </Col>
-        </Row>
-        <Button style={{ margin: "10px 0px" }} type="primary" htmlType="submit">
-          add
-        </Button>
+            </Col>
+            <Col xs={24} md={24} lg={24}>
+              <FormTextArea name="details" label="Details" />
+            </Col>
+          </Row>
+        </div>
+        <div className="flex justify-center items-center">
+          <Button htmlType="submit" type="primary" disabled={isLoading}>
+            Create
+          </Button>
+        </div>
       </Form>
     </div>
   );
