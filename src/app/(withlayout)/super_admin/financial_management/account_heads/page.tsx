@@ -1,11 +1,17 @@
 "use client";
 import AddAccountHeads from "@/components/CreateUpdateFrom/AddAccountHeads";
+import Loader from "@/components/Utlis/Loader";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { useGetAllAccountHeadQuery } from "@/redux/api/accountHead/accountHeadApi";
 import { useDebounced } from "@/redux/hooks";
-import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  EyeOutlined,
+  ReloadOutlined,
+} from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
 import Link from "next/link";
@@ -20,11 +26,10 @@ const AccountHeadsPage = () => {
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  // query["limit"] = size;
-  // query["page"] = page;
-  // query["sortBy"] = sortBy;
-  // query["sortOrder"] = sortOrder;
-  query["searchTerm"] = searchTerm;
+  query["limit"] = size;
+  query["page"] = page;
+  query["sortBy"] = sortBy;
+  query["sortOrder"] = sortOrder;
 
   const debouncedTerm = useDebounced({
     searchQuery: searchTerm,
@@ -35,7 +40,10 @@ const AccountHeadsPage = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const { data } = useGetAllAccountHeadQuery({ ...query });
+  const { data, isLoading } = useGetAllAccountHeadQuery({ ...query });
+  if (isLoading) {
+    return <Loader className="h-[50vh] flex items-end justify-center" />;
+  }
   const accountHeads = data?.accountHeads;
   const meta = data?.meta;
   console.log(accountHeads);
@@ -51,10 +59,10 @@ const AccountHeadsPage = () => {
     },
     {
       title: "Account Type",
-      dataIndex: "accountTypeId",
-      render: function (data: any) {
-        return <>{data?.label}</>;
-      },
+      dataIndex: "accountType",
+      render: (accountType: any) => (
+        <span>{accountType && accountType.label}</span>
+      ),
     },
     {
       title: "CreatedAt",
@@ -121,26 +129,36 @@ const AccountHeadsPage = () => {
   };
 
   return (
-    <div>
+    <div className="rounded-xl bg-white p-5">
       <ActionBar title="Account Heads List">
         <Input
-          type="text"
           size="large"
-          placeholder="Search..."
+          placeholder="Search"
+          onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            width: "20%",
-          }}
-          onChange={(e) => {
-            setSearchTerm(e.target.value);
+            minWidth: "150px",
+            maxWidth: "300px",
           }}
         />
-        <ModalComponent buttonText="Add Account Head">
-          <AddAccountHeads />
-        </ModalComponent>
+        <div>
+          <ModalComponent buttonText="Add Account Head">
+            <AddAccountHeads />
+          </ModalComponent>
+          {(!!sortBy || !!sortOrder || !!searchTerm) && (
+            <Button
+              style={{ margin: "0px 5px" }}
+              type="primary"
+              onClick={resetFilters}
+            >
+              <ReloadOutlined />
+            </Button>
+          )}
+        </div>
       </ActionBar>
 
       <UMTable
         columns={columns}
+        loading={false}
         dataSource={accountHeads}
         pageSize={size}
         totalPages={meta?.total}
