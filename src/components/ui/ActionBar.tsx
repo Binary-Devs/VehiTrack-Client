@@ -6,8 +6,8 @@ type ActionBarProps = {
 
 const ActionBar = ({ title, children, inline }: ActionBarProps) => {
   return (
-    <div className={inline ? "flex justify-between" : undefined}>
-      <h1 className="text-2xl">{title}</h1>
+    <div className={inline ? "flex justify-between items-center" : undefined}>
+      <h1 className="text-2xl font-semibold">{title}</h1>
       <div
         style={{
           display: "flex",

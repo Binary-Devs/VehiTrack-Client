@@ -9,13 +9,13 @@ import {
   ReloadOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Avatar, Button, Input, Tag } from "antd";
+import { Avatar, Button, Input } from "antd";
 import Link from "next/link";
 import { useState } from "react";
 
 import dayjs from "dayjs";
 
-import CreateDriver from "@/components/CreateUpdateFrom/DriverCreate";
+import AddUpdateDriver from "@/components/CreateUpdateFrom/AddUpdateDriver";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
@@ -31,10 +31,10 @@ const AllDriverList = () => {
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  // query["limit"] = size;
-  // query["page"] = page;
-  // query["sortBy"] = sortBy;
-  // query["sortOrder"] = sortOrder;
+  query["limit"] = size;
+  query["page"] = page;
+  query["sortBy"] = sortBy;
+  query["sortOrder"] = sortOrder;
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -84,7 +84,7 @@ const AllDriverList = () => {
 
   const columns = [
     {
-      title: "Image",
+      title: "",
 
       render: function (data: any) {
         return <Avatar size={64} icon={<UserOutlined />} />;
@@ -95,21 +95,37 @@ const AllDriverList = () => {
       dataIndex: "fullName",
     },
     {
-      title: "Active",
-      dataIndex: "isActive",
-      render: (isActive: boolean) =>
-        isActive ? (
-          <Tag color="green">Active</Tag>
-        ) : (
-          <Tag color="red">Not Active</Tag>
-        ),
+      title: "User ID",
+      dataIndex: "driverId",
     },
+    {
+      title: "License No",
+      dataIndex: "licenseNo",
+    },
+    // {
+    //   title: "Active",
+    //   dataIndex: "isActive",
+    //   render: (isActive: boolean) =>
+    //     isActive ? (
+    //       <Tag color="green">Active</Tag>
+    //     ) : (
+    //       <Tag color="red">Not Active</Tag>
+    //     ),
+    // },
     {
       title: "Mobile",
       dataIndex: "mobile",
     },
     {
-      title: "Created at",
+      title: "Address",
+      dataIndex: "address",
+    },
+    {
+      title: "Blood Group",
+      dataIndex: "bloodGroup",
+    },
+    {
+      title: "Joined at",
       dataIndex: "createdAt",
       render: function (data: any) {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
@@ -119,7 +135,7 @@ const AllDriverList = () => {
     {
       title: "Action",
       dataIndex: "_id",
-      width: "15%",
+      // width: "15%",
       render: function (data: any) {
         return (
           <>
@@ -131,7 +147,7 @@ const AllDriverList = () => {
             <Link href={`/${SUPER_ADMIN}/general_user/edit/${data}`}>
               <Button
                 style={{
-                  margin: "0px 5px",
+                  margin: "0px 8px",
                 }}
                 onClick={() => console.log(data)}
                 type="primary"
@@ -153,10 +169,10 @@ const AllDriverList = () => {
   ];
 
   const { data, isLoading } = useGetAllDriverQuery({ ...query });
-  const AllDriverData = data?.drivers || [];
+  const drivers = data?.drivers;
   const meta = data?.meta;
 
-  console.log(AllDriverData);
+  console.log(drivers);
 
   const onPaginationChange = (page: number, pageSize: number) => {
     setPage(page);
@@ -194,40 +210,42 @@ const AllDriverList = () => {
   //       }
   //     });
   //   };
-  //   if (isLoading) {
-  //     return <LoadingForDataFetch />;
-  //   }
+  // if (isLoading) {
+  //   return <Loader className="h-[50vh] flex items-end justify-center" />;
+  // }
   return (
-    <div className="rounded-xl bg-white p-5 shadow-xl">
-      <ActionBar title="Driver List">
-        <Input
-          size="large"
-          placeholder="Search"
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            width: "20%",
-          }}
-        />
-        <div>
-          <ModalComponent buttonText="Create Driver">
-            <CreateDriver />
-          </ModalComponent>
+    <div className="bg-white border border-blue-200 rounded-xl shadow-md shadow-blue-200 p-5 space-y-3">
+      <ActionBar inline title="Driver List">
+        <div className="flex items-center gap-2">
+          <Input
+            // size="large"
+            placeholder="Search"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            style={
+              {
+                // width: "100%",
+              }
+            }
+          />
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
-              style={{ margin: "0px 5px" }}
+              // style={{ margin: "0px 5px" }}
               type="primary"
               onClick={resetFilters}
             >
               <ReloadOutlined />
             </Button>
           )}
+          <ModalComponent buttonText="Add Driver">
+            <AddUpdateDriver />
+          </ModalComponent>
         </div>
       </ActionBar>
 
       <UMTable
-        loading={false}
+        loading={isLoading}
         columns={columns}
-        dataSource={AllDriverData}
+        dataSource={drivers}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}

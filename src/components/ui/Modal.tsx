@@ -6,7 +6,7 @@ import React, { useState } from "react";
 const ModalComponent = ({
   children,
   buttonText,
-  loading = false,
+  loading,
   setSetModel,
   showModel,
 }: {
@@ -35,7 +35,7 @@ const ModalComponent = ({
 
   return (
     <>
-      <div className="w-full">
+      <div className="">
         <div className="lg:hidden px-2 py-1 rounded-lg border ml-1  flex justify-center items-center">
           <Button onClick={showModal} type="primary">
             <PlusOutlined />
@@ -50,7 +50,7 @@ const ModalComponent = ({
       <Modal
         // title="Title"
         open={open}
-        confirmLoading={loading}
+        confirmLoading={loading ? loading : false}
         onCancel={handleCancel}
         //! when i went hidden ok and cancel button then it use
         footer={(_, { OkBtn, CancelBtn }) => (

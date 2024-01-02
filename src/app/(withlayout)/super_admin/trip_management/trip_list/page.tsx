@@ -46,21 +46,7 @@ const TripListPage = () => {
       dataIndex: "tripNo",
       eclipse: true,
     },
-    // {
-    //   title: "vehicle",
-    //   dataIndex: "vehicle",
-    //   render: (vehicle: any) => <span>{vehicle && vehicle.regNo}</span>,
-    // },
-    // {
-    //   title: "driver",
-    //   dataIndex: "driver",
-    //   render: (driver: any) => <span>{driver && driver.fullName}</span>,
-    // },
-    // {
-    //   title: "Party",
-    //   dataIndex: "party",
-    //   render: (party: any) => <span>{party && party.fullName}</span>,
-    // },
+
     {
       title: "Start Date",
       dataIndex: "startDate",
@@ -150,7 +136,8 @@ const TripListPage = () => {
           size="large"
           placeholder="Search..."
           style={{
-            width: "20%",
+            width: "100%",
+            maxWidth: "200px",
           }}
           onChange={(e) => {
             setSearchTerm(e.target.value);

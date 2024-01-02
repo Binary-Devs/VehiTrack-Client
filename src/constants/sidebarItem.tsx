@@ -14,6 +14,8 @@ import {
 } from "@ant-design/icons";
 import { MenuProps } from "antd";
 import Link from "next/link";
+import { FaRoadCircleCheck } from "react-icons/fa6";
+import { MdOutlineUpcoming } from "react-icons/md";
 import { TbReportAnalytics } from "react-icons/tb";
 import { USER_ROLE } from "./role";
 
@@ -107,17 +109,6 @@ export const sidebarItem = (role: string) => {
           label: (
             <Link
               className="text-sm "
-              href={`/${role}/helper_management/add_new_helper`}
-            >
-              Add New Helper
-            </Link>
-          ),
-          key: `${role}/helper_management/add_new_helper`,
-        },
-        {
-          label: (
-            <Link
-              className="text-sm "
               href={`/${role}/helper_management/helper_list`}
             >
               Helper List
@@ -143,17 +134,6 @@ export const sidebarItem = (role: string) => {
           ),
           key: `/${role}/trip_management/party_list`,
         },
-        // {
-        //   label: (
-        //     <Link
-        //       className="text-sm "
-        //       href={`/${role}/trip_management/trip_expense_head`}
-        //     >
-        //       Trip Expense Head
-        //     </Link>
-        //   ),
-        //   key: `/${role}/trip_management/trip_expense_head`,
-        // },
         {
           label: (
             <Link
@@ -164,6 +144,17 @@ export const sidebarItem = (role: string) => {
             </Link>
           ),
           key: `/${role}/trip_management/trip_list`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/trip_management/trip_expense_head`}
+            >
+              Trip Expense Head
+            </Link>
+          ),
+          key: `/${role}/trip_management/trip_expense_head`,
         },
       ],
     },
@@ -194,17 +185,17 @@ export const sidebarItem = (role: string) => {
           ),
           key: `/${role}/financial_management/account_heads`,
         },
-        // {
-        //   label: (
-        //     <Link
-        //       className="text-sm "
-        //       href={`/${role}/financial_management/balance_sheet`}
-        //     >
-        //       Balance Sheet
-        //     </Link>
-        //   ),
-        //   key: `/${role}/financial_management/balance_sheet`,
-        // },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/financial_management/balance_sheet`}
+            >
+              Balance Sheet
+            </Link>
+          ),
+          key: `/${role}/financial_management/balance_sheet`,
+        },
       ],
     },
     {
@@ -301,17 +292,6 @@ export const sidebarItem = (role: string) => {
           ),
           key: `/${role}/paper_work/route_permit`,
         },
-        {
-          label: (
-            <Link
-              className="text-sm "
-              href={`/${role}/paper_work/paper_work_list`}
-            >
-              Paper Work List
-            </Link>
-          ),
-          key: `/${role}/paper_work/paper_work_list`,
-        },
       ],
     },
     {
@@ -341,17 +321,17 @@ export const sidebarItem = (role: string) => {
           ),
           key: `/${role}/store_management/equipment_in`,
         },
-        // {
-        //   label: (
-        //     <Link
-        //       className="text-sm "
-        //       href={`/${role}/store_management/stock_status`}
-        //     >
-        //       Stock Status
-        //     </Link>
-        //   ),
-        //   key: `/${role}/store_management/stock_status`,
-        // },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/store_management/stock_status`}
+            >
+              Stock Status
+            </Link>
+          ),
+          key: `/${role}/store_management/stock_status`,
+        },
         {
           label: (
             <Link
@@ -383,7 +363,6 @@ export const sidebarItem = (role: string) => {
         },
       ],
     },
-
     {
       label: "Miscellaneous Expenses",
       icon: <MoneyCollectOutlined />,
@@ -445,6 +424,73 @@ export const sidebarItem = (role: string) => {
       icon: <HistoryOutlined />,
       key: `/${role}/accident_history`,
     },
+  ];
+
+  const adminSidebarItems: MenuProps["items"] = [...commonAdminSidebarItems];
+  const driverSidebarItems: MenuProps["items"] = [
+    ...defaultSidebarItems,
+    {
+      label: (
+        <Link className="text-sm " href={`/dashboard`}>
+          Dashboard
+        </Link>
+      ),
+      key: "dashboard",
+      icon: <DashboardFilled />,
+    },
+    {
+      label: (
+        <Link className="text-sm " href={`/${role}/accident_history`}>
+          Upcoming Trip
+        </Link>
+      ),
+      icon: <MdOutlineUpcoming />,
+      key: `/${role}/upcoming_trip`,
+    },
+    {
+      label: (
+        <Link className="text-sm " href={`/${role}/accident_history`}>
+          My Trip
+        </Link>
+      ),
+      icon: <FaRoadCircleCheck />,
+      key: `/${role}/my_trip`,
+    },
+  ];
+  const helperSidebarItems: MenuProps["items"] = [
+    ...defaultSidebarItems,
+    {
+      label: (
+        <Link className="text-sm " href={`/dashboard`}>
+          Dashboard
+        </Link>
+      ),
+      key: "dashboard",
+      icon: <DashboardFilled />,
+    },
+    {
+      label: (
+        <Link className="text-sm " href={`/${role}/accident_history`}>
+          Upcoming Trip
+        </Link>
+      ),
+      icon: <MdOutlineUpcoming />,
+      key: `/${role}/upcoming_trip`,
+    },
+    {
+      label: (
+        <Link className="text-sm " href={`/${role}/accident_history`}>
+          My Trip
+        </Link>
+      ),
+      icon: <FaRoadCircleCheck />,
+      key: `/${role}/my_trip`,
+    },
+  ];
+
+  const superAdminSidebarItems: MenuProps["items"] = [
+    ...commonAdminSidebarItems,
+    ...defaultSidebarItems,
     {
       label: "Manger Management",
       key: `/${role}/manager`,
@@ -473,15 +519,10 @@ export const sidebarItem = (role: string) => {
     },
   ];
 
-  const adminSidebarItems: MenuProps["items"] = [...commonAdminSidebarItems];
-
-  const superAdminSidebarItems: MenuProps["items"] = [
-    ...commonAdminSidebarItems,
-    ...defaultSidebarItems,
-  ];
-
   if (role === USER_ROLE.SUPER_ADMIN) return superAdminSidebarItems;
   else if (role === USER_ROLE.ADMIN) return adminSidebarItems;
+  else if (role === USER_ROLE.DRIVER) return driverSidebarItems;
+  else if (role === USER_ROLE.HELPER) return helperSidebarItems;
   else {
     return defaultSidebarItems;
   }
