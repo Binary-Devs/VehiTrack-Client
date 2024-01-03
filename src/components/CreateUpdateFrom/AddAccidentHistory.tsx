@@ -167,9 +167,9 @@ const AddAccidentHistory = () => {
             </Col>
           </Row>
         </div>
-        <div className="flex justify-center items-center">
+        <div className="flex justify-end items-center">
           <Button htmlType="submit" type="primary" disabled={isLoading}>
-            Create
+            Add
           </Button>
         </div>
       </Form>

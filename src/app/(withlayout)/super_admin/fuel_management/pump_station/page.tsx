@@ -9,7 +9,6 @@ import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
   EditOutlined,
-  EyeOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
 import { Button, Input } from "antd";
@@ -73,13 +72,13 @@ const PumpStationPage = () => {
       render: function (data: any) {
         return (
           <>
-            <Link
+            {/* <Link
               href={`/super_admin/manage-fuel/pump-station/details/${data?.id}`}
             >
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
-            </Link>
+            </Link> */}
             <Link
               href={`/super_admin/manage-fuel/pump-station/edit/${data?.id}`}
             >
@@ -120,30 +119,31 @@ const PumpStationPage = () => {
     setSearchTerm("");
   };
   return (
-    <div className="rounded-xl bg-white p-5">
-      <ActionBar title="Pump Station List">
-        <Input
-          size="large"
-          placeholder="Search"
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            minWidth: "150px",
-            maxWidth: "300px",
-          }}
-        />
-        <div>
-          <ModalComponent buttonText="Add Pump Station">
-            <AddPumpStation />
-          </ModalComponent>
+    <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
+      <ActionBar inline title="Pump Station List">
+        <div className="flex items-center gap-2">
+          <Input
+            // size="large"
+            placeholder="Search"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            // style={{
+            //   minWidth: "150px",
+            //   maxWidth: "300px",
+            // }}
+          />
+
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
-              style={{ margin: "0px 5px" }}
+              // style={{ margin: "0px 5px" }}
               type="primary"
               onClick={resetFilters}
             >
               <ReloadOutlined />
             </Button>
           )}
+          <ModalComponent buttonText="Add Pump Station">
+            <AddPumpStation />
+          </ModalComponent>
         </div>
       </ActionBar>
       <UMTable
