@@ -1,71 +1,53 @@
 "use client";
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
-import { useCreateBrandMutation } from "@/redux/api/brand/brandApi";
+import {
+  useCreateBrandMutation,
+  useGetSingleBrandQuery,
+  useUpdateBrandMutation,
+} from "@/redux/api/brand/brandApi";
 import { Button, Col, Row, message } from "antd";
+import Loader from "../Utlis/Loader";
 
-const AddUpdateBrand = () => {
-  const [createBrand, { isLoading }] = useCreateBrandMutation();
+const AddUpdateBrand = ({ id }: { id?: string }) => {
+  //Get
+  const { data, isLoading: getLoad } = useGetSingleBrandQuery(id ? id : "");
+
+  //Update
+  const [updateBrand, { isLoading: updateLoad }] = useUpdateBrandMutation();
+
+  //Create
+  const [createBrand, { isLoading: createLoad }] = useCreateBrandMutation();
+
+  console.log(id,data);
+
   const onSubmit = async (values: any) => {
-    message.loading("Adding....");
+    message.loading(id ? "Updating...." : "Adding....");
     try {
-      const res = await createBrand({ ...values }).unwrap();
+      const res = id
+        ? await updateBrand({ id, data: values }).unwrap()
+        : await createBrand({ ...values }).unwrap();
       if (res.id) {
-        message.success("Brand added successfully!");
-      }else{
+        message.success(`Brand ${id ? "updated" : "added"} successfully!`);
+      } else {
         message.error(res.message);
       }
     } catch (err: any) {
       message.error(err.message);
     }
   };
-  //   if(isLoading){
-  //     return message.loading("Loading...")
-  //   }
 
-  const driverlist = [
-    {
-      label: "Md korim (D-25141)",
-      value: "dffd",
-    },
-    {
-      label: "Md hasan (D-25414)",
-      value: "ddfsdf",
-    },
-    {
-      label: "Md Mondi (D-74118)",
-      value: "ddsdf",
-    },
-    {
-      label: "Mukbos (D-17411)",
-      value: "dsfd",
-    },
-  ];
-  const helperList = [
-    {
-      label: "Aomie (H-2511)",
-      value: "ddafds",
-    },
-    {
-      label: "Sampod (H-5414)",
-      value: "ddsadf",
-    },
-    {
-      label: "Md timil (H-85118)",
-      value: "ddafd",
-    },
-    {
-      label: "alind (H-1411)",
-      value: "ddasdf",
-    },
-  ];
-
+  if (id && getLoad) {
+    return <Loader className="h-[40vh] flex items-center justify-center" />;
+  }
   return (
     <div>
-      <h1 className="text-center my-1 font-bold text-2xl">Add Brand</h1>
+      <h1 className="text-center my-1 font-bold text-2xl">
+        {id ? "Update Brand" : "Add Brand"}
+      </h1>
       {/*  */}
       <div>
-        <Form submitHandler={onSubmit}>
+        <Form submitHandler={onSubmit} defaultValues={data}>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -89,14 +71,19 @@ const AddUpdateBrand = () => {
                   name="label"
                   size="large"
                   label="Brand name"
+                  // defaultValue={data && data.label}
                   required={true}
                   placeholder="Please enter brand name"
                 />
               </Col>
             </Row>
             <div className="flex justify-end items-center">
-              <Button htmlType="submit" type="primary" disabled={isLoading}>
-                Add
+              <Button
+                htmlType="submit"
+                type="primary"
+                disabled={createLoad || updateLoad}
+              >
+                {id ? "Update" : "Add"}
               </Button>
             </div>
           </div>

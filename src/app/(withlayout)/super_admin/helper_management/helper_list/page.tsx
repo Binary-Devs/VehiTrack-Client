@@ -20,6 +20,7 @@ import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
 import { useGetAllHelperQuery } from "@/redux/api/helper/helperApi";
+import { IoMdAdd } from "react-icons/io";
 
 const HelperListPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
@@ -217,6 +218,7 @@ const HelperListPage = () => {
             // size="large"
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
+            value={searchTerm}
             style={
               {
                 // width: "100%",
@@ -232,7 +234,7 @@ const HelperListPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Helper">
+          <ModalComponent buttonText="Add Helper" icon={<IoMdAdd />}>
             <AddUpdateHelper />
           </ModalComponent>
         </div>

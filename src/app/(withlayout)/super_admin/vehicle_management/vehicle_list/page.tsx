@@ -6,11 +6,9 @@ import {
   CarOutlined,
   DeleteOutlined,
   EditOutlined,
-  EyeOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
 import { Avatar, Button, Input } from "antd";
-import Link from "next/link";
 import { useState } from "react";
 
 import dayjs from "dayjs";
@@ -23,7 +21,8 @@ import { useGetAllBrandQuery } from "@/redux/api/brand/brandApi";
 import { useGetAllDriverQuery } from "@/redux/api/driver/driverApi";
 import { useGetAllHelperQuery } from "@/redux/api/helper/helperApi";
 import { useGetAllModelQuery } from "@/redux/api/model/modelApi";
-import { useGetAllVehicleQuery } from "@/redux/api/vehicle/vehicleApi";
+import { useGetAllVehicleQuery, useUpdateVehicleMutation } from "@/redux/api/vehicle/vehicleApi";
+import { IoMdAdd } from "react-icons/io";
 
 const VehicleListPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
@@ -83,51 +82,8 @@ const VehicleListPage = () => {
   });
   const helpers = helperData?.helpers;
 
-  //@ts-ignore
-  const generalUserData = [
-    {
-      _id: 1,
-      name: "C.N.G",
-      regNo: "DP-01441",
-      bandName: "TATA",
-      vehicleValue: 400000,
-      isActive: true,
-      createdAt: "2023-01-01",
-      phoneNumber: "014741154151",
-      image:
-        "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=150&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      _id: 2,
-      name: "C.N.G",
-      regNo: "DP-01441",
-      bandName: "TATA",
-      vehicleValue: 400000,
-      isActive: true,
-      createdAt: "2023-01-01",
-      phoneNumber: "014741154151",
-      image:
-        "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=150&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      _id: 3,
-      name: "C.N.G",
-      regNo: "DP-01441",
-      bandName: "TATA",
-      vehicleValue: 400000,
-      isActive: true,
-      createdAt: "2023-01-01",
-      phoneNumber: "014741154151",
-      image:
-        "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=150&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-  ];
-  //@ts-ignore
-  // const meta = {
-  //   page: 1,
-  //   limit: 10,
-  //   total: 3,
-  // };
+  // Inactive vehicle
+  const [updateVehicle, { isLoading: updateLoad }] = useUpdateVehicleMutation();
 
   const columns = [
     {
@@ -188,7 +144,7 @@ const VehicleListPage = () => {
       title: "Helper Name",
       dataIndex: "helper",
       render: (data: any) => {
-        return `${data ? data.fullName : ""}`;
+        return `${data ? data.fullName : "N/A"}`;
       },
     },
     // {
@@ -214,23 +170,27 @@ const VehicleListPage = () => {
       dataIndex: "id",
       render: function (data: any) {
         return (
-          <>
-            <Link href={`/manage_vehicle`}>
+          <div className="flex">
+            {/* <Link href={`/manage_vehicle`}>
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
-            </Link>
-            <Link href={`/${SUPER_ADMIN}/general_user/edit/${data}`}>
-              <Button
-                style={{
-                  margin: "0px 5px",
-                }}
-                onClick={() => console.log(data)}
-                type="primary"
-              >
-                <EditOutlined />
-              </Button>
-            </Link>
+            </Link> */}
+            <div
+              style={{
+                margin: "0px 5px",
+              }}
+            >
+              <ModalComponent icon={<EditOutlined />}>
+                <AddUpdateVehicle
+                  id={data}
+                  brands={brands}
+                  models={models}
+                  drivers={drivers}
+                  helpers={helpers}
+                />
+              </ModalComponent>
+            </div>
             <Button
               //   onClick={() => deleteGeneralUserHandler(data)}
               type="primary"
@@ -238,7 +198,7 @@ const VehicleListPage = () => {
             >
               <DeleteOutlined />
             </Button>
-          </>
+          </div>
         );
       },
     },
@@ -292,6 +252,7 @@ const VehicleListPage = () => {
             // size="large"
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
+            value={searchTerm}
             // style={{
             //   minWidth: "150px",
             //   maxWidth: "300px",
@@ -306,7 +267,7 @@ const VehicleListPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Vehicle">
+          <ModalComponent buttonText="Add Vehicle" icon={<IoMdAdd />}>
             <AddUpdateVehicle
               brands={brands}
               models={models}
