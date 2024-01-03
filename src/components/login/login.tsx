@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import { SubmitHandler } from "react-hook-form";
 import Form from "../Forms/Form";
 import FormInput from "../Forms/FormInput";
-import SVG_Web from "../Svg/SvgWeb";
 import ButtonLoading from "../ui/Loader/ButtonLoading";
 type FormValues = {
   userName: string;
@@ -39,20 +38,19 @@ const LoginPage = () => {
 
   return (
     <div className="relative ">
-      {/* <img
+      <img
         src="https://media.giphy.com/media/21QEGwILf5SGDRRHMn/giphy.gif"
-       
         alt=""
-      /> */}
-      <div  className="absolute inset-0 object-cover w-full h-screen">
+        className="absolute inset-0 object-cover w-full h-screen"
+      />
+      {/* <div  className="absolute inset-0 object-cover w-full h-screen">
         <SVG_Web/>
-      </div>
+      </div> */}
       <div className="relative bg-transparent bg-opacity-75 h-screen ">
         <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20 ">
           <div className="flex flex-col items-center justify-center mt-[15%]">
             <div className="w-full max-w-xl xl:px-8 xl:w-5/12 ">
               <div className="bg-white rounded shadow-2xl p-7 sm:p-10">
-   
                 <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
                   Login Dashboard
                 </h3>
@@ -80,7 +78,14 @@ const LoginPage = () => {
                     />
                   </div>
                   {isLoading ? (
-                    <ButtonLoading />
+                    <Button
+                      type="default"
+                      htmlType="submit"
+                      style={{ width: "100%" }}
+                      size="large"
+                    >
+                      <ButtonLoading />
+                    </Button>
                   ) : (
                     <Button
                       type="primary"

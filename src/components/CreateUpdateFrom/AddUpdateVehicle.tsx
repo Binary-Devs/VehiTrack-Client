@@ -3,81 +3,76 @@ import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import UploadImage from "@/components/ui/uploadImage";
-import { useCreateVehicleMutation } from "@/redux/api/vehicle/vehicleApi";
+import {
+  useCreateVehicleMutation,
+  useGetSingleVehicleQuery,
+  useUpdateVehicleMutation,
+} from "@/redux/api/vehicle/vehicleApi";
 import { Button, Col, Row, message } from "antd";
+import Loader from "../Utlis/Loader";
 
 const AddUpdateVehicle = ({
+  id,
   brands,
   models,
   drivers,
   helpers,
 }: {
-  brands: any;
-  models: any;
-  drivers: any;
-  helpers: any;
+  id?: string;
+  brands?: any;
+  models?: any;
+  drivers?: any;
+  helpers?: any;
 }) => {
-  const [createVehicle, { isLoading }] = useCreateVehicleMutation();
+  //Get
+  const { data, isLoading: getLoad } = useGetSingleVehicleQuery(id ? id : "");
+
+  //Update
+  const [updateVehicle, { isLoading: updateLoad }] = useUpdateVehicleMutation();
+
+  //Create
+  const [createVehicle, { isLoading: createLoad }] = useCreateVehicleMutation();
+
   const onSubmit = async (values: any) => {
     console.log(values);
-    message.loading("Adding vehicle....");
-    // try {
-    //   const res = await createVehicle(values).unwrap();
-    //   if (res.id) {
-    //     message.success("Vehicle added successfully!");
-    //   } else {
-    //     message.error(res.message);
-    //   }
-    // } catch (err: any) {
-    //   message.error(err.message);
-    // }
+    message.loading(id ? "Updating...." : "Adding....");
+    try {
+      const res = id
+        ? await updateVehicle({
+            id,
+            data: {
+              brandId: values.brandId,
+              modelId: values.modelId,
+              regNo: values.regNo,
+              vehicleValue: values.vehicleValue,
+              driverId: values.driverId,
+              helperId: values.helperId,
+              isActive: values.isActive,
+              imageUrl: "",
+            },
+          }).unwrap()
+        : await createVehicle(values).unwrap();
+      if (res.id) {
+        message.success(`Vehicle ${id ? "updated" : "added"} successfully!`);
+      } else {
+        message.error(res.message);
+      }
+    } catch (err: any) {
+      message.error(err.message);
+    }
   };
-  //   if(isLoading){
-  //     return message.loading("Loading...")
-  //   }
 
-  const driverlist = [
-    {
-      label: "Md korim (D-25141)",
-      value: "dffd",
-    },
-    {
-      label: "Md hasan (D-25414)",
-      value: "ddfsdf",
-    },
-    {
-      label: "Md Mondi (D-74118)",
-      value: "ddsdf",
-    },
-    {
-      label: "Mukbos (D-17411)",
-      value: "dsfd",
-    },
-  ];
-  const helperList = [
-    {
-      label: "Aomie (H-2511)",
-      value: "ddafds",
-    },
-    {
-      label: "Sampod (H-5414)",
-      value: "ddsadf",
-    },
-    {
-      label: "Md timil (H-85118)",
-      value: "ddafd",
-    },
-    {
-      label: "alind (H-1411)",
-      value: "ddasdf",
-    },
-  ];
+  if (id && getLoad) {
+    return <Loader className="h-[40vh] flex items-center justify-center" />;
+  }
 
   return (
     <div>
-      <h1 className="text-center my-1 font-bold text-2xl">Add Vehicle</h1>
+      <h1 className="text-center my-1 font-bold text-2xl">
+        {id ? "Update Vehicle" : "Add Vehicle"}
+      </h1>
       <div>
-        <Form submitHandler={onSubmit}>
+        <Form submitHandler={onSubmit} defaultValues={data}>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -271,8 +266,12 @@ const AddUpdateVehicle = ({
               </Col>
             </Row>
             <div className="flex justify-end items-center mt-[5px]">
-              <Button htmlType="submit" type="primary" disabled={isLoading}>
-                Add
+              <Button
+                htmlType="submit"
+                type="primary"
+                disabled={createLoad || updateLoad}
+              >
+                {id ? "Update" : "Add"}
               </Button>
             </div>
           </div>

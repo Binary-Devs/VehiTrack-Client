@@ -20,6 +20,7 @@ import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
 import { useGetAllHelperQuery } from "@/redux/api/helper/helperApi";
+import { IoMdAdd } from "react-icons/io";
 
 const HelperListPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
@@ -134,23 +135,21 @@ const HelperListPage = () => {
       // width: "15%",
       render: function (data: any) {
         return (
-          <>
-            <Link href={`/${SUPER_ADMIN}/general_user/details/${data}`}>
+          <div className="flex">
+            {/* <Link href={`/${SUPER_ADMIN}/general_user/details/${data}`}>
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
-            </Link>
-            <Link href={`/${SUPER_ADMIN}/general_user/edit/${data}`}>
-              <Button
-                style={{
-                  margin: "0px 8px",
-                }}
-                onClick={() => console.log(data)}
-                type="primary"
-              >
-                <EditOutlined />
-              </Button>
-            </Link>
+            </Link> */}
+            <div
+              style={{
+                margin: "0px 5px",
+              }}
+            >
+              <ModalComponent icon={<EditOutlined />}>
+                <AddUpdateHelper id={data} />
+              </ModalComponent>
+            </div>
             <Button
               //   onClick={() => deleteGeneralUserHandler(data)}
               type="primary"
@@ -158,7 +157,7 @@ const HelperListPage = () => {
             >
               <DeleteOutlined />
             </Button>
-          </>
+          </div>
         );
       },
     },
@@ -217,6 +216,7 @@ const HelperListPage = () => {
             // size="large"
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
+            value={searchTerm}
             style={
               {
                 // width: "100%",
@@ -232,7 +232,7 @@ const HelperListPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Helper">
+          <ModalComponent buttonText="Add Helper" icon={<IoMdAdd />}>
             <AddUpdateHelper />
           </ModalComponent>
         </div>

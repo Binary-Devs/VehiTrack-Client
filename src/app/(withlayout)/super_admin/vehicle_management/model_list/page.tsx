@@ -2,14 +2,8 @@
 
 import ActionBar from "@/components/ui/ActionBar";
 import { useDebounced } from "@/redux/hooks";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  EyeOutlined,
-  ReloadOutlined,
-} from "@ant-design/icons";
+import { EditOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
-import Link from "next/link";
 import { useState } from "react";
 
 import dayjs from "dayjs";
@@ -20,6 +14,7 @@ import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
 import { useGetAllBrandQuery } from "@/redux/api/brand/brandApi";
 import { useGetAllModelQuery } from "@/redux/api/model/modelApi";
+import { IoMdAdd } from "react-icons/io";
 
 const ModelListPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
@@ -47,62 +42,17 @@ const ModelListPage = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
+  // Get all model
   const { data, isLoading } = useGetAllModelQuery({ ...query });
 
   const models = data?.models;
   const meta = data?.meta;
 
-  // BrandData for creating model
+  // GetBrandData for creating model
   const { data: brandData, isLoading: brandLoad } = useGetAllBrandQuery({
     limit: "100",
   });
   const brands = brandData?.brands;
-
-  //@ts-ignore
-  const generalUserData = [
-    {
-      _id: 1,
-      name: "C.N.G",
-      regNo: "DP-01441",
-      bandName: "TATA",
-      vehicleValue: 400000,
-      isActive: true,
-      createdAt: "2023-01-01",
-      phoneNumber: "014741154151",
-      image:
-        "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=150&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      _id: 2,
-      name: "C.N.G",
-      regNo: "DP-01441",
-      bandName: "TATA",
-      vehicleValue: 400000,
-      isActive: true,
-      createdAt: "2023-01-01",
-      phoneNumber: "014741154151",
-      image:
-        "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=150&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      _id: 3,
-      name: "C.N.G",
-      regNo: "DP-01441",
-      bandName: "TATA",
-      vehicleValue: 400000,
-      isActive: true,
-      createdAt: "2023-01-01",
-      phoneNumber: "014741154151",
-      image:
-        "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=150&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-  ];
-  //@ts-ignore
-  // const meta = {
-  //   page: 1,
-  //   limit: 10,
-  //   total: 3,
-  // };
 
   const columns = [
     // {
@@ -139,38 +89,35 @@ const ModelListPage = () => {
       dataIndex: "id",
       render: function (data: any) {
         return (
-          <>
-            <Link href={``}>
+          <div className="flex">
+            {/* <Link href={``}>
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
-            </Link>
-            <Link href={``}>
-              <Button
-                style={{
-                  margin: "0px 5px",
-                }}
-                onClick={() => console.log(data)}
-                type="primary"
-              >
-                <EditOutlined />
-              </Button>
-              {/* <ModalComponent buttonText="" icon={<EditOutlined />}>
-                <AddUpdateBrand />
-              </ModalComponent> */}
-            </Link>
-            <Button
+            </Link> */}
+            <div
+              style={{
+                margin: "0px 5px",
+              }}
+              onClick={() => {}}
+            >
+              <ModalComponent icon={<EditOutlined />}>
+                <AddUpdateModel id={data} brands={brands} />
+              </ModalComponent>
+            </div>
+            {/* <Button
               //   onClick={() => deleteGeneralUserHandler(data)}
               type="primary"
               danger
             >
               <DeleteOutlined />
-            </Button>
-          </>
+            </Button> */}
+          </div>
         );
       },
     },
   ];
+  
   const onPaginationChange = (page: number, pageSize: number) => {
     console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
@@ -221,6 +168,7 @@ const ModelListPage = () => {
             // size="large"
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
+            value={searchTerm}
             // style={{
             //   minWidth: "150px",
             //   maxWidth: "300px",
@@ -236,7 +184,7 @@ const ModelListPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Model">
+          <ModalComponent buttonText="Add Model" icon={<IoMdAdd />}>
             <AddUpdateModel brands={brands} />
           </ModalComponent>
         </div>

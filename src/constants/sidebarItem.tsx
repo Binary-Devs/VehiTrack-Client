@@ -97,7 +97,7 @@ export const sidebarItem = (role: string) => {
               Driver List
             </Link>
           ),
-          key: `${role}/driver_management/driver_list`,
+          key: `/${role}/driver_management/driver_list`,
         },
       ],
     },
@@ -115,7 +115,7 @@ export const sidebarItem = (role: string) => {
               Helper List
             </Link>
           ),
-          key: `${role}/helper_management/helper_list`,
+          key: `/${role}/helper_management/helper_list`,
         },
       ],
     },

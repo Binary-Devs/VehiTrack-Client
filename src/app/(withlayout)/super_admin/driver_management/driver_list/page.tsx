@@ -5,12 +5,10 @@ import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
   EditOutlined,
-  EyeOutlined,
   ReloadOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { Avatar, Button, Input } from "antd";
-import Link from "next/link";
 import { useState } from "react";
 
 import dayjs from "dayjs";
@@ -20,6 +18,7 @@ import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
 import { useGetAllDriverQuery } from "@/redux/api/driver/driverApi";
+import { IoMdAdd } from "react-icons/io";
 
 const AllDriverList = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
@@ -45,43 +44,6 @@ const AllDriverList = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  //@ts-ignore
-  // const AllDriverData = [
-  //   {
-  //     _id: 1,
-  //     name: "sampood",
-  //     email: "sampood@gmail.com",
-  //     createdAt: "2023-01-01",
-  //     phoneNumber: "014741154151",
-  //     profileImage:
-  //       "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //   },
-  //   {
-  //     _id: 2,
-  //     name: "akahs",
-  //     email: "kakspood@gmail.com",
-  //     createdAt: "2023-01-01",
-  //     phoneNumber: "018044518521",
-  //     profileImage:
-  //       "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //   },
-  //   {
-  //     _id: 3,
-  //     name: "roihime",
-  //     email: "roihime@gmail.com",
-  //     phoneNumber: "018769988521",
-  //     createdAt: "2023-01-01",
-  //     profileImage:
-  //       "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //   },
-  // ];
-  //@ts-ignore
-  //   const meta = {
-  //     "page": 1,
-  //     "limit": 10,
-  //     "total": 3
-  // };
-
   const columns = [
     {
       title: "",
@@ -101,6 +63,7 @@ const AllDriverList = () => {
     {
       title: "License No",
       dataIndex: "licenseNo",
+      render: (data: any) => (data ? data : "N/A"),
     },
     // {
     //   title: "Active",
@@ -115,14 +78,17 @@ const AllDriverList = () => {
     {
       title: "Mobile",
       dataIndex: "mobile",
+      render: (data: any) => (data ? data : "N/A"),
     },
     {
       title: "Address",
       dataIndex: "address",
+      render: (data: any) => (data ? data : "N/A"),
     },
     {
       title: "Blood Group",
       dataIndex: "bloodGroup",
+      render: (data: any) => (data ? data : "N/A"),
     },
     {
       title: "Joined at",
@@ -134,27 +100,25 @@ const AllDriverList = () => {
     },
     {
       title: "Action",
-      dataIndex: "_id",
+      dataIndex: "id",
       // width: "15%",
       render: function (data: any) {
         return (
-          <>
-            <Link href={`/${SUPER_ADMIN}/general_user/details/${data}`}>
+          <div className="flex">
+            {/* <Link href={`/${SUPER_ADMIN}/general_user/details/${data}`}>
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
-            </Link>
-            <Link href={`/${SUPER_ADMIN}/general_user/edit/${data}`}>
-              <Button
-                style={{
-                  margin: "0px 8px",
-                }}
-                onClick={() => console.log(data)}
-                type="primary"
-              >
-                <EditOutlined />
-              </Button>
-            </Link>
+            </Link> */}
+            <div
+              style={{
+                margin: "0px 5px",
+              }}
+            >
+              <ModalComponent icon={<EditOutlined />}>
+                <AddUpdateDriver id={data} />
+              </ModalComponent>
+            </div>
             <Button
               //   onClick={() => deleteGeneralUserHandler(data)}
               type="primary"
@@ -162,7 +126,7 @@ const AllDriverList = () => {
             >
               <DeleteOutlined />
             </Button>
-          </>
+          </div>
         );
       },
     },
@@ -221,6 +185,7 @@ const AllDriverList = () => {
             // size="large"
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
+            value={searchTerm}
             style={
               {
                 // width: "100%",
@@ -236,7 +201,7 @@ const AllDriverList = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Driver">
+          <ModalComponent buttonText="Add Driver" icon={<IoMdAdd />}>
             <AddUpdateDriver />
           </ModalComponent>
         </div>

@@ -8,6 +8,7 @@ interface IInput {
   type?: string;
   size?: "large" | "small";
   value?: string | string[] | undefined;
+  defaultValue?: string | string[] | undefined;
   id?: string;
   placeholder?: string;
   validation?: object;
@@ -22,6 +23,7 @@ const FormInput = ({
   type,
   size = "large",
   value,
+  defaultValue,
   id,
   placeholder,
   validation,
@@ -62,6 +64,7 @@ const FormInput = ({
               readOnly={readOnly}
               placeholder={placeholder}
               {...field}
+              defaultValue={defaultValue}
               value={value ? value : field.value}
             />
           ) : type === "number" ? (
@@ -87,6 +90,7 @@ const FormInput = ({
                 size={size}
                 placeholder={placeholder}
                 {...field}
+                defaultValue={defaultValue}
                 value={value ? value : field.value}
               />
             </div>
@@ -99,6 +103,7 @@ const FormInput = ({
               readOnly={readOnly}
               placeholder={placeholder}
               {...field}
+              defaultValue={defaultValue}
               value={value ? value : field.value}
             />
           )
