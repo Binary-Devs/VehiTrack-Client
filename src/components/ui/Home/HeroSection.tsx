@@ -1,52 +1,36 @@
-import { Button, Flex } from "antd";
+import { motion } from "framer-motion";
 import Image from "next/image";
-import vehicle from "../../../assets/car-monochromatic.png";
 
 export default function HeroSection() {
   return (
-    <section className="text-center flex flex-col justify-center items-center my-10 space-y-5">
-      <h1 className="text-2xl md:text-5xl max-w-7xl font-semibold ">
-      Vehicle Management System (VMS): A One Stop Fleet Management Solution
-      </h1>
-      <div className="max-w-7xl mx-auto">
-
-      <p className="text-lg ">
-        Netus proin iaculis ad curabitur si magnis et sollicitudin erat felis
-        parturient adipiscing nam aenean euismod elementum dui id diam nullam
-        commodo habitasse quam auctor urna curae aliquet ut pede
-      </p>
-      </div>
-      <Flex justify="center" align="center" gap="small">
-        <Button>View Demo </Button>
-        <Button type="primary">Buy Now</Button>
-      </Flex>
-      <div className="relative">
+    <section className="relative flex justify-center items-center h-[92.7vh] overflow-hidden">
+      {/* Image Section */}
+      <div className="flex-1">
         <Image
-          src={vehicle}
-          width={500}
-          height={500}
-          alt=""
-          style={{ overflow: "hidden", objectFit: "cover" }}
+          src="/assets/images/banner.jpg"
+          layout="fill"
+          objectFit="cover"
+          alt="Background Image"
         />
-        <div className="flex items-center justify-center   absolute top-[10%] inset-0 animate-pulse">
-          <button className="relative flex items-center justify-center w-16 h-16 bg-blue-500 rounded-full focus:outline-none">
-            <span className="absolute w-8 h-8 bg-white rounded-full"></span>
-            <svg
-              className="w-6 h-6 text-white"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                stroke-linecap="round"
-                strokeLinejoin="round"
-                stroke-width="2"
-                d="M5 3l14 9-14 9V3z"
-              ></path>
-            </svg>
-          </button>
-        </div>
+      </div>
+
+      {/* Text Section */}
+      <div className="flex-1 relative z-10 bg-gradient-to-r from-blue-900 to-indigo-800 text-white p-10 opacity-80 bo">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
+          <h1 className="text-4xl md:text-5xl max-w-3xl font-semibold">
+            VMS: Simplifying Fleet Management
+          </h1>
+          <div className="max-w-2xl mt-6">
+            <p className="text-xl">
+              Manage your vehicle effortlessly with our Vehicle Management
+              System. From maintenance to tracking, we&apos;ve got you covered.
+            </p>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

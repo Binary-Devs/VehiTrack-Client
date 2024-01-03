@@ -1,64 +1,76 @@
-"use client";
-import { Menu } from "antd";
-
-import { homeNavItems } from "@/constants/homeNabItems";
+// Import necessary components and modules
+import { authKey } from "@/constants/storageKey";
+import { getUserInfo, removeUserInfo } from "@/services/auth.service";
+import { UserOutlined } from "@ant-design/icons";
+import { Avatar, Button, Dropdown, MenuProps, Space } from "antd";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "../../../../assets/vehitrackLogo.png";
+import { useRouter } from "next/navigation";
+import logo from "../../../../../public/logo.jpg";
+
+// Define NavbarPublic component
 const NavbarPublic = () => {
-  // const screens = useBreakpoint();
+  const router = useRouter();
+  const { role } = getUserInfo() as any;
+
+  // Function to handle logout
+  const logOut = () => {
+    removeUserInfo(authKey);
+    router.push("/login");
+  };
+
+  // Dropdown menu items
+  const items: MenuProps["items"] = [
+    {
+      key: "1",
+      label: (
+        <Link href={"/dashboard"}>
+          <Button type="text">Dashboard</Button>
+        </Link>
+      ),
+    },
+    {
+      key: "0",
+      label: (
+        <Button onClick={logOut} type="text" danger>
+          Logout
+        </Button>
+      ),
+    },
+  ];
 
   return (
-    <div
-      style={{
-       
-        // background: "#e0e0e0",
-        boxShadow: "20px 20px 60px #bebebe ",
-      }}
-      className="top-0  z-100"
-    >
-      <nav
-        className=" text-black py-2
-    flex align-center justify-between  gap-2 container mx-auto"
-      >
-        <Link
-          href="/"
-          style={{
-            textDecoration: "none",
-            fontWeight: "700",
-            color: "black",
-            fontSize: "1.3rem",
-            fontFamily: "sans-serif",
-            // background:"white",
-            // paddingBlock:"0.2rem",
-            // borderRadius:"5px"
-          }}
-        >
-          <Image
-            className="w-20 rounded-xl"
-            src={logo}
-            height={120}
-            width={200}
-            alt="Logo"
-          />
-        </Link>
+    <header className="text-gray-600 body-font">
+      <div className="mx-auto flex flex-wrap p-3 flex-row items-center justify-between">
+        {/* Logo */}
+        <div className="flex-shrink-0">
+          <Image className="rounded-xl" height={50} src={logo} alt="Logo" />
+        </div>
 
-        <Menu
-          mode="horizontal"
-          className="hidden lg:flex"
-          style={{
-            // color:"#5371FF"
-            fontWeight: "700",
-            fontSize: "15px",
-            fontFamily: "fantasy",
-            // display:`${screens.sm ? "flex":"none"}`
-          }}
-          disabledOverflow
-          // items={sidebarItems("homeNav")}
-          items={homeNavItems}
-        />
-      </nav>
-    </div>
+        {/* Navigation and User Info */}
+        <div className="flex justify-between items-center mt-4 md:mt-0">
+          {/* User Role */}
+          <p className="hidden md:block" style={{ margin: "0px 20px" }}>
+            {role === "super_admin"
+              ? "Super Admin"
+              : role === "admin"
+              ? "Admin"
+              : role === "driver"
+              ? "Driver"
+              : "Helper"}
+          </p>
+
+          {/* User Avatar and Dropdown */}
+          <Dropdown menu={{ items }}>
+            <a>
+              <Space wrap size={16}>
+                <Avatar size="large" icon={<UserOutlined />} />
+              </Space>
+            </a>
+          </Dropdown>
+        </div>
+      </div>
+    </header>
   );
 };
 
