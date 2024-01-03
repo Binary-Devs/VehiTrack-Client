@@ -138,30 +138,31 @@ const FitnessPage = () => {
     setSearchTerm("");
   };
   return (
-    <div className="rounded-xl bg-white p-5">
-      <ActionBar title="Fitness List">
-        <Input
-          size="large"
-          placeholder="Search"
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            minWidth: "150px",
-            maxWidth: "300px",
-          }}
-        />
-        <div>
-          <ModalComponent buttonText="Add Fitness">
-            <AddFitness />
-          </ModalComponent>
+    <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
+      <ActionBar inline title="Fitness List">
+        <div className="flex items-center gap-2">
+          <Input
+            // size="large"
+            placeholder="Search"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            // style={{
+            //   minWidth: "150px",
+            //   maxWidth: "300px",
+            // }}
+          />
+
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
-              style={{ margin: "0px 5px" }}
+              // style={{ margin: "0px 5px" }}
               type="primary"
               onClick={resetFilters}
             >
               <ReloadOutlined />
             </Button>
           )}
+          <ModalComponent buttonText="Add Fitness">
+            <AddFitness />
+          </ModalComponent>
         </div>
       </ActionBar>
 

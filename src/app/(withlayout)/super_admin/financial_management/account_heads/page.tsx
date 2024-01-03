@@ -9,7 +9,6 @@ import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
   EditOutlined,
-  EyeOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
 import { Button, Input } from "antd";
@@ -77,13 +76,13 @@ const AccountHeadsPage = () => {
       render: function (data: any) {
         return (
           <>
-            <Link
+            {/* <Link
               href={`/super_admin/manage-financial/account-heads/details/${data?.id}`}
             >
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
-            </Link>
+            </Link> */}
             <Link
               href={`/super_admin/manage-financial/account-heads/edit/${data?.id}`}
             >
@@ -129,30 +128,31 @@ const AccountHeadsPage = () => {
   };
 
   return (
-    <div className="rounded-xl bg-white p-5">
-      <ActionBar title="Account Heads List">
-        <Input
-          size="large"
-          placeholder="Search"
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            minWidth: "150px",
-            maxWidth: "300px",
-          }}
-        />
-        <div>
-          <ModalComponent buttonText="Add Account Head">
-            <AddAccountHeads />
-          </ModalComponent>
+    <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
+      <ActionBar inline title="Account Head List">
+        <div className="flex items-center gap-2">
+          <Input
+            // size="large"
+            placeholder="Search"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            // style={{
+            //   minWidth: "150px",
+            //   maxWidth: "300px",
+            // }}
+          />
+
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
-              style={{ margin: "0px 5px" }}
+              // style={{ margin: "0px 5px" }}
               type="primary"
               onClick={resetFilters}
             >
               <ReloadOutlined />
             </Button>
           )}
+          <ModalComponent buttonText="Add Account Head">
+            <AddAccountHeads />
+          </ModalComponent>
         </div>
       </ActionBar>
 

@@ -160,7 +160,7 @@ const BalanceSheet = () => {
                 <CardItem title="Trip Income" value={tripIncomeAmount} />
                 <CardItem title="Interest Income" value={0} />
                 <CardItem
-                  title="Accidental Income"
+                  title="Additional Income"
                   value={accidentalIncomeAmount}
                 />
               </SheetCard>
@@ -186,7 +186,7 @@ const BalanceSheet = () => {
                 />
                 <CardItem title="Fixed Asset Deprecation" value={0} />
                 <CardItem
-                  title="Accidental Expense"
+                  title="Additional Expense"
                   value={accidentalExpenseAmount}
                 />
                 <CardItem title="Legal Expense" value={paperExpenseAmount} />
