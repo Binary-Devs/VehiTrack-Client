@@ -60,7 +60,7 @@ const ProfilePage = () => {
                     : data[data.role]["fullName"]}
                 </h2>
                 <p className="text-gray-500">
-                 📲 
+                  📲
                   {data.role === "super_admin"
                     ? data.superAdmin.mobile
                     : data[data.role]["mobile"]}
@@ -82,13 +82,14 @@ const ProfilePage = () => {
                 />
               </div>
               <div className="p-1 md:p-4 border-t md:mx-8 mt-2  ">
-                Bio-data :
+                Professional Summary :
                 <p className="text-black  border-2 rounded-md p-3">
-                  Habitant efficitur platea convallis nullam tristique velit nam
-                  dapibus libero porta non metus dolor aptent suspendisse lectus
-                  integer accumsan feugiat placerat egestas semper molestie
-                  neque gravida facilisi nec odio iaculis lacinia amet imperdiet
-                  tortor viverra etiam nascetur pede leo duis
+                  Friendly and outgoing car driver proficient in safe
+                  operations, passenger transportation and inclement weather
+                  driving. Excellent communicator and problem solver with a
+                  solid track record in the field. Outstanding safety background
+                  and consistently requested by repeat customers for regular
+                  transportation.
                 </p>
               </div>
             </div>
