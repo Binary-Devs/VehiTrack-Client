@@ -85,8 +85,40 @@ export const reportApi = baseApi.injectEndpoints({
         tagTypes.vehicle,
       ],
     }),
+
+    // summary report
+    summaryReport: build.query({
+      query: (arg: Record<string, any>) => ({
+        url: `${REPORT_URL}/summary-report`,
+        method: 'GET',
+        params: arg,
+      }),
+      transformResponse: (response: any[], meta: IMeta) => {
+        return {
+          summaries: response,
+          meta,
+        };
+      },
+      providesTags: [
+        tagTypes.vehicle,
+        tagTypes.accountHead,
+        tagTypes.accountType,
+        tagTypes.accidentHistory,
+        tagTypes.equipmentIn,
+        tagTypes.expense,
+        tagTypes.expenseHead,
+        tagTypes.fuel,
+        tagTypes.maintenance,
+        tagTypes.paperWork,
+        tagTypes.vehicle,
+      ],
+    }),
   }),
 });
 
-export const { useBalanceSheetQuery, useFuelStatusQuery, useStockStatusQuery } =
-  reportApi;
+export const {
+  useBalanceSheetQuery,
+  useFuelStatusQuery,
+  useStockStatusQuery,
+  useSummaryReportQuery,
+} = reportApi;

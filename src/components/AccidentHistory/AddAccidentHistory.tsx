@@ -67,34 +67,30 @@ const AddAccidentHistory = ({ open, handleClose }: IProps) => {
               />
             </Col>
             <Col xs={24} md={12} lg={8}>
-              <div>
-                <FormSelectField
-                  size="large"
-                  name="vehicleId"
-                  options={allVehicles?.map((el) => ({
-                    label: el.regNo,
-                    value: el.id,
-                  }))}
-                  label="Select Vehicle"
-                  placeholder="Select"
-                  required={true}
-                />
-              </div>
+              <FormSelectField
+                size="large"
+                name="vehicleId"
+                options={allVehicles?.map((el) => ({
+                  label: el.regNo,
+                  value: el.id,
+                }))}
+                label="Select Vehicle"
+                placeholder="Select"
+                required={true}
+              />
             </Col>
             <Col xs={24} md={12} lg={8}>
-              <div>
-                <FormSelectField
-                  size="large"
-                  name="driverId"
-                  options={allDrivers?.map((el) => ({
-                    label: el.fullName,
-                    value: el.id,
-                  }))}
-                  label="Select Driver"
-                  placeholder="Select"
-                  required={true}
-                />
-              </div>
+              <FormSelectField
+                size="large"
+                name="driverId"
+                options={allDrivers?.map((el) => ({
+                  label: el.fullName,
+                  value: el.id,
+                }))}
+                label="Select Driver"
+                placeholder="Select"
+                required={true}
+              />
             </Col>
             <Col xs={24} md={12} lg={8}>
               <FormInput
