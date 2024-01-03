@@ -285,7 +285,7 @@ const VehicleListPage = () => {
   //   return <Loader className="h-[50vh] flex items-end justify-center" />;
   // }
   return (
-    <div className="bg-white border border-blue-200 rounded-xl shadow-md shadow-blue-200 p-5 space-y-3">
+    <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
       <ActionBar inline title="Vehicle List">
         <div className="flex items-center gap-2">
           <Input

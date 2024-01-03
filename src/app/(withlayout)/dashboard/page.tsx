@@ -491,7 +491,7 @@ const DashboardPage = () => {
         {count.map((c, index) => (
           <div
             key={index}
-            className="flex items-center justify-between bg-white rounded-lg p-5"
+            className="flex items-center justify-between bg-white border border-blue-200 shadow-md shadow-blue-200 rounded-lg p-5"
           >
             <div>
               <span className="text-[#8c8c8c] font-semibold text-sm">
@@ -521,10 +521,10 @@ const DashboardPage = () => {
 
       {/* Section 2 */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-5">
-        <div className="bg-white rounded-lg p-5">
+        <div className="bg-white border border-blue-200 shadow-md shadow-blue-200 rounded-lg p-5">
           <ColumnChart />
         </div>
-        <div className="bg-white rounded-lg p-5">
+        <div className="bg-white border border-blue-200 shadow-md shadow-blue-200 rounded-lg p-5">
           <LineChart />
         </div>
       </div>
@@ -532,7 +532,7 @@ const DashboardPage = () => {
       {/* Section 3 */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 mb-5">
         {/* Recent Data */}
-        <div className="bg-white rounded-lg py-5 pl-5 pr-1.5 lg:col-span-7 overflow-x-auto">
+        <div className="bg-white border border-blue-200 shadow-md shadow-blue-200 rounded-lg py-5 pl-5 pr-1.5 lg:col-span-7 overflow-x-auto">
           <div className="flex justify-between items-center pr-3.5 mb-3">
             <div>
               <Title level={5} className="!m-0">
@@ -554,7 +554,7 @@ const DashboardPage = () => {
           </div>
           {/* Trip */}
           {recentTabData === "trip" && (
-            <div className="inline-block min-w-full align-middle overflow-auto h-[340px] scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-300 scrollbar-track-rounded-full scrollbar-thumb-rounded-full pr-1.5">
+            <div className="inline-block min-w-full align-middle overflow-auto h-[340px] scrollbar-thin scrollbar-track-transparent scrollbar-thumb-blue-200 scrollbar-track-rounded-full scrollbar-thumb-rounded-full pr-1.5">
               <table className="min-w-full divide-y divide-gray-300">
                 <thead>
                   <tr className="">
@@ -614,7 +614,7 @@ const DashboardPage = () => {
           )}
           {/* Maintenance */}
           {recentTabData === "maintenance" && (
-            <div className="inline-block min-w-full align-middle overflow-auto h-[340px] scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-300 scrollbar-track-rounded-full scrollbar-thumb-rounded-full pr-1.5">
+            <div className="inline-block min-w-full align-middle overflow-auto h-[340px] scrollbar-thin scrollbar-track-transparent scrollbar-thumb-blue-200 scrollbar-track-rounded-full scrollbar-thumb-rounded-full pr-1.5">
               <table className="min-w-full divide-y divide-gray-300">
                 <thead>
                   <tr className="">
@@ -674,14 +674,14 @@ const DashboardPage = () => {
           )}
         </div>
         {/* Income/Expense */}
-        <div className="bg-white rounded-lg py-5 pl-5 pr-1.5 lg:col-span-5 overflow-auto">
+        <div className="bg-white border border-blue-200 shadow-md shadow-blue-200 rounded-lg py-5 pl-5 pr-1.5 lg:col-span-5 overflow-auto">
           <div className="pr-3.5">
             <Title level={5}>Income/Expenses</Title>
             {/* <Paragraph className="lastweek !m-0">
                 than last year <span className="blue">+10%</span>
               </Paragraph> */}
           </div>
-          <div className="overflow-auto h-[352px] scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-300 scrollbar-track-rounded-full scrollbar-thumb-rounded-full pr-1.5">
+          <div className="overflow-auto h-[352px] scrollbar-thin scrollbar-track-transparent scrollbar-thumb-blue-200 scrollbar-track-rounded-full scrollbar-thumb-rounded-full pr-1.5">
             <header className="text-xs uppercase text-slate-400 bg-slate-50 rounded-sm font-semibold p-2">
               Today
             </header>
@@ -750,7 +750,7 @@ const DashboardPage = () => {
 
       {/* Section 4 */}
       {/* Upcoming Data */}
-      <div className="bg-white rounded-lg py-5 pl-5 pr-1.5 lg:col-span-7 overflow-x-auto">
+      <div className="bg-white border border-blue-200 shadow-md shadow-blue-200 rounded-lg py-5 pl-5 pr-1.5 lg:col-span-7 overflow-x-auto">
         <div className="flex justify-between items-center mb-3 pr-3.5">
           <div>
             <Title level={5} className="!m-0 flex-1">
@@ -769,7 +769,7 @@ const DashboardPage = () => {
         </div>
         {/* Trip */}
         {upcomingTabData === "trip" && (
-          <div className="inline-block min-w-full align-middle overflow-auto h-[340px] scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-300 scrollbar-track-rounded-full scrollbar-thumb-rounded-full pr-1.5">
+          <div className="inline-block min-w-full align-middle overflow-auto h-[340px] scrollbar-thin scrollbar-track-transparent scrollbar-thumb-blue-200 scrollbar-track-rounded-full scrollbar-thumb-rounded-full pr-1.5">
             <table className="min-w-full divide-y divide-gray-300">
               <thead>
                 <tr className="">

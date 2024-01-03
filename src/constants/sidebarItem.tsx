@@ -22,7 +22,7 @@ import { USER_ROLE } from "./role";
 export const sidebarItem = (role: string) => {
   const defaultSidebarItems: MenuProps["items"] = [
     {
-      key: "profile",
+      key: "/profile",
       label: (
         <Link className="text-sm " href={`/profile`}>
           Profile
@@ -39,7 +39,7 @@ export const sidebarItem = (role: string) => {
           Dashboard
         </Link>
       ),
-      key: "dashboard",
+      key: "/dashboard",
       icon: <DashboardFilled />,
     },
     {
