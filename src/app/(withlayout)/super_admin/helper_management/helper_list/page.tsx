@@ -135,23 +135,21 @@ const HelperListPage = () => {
       // width: "15%",
       render: function (data: any) {
         return (
-          <>
-            <Link href={`/${SUPER_ADMIN}/general_user/details/${data}`}>
+          <div className="flex">
+            {/* <Link href={`/${SUPER_ADMIN}/general_user/details/${data}`}>
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
-            </Link>
-            <Link href={`/${SUPER_ADMIN}/general_user/edit/${data}`}>
-              <Button
-                style={{
-                  margin: "0px 8px",
-                }}
-                onClick={() => console.log(data)}
-                type="primary"
-              >
-                <EditOutlined />
-              </Button>
-            </Link>
+            </Link> */}
+            <div
+              style={{
+                margin: "0px 5px",
+              }}
+            >
+              <ModalComponent icon={<EditOutlined />}>
+                <AddUpdateHelper id={data} />
+              </ModalComponent>
+            </div>
             <Button
               //   onClick={() => deleteGeneralUserHandler(data)}
               type="primary"
@@ -159,7 +157,7 @@ const HelperListPage = () => {
             >
               <DeleteOutlined />
             </Button>
-          </>
+          </div>
         );
       },
     },
