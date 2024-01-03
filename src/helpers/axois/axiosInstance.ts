@@ -27,7 +27,6 @@ instance.interceptors.request.use(
 );
 
 // Add a response interceptor
-
 instance.interceptors.response.use(
   //@ts-ignore
   function (response) {
@@ -35,10 +34,8 @@ instance.interceptors.response.use(
     // Do something with response data
     const responseObject: ResponseSuccessType = {
       data: response?.data?.data,
-      success: response?.data?.success,
       meta: response?.data?.meta,
     };
-
     return responseObject;
   },
   function (error) {
