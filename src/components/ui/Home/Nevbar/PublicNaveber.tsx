@@ -4,14 +4,13 @@ import { Menu } from "antd";
 import { homeNavItems } from "@/constants/homeNabItems";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "../../../../assets/vehitrackLogo.png";
+import logo from "/assets/logo.jpg";
 const NavbarPublic = () => {
   // const screens = useBreakpoint();
 
   return (
     <div
       style={{
-       
         // background: "#e0e0e0",
         boxShadow: "20px 20px 60px #bebebe ",
       }}

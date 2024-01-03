@@ -23,6 +23,7 @@
     "dayjs": "^1.11.10",
     "eslint": "8.50.0",
     "eslint-config-next": "13.5.2",
+    "framer-motion": "^10.17.4",
     "jwt-decode": "^3.1.2",
     "next": "13.5.2",
     "next-google-fonts": "^2.2.0",
