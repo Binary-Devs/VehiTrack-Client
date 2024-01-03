@@ -5,18 +5,22 @@ import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import { accidentPaymentStatus } from "@/constants/global";
-import { useCreateAccidentHistoryMutation } from "@/redux/api/accidentHistory/accidentHistoryApi";
+import {
+  useCreateAccidentHistoryMutation
+} from "@/redux/api/accidentHistory/accidentHistoryApi";
 import { useGetAllAccountHeadQuery } from "@/redux/api/accountHead/accountHeadApi";
 import { useGetAllDriverQuery } from "@/redux/api/driver/driverApi";
 import { useGetAllVehicleQuery } from "@/redux/api/vehicle/vehicleApi";
 import { Button, Col, Row, message } from "antd";
 
 const AddAccidentHistory = () => {
+
+
   const { data: vehiclesData } = useGetAllVehicleQuery({ limit: 100 });
   const { data: driversData } = useGetAllDriverQuery({ limit: 100 });
   const { data: accountHeadsData } = useGetAllAccountHeadQuery({ limit: 100 });
   const vehicles = vehiclesData?.vehicles;
-  const vehicleOptions = vehicles?.map((vehicle) => {
+  const vehicleOptions = vehicles?.map((vehicle:any) => {
     return {
       label: vehicle?.regNo,
       value: vehicle?.id,

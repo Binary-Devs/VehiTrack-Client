@@ -1,6 +1,5 @@
 "use client";
 import AddAccidentHistory from "@/components/CreateUpdateFrom/AddAccidentHistory";
-import Loader from "@/components/Utlis/Loader";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
@@ -19,7 +18,6 @@ import { useState } from "react";
 
 const AccidentHistoryPage = () => {
   const query: Record<string, any> = {};
-
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
   const [sortBy, setSortBy] = useState<string>("");
@@ -41,9 +39,9 @@ const AccidentHistoryPage = () => {
   }
 
   const { data, isLoading } = useGetAllAccidentHistoriesQuery({ ...query });
-  if (isLoading) {
-    return <Loader className="h-[50vh] flex items-end justify-center" />;
-  }
+  // if (isLoading) {
+  //   return <Loader className="h-[50vh] flex items-end justify-center" />;
+  // }
   const accidentHistories = data?.accidentHistories;
   const meta = data?.meta;
 
@@ -92,14 +90,14 @@ const AccidentHistoryPage = () => {
         return (
           <>
             <Link
-              href={`/super_admin/maintenance/accident-history/details/${data?.id}`}
+              href={`/super_admin/accident_history/details/${data?.id}`}
             >
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
             </Link>
             <Link
-              href={`/super_admin/maintenance/accident-history/edit/${data?.id}`}
+              href={`/super_admin/accident_history/edit/${data?.id}`}
             >
               <Button
                 style={{
@@ -167,7 +165,7 @@ const AccidentHistoryPage = () => {
 
       <UMTable
         columns={columns}
-        loading={false}
+        loading={isLoading}
         dataSource={accidentHistories}
         pageSize={size}
         totalPages={meta?.total}
@@ -175,6 +173,7 @@ const AccidentHistoryPage = () => {
         onPaginationChange={onPaginationChange}
         onTableChange={onTableChange}
         showPagination={true}
+
       />
     </div>
   );

@@ -1,6 +1,6 @@
 import { tagTypes } from '@/redux/teg-types';
-import { baseApi } from '../baseApi';
 import { IMeta } from '@/types';
+import { baseApi } from '../baseApi';
 
 const ACCIDENT_HISTORY_URL = '/accident-history';
 
