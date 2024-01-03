@@ -138,21 +138,18 @@ const AccidentHistoryPage = () => {
     setSearchTerm("");
   };
   return (
-    <div className="rounded-xl bg-white p-5">
+    <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
       <ActionBar title="Accident History List">
-        <Input
-          size="large"
-          placeholder="Search"
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            minWidth: "150px",
-            maxWidth: "300px",
-          }}
-        />
-        <div>
-          <ModalComponent buttonText="Add Accident History">
-            <AddAccidentHistory />
-          </ModalComponent>
+        <div className="flex items-center gap-2">
+          <Input
+            // size="large"
+            placeholder="Search"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            // style={{
+            //   minWidth: "150px",
+            //   maxWidth: "300px",
+            // }}
+          />
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
@@ -162,6 +159,9 @@ const AccidentHistoryPage = () => {
               <ReloadOutlined />
             </Button>
           )}
+          <ModalComponent buttonText="Add Accident History">
+            <AddAccidentHistory />
+          </ModalComponent>
         </div>
       </ActionBar>
 
