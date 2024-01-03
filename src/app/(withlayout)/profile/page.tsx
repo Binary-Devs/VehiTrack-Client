@@ -1,48 +1,45 @@
 "use client";
 import { AllImage } from "@/components/Image";
 import Loader from "@/components/Utlis/Loader";
-import { authKey } from "@/constants/storageKey";
-import { getFromLocalStorage } from "@/utils/local-storage";
-import { Error_model_hook } from "@/utils/modalHook";
+import { useGetProfileQuery } from "@/redux/api/profile/profileApi";
 import { Flex } from "antd";
-import axios from "axios";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 
 const ProfilePage = () => {
-  // const {data,isLoading,error}=useGetProfileQuery('')
-  const [loading, setloading] = useState(true);
-  const [user, setUser] = useState<any>({});
+  const { data, isLoading, error } = useGetProfileQuery(undefined);
+  console.log("🚀 ~ file: page.tsx:15 ~ ProfilePage ~ data:", data);
+  // const [loading, setloading] = useState(true);
+  // const [user, setUser] = useState<any>({});
 
-  useEffect(() => {
-    setloading(true);
-    const profile = async () => {
-      const data = await axios.get(
-        "https://vms-system-backend.vercel.app/api/v1/profile",
-        {
-          headers: {
-            Authorization: getFromLocalStorage(authKey),
-          },
-        }
-      );
-      console.log(data?.data?.data);
-      if (!data?.data?.data?.id) {
-        setloading(false);
-        Error_model_hook("login failed");
-      } else {
-        setUser(data?.data?.data);
-        setloading(false);
-      }
-    };
-    profile();
+  // useEffect(() => {
+  //   setloading(true);
+  //   const profile = async () => {
+  //     const data = await axios.get(
+  //       "https://vms-system-backend.vercel.app/api/v1/profile",
+  //       {
+  //         headers: {
+  //           Authorization: getFromLocalStorage(authKey),
+  //         },
+  //       }
+  //     );
+  //     console.log(data?.data?.data);
+  //     if (!data?.data?.data?.id) {
+  //       setloading(false);
+  //       Error_model_hook("login failed");
+  //     } else {
+  //       setUser(data?.data?.data);
+  //       setloading(false);
+  //     }
+  //   };
+  //   profile();
 
-    return () => {};
-  }, []);
+  //   return () => {};
+  // }, []);
 
-  if (loading) {
+  if (isLoading) {
     return <Loader />;
   }
-  console.log(user);
+
   return (
     <section className="">
       <div className="">
@@ -65,24 +62,24 @@ const ProfilePage = () => {
               <p className="absolute top-[10px] right-1 w-5 h-5 rounded-full bg-[#008000]"></p>
             </div>
             <h1 className="text-center font-semibold text-lg ">
-              {user.role === "super_admin"
-                ? user.superAdmin.fullName
-                : user[user.role]["fullName"]}
+              {data.role === "super_admin"
+                ? data.superAdmin.fullName
+                : data[data.role]["fullName"]}
             </h1>
-          
-              <h1 className=" font-normal text-base ">
-                Address:
-                {user.role === "super_admin"
-                  ? user.superAdmin.address
-                  : user[user.role]["address"]}
-              </h1>
-              <h1 className=" font-normal text-base ">
-                Phone number:
-                {user.role === "super_admin"
-                  ? user.superAdmin.mobile
-                  : user[user.role]["mobile"]}
-              </h1>
-          
+
+            <h1 className=" font-normal text-base ">
+              Address:
+              {data.role === "super_admin"
+                ? data.superAdmin.address
+                : data[data.role]["address"]}
+            </h1>
+            <h1 className=" font-normal text-base ">
+              Phone number:
+              {data.role === "super_admin"
+                ? data.superAdmin.mobile
+                : data[data.role]["mobile"]}
+            </h1>
+
             <p className="">
               Maximus nibh fringilla penatibus est vestibulum hendrerit nam
               curabitur lorem sagittis dis facilisis tempor consectetuer at ante
