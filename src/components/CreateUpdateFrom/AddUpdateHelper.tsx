@@ -3,21 +3,35 @@ import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import { bloodGroupOptions } from "@/constants/global";
+import {
+  useGetSingleHelperQuery,
+  useUpdateHelperMutation,
+} from "@/redux/api/helper/helperApi";
 import { useCreateHelperMutation } from "@/redux/api/user/userApi";
 import { Button, Col, Row, message } from "antd";
 import FormSelectField from "../Forms/FormSelectField";
+import Loader from "../Utlis/Loader";
 import UploadImage from "../ui/uploadImage";
 
-const AddUpdateHelper = () => {
-  const [createHelper, { isLoading }] = useCreateHelperMutation();
+const AddUpdateHelper = ({ id }: { id?: any }) => {
+  //Get
+  const { data, isLoading: getLoad } = useGetSingleHelperQuery(id ? id : "");
+
+  //Update
+  const [updateHelper, { isLoading: updateLoad }] = useUpdateHelperMutation();
+
+  //Create
+  const [createHelper, { isLoading: createLoad }] = useCreateHelperMutation();
 
   const onSubmit = async (values: any) => {
-    message.loading("Adding helper....");
+    message.loading(id ? "Updating...." : "Adding....");
     console.log(values);
     try {
-      const res = await createHelper(values).unwrap();
+      const res = id
+        ? await updateHelper({ id, data: values }).unwrap()
+        : await createHelper(values).unwrap();
       if (res.id) {
-        message.success("Helper added successfully");
+        message.success(`Helper ${id ? "updated" : "added"} successfully`);
       } else {
         message.error(res.message);
       }
@@ -25,14 +39,17 @@ const AddUpdateHelper = () => {
       console.error(err.message);
     }
   };
-  //   if(isLoading){
-  //     return message.loading("Loading...")
-  //   }
+
+  if (id && getLoad) {
+    return <Loader className="h-[40vh] flex items-center justify-center" />;
+  }
   return (
     <div>
-      <h1 className="text-center my-1 font-bold text-2xl">Add Helper</h1>
+      <h1 className="text-center my-1 font-bold text-2xl">
+        {id ? "Update Helper" : "Add Helper"}
+      </h1>
       <div>
-        <Form submitHandler={onSubmit}>
+        <Form submitHandler={onSubmit} defaultValues={data}>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -200,8 +217,12 @@ const AddUpdateHelper = () => {
               </Col>
             </Row>
             <div className="flex justify-end items-center mt-[5px]">
-              <Button htmlType="submit" type="primary" disabled={isLoading}>
-                Add
+              <Button
+                htmlType="submit"
+                type="primary"
+                disabled={createLoad || updateLoad}
+              >
+                {id ? "Update" : "Add"}
               </Button>
             </div>
           </div>

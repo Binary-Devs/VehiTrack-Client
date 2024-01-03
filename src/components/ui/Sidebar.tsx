@@ -15,7 +15,7 @@ const Sidebar = () => {
   // const { role } = getUserInfo() as any;
 
   return (
-    <section className="">
+    <section className="hidden sm:block">
       <Sider
         collapsible
         collapsed={collapsed}
