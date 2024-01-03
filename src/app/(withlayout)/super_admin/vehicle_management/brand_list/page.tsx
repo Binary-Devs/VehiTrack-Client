@@ -1,22 +1,17 @@
 "use client";
 
-import ActionBar from "@/components/ui/ActionBar";
-import { useDebounced } from "@/redux/hooks";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  EyeOutlined,
-  ReloadOutlined,
-} from "@ant-design/icons";
-import { Button, Input } from "antd";
-import Link from "next/link";
-import { useState } from "react";
-import dayjs from "dayjs";
 import AddUpdateBrand from "@/components/CreateUpdateFrom/AddUpdateBrand";
+import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
 import { useGetAllBrandQuery } from "@/redux/api/brand/brandApi";
+import { useDebounced } from "@/redux/hooks";
+import { EditOutlined, ReloadOutlined } from "@ant-design/icons";
+import { Button, Input } from "antd";
+import dayjs from "dayjs";
+import { useState } from "react";
+import { IoMdAdd } from "react-icons/io";
 
 const BrandListPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
@@ -44,12 +39,11 @@ const BrandListPage = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
+  //Get
   const { data, isLoading } = useGetAllBrandQuery({ ...query });
 
   const brands = data?.brands;
   const meta = data?.meta;
-
-  console.log(brands);
 
   const columns = [
     // {
@@ -86,34 +80,32 @@ const BrandListPage = () => {
       dataIndex: "id",
       render: function (data: any) {
         return (
-          <>
-            <Link href={``}>
+          <div className="flex">
+            {/* <Link href={``}>
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
-            </Link>
-            <Link href={``}>
-              <Button
-                style={{
-                  margin: "0px 5px",
-                }}
-                onClick={() => console.log(data)}
-                type="primary"
-              >
-                <EditOutlined />
-              </Button>
-              {/* <ModalComponent buttonText="">
-                <AddUpdateBrand />
-              </ModalComponent> */}
-            </Link>
-            <Button
-              //   onClick={() => deleteGeneralUserHandler(data)}
+            </Link> */}
+            <div
+              style={{
+                margin: "0px 5px",
+              }}
+              onClick={() => {}}
+            >
+              <ModalComponent icon={<EditOutlined />}>
+                <AddUpdateBrand id={data} />
+              </ModalComponent>
+            </div>
+            {/* <Button
+              onClick={() => {
+                updateBrand({id:data,data:{}});
+              }}
               type="primary"
               danger
             >
               <DeleteOutlined />
-            </Button>
-          </>
+            </Button> */}
+          </div>
         );
       },
     },
@@ -170,6 +162,7 @@ const BrandListPage = () => {
             // size="large"
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
+            value={searchTerm}
             // style={{
             //   minWidth: "150px",
             //   maxWidth: "300px",
@@ -185,7 +178,7 @@ const BrandListPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Brand">
+          <ModalComponent buttonText="Add Brand" icon={<IoMdAdd />}>
             <AddUpdateBrand />
           </ModalComponent>
         </div>
