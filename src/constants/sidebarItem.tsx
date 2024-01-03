@@ -32,18 +32,18 @@ export const sidebarItem = (role: string) => {
     },
   ];
 
-  const commonAdminSidebarItems: MenuProps["items"] = [
+  const commonAdminSidebarItems: MenuProps['items'] = [
     {
       label: (
         <Link className="text-sm " href={`/dashboard`}>
           Dashboard
         </Link>
       ),
-      key: "dashboard",
+      key: 'dashboard',
       icon: <DashboardFilled />,
     },
     {
-      label: "Vehicle Management",
+      label: 'Vehicle Management',
       icon: <CarOutlined />,
       key: `/${role}/vehicle_management`,
       children: [
@@ -83,7 +83,7 @@ export const sidebarItem = (role: string) => {
       ],
     },
     {
-      label: "Driver Management",
+      label: 'Driver Management',
       key: `/${role}/driver_management`,
       icon: <UserOutlined />,
       children: [
@@ -101,7 +101,7 @@ export const sidebarItem = (role: string) => {
       ],
     },
     {
-      label: "Helper Management",
+      label: 'Helper Management',
       key: `/${role}/helper_management`,
       icon: <UserOutlined />,
       children: [
@@ -119,7 +119,7 @@ export const sidebarItem = (role: string) => {
       ],
     },
     {
-      label: "Trip Management",
+      label: 'Trip Management',
       icon: <TaobaoOutlined />,
       key: `/${role}/trip_management`,
       children: [
@@ -159,7 +159,7 @@ export const sidebarItem = (role: string) => {
       ],
     },
     {
-      label: "Financial  Management",
+      label: 'Financial  Management',
       icon: <BankOutlined />,
       key: `/${role}/financial_management`,
       children: [
@@ -199,7 +199,7 @@ export const sidebarItem = (role: string) => {
       ],
     },
     {
-      label: "Fuel Management",
+      label: 'Fuel Management',
       icon: <ThunderboltOutlined />,
       key: `/${role}/fuel_management`,
       children: [
@@ -250,7 +250,7 @@ export const sidebarItem = (role: string) => {
       ],
     },
     {
-      label: "Paper Work",
+      label: 'Paper Work',
       icon: <PaperClipOutlined />,
       key: `/${role}/paper_work`,
       children: [
@@ -295,7 +295,7 @@ export const sidebarItem = (role: string) => {
       ],
     },
     {
-      label: "Store Management",
+      label: 'Store Management',
       icon: <StrikethroughOutlined />,
       key: `/${role}/store_management`,
       children: [
@@ -346,10 +346,21 @@ export const sidebarItem = (role: string) => {
       ],
     },
     {
-      label: "Maintenance",
+      label: 'Maintenance',
       icon: <ToolOutlined />,
       key: `/${role}/maintenance`,
       children: [
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/maintenance/maintenance_head`}
+            >
+              Maintenance Heads
+            </Link>
+          ),
+          key: `/${role}/maintenance/maintenance_head`,
+        },
         {
           label: (
             <Link
@@ -364,7 +375,7 @@ export const sidebarItem = (role: string) => {
       ],
     },
     {
-      label: "Miscellaneous Expenses",
+      label: 'Miscellaneous Expenses',
       icon: <MoneyCollectOutlined />,
       key: `/${role}/miscellaneous_expenses`,
       children: [
@@ -393,7 +404,7 @@ export const sidebarItem = (role: string) => {
       ],
     },
     {
-      label: "Report",
+      label: 'Report',
       icon: <TbReportAnalytics />,
       key: `/${role}/report`,
       children: [

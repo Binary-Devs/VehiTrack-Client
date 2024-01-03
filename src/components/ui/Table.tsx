@@ -3,6 +3,7 @@
 import { Table } from "antd";
 
 type UMTableProps = {
+  rowKey?: string;
   loading?: boolean;
   columns: any;
   dataSource: any;
@@ -15,6 +16,7 @@ type UMTableProps = {
 };
 
 const UMTable = ({
+  rowKey = 'id',
   loading = false,
   columns,
   dataSource,
@@ -39,7 +41,7 @@ const UMTable = ({
     <Table
       scroll={{
         // x: 1200,
-        x: "max-content",
+        x: 'max-content',
         // y: "max-content",
       }}
       loading={loading}
