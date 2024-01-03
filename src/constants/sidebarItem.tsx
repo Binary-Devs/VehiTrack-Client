@@ -3,9 +3,9 @@ import {
   CarOutlined,
   DashboardFilled,
   HistoryOutlined,
+  HomeOutlined,
   MoneyCollectOutlined,
   PaperClipOutlined,
-  ProfileOutlined,
   StrikethroughOutlined,
   TaobaoOutlined,
   ThunderboltOutlined,
@@ -22,17 +22,18 @@ import { USER_ROLE } from "./role";
 export const sidebarItem = (role: string) => {
   const defaultSidebarItems: MenuProps["items"] = [
     {
-      key: "profile",
+      key: "home",
       label: (
-        <Link className="text-sm " href={`/profile`}>
-          Profile
+        <Link className="text-sm" href={`/`}>
+          Home
         </Link>
       ),
-      icon: <ProfileOutlined />,
+      icon: <HomeOutlined />,
     },
   ];
 
   const commonAdminSidebarItems: MenuProps["items"] = [
+    ...defaultSidebarItems,
     {
       label: (
         <Link className="text-sm " href={`/dashboard`}>
