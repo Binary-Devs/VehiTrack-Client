@@ -19,6 +19,10 @@
   @apply scrollbar-thin scrollbar-track-transparent scrollbar-thumb-blue-200 scrollbar-track-rounded-full scrollbar-thumb-rounded-full
 }
 
+.ant-menu {
+  @apply scrollbar-thin scrollbar-track-transparent scrollbar-thumb-blue-200 scrollbar-track-rounded-full scrollbar-thumb-rounded-full
+}
+
 /* Override base SVG style to work with Ant Design */
 svg {
   vertical-align: initial;
