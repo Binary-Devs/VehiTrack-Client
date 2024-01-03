@@ -74,34 +74,30 @@ const CreateExpense = ({ open, handleClose }: IProps) => {
               />
             </Col>
             <Col xs={24} md={12}>
-              <div>
-                <FormSelectField
-                  size="large"
-                  name="vehicleId"
-                  options={allVehicles?.map((el) => ({
-                    label: el.regNo,
-                    value: el.id,
-                  }))}
-                  label="Select Vehicle"
-                  placeholder="Select"
-                  required={true}
-                />
-              </div>
+              <FormSelectField
+                size="large"
+                name="vehicleId"
+                options={allVehicles?.map((el) => ({
+                  label: el.regNo,
+                  value: el.id,
+                }))}
+                label="Select Vehicle"
+                placeholder="Select"
+                required={true}
+              />
             </Col>
             <Col xs={24} md={12}>
-              <div>
-                <FormSelectField
-                  size="large"
-                  name="expenseHeadId"
-                  options={allExpenseHeads?.map((el) => ({
-                    label: el.label,
-                    value: el.id,
-                  }))}
-                  label="Select Expense Head"
-                  placeholder="Select"
-                  required={true}
-                />
-              </div>
+              <FormSelectField
+                size="large"
+                name="expenseHeadId"
+                options={allExpenseHeads?.map((el) => ({
+                  label: el.label,
+                  value: el.id,
+                }))}
+                label="Select Expense Head"
+                placeholder="Select"
+                required={true}
+              />
             </Col>
             <Col xs={24} md={12}>
               <FormInput
