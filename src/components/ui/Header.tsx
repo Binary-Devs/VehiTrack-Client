@@ -1,6 +1,5 @@
 "use client";
 
-import { USER_ROLE } from "@/constants/role";
 import { sidebarItem } from "@/constants/sidebarItem";
 import { authKey } from "@/constants/storageKey";
 import { getUserInfo, removeUserInfo } from "@/services/auth.service";
