@@ -1,17 +1,38 @@
 "use client";
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
-import { useCreateAccountTypeMutation } from "@/redux/api/accountType/accountTypeApi";
+import {
+  useCreateAccountTypeMutation,
+  useGetSingleAccountTypeQuery,
+  useUpdateAccountTypeMutation,
+} from "@/redux/api/accountType/accountTypeApi";
 import { Button, Col, Row, message } from "antd";
+import Loader from "../Utlis/Loader";
 
-const AddAccountType = () => {
-  const [createAccountType, { isLoading }] = useCreateAccountTypeMutation();
+const AddAccountType = ({ id }: { id?: string }) => {
+  //Get
+  const { data, isLoading: getLoad } = useGetSingleAccountTypeQuery(
+    id ? id : ""
+  );
+
+  //Update
+  const [updateAccountType, { isLoading: updateLoad }] =
+    useUpdateAccountTypeMutation();
+
+  //Create
+  const [createAccountType, { isLoading: createLoad }] =
+    useCreateAccountTypeMutation();
+
   const onSubmit = async (data: any) => {
-    message.loading("Adding.............");
+    message.loading(id ? "Updating...." : "Adding....");
     try {
-      const res = await createAccountType({ ...data }).unwrap();
+      const res = id
+        ? await updateAccountType({ id, data }).unwrap()
+        : await createAccountType({ ...data }).unwrap();
       if (res.id) {
-        message.success(" Account Type add in successfully");
+        message.success(
+          `Account Type ${id ? "updated" : "added"} successfully!`
+        );
       } else {
         message.error(res.message);
       }
@@ -19,11 +40,19 @@ const AddAccountType = () => {
       message.error(err.message);
     }
   };
+
+  if (id && getLoad) {
+    return <Loader className="h-[40vh] flex items-center justify-center" />;
+  }
+
   return (
     <div>
-      <h1 className="text-center my-1 font-bold text-2xl">Add Account Type</h1>
+      <h1 className="text-center my-1 font-bold text-2xl">
+        {id ? "Update Account Type" : "Add Account Type"}
+      </h1>
+      {/*  */}
       <div>
-        <Form submitHandler={onSubmit}>
+        <Form submitHandler={onSubmit} defaultValues={data}>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -55,8 +84,12 @@ const AddAccountType = () => {
             </Row>
           </div>
           <div className="flex justify-end items-center">
-            <Button htmlType="submit" type="primary" disabled={isLoading}>
-              Add
+            <Button
+              htmlType="submit"
+              type="primary"
+              disabled={createLoad || updateLoad}
+            >
+              {id ? "Update" : "Add"}
             </Button>
           </div>
         </Form>

@@ -6,14 +6,9 @@ import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { useGetAllAccountTypeQuery } from "@/redux/api/accountType/accountTypeApi";
 import { useDebounced } from "@/redux/hooks";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  ReloadOutlined,
-} from "@ant-design/icons";
+import { EditOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
-import Link from "next/link";
 import { useState } from "react";
 
 const AccountTypePage = () => {
@@ -24,6 +19,7 @@ const AccountTypePage = () => {
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [open, setOpen] = useState(false);
 
   query["limit"] = size;
   query["page"] = page - 1;
@@ -64,31 +60,18 @@ const AccountTypePage = () => {
       title: "Action",
       render: function (data: any) {
         return (
-          <>
-            {/* <Link
-              href={`/super_admin/manage-financial/account-type/details/${data?.id}`}
+          <div className="flex">
+            <div
+              style={{
+                margin: "0px 5px",
+              }}
+              onClick={() => console.log(data?.id)}
             >
-              <Button onClick={() => console.log(data)} type="primary">
-                <EyeOutlined />
-              </Button>
-            </Link> */}
-            <Link
-              href={`/super_admin/manage-financial/account-type/edit/${data?.id}`}
-            >
-              <Button
-                style={{
-                  margin: "0px 5px",
-                }}
-                onClick={() => console.log(data)}
-                type="primary"
-              >
-                <EditOutlined />
-              </Button>
-            </Link>
-            <Button onClick={() => console.log(data?.id)} type="primary" danger>
-              <DeleteOutlined />
-            </Button>
-          </>
+              <ModalComponent icon={<EditOutlined />}>
+                <AddAccountType id={data?.id} />
+              </ModalComponent>
+            </div>
+          </div>
         );
       },
     },
@@ -110,6 +93,12 @@ const AccountTypePage = () => {
     setSortBy("");
     setSortOrder("");
     setSearchTerm("");
+    const inputField = document.getElementById(
+      "searchInput"
+    ) as HTMLInputElement;
+    if (inputField) {
+      inputField.value = "";
+    }
   };
 
   return (
@@ -120,6 +109,7 @@ const AccountTypePage = () => {
             // size="large"
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
+            onClick={resetFilters}
             // style={{
             //   minWidth: "150px",
             //   maxWidth: "300px",
