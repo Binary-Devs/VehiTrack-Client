@@ -1,3 +1,4 @@
+"use client";
 import NavbarPublic from "./Nevbar/PublicNaveber";
 
 export default function Header() {
