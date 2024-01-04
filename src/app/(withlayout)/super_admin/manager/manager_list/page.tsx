@@ -56,6 +56,7 @@ const AllManagerList = () => {
       render: function (data: any) {
         return <Avatar size={64} icon={<UserOutlined />} />;
       },
+      width:100
     },
     {
       title: "Name",
@@ -64,6 +65,7 @@ const AllManagerList = () => {
     {
       title: "Active",
       dataIndex: "isActive",
+      width:100,
       render: (isActive: boolean) =>
         isActive ? (
           <Tag color="green">Active</Tag>
@@ -74,6 +76,10 @@ const AllManagerList = () => {
     {
       title: "Mobile",
       dataIndex: "mobile",
+    },
+    {
+      title: "Address",
+      dataIndex: "address",
     },
     {
       title: "Created at",
@@ -111,7 +117,7 @@ const AllManagerList = () => {
                 <EditOutlined />
               </Button>
             </Link> */}
-            <Button onClick={() => handleDelete(data)} type="primary" danger>
+            <Button style={{margin:"7px"}} onClick={() => handleDelete(data)} type="primary" danger>
               <DeleteOutlined />
             </Button>
           </>
