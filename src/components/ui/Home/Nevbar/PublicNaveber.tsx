@@ -57,22 +57,30 @@ const NavbarPublic = () => {
         </div>
 
         {/* Navigation and User Info */}
-        <div className="flex justify-between items-center mt-4 md:mt-0">
-          <Link href={"/dashboard"}>
-            <Button type="text" size="large" className="mr-2">
-              Dashboard
+        {role ? (
+          <div className="flex justify-between items-center mt-4 md:mt-0">
+            <Link href={"/dashboard"}>
+              <Button type="text" size="large" className="mr-2">
+                Dashboard
+              </Button>
+            </Link>
+
+            {/* User Avatar and Dropdown */}
+            <Dropdown menu={{ items }}>
+              <a>
+                <Space wrap size={16}>
+                  <Avatar size="large" icon={<UserOutlined />} />
+                </Space>
+              </a>
+            </Dropdown>
+          </div>
+        ) : (
+          <Link href={"/login"}>
+            <Button type="primary" size="large" className="px-2">
+              Login
             </Button>
           </Link>
-
-          {/* User Avatar and Dropdown */}
-          <Dropdown menu={{ items }}>
-            <a>
-              <Space wrap size={16}>
-                <Avatar size="large" icon={<UserOutlined />} />
-              </Space>
-            </a>
-          </Dropdown>
-        </div>
+        )}
       </div>
     </header>
   );
