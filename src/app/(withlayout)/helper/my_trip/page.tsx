@@ -56,7 +56,7 @@ const MyTrip = () => {
     {
       title: "driver",
       dataIndex: "driver",
-      render: (driver: any) => <span>{driver && driver.fullName}</span>,
+      render: (driver: any) => <span>{driver ? driver.fullName : "N/A"}</span>,
     },
     // {
     //   title: "helper",

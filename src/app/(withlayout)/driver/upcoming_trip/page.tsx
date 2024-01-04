@@ -61,7 +61,7 @@ const UpcomingTrip = () => {
     {
       title: "helper",
       dataIndex: "helper",
-      render: (helper: any) => <span>{helper && helper.fullName}</span>,
+      render: (helper: any) => <span>{helper ? helper.fullName : "N/A"}</span>,
     },
     {
       title: "Start Date",
