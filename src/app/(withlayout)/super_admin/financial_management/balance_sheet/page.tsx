@@ -1,9 +1,12 @@
+import BalanceSheet from '@/components/Financial/BalanceSheet';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'VehiTrack | Balance Sheet',
+};
+
 const BalanceSheetPage = () => {
-  return (
-    <div>
-      <p>this is balance sheet page</p>
-    </div>
-  );
+  return <BalanceSheet />;
 };
 
 export default BalanceSheetPage;

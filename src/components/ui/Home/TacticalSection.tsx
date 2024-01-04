@@ -1,104 +1,83 @@
-import { Button, Flex } from "antd";
 import Image from "next/image";
-import one from "../../../assets/1tac.png";
-import two from "../../../assets/2tac.png";
-import trhee from "../../../assets/3tac.png";
-import four from "../../../assets/4tac.png";
-import five from "../../../assets/5tac.png";
-import ser from "../../../assets/6tac.png";
+import one from "../../../assets/1h.png";
+import two from "../../../assets/2h.png";
+import trhee from "../../../assets/3h.png";
+import four from "../../../assets/4h.png";
+import five from "../../../assets/5h.png";
+import ser from "../../../assets/6h.png";
+
 export default function TacticalSection() {
   const data = [
     {
-      title: "Manage your vehicle from home",
+      title: "Remote Vehicle Management",
       img: one,
       details:
-        "The VMS software helps you to manage vehicles, store all important data about vehicle type, fitness, routes, stations, driver-helper-officer details, vehicle base performance etc.",
+        "Effortlessly manage your vehicles from anywhere using our VehiTrack system. Keep track of vehicle details, routes, and performance.",
     },
     {
-      title: "Manage inventory & expenses under control",
+      title: "Streamlined Inventory Control",
       img: ser,
       details:
-        "Get all inventory records such as stock in hand, vehicle wise parts use report etc. We have designed an expense management system to take your inventory & expenses under control.",
+        "Take control of inventory and expenses with our advanced system. Manage stock levels, track parts usage, and streamline expense management.",
     },
     {
-      title: "Ensure the best profitability",
+      title: "Boost Profitability with Automation",
       img: five,
       details:
-        "Use automation in every section of your business. Such as asset tracking, manage daily activities, get automatic calculation of finance .That’s why to ensure the best profitability you should have an vehicle management system.",
+        "Utilize automation across your business operations for asset tracking, daily activity management, and automatic financial calculations.",
     },
     {
-      title: "Take authentic decision",
+      title: "Informed Decision-Making",
       img: four,
       details:
-        "VMS includes an integrated system that helps you to keep all your information in one place. You can view your all data at a glance at any time, get instant reports & can be able to make authentic decisions.",
+        "Make authentic decisions with our integrated system. Access all your information, view instant reports, and make data-driven decisions.",
     },
     {
-      title: "Be the market leader of your industry",
+      title: "Become a Market Leader",
       img: trhee,
       details:
-        "A computer based management system brings a supersonic speed to manage an organization, get reports & ensure sustainable business growth. Having an automation system will help you to be the market leader",
+        "Achieve supersonic speed in managing your organization. Be the market leader with automation, streamlined workflows, and sustainable business growth.",
     },
     {
-      title: "Own a competent workforce",
+      title: "Empower Your Workforce",
       img: two,
       details:
-        "An automation system makes easy dealing of your daily activities. You can specify your functionality as admins, superadmins inventory manager & other employees activities. And have the system for monetising their performance to make them competent.",
+        "Provide your workforce with an easy-to-use automation system. Specify roles, manage activities, and monetize performance for a competent team.",
     },
   ];
+
   return (
-    <div className="flex flex-col justify-center items-center text-center space-y-5 bg-[#f7f7f7] p-4">
-      <h1 className="text-2xl md:text-5xl max-w-6xl font-semibold text-center">
-        Be Tactical, Chose Automation, Ensure Profitability
+    <div className="container text-center mx-auto py-24 p-4">
+      <h1 className="text-2xl md:text-4xl font-semibold mb-4">
+        Welcome to VehiTrack
       </h1>
-      <p className="text-lg max-w-6xl">
-        This fleet management system provides an ordained solution for the
-        problems, generally a transport manager faced. Have an attentive tour
-        from top to bottom & get a complete idea about a vehicle management
-        system
+      <p className="text-xl mx-auto mb-8">
+        VehiTrack is your all-in-one solution for efficient vehicle management
       </p>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-7">
-        {data.map((data, index) => (
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mx-auto mt-10">
+        {data.map((item, index) => (
           <div
             key={index}
-            className="flex justify-center items-center flex-col gap-3 bg-white text-center px-9 py-3 max-w-sm"
+            className="bg-white p-6 rounded-lg shadow-lg text-center h-full"
           >
-            <Image
-              src={data.img}
-              width={200}
-              height={200}
-              alt=""
-              className="rounded-full w-36 h-32"
-            />
-            <h2 className="text-2xl font-bold">{data.title}</h2>
-            <p className="text">{data.details}</p>
+            <div
+              className="h-40 mb-4 overflow-hidden"
+              style={{ borderRadius: "50%" }}
+            >
+              <Image
+                src={item.img}
+                width={200}
+                height={200}
+                alt={item.title}
+                objectFit="cover"
+                className="mx-auto my-auto"
+              />
+            </div>
+            <h2 className="text-xl font-semibold mb-2">{item.title}</h2>
+            <p className="text-sm text-gray-600">{item.details}</p>
           </div>
         ))}
-      </div>
-      <div className=" max-w-6xl space-y-7 text-start">
-        <h1 className="text-2xl md:text-5xl max-w-6xl font-semibold text-center">
-          Vehicle Management System
-        </h1>
-        <p>
-          Vehicle management system is an automated software for the
-          transportation industry or an organization which owns a large number
-          of vehicle & managing fleets. It is an organized code which provides
-          management functions that permit corporations to get rid of or
-          minimize the risks related to vehicles. It helps a business to boost
-          up some outstanding criteria including the daily management of
-          vehicles, fuel and services management, cost & inventory management
-          etc.
-        </p>
-        <p>
-          Bdtask has designed the most modern vehicle management software to
-          manage large vehicles and fleets. This system processes and analyzes
-          every single data of all vehicles. It is an online based software
-          which is really helpful for Bus, Car, Taxi, Cover Van & Truck
-          operators to manage everyday workflow and performance.
-        </p>
-        <Flex justify="center" align="center" gap="small">
-          <Button>View Demo </Button>
-          <Button type="primary">Buy Now</Button>
-        </Flex>
       </div>
     </div>
   );

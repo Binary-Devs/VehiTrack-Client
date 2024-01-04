@@ -1,18 +1,34 @@
 "use client";
+
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
-import { useCreateModelMutation } from "@/redux/api/model/modelApi";
+import {
+  useCreateModelMutation,
+  useGetSingleModelQuery,
+  useUpdateModelMutation,
+} from "@/redux/api/model/modelApi";
 import { Button, Col, Row, message } from "antd";
+import Loader from "../Utlis/Loader";
 
-const AddUpdateModel = ({ brands }: { brands: any }) => {
-  const [createModel, { isLoading }] = useCreateModelMutation();
+const AddUpdateModel = ({ id, brands }: { id?: string; brands?: any }) => {
+  //Get
+  const { data, isLoading: getLoad } = useGetSingleModelQuery(id ? id : "");
+
+  //Update
+  const [updateModel, { isLoading: updateLoad }] = useUpdateModelMutation();
+
+  //Create
+  const [createModel, { isLoading: createLoad }] = useCreateModelMutation();
+
   const onSubmit = async (values: any) => {
-    message.loading("Adding....");
+    message.loading(id ? "Updating...." : "Adding....");
     try {
-      const res = await createModel({ ...values }).unwrap();
+      const res = id
+        ? await updateModel({ id, data: values }).unwrap()
+        : await createModel({ ...values }).unwrap();
       if (res.id) {
-        message.success("Model added successfully!");
+        message.success(`Model ${id ? "updated" : "added"} successfully!`);
       } else {
         message.error(res.message);
       }
@@ -20,64 +36,26 @@ const AddUpdateModel = ({ brands }: { brands: any }) => {
       message.error(err.message);
     }
   };
-  //   if(isLoading){
-  //     return message.loading("Loading...")
-  //   }
 
-  // const driverlist = [
-  //   {
-  //     label: "Md korim (D-25141)",
-  //     value: "dffd",
-  //   },
-  //   {
-  //     label: "Md hasan (D-25414)",
-  //     value: "ddfsdf",
-  //   },
-  //   {
-  //     label: "Md Mondi (D-74118)",
-  //     value: "ddsdf",
-  //   },
-  //   {
-  //     label: "Mukbos (D-17411)",
-  //     value: "dsfd",
-  //   },
-  // ];
-  // const helperList = [
-  //   {
-  //     label: "Aomie (H-2511)",
-  //     value: "ddafds",
-  //   },
-  //   {
-  //     label: "Sampod (H-5414)",
-  //     value: "ddsadf",
-  //   },
-  //   {
-  //     label: "Md timil (H-85118)",
-  //     value: "ddafd",
-  //   },
-  //   {
-  //     label: "alind (H-1411)",
-  //     value: "ddasdf",
-  //   },
-  // ];
-
+  if (id && getLoad) {
+    return <Loader className="h-[40vh] flex items-center justify-center" />;
+  }
   return (
     <div>
-      <h1 className="text-center my-1 font-bold text-2xl">Add Model</h1>
+      <h1 className="text-center my-1 font-bold text-2xl">
+        {id ? "Update Model" : "Add Model"}
+      </h1>
       {/*  */}
       <div>
-        <Form submitHandler={onSubmit}>
+        <Form submitHandler={onSubmit} defaultValues={data}>
           <div
             style={{
               border: "1px solid #d9d9d9",
               borderRadius: "5px",
-              padding: "15px",
+              padding: "20px",
               marginBottom: "10px",
             }}
           >
-            <p className="text-base lg:text-lg font-normal">
-              Model Information
-            </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
                 className="gutter-row"
@@ -91,11 +69,10 @@ const AddUpdateModel = ({ brands }: { brands: any }) => {
                 <FormSelectField
                   size="large"
                   name="brandId"
-                  options={brands.map((m: any) => ({
-                    label: m.label,
-                    value: m.id,
+                  options={brands.map((b: any) => ({
+                    label: b.label,
+                    value: b.id,
                   }))}
-                  // defaultValue={priceTypeOptions[0]}
                   label="Brand Name"
                   // placeholder="Select"
                   required={true}
@@ -120,11 +97,15 @@ const AddUpdateModel = ({ brands }: { brands: any }) => {
                 />
               </Col>
             </Row>
-          </div>
-          <div className="flex justify-center items-center">
-            <Button htmlType="submit" type="primary" disabled={isLoading}>
-              Create
-            </Button>
+            <div className="flex justify-end items-center mt-[5px]">
+              <Button
+                htmlType="submit"
+                type="primary"
+                disabled={createLoad || updateLoad}
+              >
+                {id ? "Update" : "Add"}
+              </Button>
+            </div>
           </div>
         </Form>
       </div>

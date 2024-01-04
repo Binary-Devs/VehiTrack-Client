@@ -1,14 +1,18 @@
 "use client";
 import AddRefueling from "@/components/CreateUpdateFrom/AddRefueling";
+import Loader from "@/components/Utlis/Loader";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { useGetAllFuelQuery } from "@/redux/api/fuel/fuelApi";
 import { useDebounced } from "@/redux/hooks";
-import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  ReloadOutlined,
+} from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
-import Link from "next/link";
 import { useState } from "react";
 
 const RefuelingPage = () => {
@@ -20,11 +24,10 @@ const RefuelingPage = () => {
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  // query["limit"] = size;
-  // query["page"] = page;
-  // query["sortBy"] = sortBy;
-  // query["sortOrder"] = sortOrder;
-  query["searchTerm"] = searchTerm;
+  query["limit"] = size;
+  query["page"] = page;
+  query["sortBy"] = sortBy;
+  query["sortOrder"] = sortOrder;
 
   const debouncedTerm = useDebounced({
     searchQuery: searchTerm,
@@ -35,8 +38,10 @@ const RefuelingPage = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const { data } = useGetAllFuelQuery({ ...query });
-
+  const { data, isLoading } = useGetAllFuelQuery({ ...query });
+  if (isLoading) {
+    return <Loader className="h-[50vh] flex items-end justify-center" />;
+  }
   const fuels = data?.fuels;
   console.log(fuels);
   const meta = data?.meta;
@@ -92,15 +97,15 @@ const RefuelingPage = () => {
       title: "Action",
       render: function (data: any) {
         return (
-          <>
-            <Link
+          <div className="flex">
+            {/* <Link
               href={`/super_admin/manage-fuel/refueling/details/${data?.id}`}
             >
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
-            </Link>
-            <Link href={`/super_admin/manage-fuel/refueling/edit/${data?.id}`}>
+            </Link> */}
+            {/* <Link href={`/super_admin/manage-fuel/refueling/edit/${data?.id}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -110,11 +115,21 @@ const RefuelingPage = () => {
               >
                 <EditOutlined />
               </Button>
-            </Link>
+            </Link> */}
+            <div
+              style={{
+                margin: "0px 5px",
+              }}
+              onClick={() => console.log(data?.id)}
+            >
+              <ModalComponent icon={<EditOutlined />}>
+                <AddRefueling id={data?.id} />
+              </ModalComponent>
+            </div>
             <Button onClick={() => console.log(data?.id)} type="primary" danger>
               <DeleteOutlined />
             </Button>
-          </>
+          </div>
         );
       },
     },
@@ -138,26 +153,37 @@ const RefuelingPage = () => {
     setSearchTerm("");
   };
   return (
-    <div>
-      <ActionBar title="Refueling List">
-        <Input
-          type="text"
-          size="large"
-          placeholder="Search..."
-          style={{
-            width: "20%",
-          }}
-          onChange={(e) => {
-            setSearchTerm(e.target.value);
-          }}
-        />
-        <ModalComponent buttonText="Add Refueling">
-          <AddRefueling />
-        </ModalComponent>
+    <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
+      <ActionBar inline title="Refueling List">
+        <div className="flex items-center gap-2">
+          <Input
+            // size="large"
+            placeholder="Search"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            // style={{
+            //   minWidth: "150px",
+            //   maxWidth: "300px",
+            // }}
+          />
+
+          {(!!sortBy || !!sortOrder || !!searchTerm) && (
+            <Button
+              // style={{ margin: "0px 5px" }}
+              type="primary"
+              onClick={resetFilters}
+            >
+              <ReloadOutlined />
+            </Button>
+          )}
+          <ModalComponent buttonText="Add Refueling">
+            <AddRefueling />
+          </ModalComponent>
+        </div>
       </ActionBar>
 
       <UMTable
         columns={columns}
+        loading={false}
         dataSource={fuels}
         pageSize={size}
         totalPages={meta?.total}

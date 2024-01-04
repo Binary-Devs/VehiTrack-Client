@@ -1,14 +1,14 @@
 "use client";
 import AddPumpStation from "@/components/CreateUpdateFrom/AddPumpStation";
+import Loader from "@/components/Utlis/Loader";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { useGetAllFuelStationQuery } from "@/redux/api/fuelStation/fuelStationApi";
 import { useDebounced } from "@/redux/hooks";
-import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import { EditOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
-import Link from "next/link";
 import { useState } from "react";
 
 const PumpStationPage = () => {
@@ -20,11 +20,10 @@ const PumpStationPage = () => {
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  // query["limit"] = size;
-  // query["page"] = page;
-  // query["sortBy"] = sortBy;
-  // query["sortOrder"] = sortOrder;
-  query["searchTerm"] = searchTerm;
+  query["limit"] = size;
+  query["page"] = page;
+  query["sortBy"] = sortBy;
+  query["sortOrder"] = sortOrder;
 
   const debouncedTerm = useDebounced({
     searchQuery: searchTerm,
@@ -38,6 +37,9 @@ const PumpStationPage = () => {
   const { data, isLoading } = useGetAllFuelStationQuery({
     ...query,
   });
+  if (isLoading) {
+    return <Loader className="h-[50vh] flex items-end justify-center" />;
+  }
 
   const fuelStations = data?.fuelStations;
 
@@ -65,29 +67,26 @@ const PumpStationPage = () => {
       render: function (data: any) {
         return (
           <>
-            <Link
+            {/* <Link
               href={`/super_admin/manage-fuel/pump-station/details/${data?.id}`}
             >
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
-            </Link>
-            <Link
-              href={`/super_admin/manage-fuel/pump-station/edit/${data?.id}`}
+            </Link> */}
+            <div
+              style={{
+                margin: "0px 5px",
+              }}
+              onClick={() => {}}
             >
-              <Button
-                style={{
-                  margin: "0px 5px",
-                }}
-                onClick={() => console.log(data)}
-                type="primary"
-              >
-                <EditOutlined />
-              </Button>
-            </Link>
-            <Button onClick={() => console.log(data?.id)} type="primary" danger>
+              <ModalComponent icon={<EditOutlined />}>
+                <AddPumpStation id={data?.id} />
+              </ModalComponent>
+            </div>
+            {/* <Button onClick={() => console.log(data?.id)} type="primary" danger>
               <DeleteOutlined />
-            </Button>
+            </Button> */}
           </>
         );
       },
@@ -112,40 +111,36 @@ const PumpStationPage = () => {
     setSearchTerm("");
   };
   return (
-    <div>
-      <ActionBar title="Pump Station List">
-        <Input
-          type="text"
-          size="large"
-          placeholder="Search..."
-          style={{
-            width: "20%",
-          }}
-          onChange={(e) => {
-            setSearchTerm(e.target.value);
-          }}
-        />
-        {/* <div>
-          <Link href="/super_admin/manage-fuel/pump-station/create">
-            <Button type="primary">Create</Button>
-          </Link>
+    <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
+      <ActionBar inline title="Pump Station List">
+        <div className="flex items-center gap-2">
+          <Input
+            // size="large"
+            placeholder="Search"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            // style={{
+            //   minWidth: "150px",
+            //   maxWidth: "300px",
+            // }}
+          />
+
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
-              onClick={resetFilters}
+              // style={{ margin: "0px 5px" }}
               type="primary"
-              style={{ margin: "0px 5px" }}
+              onClick={resetFilters}
             >
               <ReloadOutlined />
             </Button>
           )}
-        </div> */}
-        <ModalComponent buttonText="Add Pump Station">
-          <AddPumpStation />
-        </ModalComponent>
+          <ModalComponent buttonText="Add Pump Station">
+            <AddPumpStation />
+          </ModalComponent>
+        </div>
       </ActionBar>
-
       <UMTable
         columns={columns}
+        loading={false}
         dataSource={fuelStations}
         pageSize={size}
         totalPages={meta?.total}

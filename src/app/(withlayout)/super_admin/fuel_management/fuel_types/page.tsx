@@ -1,14 +1,14 @@
 "use client";
-import AddFuelTypes from "@/components/CreateUpdateFrom/AddFuelTypes";
+import AddFuelTypes from "@/components/CreateUpdateFrom/AddUpdateFuelTypes";
+import Loader from "@/components/Utlis/Loader";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { useGetAllFuelTypeQuery } from "@/redux/api/fuelType/fuelTypeApi";
 import { useDebounced } from "@/redux/hooks";
-import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import { EditOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
-import Link from "next/link";
 import { useState } from "react";
 
 const FuelTypesPage = () => {
@@ -20,11 +20,10 @@ const FuelTypesPage = () => {
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  // query["limit"] = size;
-  // query["page"] = page;
-  // query["sortBy"] = sortBy;
-  // query["sortOrder"] = sortOrder;
-  query["searchTerm"] = searchTerm;
+  query["limit"] = size;
+  query["page"] = page;
+  query["sortBy"] = sortBy;
+  query["sortOrder"] = sortOrder;
 
   const debouncedTerm = useDebounced({
     searchQuery: searchTerm,
@@ -38,7 +37,9 @@ const FuelTypesPage = () => {
   const { data, isLoading } = useGetAllFuelTypeQuery({
     ...query,
   });
-  console.log("data: " + data);
+  if (isLoading) {
+    return <Loader className="h-[50vh] flex items-end justify-center" />;
+  }
   const fuelTypes = data?.fuelTypes;
 
   const meta = data?.meta;
@@ -61,14 +62,14 @@ const FuelTypesPage = () => {
       render: function (data: any) {
         return (
           <>
-            <Link
+            {/* <Link
               href={`/super_admin/manage-fuel/fuel-type/details/${data?.id}`}
             >
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
-            </Link>
-            <Link href={`/super_admin/manage-fuel/fuel-type/edit/${data?.id}`}>
+            </Link> */}
+            {/* <Link href={`/super_admin/manage-fuel/fuel-type/edit/${data?.id}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -78,10 +79,20 @@ const FuelTypesPage = () => {
               >
                 <EditOutlined />
               </Button>
-            </Link>
-            <Button onClick={() => console.log(data?.id)} type="primary" danger>
+            </Link> */}
+            <div
+              style={{
+                margin: "0px 5px",
+              }}
+              onClick={() => {}}
+            >
+              <ModalComponent icon={<EditOutlined />}>
+                <AddFuelTypes id={data?.id} />
+              </ModalComponent>
+            </div>
+            {/* <Button onClick={() => console.log(data?.id)} type="primary" danger>
               <DeleteOutlined />
-            </Button>
+            </Button> */}
           </>
         );
       },
@@ -106,40 +117,37 @@ const FuelTypesPage = () => {
     setSearchTerm("");
   };
   return (
-    <div>
-      <ActionBar title="Fuel Types List">
-        <Input
-          type="text"
-          size="large"
-          placeholder="Search..."
-          style={{
-            width: "20%",
-          }}
-          onChange={(e) => {
-            setSearchTerm(e.target.value);
-          }}
-        />
-        {/* <div>
-          <Link href="/super_admin/manage-fuel/fuel-types/create">
-            <Button type="primary">Create</Button>
-          </Link>
+    <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
+      <ActionBar inline title="Fuel Type List">
+        <div className="flex items-center gap-2">
+          <Input
+            // size="large"
+            placeholder="Search"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            // style={{
+            //   minWidth: "150px",
+            //   maxWidth: "300px",
+            // }}
+          />
+
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
-              onClick={resetFilters}
+              // style={{ margin: "0px 5px" }}
               type="primary"
-              style={{ margin: "0px 5px" }}
+              onClick={resetFilters}
             >
               <ReloadOutlined />
             </Button>
           )}
-        </div> */}
-        <ModalComponent buttonText="Add Fuel Types">
-          <AddFuelTypes />
-        </ModalComponent>
+          <ModalComponent buttonText="Add Fuel Type">
+            <AddFuelTypes />
+          </ModalComponent>
+        </div>
       </ActionBar>
 
       <UMTable
         columns={columns}
+        loading={false}
         dataSource={fuelTypes}
         pageSize={size}
         totalPages={meta?.total}

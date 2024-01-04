@@ -4,24 +4,29 @@ import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
   EditOutlined,
-  EyeOutlined,
   ReloadOutlined,
-  UserOutlined,
+  UserOutlined
 } from "@ant-design/icons";
-import { Avatar, Button, Input, Tag } from "antd";
-import Link from "next/link";
+import { Avatar, Button, Input, Tag, message } from "antd";
 import { useState } from "react";
 
 import dayjs from "dayjs";
 
 import CreateManager from "@/components/CreateUpdateFrom/ManagerCreate";
+import ManagerUpdate from "@/components/CreateUpdateFrom/ManagerUpdate";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
-import { useGetAllAdminQuery } from "@/redux/api/admin/adminApi";
+import {
+  useGetAllAdminQuery,
+  useInactiveAdminMutation,
+} from "@/redux/api/admin/adminApi";
+import { confirm_modal } from "@/utils/modalHook";
 
 const AllManagerList = () => {
-  const SUPER_ADMIN = USER_ROLE.ADMIN;
+  const SUPER_ADMIN = USER_ROLE.SUPER_ADMIN;
+  const [deleteAdmin, { isLoading: adminUpdateLoading }] =
+    useInactiveAdminMutation();
   const query: Record<string, any> = {};
 
   const [page, setPage] = useState<number>(1);
@@ -80,17 +85,22 @@ const AllManagerList = () => {
     },
     {
       title: "Action",
-      dataIndex: "_id",
+      dataIndex: "id",
       width: "15%",
       render: function (data: any) {
         return (
           <>
-            <Link href={`/${SUPER_ADMIN}/general_user/details/${data}`}>
+            {/* <Link href={`/${SUPER_ADMIN}/manager/details/${data}`}>
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
-            </Link>
-            <Link href={`/${SUPER_ADMIN}/general_user/edit/${data}`}>
+            </Link> */}
+
+            <ModalComponent icon={<EditOutlined />}>
+              <ManagerUpdate id={data} />
+            </ModalComponent>
+
+            {/* <Link href={`/${SUPER_ADMIN}/manager/edit/${data}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -100,12 +110,8 @@ const AllManagerList = () => {
               >
                 <EditOutlined />
               </Button>
-            </Link>
-            <Button
-              //   onClick={() => deleteGeneralUserHandler(data)}
-              type="primary"
-              danger
-            >
+            </Link> */}
+            <Button onClick={() => handleDelete(data)} type="primary" danger>
               <DeleteOutlined />
             </Button>
           </>
@@ -134,6 +140,25 @@ const AllManagerList = () => {
     setSortBy("");
     setSortOrder("");
     setSearchTerm("");
+  };
+  const handleDelete = (id: string) => {
+    confirm_modal(`Are you sure you want to delete`).then(async (res) => {
+      if (res.isConfirmed) {
+        try {
+          message.loading("Please await...");
+          const res = await deleteAdmin(`${id}`).unwrap();
+          if (res.id) {
+            // message.success("Admin Successfully Deleted!");
+            // setOpen(false);
+            message.success("Admin Successfully Deleted!");
+          } else {
+            message.error(res?.message);
+          }
+        } catch (error: any) {
+          message.error(error.message);
+        }
+      }
+    });
   };
 
   return (
@@ -166,7 +191,7 @@ const AllManagerList = () => {
       <br />
 
       <UMTable
-        loading={false}
+        loading={isLoading}
         columns={columns}
         dataSource={AllAdminData}
         pageSize={size}

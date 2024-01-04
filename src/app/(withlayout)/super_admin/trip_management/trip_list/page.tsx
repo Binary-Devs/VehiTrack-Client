@@ -5,11 +5,17 @@ import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { useGetAllTripQuery } from "@/redux/api/trip/tripApi";
 import { useDebounced } from "@/redux/hooks";
-import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  EyeOutlined,
+  MoneyCollectOutlined,
+} from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
 import Link from "next/link";
 import { useState } from "react";
+import { IoMdAdd } from "react-icons/io";
 
 const TripListPage = () => {
   const query: Record<string, any> = {};
@@ -35,7 +41,7 @@ const TripListPage = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const { data } = useGetAllTripQuery({ ...query });
+  const { data, isLoading } = useGetAllTripQuery({ ...query });
 
   const trips = data?.trips;
   const meta = data?.meta;
@@ -46,21 +52,7 @@ const TripListPage = () => {
       dataIndex: "tripNo",
       eclipse: true,
     },
-    // {
-    //   title: "vehicle",
-    //   dataIndex: "vehicle",
-    //   render: (vehicle: any) => <span>{vehicle && vehicle.regNo}</span>,
-    // },
-    // {
-    //   title: "driver",
-    //   dataIndex: "driver",
-    //   render: (driver: any) => <span>{driver && driver.fullName}</span>,
-    // },
-    // {
-    //   title: "Party",
-    //   dataIndex: "party",
-    //   render: (party: any) => <span>{party && party.fullName}</span>,
-    // },
+
     {
       title: "Start Date",
       dataIndex: "startDate",
@@ -97,7 +89,7 @@ const TripListPage = () => {
       title: "Action",
       render: function (data: any) {
         return (
-          <>
+          <div className="flex items-center gap-1">
             <Link
               href={`/super_admin/manage-fuel/refueling/details/${data?.id}`}
             >
@@ -106,27 +98,24 @@ const TripListPage = () => {
               </Button>
             </Link>
             <Link href={`/super_admin/manage-fuel/refueling/edit/${data?.id}`}>
-              <Button
-                style={{
-                  margin: "0px 5px",
-                }}
-                onClick={() => console.log(data)}
-                type="primary"
-              >
+              <Button onClick={() => console.log(data)} type="primary">
                 <EditOutlined />
               </Button>
             </Link>
             <Button onClick={() => console.log(data?.id)} type="primary" danger>
               <DeleteOutlined />
             </Button>
-          </>
+
+            <ModalComponent icon={<MoneyCollectOutlined />}>
+              <AddTrip />
+            </ModalComponent>
+          </div>
         );
       },
     },
   ];
 
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
@@ -150,13 +139,14 @@ const TripListPage = () => {
           size="large"
           placeholder="Search..."
           style={{
-            width: "20%",
+            width: "100%",
+            maxWidth: "200px",
           }}
           onChange={(e) => {
             setSearchTerm(e.target.value);
           }}
         />
-        <ModalComponent buttonText="Add Trip">
+        <ModalComponent buttonText="Add Trip" icon={<IoMdAdd />}>
           <AddTrip />
         </ModalComponent>
       </ActionBar>
@@ -170,6 +160,7 @@ const TripListPage = () => {
         onPaginationChange={onPaginationChange}
         onTableChange={onTableChange}
         showPagination={true}
+        loading={isLoading}
       />
     </div>
   );

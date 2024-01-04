@@ -1,11 +1,12 @@
-import React from 'react';
+import StockStatus from '@/components/StoreManagement/StockStatus';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'VehiTrack | Stock Status',
+};
 
 const StockStatusList = () => {
-    return (
-        <div>
-            <h1>StockStatusList</h1>
-        </div>
-    );
+  return <StockStatus />;
 };
 
 export default StockStatusList;

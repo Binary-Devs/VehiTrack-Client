@@ -56,7 +56,7 @@ const AddTrip = () => {
   });
   const [createTrip] = useCreateTripMutation();
   const onSubmit = async (data: any) => {
-    message.loading("creating.............");
+    message.loading("creating........");
     try {
       data.odometerStart = parseFloat(data.odometerStart);
       data.odometerEnd = parseFloat(data.odometerEnd);
@@ -120,17 +120,6 @@ const AddTrip = () => {
               />
             </div>
           </Col>
-          <Col xs={24} md={12} lg={8}>
-            <div>
-              <FormSelectField
-                size="large"
-                name="accountHeadId"
-                options={accountHeadOptions as any}
-                label="Account Head"
-                placeholder="Select"
-              />
-            </div>
-          </Col>
           <Col
             className="gutter-row"
             xs={24}
@@ -168,12 +157,6 @@ const AddTrip = () => {
           </Col>
           <Col xs={24} md={12} lg={8}>
             <FormInput name="to" label="to" />
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <FormInput name="odometerStart" label="odometerStart" />
-          </Col>
-          <Col xs={24} md={12} lg={8}>
-            <FormInput name="odometerEnd" label="odometerEnd" />
           </Col>
           <Col xs={24} md={12} lg={8}>
             <FormInput name="distance" label="distance" />

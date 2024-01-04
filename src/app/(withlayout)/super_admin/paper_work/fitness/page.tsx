@@ -1,11 +1,17 @@
 "use client";
 import AddFitness from "@/components/CreateUpdateFrom/AddFitness";
+import Loader from "@/components/Utlis/Loader";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { useGetAllPaperWorksQuery } from "@/redux/api/paperWork/paperWorkApi";
 import { useDebounced } from "@/redux/hooks";
-import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  EyeOutlined,
+  ReloadOutlined,
+} from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
 import Link from "next/link";
@@ -20,11 +26,10 @@ const FitnessPage = () => {
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  // query["limit"] = size;
-  // query["page"] = page;
-  // query["sortBy"] = sortBy;
-  // query["sortOrder"] = sortOrder;
-  query["searchTerm"] = searchTerm;
+  query["limit"] = size;
+  query["page"] = page;
+  query["sortBy"] = sortBy;
+  query["sortOrder"] = sortOrder;
 
   const debouncedTerm = useDebounced({
     searchQuery: searchTerm,
@@ -35,7 +40,10 @@ const FitnessPage = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const { data } = useGetAllPaperWorksQuery({ ...query });
+  const { data, isLoading } = useGetAllPaperWorksQuery({ ...query });
+  if (isLoading) {
+    return <Loader className="h-[50vh] flex items-end justify-center" />;
+  }
   const paperworkRecords = data?.paperWorks;
   console.log(paperworkRecords);
   const meta = data?.meta;
@@ -130,40 +138,37 @@ const FitnessPage = () => {
     setSearchTerm("");
   };
   return (
-    <div>
-      <ActionBar title="Fitness List">
-        <Input
-          type="text"
-          size="large"
-          placeholder="Search..."
-          style={{
-            width: "20%",
-          }}
-          onChange={(e) => {
-            setSearchTerm(e.target.value);
-          }}
-        />
-        {/* <div>
-          <Link href="super_admin/paper-work/paper-work-list/create">
-            <Button type="primary">Create</Button>
-          </Link>
+    <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
+      <ActionBar inline title="Fitness List">
+        <div className="flex items-center gap-2">
+          <Input
+            // size="large"
+            placeholder="Search"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            // style={{
+            //   minWidth: "150px",
+            //   maxWidth: "300px",
+            // }}
+          />
+
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
-              onClick={resetFilters}
+              // style={{ margin: "0px 5px" }}
               type="primary"
-              style={{ margin: "0px 5px" }}
+              onClick={resetFilters}
             >
               <ReloadOutlined />
             </Button>
           )}
-        </div> */}
-        <ModalComponent buttonText="Add Fitness">
-          <AddFitness />
-        </ModalComponent>
+          <ModalComponent buttonText="Add Fitness">
+            <AddFitness />
+          </ModalComponent>
+        </div>
       </ActionBar>
 
       <UMTable
         columns={columns}
+        loading={false}
         dataSource={paperworkRecords}
         pageSize={size}
         totalPages={meta?.total}

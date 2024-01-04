@@ -5,21 +5,20 @@ import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
   EditOutlined,
-  EyeOutlined,
   ReloadOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Avatar, Button, Input, Tag } from "antd";
-import Link from "next/link";
+import { Avatar, Button, Input } from "antd";
 import { useState } from "react";
 
 import dayjs from "dayjs";
 
-import CreateDriver from "@/components/CreateUpdateFrom/DriverCreate";
+import AddUpdateDriver from "@/components/CreateUpdateFrom/AddUpdateDriver";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
 import { useGetAllDriverQuery } from "@/redux/api/driver/driverApi";
+import { IoMdAdd } from "react-icons/io";
 
 const AllDriverList = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
@@ -31,10 +30,10 @@ const AllDriverList = () => {
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  // query["limit"] = size;
-  // query["page"] = page;
-  // query["sortBy"] = sortBy;
-  // query["sortOrder"] = sortOrder;
+  query["limit"] = size;
+  query["page"] = page;
+  query["sortBy"] = sortBy;
+  query["sortOrder"] = sortOrder;
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -45,46 +44,9 @@ const AllDriverList = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  //@ts-ignore
-  // const AllDriverData = [
-  //   {
-  //     _id: 1,
-  //     name: "sampood",
-  //     email: "sampood@gmail.com",
-  //     createdAt: "2023-01-01",
-  //     phoneNumber: "014741154151",
-  //     profileImage:
-  //       "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //   },
-  //   {
-  //     _id: 2,
-  //     name: "akahs",
-  //     email: "kakspood@gmail.com",
-  //     createdAt: "2023-01-01",
-  //     phoneNumber: "018044518521",
-  //     profileImage:
-  //       "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //   },
-  //   {
-  //     _id: 3,
-  //     name: "roihime",
-  //     email: "roihime@gmail.com",
-  //     phoneNumber: "018769988521",
-  //     createdAt: "2023-01-01",
-  //     profileImage:
-  //       "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //   },
-  // ];
-  //@ts-ignore
-  //   const meta = {
-  //     "page": 1,
-  //     "limit": 10,
-  //     "total": 3
-  // };
-
   const columns = [
     {
-      title: "Image",
+      title: "",
 
       render: function (data: any) {
         return <Avatar size={64} icon={<UserOutlined />} />;
@@ -95,21 +57,41 @@ const AllDriverList = () => {
       dataIndex: "fullName",
     },
     {
-      title: "Active",
-      dataIndex: "isActive",
-      render: (isActive: boolean) =>
-        isActive ? (
-          <Tag color="green">Active</Tag>
-        ) : (
-          <Tag color="red">Not Active</Tag>
-        ),
+      title: "User ID",
+      dataIndex: "driverId",
     },
+    {
+      title: "License No",
+      dataIndex: "licenseNo",
+      render: (data: any) => (data ? data : "N/A"),
+    },
+    // {
+    //   title: "Active",
+    //   dataIndex: "isActive",
+    //   render: (isActive: boolean) =>
+    //     isActive ? (
+    //       <Tag color="green">Active</Tag>
+    //     ) : (
+    //       <Tag color="red">Not Active</Tag>
+    //     ),
+    // },
     {
       title: "Mobile",
       dataIndex: "mobile",
+      render: (data: any) => (data ? data : "N/A"),
     },
     {
-      title: "Created at",
+      title: "Address",
+      dataIndex: "address",
+      render: (data: any) => (data ? data : "N/A"),
+    },
+    {
+      title: "Blood Group",
+      dataIndex: "bloodGroup",
+      render: (data: any) => (data ? data : "N/A"),
+    },
+    {
+      title: "Joined at",
       dataIndex: "createdAt",
       render: function (data: any) {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
@@ -118,27 +100,25 @@ const AllDriverList = () => {
     },
     {
       title: "Action",
-      dataIndex: "_id",
-      width: "15%",
+      dataIndex: "id",
+      // width: "15%",
       render: function (data: any) {
         return (
-          <>
-            <Link href={`/${SUPER_ADMIN}/general_user/details/${data}`}>
+          <div className="flex">
+            {/* <Link href={`/${SUPER_ADMIN}/general_user/details/${data}`}>
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
-            </Link>
-            <Link href={`/${SUPER_ADMIN}/general_user/edit/${data}`}>
-              <Button
-                style={{
-                  margin: "0px 5px",
-                }}
-                onClick={() => console.log(data)}
-                type="primary"
-              >
-                <EditOutlined />
-              </Button>
-            </Link>
+            </Link> */}
+            <div
+              style={{
+                margin: "0px 5px",
+              }}
+            >
+              <ModalComponent icon={<EditOutlined />}>
+                <AddUpdateDriver id={data} />
+              </ModalComponent>
+            </div>
             <Button
               //   onClick={() => deleteGeneralUserHandler(data)}
               type="primary"
@@ -146,17 +126,17 @@ const AllDriverList = () => {
             >
               <DeleteOutlined />
             </Button>
-          </>
+          </div>
         );
       },
     },
   ];
 
   const { data, isLoading } = useGetAllDriverQuery({ ...query });
-  const AllDriverData = data?.drivers || [];
+  const drivers = data?.drivers;
   const meta = data?.meta;
 
-  console.log(AllDriverData);
+  console.log(drivers);
 
   const onPaginationChange = (page: number, pageSize: number) => {
     setPage(page);
@@ -194,40 +174,43 @@ const AllDriverList = () => {
   //       }
   //     });
   //   };
-  //   if (isLoading) {
-  //     return <LoadingForDataFetch />;
-  //   }
+  // if (isLoading) {
+  //   return <Loader className="h-[50vh] flex items-end justify-center" />;
+  // }
   return (
-    <div className="rounded-xl bg-white p-5 shadow-xl">
-      <ActionBar title="Driver List">
-        <Input
-          size="large"
-          placeholder="Search"
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            width: "20%",
-          }}
-        />
-        <div>
-          <ModalComponent buttonText="Create Driver">
-            <CreateDriver />
-          </ModalComponent>
+    <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
+      <ActionBar inline title="Driver List">
+        <div className="flex items-center gap-2">
+          <Input
+            // size="large"
+            placeholder="Search"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            value={searchTerm}
+            style={
+              {
+                // width: "100%",
+              }
+            }
+          />
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
-              style={{ margin: "0px 5px" }}
+              // style={{ margin: "0px 5px" }}
               type="primary"
               onClick={resetFilters}
             >
               <ReloadOutlined />
             </Button>
           )}
+          <ModalComponent buttonText="Add Driver" icon={<IoMdAdd />}>
+            <AddUpdateDriver />
+          </ModalComponent>
         </div>
       </ActionBar>
 
       <UMTable
-        loading={false}
+        loading={isLoading}
         columns={columns}
-        dataSource={AllDriverData}
+        dataSource={drivers}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}

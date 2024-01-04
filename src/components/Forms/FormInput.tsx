@@ -8,6 +8,7 @@ interface IInput {
   type?: string;
   size?: "large" | "small";
   value?: string | string[] | undefined;
+  defaultValue?: string | string[] | undefined;
   id?: string;
   placeholder?: string;
   validation?: object;
@@ -22,6 +23,7 @@ const FormInput = ({
   type,
   size = "large",
   value,
+  defaultValue,
   id,
   placeholder,
   validation,
@@ -39,7 +41,8 @@ const FormInput = ({
 
   return (
     <>
-      {required && type !== "number" ? (
+      {label && label}
+      {required && (
         <span
           style={{
             color: "red",
@@ -47,8 +50,7 @@ const FormInput = ({
         >
           *
         </span>
-      ) : null}
-      {label && type !== "number" ? label : null}
+      )}
       <Controller
         control={control}
         name={name}
@@ -62,11 +64,13 @@ const FormInput = ({
               readOnly={readOnly}
               placeholder={placeholder}
               {...field}
+              defaultValue={defaultValue}
               value={value ? value : field.value}
             />
           ) : type === "number" ? (
             <div className="flex flex-col">
-              <h1>
+              {/* <p>
+                {label}
                 {required ? (
                   <span
                     style={{
@@ -76,8 +80,7 @@ const FormInput = ({
                     *
                   </span>
                 ) : null}
-                {label}
-              </h1>
+              </p> */}
               <InputNumber
                 type={type}
                 style={{ width: "100%", marginRight: "2px" }}
@@ -87,6 +90,7 @@ const FormInput = ({
                 size={size}
                 placeholder={placeholder}
                 {...field}
+                defaultValue={defaultValue}
                 value={value ? value : field.value}
               />
             </div>
@@ -99,6 +103,7 @@ const FormInput = ({
               readOnly={readOnly}
               placeholder={placeholder}
               {...field}
+              defaultValue={defaultValue}
               value={value ? value : field.value}
             />
           )

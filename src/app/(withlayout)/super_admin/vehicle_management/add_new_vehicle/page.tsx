@@ -1,4 +1,4 @@
-import CreateVehicle from "@/components/CreateUpdateFrom/VehicleCreate";
+import CreateVehicle from "@/components/CreateUpdateFrom/AddUpdateVehicle";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

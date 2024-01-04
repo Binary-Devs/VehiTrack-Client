@@ -4,9 +4,17 @@ import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
+import { useGetAllDriverQuery } from "@/redux/api/driver/driverApi";
 import { Button, Col, Row } from "antd";
 
 const CreateAccidentHistory = () => {
+  const query: Record<string, any> = {};
+  const { data: driver, isLoading, error } = useGetAllDriverQuery({});
+  console.log(driver);
+  query["limit"] = 99999;
+  query["sortBy"] = "fullName";
+  query["sortOrder"] = "asc";
+
   const vehicles = [
     {
       id: 1,
@@ -126,7 +134,9 @@ const CreateAccidentHistory = () => {
       updatedAt: "2023-01-05",
     },
   ];
-
+  if (error) {
+    console.log(error);
+  }
   const vehicleOptions = vehicles?.map((vehicle) => {
     return {
       label: vehicle?.regNo,
@@ -211,3 +221,4 @@ const CreateAccidentHistory = () => {
 };
 
 export default CreateAccidentHistory;
+
