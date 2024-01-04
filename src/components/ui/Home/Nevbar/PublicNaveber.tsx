@@ -1,4 +1,3 @@
-// Import necessary components and modules
 import { authKey } from "@/constants/storageKey";
 import { getUserInfo, removeUserInfo } from "@/services/auth.service";
 import { UserOutlined } from "@ant-design/icons";
@@ -49,16 +48,17 @@ const NavbarPublic = () => {
 
         {/* Navigation and User Info */}
         <div className="flex justify-between items-center mt-4 md:mt-0">
-          {/* User Role */}
-          <p className="hidden md:block" style={{ margin: "0px 20px" }}>
-            {role === "super_admin"
-              ? "Super Admin"
-              : role === "admin"
-              ? "Admin"
-              : role === "driver"
-              ? "Driver"
-              : "Helper"}
-          </p>
+          {role && (
+            <span className="hidden md:block" style={{ margin: "0px 20px" }}>
+              {role === "super_admin"
+                ? "Super Admin"
+                : role === "admin"
+                ? "Admin"
+                : role === "driver"
+                ? "Driver"
+                : "Helper"}
+            </span>
+          )}
 
           {/* User Avatar and Dropdown */}
           <Dropdown menu={{ items }}>
