@@ -6,12 +6,14 @@ const ModalComponent = ({
   children,
   icon,
   buttonText,
+  buttonDanger,
   loading,
   setSetModel,
   showModel,
 }: {
   children: React.ReactElement;
   buttonText?: string;
+  buttonDanger?: boolean;
   loading?: boolean;
   showModel?: any;
   setSetModel?: any;
@@ -37,12 +39,13 @@ const ModalComponent = ({
     <>
       <div style={{ display: "inline-block" }}>
         <div className="lg:hidden">
-          <Button onClick={showModal} type="primary">
+          <Button onClick={showModal} type="primary" danger={buttonDanger}>
             {icon}
           </Button>
         </div>
         <div className="hidden lg:block">
           <Button
+            danger={buttonDanger}
             type="primary"
             onClick={showModal}
             className="!flex !items-center !gap-2 "
