@@ -7,14 +7,12 @@ import { Avatar, Button, Dropdown, MenuProps, Space } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import logo from "../../../../../public/logo.jpg";
 
 // Define NavbarPublic component
 const NavbarPublic = () => {
   const router = useRouter();
-  const userInfo = getUserInfo() as any;
-  const [userRole, setUserRole] = useState("");
+  const { role } = getUserInfo() as any;
 
   // Function to handle logout
   const logOut = () => {
@@ -22,12 +20,24 @@ const NavbarPublic = () => {
     router.push("/login");
   };
 
-  useEffect(() => {
-    setUserRole(userInfo.role);
-  }, [userInfo]);
-
   // Dropdown menu items
   const items: MenuProps["items"] = [
+    {
+      key: "1",
+      label: (
+        <strong className="p-2">
+          {role && role === "super_admin"
+            ? "Super Admin"
+            : role === "admin"
+            ? "Admin"
+            : role === "driver"
+            ? "Driver"
+            : role === "helper"
+            ? "Helper"
+            : null}
+        </strong>
+      ),
+    },
     {
       key: "0",
       label: (
@@ -37,29 +47,6 @@ const NavbarPublic = () => {
       ),
     },
   ];
-
-  // const renderRoleContent = () => {
-  //   {
-  //     /* {role === "super_admin"
-  //             ? "Super Admin"
-  //             : role === "admin"
-  //             ? "Admin"
-  //             : role === "driver"
-  //             ? "Driver"
-  //             : role === "helper"
-  //             ? "Helper"
-  //             : ""} */
-  //   }
-
-  //   if (role === "super_admin") {
-  //     return (
-  //       <p className="hidden md:block" style={{ margin: "0px 20px" }}>
-  //         {"Super Admin"}
-  //       </p>
-  //     );
-  //   }
-  //   return null;
-  //
 
   return (
     <header className="text-gray-600 body-font">
@@ -71,16 +58,11 @@ const NavbarPublic = () => {
 
         {/* Navigation and User Info */}
         <div className="flex justify-between items-center mt-4 md:mt-0">
-          {/* <p className="hidden md:block" style={{ margin: "0px 20px" }}>
-            {renderRoleContent()}
-          </p> */}
-          {userRole && (
-            <Link href={"/dashboard"}>
-              <Button type="text" size="large" className="mr-4">
-                Dashboard
-              </Button>
-            </Link>
-          )}
+          <Link href={"/dashboard"}>
+            <Button type="text" size="large" className="mr-2">
+              Dashboard
+            </Button>
+          </Link>
 
           {/* User Avatar and Dropdown */}
           <Dropdown menu={{ items }}>
