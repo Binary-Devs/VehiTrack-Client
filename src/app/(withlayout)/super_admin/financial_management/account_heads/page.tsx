@@ -6,14 +6,9 @@ import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { useGetAllAccountHeadQuery } from "@/redux/api/accountHead/accountHeadApi";
 import { useDebounced } from "@/redux/hooks";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  ReloadOutlined,
-} from "@ant-design/icons";
+import { EditOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
-import Link from "next/link";
 import { useState } from "react";
 
 const AccountHeadsPage = () => {
@@ -75,7 +70,7 @@ const AccountHeadsPage = () => {
       title: "Action",
       render: function (data: any) {
         return (
-          <>
+          <div className="flex">
             {/* <Link
               href={`/super_admin/manage-financial/account-heads/details/${data?.id}`}
             >
@@ -83,7 +78,7 @@ const AccountHeadsPage = () => {
                 <EyeOutlined />
               </Button>
             </Link> */}
-            <Link
+            {/* <Link
               href={`/super_admin/manage-financial/account-heads/edit/${data?.id}`}
             >
               <Button
@@ -95,15 +90,18 @@ const AccountHeadsPage = () => {
               >
                 <EditOutlined />
               </Button>
-            </Link>
-            <Button
-              onClick={() => deleteHandler(data?.id)}
-              type="primary"
-              danger
+            </Link> */}
+            <div
+              style={{
+                margin: "0px 5px",
+              }}
+              onClick={() => {}}
             >
-              <DeleteOutlined />
-            </Button>
-          </>
+              <ModalComponent icon={<EditOutlined />}>
+                <AddAccountHeads id={data?.id} />
+              </ModalComponent>
+            </div>
+          </div>
         );
       },
     },

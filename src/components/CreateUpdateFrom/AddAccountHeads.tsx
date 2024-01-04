@@ -2,17 +2,33 @@
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
-import { useCreateAccountHeadMutation } from "@/redux/api/accountHead/accountHeadApi";
+import {
+  useCreateAccountHeadMutation,
+  useGetSingleAccountHeadQuery,
+  useUpdateAccountHeadMutation,
+} from "@/redux/api/accountHead/accountHeadApi";
 import { useGetAllAccountTypeQuery } from "@/redux/api/accountType/accountTypeApi";
 import { Button, Col, Row, message } from "antd";
+import Loader from "../Utlis/Loader";
 
-const AddAccountHeads = () => {
-  const [createAccountHead, { isLoading }] = useCreateAccountHeadMutation();
-  const { data } = useGetAllAccountTypeQuery({
+const AddAccountHeads = ({ id }: { id?: string }) => {
+  //Get
+  const { data, isLoading: getLoad } = useGetSingleAccountHeadQuery(
+    id ? id : ""
+  );
+
+  //Update
+  const [updateAccountHead, { isLoading: updateLoad }] =
+    useUpdateAccountHeadMutation();
+
+  //Create
+  const [createAccountHead, { isLoading: createLoad }] =
+    useCreateAccountHeadMutation();
+  const { data: accountType } = useGetAllAccountTypeQuery({
     limit: 100,
   });
 
-  const accountTypes = data?.accountTypes;
+  const accountTypes = accountType?.accountTypes;
 
   const accountTypeOptions = accountTypes?.map((accountType) => {
     return {
@@ -20,12 +36,22 @@ const AddAccountHeads = () => {
       value: accountType?.id,
     };
   });
-  const onSubmit = async (data: any) => {
-    message.loading("Adding.............");
+  const onSubmit = async (values: any) => {
+    message.loading(id ? "Updating...." : "Adding....");
     try {
-      const res = await createAccountHead({ ...data }).unwrap();
+      const res = id
+        ? await updateAccountHead({
+            id,
+            data: {
+              label: values.label,
+              accountTypeId: values.accountTypeId,
+            },
+          }).unwrap()
+        : await createAccountHead({ ...values }).unwrap();
       if (res.id) {
-        message.success(" create account head in successfully");
+        message.success(
+          `Account Head ${id ? "updated" : "added"} successfully!`
+        );
       } else {
         message.error(res.message);
       }
@@ -33,10 +59,18 @@ const AddAccountHeads = () => {
       message.error(err.message);
     }
   };
+
+  if (id && getLoad) {
+    return <Loader className="h-[40vh] flex items-center justify-center" />;
+  }
+
   return (
     <div>
-      <h1 className="text-center my-1 font-bold text-2xl">Add Account Head</h1>
-      <Form submitHandler={onSubmit}>
+      <h1 className="text-center my-1 font-bold text-2xl">
+        {id ? "Update Account Head" : "Add Account Head"}
+      </h1>
+      {/*  */}
+      <Form submitHandler={onSubmit} defaultValues={data}>
         <div
           style={{
             border: "1px solid #d9d9d9",
@@ -45,9 +79,6 @@ const AddAccountHeads = () => {
             marginBottom: "10px",
           }}
         >
-          <p className="text-base lg:text-lg font-normal">
-            Account Head Information
-          </p>
           <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
             <Col
               className="gutter-row"
@@ -86,10 +117,16 @@ const AddAccountHeads = () => {
               </div>
             </Col>
           </Row>
+          <div className="flex justify-end items-center">
+            <Button
+              htmlType="submit"
+              type="primary"
+              disabled={createLoad || updateLoad}
+            >
+              {id ? "Update" : "Add"}
+            </Button>
+          </div>
         </div>
-        <Button type="primary" htmlType="submit">
-          add
-        </Button>
       </Form>
     </div>
   );
