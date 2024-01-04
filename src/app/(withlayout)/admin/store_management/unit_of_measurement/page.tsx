@@ -1,21 +1,18 @@
 "use client";
-import AddFitness from "@/components/CreateUpdateFrom/AddFitness";
+
+import AddUnitOfMeasurement from "@/components/CreateUpdateFrom/AddUnitOfMeasurement";
 import Loader from "@/components/Utlis/Loader";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
-import { useGetAllPaperWorksQuery } from "@/redux/api/paperWork/paperWorkApi";
+import { useGetAllUomQuery } from "@/redux/api/uom/uomApi";
 import { useDebounced } from "@/redux/hooks";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  ReloadOutlined,
-} from "@ant-design/icons";
+import { EditOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 
-const FitnessPage = () => {
+const UnitOfMeasurement = () => {
   const query: Record<string, any> = {};
 
   const [page, setPage] = useState<number>(1);
@@ -25,7 +22,7 @@ const FitnessPage = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   query["limit"] = size;
-  query["page"] = page;
+  query["page"] = page - 1;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
 
@@ -38,47 +35,27 @@ const FitnessPage = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const { data, isLoading } = useGetAllPaperWorksQuery({ ...query });
+  const { data, isLoading } = useGetAllUomQuery({ ...query });
   if (isLoading) {
     return <Loader className="h-[50vh] flex items-end justify-center" />;
   }
-  const paperworkRecords = data?.paperWorks;
-  console.log(paperworkRecords);
+
+  const uoms = data?.uom;
   const meta = data?.meta;
 
   const columns = [
+    // {
+    //   title: "SN",
+    //   dataIndex: "sn",
+    //   key: "sn",
+    //   width: "20%",
+    //   render: (text: any, record: any, index: number) => {
+    //     return index + 1;
+    //   },
+    // },
     {
-      title: "Vehicle",
-      dataIndex: "vehicle",
-      render: (vehicle: any) => <span>{vehicle && vehicle.regNo}</span>,
-    },
-    {
-      title: "effectiveDate",
-      dataIndex: "effectiveDate",
-      render: (data: string) => dayjs(data).format("DD/MM/YYYY"),
-      sorter: true,
-    },
-    {
-      title: "expiryDate",
-      dataIndex: "expiryDate",
-      render: (data: string) => dayjs(data).format("DD/MM/YYYY"),
-      sorter: true,
-    },
-    {
-      title: "daysToRemind",
-      dataIndex: "daysToRemind",
-    },
-    {
-      title: "paperType",
-      dataIndex: "paperType",
-    },
-    {
-      title: "fee",
-      dataIndex: "fee",
-    },
-    {
-      title: "remarks",
-      dataIndex: "remarks",
+      title: "label",
+      dataIndex: "label",
     },
     {
       title: "CreatedAt",
@@ -92,21 +69,18 @@ const FitnessPage = () => {
       title: "Action",
       render: function (data: any) {
         return (
-          <div className="flex">
+          <>
             <div
               style={{
                 margin: "0px 5px",
               }}
-              onClick={() => {}}
+              onClick={() => console.log(data?.id)}
             >
               <ModalComponent icon={<EditOutlined />}>
-                <AddFitness id={data?.id} />
+                <AddUnitOfMeasurement id={data?.id} />
               </ModalComponent>
             </div>
-            <Button onClick={() => console.log(data?.id)} type="primary" danger>
-              <DeleteOutlined />
-            </Button>
-          </div>
+          </>
         );
       },
     },
@@ -129,9 +103,10 @@ const FitnessPage = () => {
     setSortOrder("");
     setSearchTerm("");
   };
+
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
-      <ActionBar inline title="Fitness List">
+      <ActionBar inline title="unit of measurement List">
         <div className="flex items-center gap-2">
           <Input
             // size="large"
@@ -152,16 +127,16 @@ const FitnessPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Fitness">
-            <AddFitness />
+          <ModalComponent buttonText="Add UOM">
+            <AddUnitOfMeasurement />
           </ModalComponent>
         </div>
       </ActionBar>
 
       <UMTable
-        columns={columns}
         loading={false}
-        dataSource={paperworkRecords}
+        columns={columns}
+        dataSource={uoms}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -173,4 +148,4 @@ const FitnessPage = () => {
   );
 };
 
-export default FitnessPage;
+export default UnitOfMeasurement;

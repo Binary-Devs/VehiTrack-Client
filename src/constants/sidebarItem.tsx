@@ -438,70 +438,6 @@ export const sidebarItem = (role: string) => {
     },
   ];
 
-  const adminSidebarItems: MenuProps["items"] = [...commonAdminSidebarItems];
-
-  const driverSidebarItems: MenuProps["items"] = [
-    ...defaultSidebarItems,
-    {
-      label: (
-        <Link className="text-sm " href={`/dashboard`}>
-          Dashboard
-        </Link>
-      ),
-      key: "/dashboard",
-      icon: <DashboardFilled />,
-    },
-    {
-      label: (
-        <Link className="text-sm " href={`/${role}/accident_history`}>
-          Upcoming Trip
-        </Link>
-      ),
-      icon: <MdOutlineUpcoming />,
-      key: `/${role}/upcoming_trip`,
-    },
-    {
-      label: (
-        <Link className="text-sm " href={`/${role}/accident_history`}>
-          My Trip
-        </Link>
-      ),
-      icon: <FaRoadCircleCheck />,
-      key: `/${role}/my_trip`,
-    },
-  ];
-
-  const helperSidebarItems: MenuProps["items"] = [
-    ...defaultSidebarItems,
-    {
-      label: (
-        <Link className="text-sm " href={`/dashboard`}>
-          Dashboard
-        </Link>
-      ),
-      key: "/dashboard",
-      icon: <DashboardFilled />,
-    },
-    {
-      label: (
-        <Link className="text-sm " href={`/${role}/accident_history`}>
-          Upcoming Trip
-        </Link>
-      ),
-      icon: <MdOutlineUpcoming />,
-      key: `/${role}/upcoming_trip`,
-    },
-    {
-      label: (
-        <Link className="text-sm " href={`/${role}/accident_history`}>
-          My Trip
-        </Link>
-      ),
-      icon: <FaRoadCircleCheck />,
-      key: `/${role}/my_trip`,
-    },
-  ];
-
   const superAdminSidebarItems: MenuProps["items"] = [
     ...commonAdminSidebarItems,
     {
@@ -529,6 +465,88 @@ export const sidebarItem = (role: string) => {
           key: `${role}/manager/manager_list`,
         },
       ],
+    },
+    {
+      label: (
+        <Link className="text-sm " href={`/profile`}>
+          Profile
+        </Link>
+      ),
+      icon: <UserOutlined />,
+      key: `/profile`,
+    },
+  ];
+
+  const adminSidebarItems: MenuProps["items"] = [...commonAdminSidebarItems];
+
+  const driverSidebarItems: MenuProps["items"] = [
+    ...defaultSidebarItems,
+    {
+      label: (
+        <Link className="text-sm " href={`/dashboard`}>
+          Dashboard
+        </Link>
+      ),
+      key: "/dashboard",
+      icon: <DashboardFilled />,
+    },
+    {
+      label: (
+        <Link className="text-sm " href={`/${role}/upcoming_trip`}>
+          Upcoming Trip
+        </Link>
+      ),
+      icon: <MdOutlineUpcoming />,
+      key: `/${role}/upcoming_trip`,
+    },
+    {
+      label: (
+        <Link className="text-sm " href={`/${role}/my_trip`}>
+          My Trip
+        </Link>
+      ),
+      icon: <FaRoadCircleCheck />,
+      key: `/${role}/my_trip`,
+    },
+    {
+      label: (
+        <Link className="text-sm " href={`/profile`}>
+          Profile
+        </Link>
+      ),
+      icon: <UserOutlined />,
+      key: `/profile`,
+    },
+  ];
+
+  const helperSidebarItems: MenuProps["items"] = [
+    ...defaultSidebarItems,
+    {
+      label: (
+        <Link className="text-sm " href={`/dashboard`}>
+          Dashboard
+        </Link>
+      ),
+      key: "/dashboard",
+      icon: <DashboardFilled />,
+    },
+    {
+      label: (
+        <Link className="text-sm " href={`/${role}/upcoming_trip`}>
+          Upcoming Trip
+        </Link>
+      ),
+      icon: <MdOutlineUpcoming />,
+      key: `/${role}/upcoming_trip`,
+    },
+    {
+      label: (
+        <Link className="text-sm " href={`/${role}/my_trip`}>
+          My Trip
+        </Link>
+      ),
+      icon: <FaRoadCircleCheck />,
+      key: `/${role}/my_trip`,
     },
     {
       label: (

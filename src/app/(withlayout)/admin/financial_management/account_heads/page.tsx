@@ -1,21 +1,17 @@
 "use client";
-import AddFitness from "@/components/CreateUpdateFrom/AddFitness";
+import AddAccountHeads from "@/components/CreateUpdateFrom/AddUpdateAccountHeads";
 import Loader from "@/components/Utlis/Loader";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
-import { useGetAllPaperWorksQuery } from "@/redux/api/paperWork/paperWorkApi";
+import { useGetAllAccountHeadQuery } from "@/redux/api/accountHead/accountHeadApi";
 import { useDebounced } from "@/redux/hooks";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  ReloadOutlined,
-} from "@ant-design/icons";
+import { EditOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 
-const FitnessPage = () => {
+const AccountHeadsPage = () => {
   const query: Record<string, any> = {};
 
   const [page, setPage] = useState<number>(1);
@@ -38,47 +34,29 @@ const FitnessPage = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const { data, isLoading } = useGetAllPaperWorksQuery({ ...query });
+  const { data, isLoading } = useGetAllAccountHeadQuery({ ...query });
   if (isLoading) {
     return <Loader className="h-[50vh] flex items-end justify-center" />;
   }
-  const paperworkRecords = data?.paperWorks;
-  console.log(paperworkRecords);
+  const accountHeads = data?.accountHeads;
   const meta = data?.meta;
+  console.log(accountHeads);
+  const deleteHandler = async (id: string) => {
+    console.log(id);
+  };
 
   const columns = [
     {
-      title: "Vehicle",
-      dataIndex: "vehicle",
-      render: (vehicle: any) => <span>{vehicle && vehicle.regNo}</span>,
-    },
-    {
-      title: "effectiveDate",
-      dataIndex: "effectiveDate",
-      render: (data: string) => dayjs(data).format("DD/MM/YYYY"),
+      title: "Label",
+      dataIndex: "label",
       sorter: true,
     },
     {
-      title: "expiryDate",
-      dataIndex: "expiryDate",
-      render: (data: string) => dayjs(data).format("DD/MM/YYYY"),
-      sorter: true,
-    },
-    {
-      title: "daysToRemind",
-      dataIndex: "daysToRemind",
-    },
-    {
-      title: "paperType",
-      dataIndex: "paperType",
-    },
-    {
-      title: "fee",
-      dataIndex: "fee",
-    },
-    {
-      title: "remarks",
-      dataIndex: "remarks",
+      title: "Account Type",
+      dataIndex: "accountType",
+      render: (accountType: any) => (
+        <span>{accountType && accountType.label}</span>
+      ),
     },
     {
       title: "CreatedAt",
@@ -93,6 +71,26 @@ const FitnessPage = () => {
       render: function (data: any) {
         return (
           <div className="flex">
+            {/* <Link
+              href={`/super_admin/manage-financial/account-heads/details/${data?.id}`}
+            >
+              <Button onClick={() => console.log(data)} type="primary">
+                <EyeOutlined />
+              </Button>
+            </Link> */}
+            {/* <Link
+              href={`/super_admin/manage-financial/account-heads/edit/${data?.id}`}
+            >
+              <Button
+                style={{
+                  margin: "0px 5px",
+                }}
+                onClick={() => console.log(data)}
+                type="primary"
+              >
+                <EditOutlined />
+              </Button>
+            </Link> */}
             <div
               style={{
                 margin: "0px 5px",
@@ -100,12 +98,9 @@ const FitnessPage = () => {
               onClick={() => {}}
             >
               <ModalComponent icon={<EditOutlined />}>
-                <AddFitness id={data?.id} />
+                <AddAccountHeads id={data?.id} />
               </ModalComponent>
             </div>
-            <Button onClick={() => console.log(data?.id)} type="primary" danger>
-              <DeleteOutlined />
-            </Button>
           </div>
         );
       },
@@ -129,9 +124,10 @@ const FitnessPage = () => {
     setSortOrder("");
     setSearchTerm("");
   };
+
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
-      <ActionBar inline title="Fitness List">
+      <ActionBar inline title="Account Head List">
         <div className="flex items-center gap-2">
           <Input
             // size="large"
@@ -152,8 +148,8 @@ const FitnessPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Fitness">
-            <AddFitness />
+          <ModalComponent buttonText="Add Account Head">
+            <AddAccountHeads />
           </ModalComponent>
         </div>
       </ActionBar>
@@ -161,7 +157,7 @@ const FitnessPage = () => {
       <UMTable
         columns={columns}
         loading={false}
-        dataSource={paperworkRecords}
+        dataSource={accountHeads}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -173,4 +169,4 @@ const FitnessPage = () => {
   );
 };
 
-export default FitnessPage;
+export default AccountHeadsPage;

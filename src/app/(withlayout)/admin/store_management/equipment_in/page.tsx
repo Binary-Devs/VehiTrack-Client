@@ -1,10 +1,11 @@
 "use client";
-import AddFitness from "@/components/CreateUpdateFrom/AddFitness";
+
+import AddEquipmentIn from "@/components/CreateUpdateFrom/AddEquipmentIn";
 import Loader from "@/components/Utlis/Loader";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
-import { useGetAllPaperWorksQuery } from "@/redux/api/paperWork/paperWorkApi";
+import { useGetAllEquipmentInQuery } from "@/redux/api/equipmentIn/equipmentInApi";
 import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
@@ -15,7 +16,7 @@ import { Button, Input } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 
-const FitnessPage = () => {
+const EquipmentInList = () => {
   const query: Record<string, any> = {};
 
   const [page, setPage] = useState<number>(1);
@@ -25,7 +26,7 @@ const FitnessPage = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   query["limit"] = size;
-  query["page"] = page;
+  query["page"] = page - 1;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
 
@@ -38,47 +39,53 @@ const FitnessPage = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const { data, isLoading } = useGetAllPaperWorksQuery({ ...query });
+  const { data, isLoading } = useGetAllEquipmentInQuery({ ...query });
   if (isLoading) {
     return <Loader className="h-[50vh] flex items-end justify-center" />;
   }
-  const paperworkRecords = data?.paperWorks;
-  console.log(paperworkRecords);
+
+  const equipments = data?.equipmentIns;
   const meta = data?.meta;
 
   const columns = [
+    // {
+    //   title: "SN",
+    //   dataIndex: "sn",
+    //   key: "sn",
+    //   width: "5%",
+    //   render: (text: any, record: any, index: number) => {
+    //     return index + 1;
+    //   },
+    // },
     {
-      title: "Vehicle",
-      dataIndex: "vehicle",
-      render: (vehicle: any) => <span>{vehicle && vehicle.regNo}</span>,
+      title: "Date",
+      dataIndex: "date",
+      key: "date",
     },
     {
-      title: "effectiveDate",
-      dataIndex: "effectiveDate",
-      render: (data: string) => dayjs(data).format("DD/MM/YYYY"),
-      sorter: true,
+      title: "equipment",
+      dataIndex: "equipment",
+      render: (equipment: any) => <span>{equipment && equipment.label}</span>,
     },
     {
-      title: "expiryDate",
-      dataIndex: "expiryDate",
-      render: (data: string) => dayjs(data).format("DD/MM/YYYY"),
-      sorter: true,
+      title: "Quantity",
+      dataIndex: "quantity",
+      key: "quantity",
     },
     {
-      title: "daysToRemind",
-      dataIndex: "daysToRemind",
+      title: "Unit price",
+      dataIndex: "unitPrice",
+      key: "unitPrice",
     },
     {
-      title: "paperType",
-      dataIndex: "paperType",
+      title: "Total price",
+      dataIndex: "totalPrice",
+      key: "totalPrice",
     },
     {
-      title: "fee",
-      dataIndex: "fee",
-    },
-    {
-      title: "remarks",
+      title: "Remarks",
       dataIndex: "remarks",
+      key: "remarks",
     },
     {
       title: "CreatedAt",
@@ -97,10 +104,9 @@ const FitnessPage = () => {
               style={{
                 margin: "0px 5px",
               }}
-              onClick={() => {}}
             >
               <ModalComponent icon={<EditOutlined />}>
-                <AddFitness id={data?.id} />
+                <AddEquipmentIn id={data?.id} />
               </ModalComponent>
             </div>
             <Button onClick={() => console.log(data?.id)} type="primary" danger>
@@ -111,7 +117,6 @@ const FitnessPage = () => {
       },
     },
   ];
-
   const onPaginationChange = (page: number, pageSize: number) => {
     console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
@@ -131,7 +136,7 @@ const FitnessPage = () => {
   };
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
-      <ActionBar inline title="Fitness List">
+      <ActionBar inline title="EquipmentIn List">
         <div className="flex items-center gap-2">
           <Input
             // size="large"
@@ -152,16 +157,16 @@ const FitnessPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Fitness">
-            <AddFitness />
+          <ModalComponent buttonText="Add EquipmentIn">
+            <AddEquipmentIn />
           </ModalComponent>
         </div>
       </ActionBar>
 
       <UMTable
-        columns={columns}
         loading={false}
-        dataSource={paperworkRecords}
+        columns={columns}
+        dataSource={equipments}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -173,4 +178,4 @@ const FitnessPage = () => {
   );
 };
 
-export default FitnessPage;
+export default EquipmentInList;
