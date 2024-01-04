@@ -46,43 +46,6 @@ const HelperListPage = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  //@ts-ignore
-  // const AllHelperData = [
-  //   {
-  //     _id: 1,
-  //     name: "sampood",
-  //     email: "sampood@gmail.com",
-  //     createdAt: "2023-01-01",
-  //     phoneNumber: "014741154151",
-  //     profileImage:
-  //       "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //   },
-  //   {
-  //     _id: 2,
-  //     name: "akahs",
-  //     email: "kakspood@gmail.com",
-  //     createdAt: "2023-01-01",
-  //     phoneNumber: "018044518521",
-  //     profileImage:
-  //       "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //   },
-  //   {
-  //     _id: 3,
-  //     name: "roihime",
-  //     email: "roihime@gmail.com",
-  //     phoneNumber: "018769988521",
-  //     createdAt: "2023-01-01",
-  //     profileImage:
-  //       "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //   },
-  // ];
-  //@ts-ignore
-  //   const meta = {
-  //     "page": 1,
-  //     "limit": 10,
-  //     "total": 3
-  // };
-
   const columns = [
     {
       title: "",
@@ -186,25 +149,6 @@ const HelperListPage = () => {
     setSearchTerm("");
   };
 
-  //   const deleteGeneralUserHandler = async (id: string) => {
-  //     console.log(id);
-  //     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
-  //       if (res.isConfirmed) {
-  //         try {
-  //           const res = await deleteGeneralUser(id).unwrap();
-  //           if (res.success == false) {
-  //             // message.success("Admin Successfully Deleted!");
-  //             // setOpen(false);
-  //             Error_model_hook(res?.message);
-  //           } else {
-  //             Success_model("Customer Successfully Deleted");
-  //           }
-  //         } catch (error: any) {
-  //           message.error(error.message);
-  //         }
-  //       }
-  //     });
-  //   };
   // if (isLoading) {
   //   return <Loader className="h-[50vh] flex items-end justify-center" />;
   // }
