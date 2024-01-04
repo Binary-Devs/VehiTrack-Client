@@ -13,7 +13,6 @@ import {
 } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
-import Link from "next/link";
 import { useState } from "react";
 
 const RefuelingPage = () => {
@@ -98,7 +97,7 @@ const RefuelingPage = () => {
       title: "Action",
       render: function (data: any) {
         return (
-          <>
+          <div className="flex">
             {/* <Link
               href={`/super_admin/manage-fuel/refueling/details/${data?.id}`}
             >
@@ -106,7 +105,7 @@ const RefuelingPage = () => {
                 <EyeOutlined />
               </Button>
             </Link> */}
-            <Link href={`/super_admin/manage-fuel/refueling/edit/${data?.id}`}>
+            {/* <Link href={`/super_admin/manage-fuel/refueling/edit/${data?.id}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -116,11 +115,21 @@ const RefuelingPage = () => {
               >
                 <EditOutlined />
               </Button>
-            </Link>
+            </Link> */}
+            <div
+              style={{
+                margin: "0px 5px",
+              }}
+              onClick={() => console.log(data?.id)}
+            >
+              <ModalComponent icon={<EditOutlined />}>
+                <AddRefueling id={data?.id} />
+              </ModalComponent>
+            </div>
             <Button onClick={() => console.log(data?.id)} type="primary" danger>
               <DeleteOutlined />
             </Button>
-          </>
+          </div>
         );
       },
     },

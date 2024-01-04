@@ -61,9 +61,6 @@ const AddAccountType = ({ id }: { id?: string }) => {
               marginBottom: "10px",
             }}
           >
-            <p className="text-base lg:text-lg font-normal">
-              Account Type Information
-            </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
                 className="gutter-row"

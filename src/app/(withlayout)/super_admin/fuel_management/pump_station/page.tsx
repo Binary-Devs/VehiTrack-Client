@@ -6,14 +6,9 @@ import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { useGetAllFuelStationQuery } from "@/redux/api/fuelStation/fuelStationApi";
 import { useDebounced } from "@/redux/hooks";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  ReloadOutlined,
-} from "@ant-design/icons";
+import { EditOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
-import Link from "next/link";
 import { useState } from "react";
 
 const PumpStationPage = () => {
@@ -79,22 +74,19 @@ const PumpStationPage = () => {
                 <EyeOutlined />
               </Button>
             </Link> */}
-            <Link
-              href={`/super_admin/manage-fuel/pump-station/edit/${data?.id}`}
+            <div
+              style={{
+                margin: "0px 5px",
+              }}
+              onClick={() => {}}
             >
-              <Button
-                style={{
-                  margin: "0px 5px",
-                }}
-                onClick={() => console.log(data)}
-                type="primary"
-              >
-                <EditOutlined />
-              </Button>
-            </Link>
-            <Button onClick={() => console.log(data?.id)} type="primary" danger>
+              <ModalComponent icon={<EditOutlined />}>
+                <AddPumpStation id={data?.id} />
+              </ModalComponent>
+            </div>
+            {/* <Button onClick={() => console.log(data?.id)} type="primary" danger>
               <DeleteOutlined />
-            </Button>
+            </Button> */}
           </>
         );
       },
