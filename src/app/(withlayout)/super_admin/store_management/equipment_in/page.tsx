@@ -14,7 +14,6 @@ import {
 } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
-import Link from "next/link";
 import { useState } from "react";
 
 const EquipmentInList = () => {
@@ -100,24 +99,20 @@ const EquipmentInList = () => {
       title: "Action",
       render: function (data: any) {
         return (
-          <>
-            <Link
-              href={`/super_admin/store_management/equipment/edit/${data?.id}`}
+          <div className="flex">
+            <div
+              style={{
+                margin: "0px 5px",
+              }}
             >
-              <Button
-                style={{
-                  margin: "0px 5px",
-                }}
-                onClick={() => console.log(data)}
-                type="primary"
-              >
-                <EditOutlined />
-              </Button>
-            </Link>
+              <ModalComponent icon={<EditOutlined />}>
+                <AddEquipmentIn id={data?.id} />
+              </ModalComponent>
+            </div>
             <Button onClick={() => console.log(data?.id)} type="primary" danger>
               <DeleteOutlined />
             </Button>
-          </>
+          </div>
         );
       },
     },

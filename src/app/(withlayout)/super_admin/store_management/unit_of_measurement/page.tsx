@@ -7,14 +7,9 @@ import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { useGetAllUomQuery } from "@/redux/api/uom/uomApi";
 import { useDebounced } from "@/redux/hooks";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  ReloadOutlined,
-} from "@ant-design/icons";
+import { EditOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
-import Link from "next/link";
 import { useState } from "react";
 
 const UnitOfMeasurement = () => {
@@ -75,22 +70,16 @@ const UnitOfMeasurement = () => {
       render: function (data: any) {
         return (
           <>
-            <Link
-              href={`/super_admin/store_management/unit_of_measurement/edit/${data?.id}`}
+            <div
+              style={{
+                margin: "0px 5px",
+              }}
+              onClick={() => console.log(data?.id)}
             >
-              <Button
-                style={{
-                  margin: "0px 5px",
-                }}
-                onClick={() => console.log(data)}
-                type="primary"
-              >
-                <EditOutlined />
-              </Button>
-            </Link>
-            <Button onClick={() => console.log(data?.id)} type="primary" danger>
-              <DeleteOutlined />
-            </Button>
+              <ModalComponent icon={<EditOutlined />}>
+                <AddUnitOfMeasurement id={data?.id} />
+              </ModalComponent>
+            </div>
           </>
         );
       },
