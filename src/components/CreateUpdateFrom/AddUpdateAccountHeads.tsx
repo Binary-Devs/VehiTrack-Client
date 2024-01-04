@@ -30,12 +30,14 @@ const AddAccountHeads = ({ id }: { id?: string }) => {
 
   const accountTypes = accountType?.accountTypes;
 
-  const accountTypeOptions = accountTypes?.map((accountType) => {
-    return {
-      label: accountType?.label,
-      value: accountType?.id,
-    };
-  });
+  const accountTypeOptions = accountTypes?.map(
+    (accountType: { label: any; id: any }) => {
+      return {
+        label: accountType?.label,
+        value: accountType?.id,
+      };
+    }
+  );
   const onSubmit = async (values: any) => {
     message.loading(id ? "Updating...." : "Adding....");
     try {

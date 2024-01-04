@@ -1,5 +1,5 @@
 "use client";
-import AddAccountType from "@/components/CreateUpdateFrom/AddAccountType";
+import AddAccountType from "@/components/CreateUpdateFrom/AddUpdateAccountType";
 import Loader from "@/components/Utlis/Loader";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
@@ -93,12 +93,6 @@ const AccountTypePage = () => {
     setSortBy("");
     setSortOrder("");
     setSearchTerm("");
-    const inputField = document.getElementById(
-      "searchInput"
-    ) as HTMLInputElement;
-    if (inputField) {
-      inputField.value = "";
-    }
   };
 
   return (
@@ -109,7 +103,6 @@ const AccountTypePage = () => {
             // size="large"
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
-            onClick={resetFilters}
             // style={{
             //   minWidth: "150px",
             //   maxWidth: "300px",

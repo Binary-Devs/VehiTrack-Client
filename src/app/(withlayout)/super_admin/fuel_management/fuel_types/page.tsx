@@ -1,19 +1,14 @@
 "use client";
-import AddFuelTypes from "@/components/CreateUpdateFrom/AddFuelTypes";
+import AddFuelTypes from "@/components/CreateUpdateFrom/AddUpdateFuelTypes";
 import Loader from "@/components/Utlis/Loader";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { useGetAllFuelTypeQuery } from "@/redux/api/fuelType/fuelTypeApi";
 import { useDebounced } from "@/redux/hooks";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  ReloadOutlined,
-} from "@ant-design/icons";
+import { EditOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
-import Link from "next/link";
 import { useState } from "react";
 
 const FuelTypesPage = () => {
@@ -74,7 +69,7 @@ const FuelTypesPage = () => {
                 <EyeOutlined />
               </Button>
             </Link> */}
-            <Link href={`/super_admin/manage-fuel/fuel-type/edit/${data?.id}`}>
+            {/* <Link href={`/super_admin/manage-fuel/fuel-type/edit/${data?.id}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -84,10 +79,20 @@ const FuelTypesPage = () => {
               >
                 <EditOutlined />
               </Button>
-            </Link>
-            <Button onClick={() => console.log(data?.id)} type="primary" danger>
+            </Link> */}
+            <div
+              style={{
+                margin: "0px 5px",
+              }}
+              onClick={() => {}}
+            >
+              <ModalComponent icon={<EditOutlined />}>
+                <AddFuelTypes id={data?.id} />
+              </ModalComponent>
+            </div>
+            {/* <Button onClick={() => console.log(data?.id)} type="primary" danger>
               <DeleteOutlined />
-            </Button>
+            </Button> */}
           </>
         );
       },

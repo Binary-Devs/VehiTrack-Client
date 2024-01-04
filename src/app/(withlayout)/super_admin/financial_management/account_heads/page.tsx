@@ -1,5 +1,5 @@
 "use client";
-import AddAccountHeads from "@/components/CreateUpdateFrom/AddAccountHeads";
+import AddAccountHeads from "@/components/CreateUpdateFrom/AddUpdateAccountHeads";
 import Loader from "@/components/Utlis/Loader";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
