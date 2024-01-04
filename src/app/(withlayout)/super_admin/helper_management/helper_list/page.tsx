@@ -5,12 +5,10 @@ import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
   EditOutlined,
-  EyeOutlined,
   ReloadOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { Avatar, Button, Input } from "antd";
-import Link from "next/link";
 import { useState } from "react";
 
 import dayjs from "dayjs";
@@ -94,7 +92,7 @@ const HelperListPage = () => {
     },
     {
       title: "Action",
-      dataIndex: "_id",
+      dataIndex: "id",
       // width: "15%",
       render: function (data: any) {
         return (
@@ -113,13 +111,20 @@ const HelperListPage = () => {
                 <AddUpdateHelper id={data} />
               </ModalComponent>
             </div>
-            <Button
-              //   onClick={() => deleteGeneralUserHandler(data)}
-              type="primary"
-              danger
-            >
-              <DeleteOutlined />
-            </Button>
+            <div>
+              <ModalComponent icon={<DeleteOutlined />} buttonDanger={true}>
+                <div>
+                  <h1 className="text-center my-1 font-bold text-2xl">
+                    Delete Helper
+                  </h1>
+                  <div className="flex justify-end items-center mt-[5px]">
+                    <Button htmlType="submit" type="primary">
+                      Ok
+                    </Button>
+                  </div>
+                </div>
+              </ModalComponent>
+            </div>
           </div>
         );
       },
