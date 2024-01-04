@@ -1,3 +1,5 @@
+"use client";
+
 import { authKey } from "@/constants/storageKey";
 import { getUserInfo, removeUserInfo } from "@/services/auth.service";
 import { UserOutlined } from "@ant-design/icons";
@@ -21,14 +23,6 @@ const NavbarPublic = () => {
   // Dropdown menu items
   const items: MenuProps["items"] = [
     {
-      key: "1",
-      label: (
-        <Link href={"/dashboard"}>
-          <Button type="text">Dashboard</Button>
-        </Link>
-      ),
-    },
-    {
       key: "0",
       label: (
         <Button onClick={logOut} type="text" danger>
@@ -37,6 +31,31 @@ const NavbarPublic = () => {
       ),
     },
   ];
+
+  // const renderRoleContent = () => {
+  //   {
+  //     /* {role === "super_admin"
+  //             ? "Super Admin"
+  //             : role === "admin"
+  //             ? "Admin"
+  //             : role === "driver"
+  //             ? "Driver"
+  //             : role === "helper"
+  //             ? "Helper"
+  //             : ""} */
+  //   }
+
+  //   if (role === "super_admin") {
+  //     return (
+  //       <p className="hidden md:block" style={{ margin: "0px 20px" }}>
+  //         {"Super Admin"}
+  //       </p>
+  //     );
+  //   }
+  //   return null;
+  // };
+
+  console.log(role);
 
   return (
     <header className="text-gray-600 body-font">
@@ -48,16 +67,15 @@ const NavbarPublic = () => {
 
         {/* Navigation and User Info */}
         <div className="flex justify-between items-center mt-4 md:mt-0">
+          {/* <p className="hidden md:block" style={{ margin: "0px 20px" }}>
+            {renderRoleContent()}
+          </p> */}
           {role && (
-            <span className="hidden md:block" style={{ margin: "0px 20px" }}>
-              {role === "super_admin"
-                ? "Super Admin"
-                : role === "admin"
-                ? "Admin"
-                : role === "driver"
-                ? "Driver"
-                : "Helper"}
-            </span>
+            <Link href={"/dashboard"}>
+              <Button type="text" size="large" className="mr-4">
+                Dashboard
+              </Button>
+            </Link>
           )}
 
           {/* User Avatar and Dropdown */}

@@ -9,6 +9,7 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Button, Input, Tag } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
+import { IoMdAdd } from "react-icons/io";
 
 const PartyListPage = () => {
   const query: Record<string, any> = {};
@@ -89,7 +90,6 @@ const PartyListPage = () => {
   ];
 
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
@@ -121,7 +121,7 @@ const PartyListPage = () => {
             maxWidth: "200px",
           }}
         />
-        <ModalComponent buttonText="Add Party">
+        <ModalComponent buttonText="Add Party" icon={<IoMdAdd />}>
           <AddUpdateParty />
         </ModalComponent>
       </ActionBar>
