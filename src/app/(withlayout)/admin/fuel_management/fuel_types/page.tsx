@@ -1,21 +1,17 @@
 "use client";
-import AddFitness from "@/components/CreateUpdateFrom/AddFitness";
+import AddFuelTypes from "@/components/CreateUpdateFrom/AddUpdateFuelTypes";
 import Loader from "@/components/Utlis/Loader";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
-import { useGetAllPaperWorksQuery } from "@/redux/api/paperWork/paperWorkApi";
+import { useGetAllFuelTypeQuery } from "@/redux/api/fuelType/fuelTypeApi";
 import { useDebounced } from "@/redux/hooks";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  ReloadOutlined,
-} from "@ant-design/icons";
+import { EditOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 
-const FitnessPage = () => {
+const FuelTypesPage = () => {
   const query: Record<string, any> = {};
 
   const [page, setPage] = useState<number>(1);
@@ -38,47 +34,20 @@ const FitnessPage = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const { data, isLoading } = useGetAllPaperWorksQuery({ ...query });
+  const { data, isLoading } = useGetAllFuelTypeQuery({
+    ...query,
+  });
   if (isLoading) {
     return <Loader className="h-[50vh] flex items-end justify-center" />;
   }
-  const paperworkRecords = data?.paperWorks;
-  console.log(paperworkRecords);
+  const fuelTypes = data?.fuelTypes;
+
   const meta = data?.meta;
 
   const columns = [
     {
-      title: "Vehicle",
-      dataIndex: "vehicle",
-      render: (vehicle: any) => <span>{vehicle && vehicle.regNo}</span>,
-    },
-    {
-      title: "effectiveDate",
-      dataIndex: "effectiveDate",
-      render: (data: string) => dayjs(data).format("DD/MM/YYYY"),
-      sorter: true,
-    },
-    {
-      title: "expiryDate",
-      dataIndex: "expiryDate",
-      render: (data: string) => dayjs(data).format("DD/MM/YYYY"),
-      sorter: true,
-    },
-    {
-      title: "daysToRemind",
-      dataIndex: "daysToRemind",
-    },
-    {
-      title: "paperType",
-      dataIndex: "paperType",
-    },
-    {
-      title: "fee",
-      dataIndex: "fee",
-    },
-    {
-      title: "remarks",
-      dataIndex: "remarks",
+      title: "label",
+      dataIndex: "label",
     },
     {
       title: "CreatedAt",
@@ -92,7 +61,25 @@ const FitnessPage = () => {
       title: "Action",
       render: function (data: any) {
         return (
-          <div className="flex">
+          <>
+            {/* <Link
+              href={`/super_admin/manage-fuel/fuel-type/details/${data?.id}`}
+            >
+              <Button onClick={() => console.log(data)} type="primary">
+                <EyeOutlined />
+              </Button>
+            </Link> */}
+            {/* <Link href={`/super_admin/manage-fuel/fuel-type/edit/${data?.id}`}>
+              <Button
+                style={{
+                  margin: "0px 5px",
+                }}
+                onClick={() => console.log(data)}
+                type="primary"
+              >
+                <EditOutlined />
+              </Button>
+            </Link> */}
             <div
               style={{
                 margin: "0px 5px",
@@ -100,13 +87,13 @@ const FitnessPage = () => {
               onClick={() => {}}
             >
               <ModalComponent icon={<EditOutlined />}>
-                <AddFitness id={data?.id} />
+                <AddFuelTypes id={data?.id} />
               </ModalComponent>
             </div>
-            <Button onClick={() => console.log(data?.id)} type="primary" danger>
+            {/* <Button onClick={() => console.log(data?.id)} type="primary" danger>
               <DeleteOutlined />
-            </Button>
-          </div>
+            </Button> */}
+          </>
         );
       },
     },
@@ -131,7 +118,7 @@ const FitnessPage = () => {
   };
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
-      <ActionBar inline title="Fitness List">
+      <ActionBar inline title="Fuel Type List">
         <div className="flex items-center gap-2">
           <Input
             // size="large"
@@ -152,8 +139,8 @@ const FitnessPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Fitness">
-            <AddFitness />
+          <ModalComponent buttonText="Add Fuel Type">
+            <AddFuelTypes />
           </ModalComponent>
         </div>
       </ActionBar>
@@ -161,7 +148,7 @@ const FitnessPage = () => {
       <UMTable
         columns={columns}
         loading={false}
-        dataSource={paperworkRecords}
+        dataSource={fuelTypes}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -173,4 +160,4 @@ const FitnessPage = () => {
   );
 };
 
-export default FitnessPage;
+export default FuelTypesPage;

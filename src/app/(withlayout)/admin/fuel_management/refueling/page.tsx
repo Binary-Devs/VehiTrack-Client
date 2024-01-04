@@ -1,10 +1,10 @@
 "use client";
-import AddFitness from "@/components/CreateUpdateFrom/AddFitness";
+import AddRefueling from "@/components/CreateUpdateFrom/AddRefueling";
 import Loader from "@/components/Utlis/Loader";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
-import { useGetAllPaperWorksQuery } from "@/redux/api/paperWork/paperWorkApi";
+import { useGetAllFuelQuery } from "@/redux/api/fuel/fuelApi";
 import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
@@ -15,7 +15,7 @@ import { Button, Input } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 
-const FitnessPage = () => {
+const RefuelingPage = () => {
   const query: Record<string, any> = {};
 
   const [page, setPage] = useState<number>(1);
@@ -38,43 +38,48 @@ const FitnessPage = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const { data, isLoading } = useGetAllPaperWorksQuery({ ...query });
+  const { data, isLoading } = useGetAllFuelQuery({ ...query });
   if (isLoading) {
     return <Loader className="h-[50vh] flex items-end justify-center" />;
   }
-  const paperworkRecords = data?.paperWorks;
-  console.log(paperworkRecords);
+  const fuels = data?.fuels;
+  console.log(fuels);
   const meta = data?.meta;
 
   const columns = [
     {
-      title: "Vehicle",
+      title: "vehicle",
       dataIndex: "vehicle",
       render: (vehicle: any) => <span>{vehicle && vehicle.regNo}</span>,
     },
     {
-      title: "effectiveDate",
-      dataIndex: "effectiveDate",
-      render: (data: string) => dayjs(data).format("DD/MM/YYYY"),
-      sorter: true,
+      title: "driver",
+      dataIndex: "driver",
+      render: (driver: any) => <span>{driver && driver.fullName}</span>,
     },
     {
-      title: "expiryDate",
-      dataIndex: "expiryDate",
-      render: (data: string) => dayjs(data).format("DD/MM/YYYY"),
-      sorter: true,
+      title: "fuel Station",
+      dataIndex: "fuelStation",
+      render: (fuelStation: any) => (
+        <span>{fuelStation && fuelStation.label}</span>
+      ),
     },
     {
-      title: "daysToRemind",
-      dataIndex: "daysToRemind",
+      title: "fuelType",
+      dataIndex: "fuelType",
+      render: (fuelType: any) => <span>{fuelType && fuelType.label}</span>,
     },
     {
-      title: "paperType",
-      dataIndex: "paperType",
+      title: "odometer",
+      dataIndex: "odometer",
     },
     {
-      title: "fee",
-      dataIndex: "fee",
+      title: "quantity",
+      dataIndex: "quantity",
+    },
+    {
+      title: "amount",
+      dataIndex: "amount",
     },
     {
       title: "remarks",
@@ -93,14 +98,32 @@ const FitnessPage = () => {
       render: function (data: any) {
         return (
           <div className="flex">
+            {/* <Link
+              href={`/super_admin/manage-fuel/refueling/details/${data?.id}`}
+            >
+              <Button onClick={() => console.log(data)} type="primary">
+                <EyeOutlined />
+              </Button>
+            </Link> */}
+            {/* <Link href={`/super_admin/manage-fuel/refueling/edit/${data?.id}`}>
+              <Button
+                style={{
+                  margin: "0px 5px",
+                }}
+                onClick={() => console.log(data)}
+                type="primary"
+              >
+                <EditOutlined />
+              </Button>
+            </Link> */}
             <div
               style={{
                 margin: "0px 5px",
               }}
-              onClick={() => {}}
+              onClick={() => console.log(data?.id)}
             >
               <ModalComponent icon={<EditOutlined />}>
-                <AddFitness id={data?.id} />
+                <AddRefueling id={data?.id} />
               </ModalComponent>
             </div>
             <Button onClick={() => console.log(data?.id)} type="primary" danger>
@@ -131,7 +154,7 @@ const FitnessPage = () => {
   };
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
-      <ActionBar inline title="Fitness List">
+      <ActionBar inline title="Refueling List">
         <div className="flex items-center gap-2">
           <Input
             // size="large"
@@ -152,8 +175,8 @@ const FitnessPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Fitness">
-            <AddFitness />
+          <ModalComponent buttonText="Add Refueling">
+            <AddRefueling />
           </ModalComponent>
         </div>
       </ActionBar>
@@ -161,7 +184,7 @@ const FitnessPage = () => {
       <UMTable
         columns={columns}
         loading={false}
-        dataSource={paperworkRecords}
+        dataSource={fuels}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -173,4 +196,4 @@ const FitnessPage = () => {
   );
 };
 
-export default FitnessPage;
+export default RefuelingPage;
