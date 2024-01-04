@@ -9,12 +9,10 @@ import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
   EditOutlined,
-  EyeOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
-import Link from "next/link";
 import { useState } from "react";
 
 const RoutePermitPage = () => {
@@ -90,31 +88,21 @@ const RoutePermitPage = () => {
       title: "Action",
       render: function (data: any) {
         return (
-          <>
-            <Link
-              href={`super_admin/paper-work/paper-work-list/details/${data?.id}`}
+          <div className="flex">
+            <div
+              style={{
+                margin: "0px 5px",
+              }}
+              onClick={() => {}}
             >
-              <Button onClick={() => console.log(data)} type="primary">
-                <EyeOutlined />
-              </Button>
-            </Link>
-            <Link
-              href={`super_admin/paper-work/paper-work-list/edit/${data?.id}`}
-            >
-              <Button
-                style={{
-                  margin: "0px 5px",
-                }}
-                onClick={() => console.log(data)}
-                type="primary"
-              >
-                <EditOutlined />
-              </Button>
-            </Link>
+              <ModalComponent icon={<EditOutlined />}>
+                <AddRoutePermit id={data?.id} />
+              </ModalComponent>
+            </div>
             <Button onClick={() => console.log(data?.id)} type="primary" danger>
               <DeleteOutlined />
             </Button>
-          </>
+          </div>
         );
       },
     },
