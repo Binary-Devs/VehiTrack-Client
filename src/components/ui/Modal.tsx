@@ -20,7 +20,6 @@ const ModalComponent = ({
   const [open, setOpen] = useState(false);
   //   const [confirmLoading, setConfirmLoading] = useState(false);
 
-
   const showModal = () => {
     setOpen(true);
   };
@@ -48,7 +47,8 @@ const ModalComponent = ({
             onClick={showModal}
             className="!flex !items-center !gap-2 "
           >
-            {icon &&<span className="m-1">{ icon}</span>}{buttonText && buttonText}
+            {icon && <span className="m-1">{icon}</span>}
+            {buttonText && buttonText}
           </Button>
         </div>
       </div>

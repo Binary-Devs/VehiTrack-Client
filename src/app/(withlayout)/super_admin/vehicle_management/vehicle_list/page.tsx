@@ -21,7 +21,10 @@ import { useGetAllBrandQuery } from "@/redux/api/brand/brandApi";
 import { useGetAllDriverQuery } from "@/redux/api/driver/driverApi";
 import { useGetAllHelperQuery } from "@/redux/api/helper/helperApi";
 import { useGetAllModelQuery } from "@/redux/api/model/modelApi";
-import { useGetAllVehicleQuery, useUpdateVehicleMutation } from "@/redux/api/vehicle/vehicleApi";
+import {
+  useGetAllVehicleQuery,
+  useUpdateVehicleMutation,
+} from "@/redux/api/vehicle/vehicleApi";
 import { IoMdAdd } from "react-icons/io";
 
 const VehicleListPage = () => {

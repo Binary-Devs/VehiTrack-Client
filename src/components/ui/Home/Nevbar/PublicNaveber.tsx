@@ -1,3 +1,5 @@
+"use client";
+
 import { authKey } from "@/constants/storageKey";
 import { getUserInfo, removeUserInfo } from "@/services/auth.service";
 import { UserOutlined } from "@ant-design/icons";
@@ -23,9 +25,17 @@ const NavbarPublic = () => {
     {
       key: "1",
       label: (
-        <Link href={"/dashboard"}>
-          <Button type="text">Dashboard</Button>
-        </Link>
+        <strong className="p-2">
+          {role && role === "super_admin"
+            ? "Super Admin"
+            : role === "admin"
+            ? "Admin"
+            : role === "driver"
+            ? "Driver"
+            : role === "helper"
+            ? "Helper"
+            : null}
+        </strong>
       ),
     },
     {
@@ -47,28 +57,30 @@ const NavbarPublic = () => {
         </div>
 
         {/* Navigation and User Info */}
-        <div className="flex justify-between items-center mt-4 md:mt-0">
-          {role && (
-            <span className="hidden md:block" style={{ margin: "0px 20px" }}>
-              {role === "super_admin"
-                ? "Super Admin"
-                : role === "admin"
-                ? "Admin"
-                : role === "driver"
-                ? "Driver"
-                : "Helper"}
-            </span>
-          )}
+        {role ? (
+          <div className="flex justify-between items-center mt-4 md:mt-0">
+            <Link href={"/dashboard"}>
+              <Button type="text" size="large" className="mr-2">
+                Dashboard
+              </Button>
+            </Link>
 
-          {/* User Avatar and Dropdown */}
-          <Dropdown menu={{ items }}>
-            <a>
-              <Space wrap size={16}>
-                <Avatar size="large" icon={<UserOutlined />} />
-              </Space>
-            </a>
-          </Dropdown>
-        </div>
+            {/* User Avatar and Dropdown */}
+            <Dropdown menu={{ items }}>
+              <a>
+                <Space wrap size={16}>
+                  <Avatar size="large" icon={<UserOutlined />} />
+                </Space>
+              </a>
+            </Dropdown>
+          </div>
+        ) : (
+          <Link href={"/login"}>
+            <Button type="primary" size="large" className="px-2">
+              Login
+            </Button>
+          </Link>
+        )}
       </div>
     </header>
   );
