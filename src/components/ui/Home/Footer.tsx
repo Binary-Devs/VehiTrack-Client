@@ -16,11 +16,11 @@ const Footer = () => {
           </div>
 
           <div className="mb-6 md:mb-0">
-            <h5 className="mb-2 font-medium uppercase flex justify-end">
+            <h5 className="mb-2 font-medium uppercase flex justify-center md:justify-end">
               Connect With Us
             </h5>
 
-            <div className="flex space-x-6 justify-end">
+            <div className="flex space-x-6 justify-center md:justify-end">
               <a href="#" className="text-[#1890ff] hover:text-blue-700">
                 <FaFacebook size={32} />
               </a>
