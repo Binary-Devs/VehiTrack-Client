@@ -5,11 +5,16 @@ import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import { paperTypeFitness } from "@/constants/global";
 import { useGetAllAccountHeadQuery } from "@/redux/api/accountHead/accountHeadApi";
-import { useCreatePaperWorkMutation } from "@/redux/api/paperWork/paperWorkApi";
+import {
+  useCreatePaperWorkMutation,
+  useGetSinglePaperWorkQuery,
+  useUpdatePaperWorkMutation,
+} from "@/redux/api/paperWork/paperWorkApi";
 import { useGetAllVehicleQuery } from "@/redux/api/vehicle/vehicleApi";
 import { Button, Col, Row, message } from "antd";
+import Loader from "../Utlis/Loader";
 
-const AddFitness = () => {
+const AddFitness = ({ id }: { id?: string }) => {
   const { data: vehiclesData } = useGetAllVehicleQuery({ limit: 100 });
   const { data: accountHeadsData } = useGetAllAccountHeadQuery({ limit: 100 });
   const vehicles = vehiclesData?.vehicles;
@@ -27,30 +32,42 @@ const AddFitness = () => {
     };
   });
 
-  const [createPaperWork, { isLoading }] = useCreatePaperWorkMutation();
-  const onSubmit = async (data: any) => {
-    message.loading("Adding.............");
+  //Get
+  const { data, isLoading: getLoad } = useGetSinglePaperWorkQuery(id ? id : "");
+
+  //Update
+  const [updatePaperWork, { isLoading: updateLoad }] =
+    useUpdatePaperWorkMutation();
+
+  //Create
+  const [createPaperWork, { isLoading: createLoad }] =
+    useCreatePaperWorkMutation();
+  const onSubmit = async (values: any) => {
+    message.loading(id ? "Updating...." : "Adding....");
     try {
-      data.daysToRemind = parseFloat(data.daysToRemind);
-      data.fee = parseInt(data.fee);
-      data.odoMeter = parseInt(data.odoMeter);
-      data.otherAmount = parseInt(data.otherAmount);
-      data.totalAmount = parseInt(data.totalAmount);
-      const res = await createPaperWork({ ...data }).unwrap();
+      const res = id
+        ? await updatePaperWork({ id: id, body: data }).unwrap()
+        : await createPaperWork({ ...values }).unwrap();
       if (res.id) {
-        message.success(" create in successfully");
+        message.success(`PaperWork ${id ? "updated" : "added"} successfully!`);
       } else {
-        message.error(res.error);
+        message.error(res.message);
       }
     } catch (err: any) {
       message.error(err.message);
     }
   };
 
+  if (id && getLoad) {
+    return <Loader className="h-[40vh] flex items-center justify-center" />;
+  }
+
   return (
     <div>
-      <h1 className="text-center my-1 font-bold text-2xl">Add Fitness</h1>
-      <Form submitHandler={onSubmit}>
+      <h1 className="text-center my-1 font-bold text-2xl">
+        {id ? "Update Fitness" : "Add Fitness"}
+      </h1>
+      <Form submitHandler={onSubmit} defaultValues={data}>
         <div
           style={{
             border: "1px solid #d9d9d9",
@@ -206,8 +223,12 @@ const AddFitness = () => {
           </Row>
         </div>
         <div className="flex justify-end items-center">
-          <Button htmlType="submit" type="primary" disabled={isLoading}>
-            Add
+          <Button
+            htmlType="submit"
+            type="primary"
+            disabled={createLoad || updateLoad}
+          >
+            {id ? "Update" : "Add"}
           </Button>
         </div>
       </Form>

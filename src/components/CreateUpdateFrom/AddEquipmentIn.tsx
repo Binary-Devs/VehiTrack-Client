@@ -1,18 +1,34 @@
 import { useGetAllEquipmentQuery } from "@/redux/api/equipment/equipmentApi";
-import { useCreateEquipmentInMutation } from "@/redux/api/equipmentIn/equipmentInApi";
+import {
+  useCreateEquipmentInMutation,
+  useGetSingleEquipmentInQuery,
+  useUpdateEquipmentInMutation,
+} from "@/redux/api/equipmentIn/equipmentInApi";
 import { Button, Col, Row, message } from "antd";
 import Form from "../Forms/Form";
 import FormDatePicker from "../Forms/FormDatePicker";
 import FormInput from "../Forms/FormInput";
 import FormSelectField from "../Forms/FormSelectField";
+import Loader from "../Utlis/Loader";
 
-const AddEquipmentIn = () => {
-  const [createEquipmentIn, { isLoading }] = useCreateEquipmentInMutation();
-  const { data } = useGetAllEquipmentQuery({
+const AddEquipmentIn = ({ id }: { id?: string }) => {
+  //Get
+  const { data, isLoading: getLoad } = useGetSingleEquipmentInQuery(
+    id ? id : ""
+  );
+
+  //Update
+  const [updateEquipmentIn, { isLoading: updateLoad }] =
+    useUpdateEquipmentInMutation();
+
+  //Create
+  const [createEquipmentIn, { isLoading: createLoad }] =
+    useCreateEquipmentInMutation();
+  const { data: eqp } = useGetAllEquipmentQuery({
     limit: 100,
   });
 
-  const equipments = data?.equipments;
+  const equipments = eqp?.equipments;
 
   const equipmentsOptions = equipments?.map((equipment) => {
     return {
@@ -21,11 +37,15 @@ const AddEquipmentIn = () => {
     };
   });
   const onSubmit = async (data: any) => {
-    message.loading("Adding.............");
+    message.loading(id ? "Updating...." : "Adding....");
     try {
-      const res = await createEquipmentIn({ ...data }).unwrap();
+      const res = id
+        ? await updateEquipmentIn({ id: id, body: data }).unwrap()
+        : await createEquipmentIn({ ...data }).unwrap();
       if (res.id) {
-        message.success(" EquipmentIn add in successfully");
+        message.success(
+          `EquipmentIn ${id ? "updated" : "added"} successfully!`
+        );
       } else {
         message.error(res.message);
       }
@@ -33,11 +53,19 @@ const AddEquipmentIn = () => {
       message.error(err.message);
     }
   };
+
+  if (id && getLoad) {
+    return <Loader className="h-[40vh] flex items-center justify-center" />;
+  }
+
   return (
     <div>
-      <h1 className="text-center my-1 font-bold text-2xl">Add EquipmentIn</h1>
+      <h1 className="text-center my-1 font-bold text-2xl">
+        {id ? "Update Equipment" : "Add Equipment"}
+      </h1>
+      {/*  */}
       <div>
-        <Form submitHandler={onSubmit}>
+        <Form submitHandler={onSubmit} defaultValues={data}>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -152,8 +180,12 @@ const AddEquipmentIn = () => {
           </div>
 
           <div className="flex justify-end items-center">
-            <Button htmlType="submit" type="primary" disabled={isLoading}>
-              Add
+            <Button
+              htmlType="submit"
+              type="primary"
+              disabled={createLoad || updateLoad}
+            >
+              {id ? "Update" : "Add"}
             </Button>
           </div>
         </Form>
