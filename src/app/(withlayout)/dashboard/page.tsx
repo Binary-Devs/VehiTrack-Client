@@ -4,6 +4,7 @@
 // import LineChart from "@/components/Charts/LineChart";
 import type { RadioChangeEvent } from "antd";
 import { Radio, Typography } from "antd";
+import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useState } from "react";
@@ -484,14 +485,34 @@ const DashboardPage = () => {
     },
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: 0.8 } },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeInOut" },
+    },
+  };
+
   return (
-    <div>
+    <motion.div
+      className="your-container-styles"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
       {/* Section 1 */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-5">
+      <motion.div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-5">
         {count.map((c, index) => (
-          <div
+          <motion.div
             key={index}
             className="flex items-center justify-between bg-white border border-blue-200 shadow-md shadow-blue-200 rounded-lg p-5"
+            variants={itemVariants}
           >
             <div>
               <span className="text-[#8c8c8c] font-semibold text-sm">
@@ -515,9 +536,9 @@ const DashboardPage = () => {
                 {c.icon}
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       {/* Section 2 */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-5">
@@ -888,7 +909,7 @@ const DashboardPage = () => {
           </div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

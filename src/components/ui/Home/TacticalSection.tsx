@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import Image from "next/image";
 import one from "../../../assets/1h.png";
 import two from "../../../assets/2h.png";
@@ -45,9 +46,23 @@ export default function TacticalSection() {
         "Provide your workforce with an easy-to-use automation system. Specify roles, manage activities, and monetize performance for a competent team.",
     },
   ];
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
 
   return (
-    <div className="container text-center mx-auto py-24 p-4">
+    <motion.div
+      className="container text-center mx-auto py-24 p-4"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
       <h1 className="text-2xl md:text-4xl font-semibold mb-4">
         Welcome to VehiTrack
       </h1>
@@ -55,11 +70,12 @@ export default function TacticalSection() {
         VehiTrack is your all-in-one solution for efficient vehicle management
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mx-auto mt-10">
+      <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8 mx-auto mt-10">
         {data.map((item, index) => (
-          <div
+          <motion.div
             key={index}
             className="bg-white p-6 rounded-lg shadow-lg text-center h-full"
+            variants={itemVariants}
           >
             <div
               className="h-40 mb-4 overflow-hidden"
@@ -76,9 +92,9 @@ export default function TacticalSection() {
             </div>
             <h2 className="text-xl font-semibold mb-2">{item.title}</h2>
             <p className="text-sm text-gray-600">{item.details}</p>
-          </div>
+          </motion.div>
         ))}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

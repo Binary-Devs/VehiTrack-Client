@@ -68,7 +68,7 @@ const AddRegistration = ({ id }: { id?: string }) => {
         {id ? "Update Registration" : "Add Registration"}
       </h1>
       {/*  */}
-      <Form submitHandler={onSubmit} defaultValues={data}>
+      <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
         <div
           style={{
             border: "1px solid #d9d9d9",

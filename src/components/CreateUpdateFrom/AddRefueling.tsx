@@ -92,7 +92,7 @@ const AddRefueling = ({ id }: { id?: string }) => {
         {id ? "Update Refueling" : "Add Refueling"}
       </h1>
       {/*  */}
-      <Form submitHandler={onSubmit} defaultValues={data}>
+      <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
         <div
           style={{
             border: "1px solid #d9d9d9",

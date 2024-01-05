@@ -65,7 +65,7 @@ const AddEquipmentIn = ({ id }: { id?: string }) => {
       </h1>
       {/*  */}
       <div>
-        <Form submitHandler={onSubmit} defaultValues={data}>
+        <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
           <div
             style={{
               border: "1px solid #d9d9d9",

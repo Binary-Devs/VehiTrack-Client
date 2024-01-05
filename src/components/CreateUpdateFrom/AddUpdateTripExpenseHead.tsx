@@ -57,7 +57,7 @@ const AddUpdateTripExpenseHead = ({ id }: { id?: string }) => {
         {id ? "Update Trip Expense Head" : "Add Trip Expense Head"}
       </h1>
       <div>
-        <Form submitHandler={onSubmit} defaultValues={id ? data : {}}>
+        <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
           <div
             style={{
               border: "1px solid #d9d9d9",
