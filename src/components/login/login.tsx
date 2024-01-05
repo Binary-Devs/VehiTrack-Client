@@ -107,7 +107,7 @@ const LoginPage = () => {
                 <Form
                   submitHandler={onSubmit}
                   defaultValues={defaultValue}
-                  variants={formVariants}
+                  // variants={formVariants}
                 >
                   <div>
                     <FormInput
