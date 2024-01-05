@@ -1,21 +1,13 @@
 // import { IMeta } from "@/types";
+import { getBaseUrl } from "@/helpers/config/envConfig";
 import { tagTypes } from "@/redux/teg-types";
+import io from "socket.io-client";
 import { baseApi } from "../baseApi";
 
 const CONVERSATION_URL = "/conversations";
 
 export const conversationApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    // create
-    createConversation: builder.mutation({
-      query: (data) => ({
-        url: `${CONVERSATION_URL}/create-conversation`,
-        method: "POST",
-        data: data,
-      }),
-      invalidatesTags: [tagTypes.conversations, tagTypes.messages],
-    }),
-
     // get all
     getAllConversation: builder.query({
       query: (arg: Record<string, any>) => ({
@@ -23,6 +15,30 @@ export const conversationApi = baseApi.injectEndpoints({
         method: "GET",
         params: arg,
       }),
+      async onCacheEntryAdded(
+        arg,
+        { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
+      ) {
+        // create socket
+        const socket = io("http://localhost:5000", {
+          reconnectionDelay: 1000,
+          reconnection: true,
+          reconnectionAttempts: 10,
+          transports: ["websocket"],
+          agent: false,
+          upgrade: false,
+          rejectUnauthorized: false,
+        });
+        try {
+          await cacheDataLoaded;
+          socket.on("conversation", (data) => {
+            console.log(data);
+          });
+        } catch (error) {
+          await cacheEntryRemoved;
+          socket.close();
+        }
+      },
       providesTags: [tagTypes.conversations],
     }),
 
@@ -33,6 +49,16 @@ export const conversationApi = baseApi.injectEndpoints({
         method: "GET",
       }),
       providesTags: [tagTypes.conversation],
+    }),
+
+    // create
+    createConversation: builder.mutation({
+      query: (data) => ({
+        url: `${CONVERSATION_URL}/create-conversation`,
+        method: "POST",
+        data: data,
+      }),
+      invalidatesTags: [tagTypes.conversations, tagTypes.messages],
     }),
 
     // update
