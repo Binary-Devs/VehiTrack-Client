@@ -67,7 +67,7 @@ const AddFitness = ({ id }: { id?: string }) => {
       <h1 className="text-center my-1 font-bold text-2xl">
         {id ? "Update Fitness" : "Add Fitness"}
       </h1>
-      <Form submitHandler={onSubmit} defaultValues={data}>
+      <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
         <div
           style={{
             border: "1px solid #d9d9d9",
