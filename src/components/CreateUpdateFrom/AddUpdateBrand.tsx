@@ -19,7 +19,7 @@ const AddUpdateBrand = ({ id }: { id?: string }) => {
   //Create
   const [createBrand, { isLoading: createLoad }] = useCreateBrandMutation();
 
-  console.log(id,data);
+  console.log(id, data);
 
   const onSubmit = async (values: any) => {
     message.loading(id ? "Updating...." : "Adding....");
@@ -47,7 +47,7 @@ const AddUpdateBrand = ({ id }: { id?: string }) => {
       </h1>
       {/*  */}
       <div>
-        <Form submitHandler={onSubmit} defaultValues={data}>
+        <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
           <div
             style={{
               border: "1px solid #d9d9d9",

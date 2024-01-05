@@ -9,11 +9,13 @@ import {
 } from "@/redux/api/driver/driverApi";
 import { useCreateDriverMutation } from "@/redux/api/user/userApi";
 import { Button, Col, Row, message } from "antd";
+import { useState } from "react";
 import FormSelectField from "../Forms/FormSelectField";
 import Loader from "../Utlis/Loader";
 import UploadImage from "../ui/uploadImage";
 
 const AddUpdateDriver = ({ id }: { id?: string }) => {
+    const [image, setimage] = useState("");
   //Get
   const { data, isLoading: getLoad } = useGetSingleDriverQuery(id ? id : "");
 
@@ -28,6 +30,7 @@ const AddUpdateDriver = ({ id }: { id?: string }) => {
   const onSubmit = async (values: any) => {
     message.loading(id ? "Updating...." : "Adding....");
     console.log(values);
+    values.imageUrl = image;
     try {
       const res = id
         ? await updateDriver({
@@ -60,7 +63,8 @@ const AddUpdateDriver = ({ id }: { id?: string }) => {
         {id ? "Update Driver" : "Add Driver"}
       </h1>
       <div>
-        <Form submitHandler={onSubmit} defaultValues={{ driver: data }}>
+     <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
+
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -87,7 +91,7 @@ const AddUpdateDriver = ({ id }: { id?: string }) => {
                 //   marginBottom: "10px",
                 // }}
               >
-                <UploadImage />
+                <UploadImage setImageStatus={setimage} name="imageUrl" />
               </Col>
 
               <Col
