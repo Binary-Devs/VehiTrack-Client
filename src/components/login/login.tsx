@@ -1,9 +1,10 @@
 "use client";
 import { useLoginMutation } from "@/redux/api/auth/authApi";
 import { storeUserInfo } from "@/services/auth.service";
-import { Button, message } from "antd";
+import { Button, Divider, message } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 import Form from "../Forms/Form";
 import FormInput from "../Forms/FormInput";
@@ -15,11 +16,12 @@ type FormValues = {
 
 const LoginPage = () => {
   const [login, { isLoading, error }] = useLoginMutation();
+  const [user, setUser] = useState("");
+  const [defaultValue, setDefaultValue] = useState({});
   const router = useRouter();
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
       const res = await login({ ...data }).unwrap();
-      console.log(res);
       if (res.accessToken) {
         router.push("/dashboard");
         message.success("User logged in successfully");
@@ -35,6 +37,20 @@ const LoginPage = () => {
   if (error) {
     console.log(error);
   }
+
+  useEffect(() => {
+    if (user === "super_admin") {
+      setDefaultValue({ userName: "SA00001", password: "123456" });
+    } else if (user === "manager") {
+      setDefaultValue({ userName: "A00001", password: "123456" });
+    } else if (user === "driver") {
+      setDefaultValue({ userName: "D00001", password: "123456" });
+    } else if (user === "helper") {
+      setDefaultValue({ userName: "H00001", password: "123456" });
+    } else {
+      setDefaultValue({});
+    }
+  }, [user]);
 
   return (
     <div className="relative ">
@@ -54,7 +70,7 @@ const LoginPage = () => {
                 <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
                   Login Dashboard
                 </h3>
-                <Form submitHandler={onSubmit}>
+                <Form submitHandler={onSubmit} defaultValues={defaultValue}>
                   <div>
                     <FormInput
                       name="userName"
@@ -96,13 +112,62 @@ const LoginPage = () => {
                       Login
                     </Button>
                   )}
-                  <div
-                    className="flex justify-end
-                  items-center mt-2"
-                  >
-                    <Link href={""} className="text-blue-600 underline">
-                      Forget password
+
+                  <Divider style={{ margin: "15px 0" }}>
+                    Go To
+                    <Link href="/" className="ml-1">
+                      Home
                     </Link>
+                  </Divider>
+
+                  <div className="flex text-sm align-center">
+                    <div className="flex mx-auto">
+                      <Button
+                        type="link"
+                        onClick={() => setUser("super_admin")}
+                        className="!p-0 "
+                        size="large"
+                      >
+                        Super Admin
+                      </Button>
+                      <Divider
+                        type="vertical"
+                        className="h-full"
+                        style={{ height: "100%", margin: "0 8px" }}
+                      />
+                      <Button
+                        type="link"
+                        onClick={() => setUser("manager")}
+                        className="!p-0 "
+                        size="large"
+                      >
+                        Manager
+                      </Button>
+                      <Divider
+                        type="vertical"
+                        style={{ height: "100%", margin: "0 8px" }}
+                      />
+                      <Button
+                        type="link"
+                        onClick={() => setUser("driver")}
+                        className="!p-0 "
+                        size="large"
+                      >
+                        Driver
+                      </Button>
+                      <Divider
+                        type="vertical"
+                        style={{ height: "100%", margin: "0 8px" }}
+                      />
+                      <Button
+                        type="link"
+                        onClick={() => setUser("helper")}
+                        className="!p-0 "
+                        size="large"
+                      >
+                        Helper
+                      </Button>
+                    </div>
                   </div>
                 </Form>
               </div>

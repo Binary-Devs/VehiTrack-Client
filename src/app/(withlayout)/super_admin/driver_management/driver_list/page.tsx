@@ -155,7 +155,6 @@ const AllDriverList = () => {
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -166,25 +165,6 @@ const AllDriverList = () => {
     setSearchTerm("");
   };
 
-  //   const deleteGeneralUserHandler = async (id: string) => {
-  //     console.log(id);
-  //     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
-  //       if (res.isConfirmed) {
-  //         try {
-  //           const res = await deleteGeneralUser(id).unwrap();
-  //           if (res.success == false) {
-  //             // message.success("Admin Successfully Deleted!");
-  //             // setOpen(false);
-  //             Error_model_hook(res?.message);
-  //           } else {
-  //             Success_model("Customer Successfully Deleted");
-  //           }
-  //         } catch (error: any) {
-  //           message.error(error.message);
-  //         }
-  //       }
-  //     });
-  //   };
   // if (isLoading) {
   //   return <Loader className="h-[50vh] flex items-end justify-center" />;
   // }

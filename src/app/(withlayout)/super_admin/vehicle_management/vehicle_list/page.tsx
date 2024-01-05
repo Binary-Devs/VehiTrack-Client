@@ -295,15 +295,6 @@ const VehicleListPage = () => {
         onTableChange={onTableChange}
         showPagination={true}
       />
-
-      {/* <UMModal
-        title="Remove admin"
-        isOpen={open}
-        closeModal={() => setOpen(false)}
-        handleOk={() => deleteGeneralUserHandler(adminId)}
-      >
-        <p className="my-5">Do you want to remove this admin?</p>
-      </UMModal> */}
     </div>
   );
 };

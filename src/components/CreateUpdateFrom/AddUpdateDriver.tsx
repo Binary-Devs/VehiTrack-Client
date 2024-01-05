@@ -33,7 +33,16 @@ const AddUpdateDriver = ({ id }: { id?: string }) => {
     values.imageUrl = image;
     try {
       const res = id
-        ? await updateDriver({ id, data: values }).unwrap()
+        ? await updateDriver({
+            id,
+            data: {
+              fullName: values.driver.fullName,
+              mobile: values.driver.mobile,
+              licenseNo: values.driver.licenseNo,
+              bloodGroup: values.driver.bloodGroup,
+              address: values.driver.address,
+            },
+          }).unwrap()
         : await createDriver(values).unwrap();
       if (res.id) {
         message.success(`Driver ${id ? "updated" : "added"} successfully`);
@@ -54,7 +63,8 @@ const AddUpdateDriver = ({ id }: { id?: string }) => {
         {id ? "Update Driver" : "Add Driver"}
       </h1>
       <div>
-        <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
+     <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
+
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -100,28 +110,32 @@ const AddUpdateDriver = ({ id }: { id?: string }) => {
                       padding: "0px",
                     }}
                   >
-                    <FormInput
-                      type="text"
-                      name="userName"
-                      size="large"
-                      label="User Name"
-                      required={true}
-                      placeholder="Please enter driver user name"
-                    />
+                    {!id && (
+                      <FormInput
+                        type="text"
+                        name="userName"
+                        size="large"
+                        label="User Name"
+                        required={true}
+                        placeholder="Please enter driver user name"
+                      />
+                    )}
                   </Col>
                   <Col
                     style={{
                       padding: "0px",
                     }}
                   >
-                    <FormInput
-                      type="password"
-                      name="password"
-                      size="large"
-                      label="Password"
-                      required={true}
-                      placeholder="Please enter driver password"
-                    />
+                    {!id && (
+                      <FormInput
+                        type="password"
+                        name="password"
+                        size="large"
+                        label="Password"
+                        required={true}
+                        placeholder="Please enter driver password"
+                      />
+                    )}
                   </Col>
                 </div>
               </Col>

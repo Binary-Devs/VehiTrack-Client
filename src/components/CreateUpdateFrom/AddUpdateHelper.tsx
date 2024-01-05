@@ -25,13 +25,23 @@ const AddUpdateHelper = ({ id }: { id?: any }) => {
   //Create
   const [createHelper, { isLoading: createLoad }] = useCreateHelperMutation();
 
+  console.log(id, data);
+
   const onSubmit = async (values: any) => {
     message.loading(id ? "Updating...." : "Adding....");
     console.log(values);
     values.imageUrl = image;
     try {
       const res = id
-        ? await updateHelper({ id, data: values }).unwrap()
+        ? await updateHelper({
+            id,
+            data: {
+              fullName: values.helper.fullName,
+              mobile: values.helper.mobile,
+              bloodGroup: values.helper.bloodGroup,
+              address: values.helper.address,
+            },
+          }).unwrap()
         : await createHelper(values).unwrap();
       if (res.id) {
         message.success(`Helper ${id ? "updated" : "added"} successfully`);
@@ -52,7 +62,9 @@ const AddUpdateHelper = ({ id }: { id?: any }) => {
         {id ? "Update Helper" : "Add Helper"}
       </h1>
       <div>
+
         <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
+
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -98,28 +110,32 @@ const AddUpdateHelper = ({ id }: { id?: any }) => {
                       padding: "0px",
                     }}
                   >
-                    <FormInput
-                      type="text"
-                      name="userName"
-                      size="large"
-                      label="User Name"
-                      required={true}
-                      placeholder="Please enter helper user name"
-                    />
+                    {!id && (
+                      <FormInput
+                        type="text"
+                        name="userName"
+                        size="large"
+                        label="User Name"
+                        required={true}
+                        placeholder="Please enter helper user name"
+                      />
+                    )}
                   </Col>
                   <Col
                     style={{
                       padding: "0px",
                     }}
                   >
-                    <FormInput
-                      type="password"
-                      name="password"
-                      size="large"
-                      label="Password"
-                      required={true}
-                      placeholder="Please enter helper password"
-                    />
+                    {!id && (
+                      <FormInput
+                        type="password"
+                        name="password"
+                        size="large"
+                        label="Password"
+                        required={true}
+                        placeholder="Please enter helper password"
+                      />
+                    )}
                   </Col>
                 </div>
               </Col>
