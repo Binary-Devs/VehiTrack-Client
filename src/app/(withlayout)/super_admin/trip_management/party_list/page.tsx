@@ -6,7 +6,7 @@ import UMTable from "@/components/ui/Table";
 import { useGetAllPartiesQuery } from "@/redux/api/party/partyApi";
 import { useDebounced } from "@/redux/hooks";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Button, Input, Tag } from "antd";
+import { Input, Tag } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
@@ -80,9 +80,9 @@ const PartyListPage = () => {
             <ModalComponent icon={<EditOutlined />}>
               <AddUpdateParty id={data} />
             </ModalComponent>
-            <Button onClick={() => console.log(data?.id)} type="primary" danger>
-              <DeleteOutlined />
-            </Button>
+            <ModalComponent icon={<DeleteOutlined />}>
+              <AddUpdateParty id={data} />
+            </ModalComponent>
           </div>
         );
       },
