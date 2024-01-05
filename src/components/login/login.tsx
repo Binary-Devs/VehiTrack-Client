@@ -104,110 +104,112 @@ const LoginPage = () => {
                 <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
                   Login Dashboard
                 </h3>
-                <Form
-                  submitHandler={onSubmit}
-                  defaultValues={defaultValue}
-                  // variants={formVariants}
-                >
-                  <div>
-                    <FormInput
-                      name="userName"
-                      type="text"
-                      size="large"
-                      label="User Id"
-                      required
-                    />
-                  </div>
-                  <div
-                    style={{
-                      margin: "15px 0",
-                    }}
+                <motion.div variants={formVariants}>
+                  <Form
+                    submitHandler={onSubmit}
+                    defaultValues={defaultValue}
+                    // variants={formVariants}
                   >
-                    <FormInput
-                      name="password"
-                      type="password"
-                      size="large"
-                      label="User Password"
-                      required
-                    />
-                  </div>
-                  {isLoading ? (
-                    <Button
-                      type="default"
-                      htmlType="submit"
-                      style={{ width: "100%" }}
-                      size="large"
-                    >
-                      <ButtonLoading />
-                    </Button>
-                  ) : (
-                    <Button
-                      type="primary"
-                      htmlType="submit"
-                      style={{ width: "100%" }}
-                      size="large"
-                    >
-                      Login
-                    </Button>
-                  )}
-
-                  <Divider style={{ margin: "15px 0" }}>
-                    Go To
-                    <Link href="/" className="ml-1">
-                      Home
-                    </Link>
-                  </Divider>
-
-                  <div className="flex text-sm align-center">
-                    <div className="flex mx-auto">
-                      <Button
-                        type="link"
-                        onClick={() => setUser("super_admin")}
-                        className="!p-0 "
+                    <div>
+                      <FormInput
+                        name="userName"
+                        type="text"
                         size="large"
-                      >
-                        Super Admin
-                      </Button>
-                      <Divider
-                        type="vertical"
-                        className="h-full"
-                        style={{ height: "100%", margin: "0 8px" }}
+                        label="User Id"
+                        required
                       />
-                      <Button
-                        type="link"
-                        onClick={() => setUser("manager")}
-                        className="!p-0 "
-                        size="large"
-                      >
-                        Manager
-                      </Button>
-                      <Divider
-                        type="vertical"
-                        style={{ height: "100%", margin: "0 8px" }}
-                      />
-                      <Button
-                        type="link"
-                        onClick={() => setUser("driver")}
-                        className="!p-0 "
-                        size="large"
-                      >
-                        Driver
-                      </Button>
-                      <Divider
-                        type="vertical"
-                        style={{ height: "100%", margin: "0 8px" }}
-                      />
-                      <Button
-                        type="link"
-                        onClick={() => setUser("helper")}
-                        className="!p-0 "
-                        size="large"
-                      >
-                        Helper
-                      </Button>
                     </div>
-                  </div>
-                </Form>
+                    <div
+                      style={{
+                        margin: "15px 0",
+                      }}
+                    >
+                      <FormInput
+                        name="password"
+                        type="password"
+                        size="large"
+                        label="User Password"
+                        required
+                      />
+                    </div>
+                    {isLoading ? (
+                      <Button
+                        type="default"
+                        htmlType="submit"
+                        style={{ width: "100%" }}
+                        size="large"
+                      >
+                        <ButtonLoading />
+                      </Button>
+                    ) : (
+                      <Button
+                        type="primary"
+                        htmlType="submit"
+                        style={{ width: "100%" }}
+                        size="large"
+                      >
+                        Login
+                      </Button>
+                    )}
+
+                    <Divider style={{ margin: "15px 0" }}>
+                      Go To
+                      <Link href="/" className="ml-1">
+                        Home
+                      </Link>
+                    </Divider>
+
+                    <div className="flex text-sm align-center">
+                      <div className="flex mx-auto">
+                        <Button
+                          type="link"
+                          onClick={() => setUser("super_admin")}
+                          className="!p-0 "
+                          size="large"
+                        >
+                          Super Admin
+                        </Button>
+                        <Divider
+                          type="vertical"
+                          className="h-full"
+                          style={{ height: "100%", margin: "0 8px" }}
+                        />
+                        <Button
+                          type="link"
+                          onClick={() => setUser("manager")}
+                          className="!p-0 "
+                          size="large"
+                        >
+                          Manager
+                        </Button>
+                        <Divider
+                          type="vertical"
+                          style={{ height: "100%", margin: "0 8px" }}
+                        />
+                        <Button
+                          type="link"
+                          onClick={() => setUser("driver")}
+                          className="!p-0 "
+                          size="large"
+                        >
+                          Driver
+                        </Button>
+                        <Divider
+                          type="vertical"
+                          style={{ height: "100%", margin: "0 8px" }}
+                        />
+                        <Button
+                          type="link"
+                          onClick={() => setUser("helper")}
+                          className="!p-0 "
+                          size="large"
+                        >
+                          Helper
+                        </Button>
+                      </div>
+                    </div>
+                  </Form>
+                </motion.div>
               </motion.div>
             </motion.div>
           </div>
