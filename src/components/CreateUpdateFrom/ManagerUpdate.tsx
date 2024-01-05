@@ -11,6 +11,7 @@ import { Button, Col, Row, message } from "antd";
 import LoadingSkeleton from "../ui/Loader/LoadingSkeleton";
 
 const ManagerUpdate = ({ id }: { id: string }) => {
+
   const [updateManager, { isLoading, error }] = useUpdateAdminMutation();
   const { data, isLoading: getAdminLoading } = useGetSingleAdminQuery(id);
   console.log(data);

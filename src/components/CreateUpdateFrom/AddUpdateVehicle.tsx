@@ -9,6 +9,7 @@ import {
   useUpdateVehicleMutation,
 } from "@/redux/api/vehicle/vehicleApi";
 import { Button, Col, Row, message } from "antd";
+import { useState } from "react";
 import Loader from "../Utlis/Loader";
 
 const AddUpdateVehicle = ({
@@ -24,7 +25,9 @@ const AddUpdateVehicle = ({
   drivers?: any;
   helpers?: any;
 }) => {
+  const [image, setimage] = useState("");
   //Get
+  console.log(image);
   const { data, isLoading: getLoad } = useGetSingleVehicleQuery(id ? id : "");
 
   //Update
@@ -34,7 +37,8 @@ const AddUpdateVehicle = ({
   const [createVehicle, { isLoading: createLoad }] = useCreateVehicleMutation();
 
   const onSubmit = async (values: any) => {
-    console.log(values);
+    values.imageUrl = image;
+
     message.loading(id ? "Updating...." : "Adding....");
     try {
       const res = id
@@ -48,7 +52,7 @@ const AddUpdateVehicle = ({
               driverId: values.driverId,
               helperId: values.helperId,
               isActive: values.isActive,
-              imageUrl: "",
+              imageUrl: image,
             },
           }).unwrap()
         : await createVehicle(values).unwrap();
@@ -99,7 +103,7 @@ const AddUpdateVehicle = ({
                 //   marginBottom: "10px",
                 // }}
               >
-                <UploadImage />
+                <UploadImage setImageStatus={setimage} name="imageUrl" />
               </Col>
 
               <Col

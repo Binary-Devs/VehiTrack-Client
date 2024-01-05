@@ -12,8 +12,10 @@ import { Button, Col, Row, message } from "antd";
 import FormSelectField from "../Forms/FormSelectField";
 import Loader from "../Utlis/Loader";
 import UploadImage from "../ui/uploadImage";
+import { useState } from "react";
 
 const AddUpdateHelper = ({ id }: { id?: any }) => {
+  const [image, setimage] = useState("");
   //Get
   const { data, isLoading: getLoad } = useGetSingleHelperQuery(id ? id : "");
 
@@ -28,6 +30,7 @@ const AddUpdateHelper = ({ id }: { id?: any }) => {
   const onSubmit = async (values: any) => {
     message.loading(id ? "Updating...." : "Adding....");
     console.log(values);
+    values.imageUrl = image;
     try {
       const res = id
         ? await updateHelper({
@@ -59,7 +62,9 @@ const AddUpdateHelper = ({ id }: { id?: any }) => {
         {id ? "Update Helper" : "Add Helper"}
       </h1>
       <div>
-        <Form submitHandler={onSubmit} defaultValues={{ helper: data }}>
+
+        <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
+
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -86,7 +91,7 @@ const AddUpdateHelper = ({ id }: { id?: any }) => {
                 //   marginBottom: "10px",
                 // }}
               >
-                <UploadImage />
+                <UploadImage setImageStatus={setimage} name="imageUrl" />
               </Col>
 
               <Col

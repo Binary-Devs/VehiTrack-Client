@@ -477,7 +477,18 @@ export const sidebarItem = (role: string) => {
     },
   ];
 
-  const adminSidebarItems: MenuProps["items"] = [...commonAdminSidebarItems];
+  const adminSidebarItems: MenuProps["items"] = [
+    ...commonAdminSidebarItems,
+    {
+      label: (
+        <Link className="text-sm " href={`/profile`}>
+          Profile
+        </Link>
+      ),
+      icon: <UserOutlined />,
+      key: `/profile`,
+    },
+  ];
 
   const driverSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
