@@ -1,5 +1,5 @@
 "use client";
-import AddPartyList from "@/components/CreateUpdateFrom/AddPartyList";
+import AddUpdateParty from "@/components/CreateUpdateFrom/AddUpdateParty";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
@@ -8,8 +8,8 @@ import { useDebounced } from "@/redux/hooks";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Button, Input, Tag } from "antd";
 import dayjs from "dayjs";
-import Link from "next/link";
 import { useState } from "react";
+import { IoMdAdd } from "react-icons/io";
 
 const PartyListPage = () => {
   const query: Record<string, any> = {};
@@ -73,33 +73,23 @@ const PartyListPage = () => {
     },
     {
       title: "Action",
+      dataIndex: "id",
       render: function (data: any) {
         return (
-          <>
-            <Link
-              href={`/super_admin/trip_management/party_list/edit/${data?.id}`}
-            >
-              <Button
-                style={{
-                  margin: "0px 5px",
-                }}
-                onClick={() => console.log(data)}
-                type="primary"
-              >
-                <EditOutlined />
-              </Button>
-            </Link>
+          <div className="flex gap-2">
+            <ModalComponent icon={<EditOutlined />}>
+              <AddUpdateParty id={data} />
+            </ModalComponent>
             <Button onClick={() => console.log(data?.id)} type="primary" danger>
               <DeleteOutlined />
             </Button>
-          </>
+          </div>
         );
       },
     },
   ];
 
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
@@ -131,8 +121,8 @@ const PartyListPage = () => {
             maxWidth: "200px",
           }}
         />
-        <ModalComponent buttonText="Add Party">
-          <AddPartyList />
+        <ModalComponent buttonText="Add Party" icon={<IoMdAdd />}>
+          <AddUpdateParty />
         </ModalComponent>
       </ActionBar>
 

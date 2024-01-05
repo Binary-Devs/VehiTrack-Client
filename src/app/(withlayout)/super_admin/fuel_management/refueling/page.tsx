@@ -2,16 +2,20 @@
 import AddRefueling from "@/components/CreateUpdateFrom/AddRefueling";
 import Loader from "@/components/Utlis/Loader";
 import ActionBar from "@/components/ui/ActionBar";
+import DeleteModal from "@/components/ui/DeleteModal";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
-import { useGetAllFuelQuery } from "@/redux/api/fuel/fuelApi";
+import {
+  useDeleteFuelMutation,
+  useGetAllFuelQuery,
+} from "@/redux/api/fuel/fuelApi";
 import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
   EditOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { Button, Input } from "antd";
+import { Button, Input, message } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 
@@ -23,6 +27,8 @@ const RefuelingPage = () => {
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [open, setOpen] = useState(false);
+  const [id, setId] = useState<string>("");
 
   query["limit"] = size;
   query["page"] = page;
@@ -37,6 +43,23 @@ const RefuelingPage = () => {
   if (!!debouncedTerm) {
     query["searchTerm"] = debouncedTerm;
   }
+  const [deleteFuel] = useDeleteFuelMutation();
+  //delete
+  const deleteHandler = async (id: string) => {
+    message.loading("Deleting.....");
+    try {
+      const res = await deleteFuel(id);
+      if (!!res) {
+        message.success("delete successfully");
+        setOpen(false);
+      } else {
+        message.error("delete failed");
+      }
+    } catch (err: any) {
+      //   console.error(err.message);
+      message.error(err.message);
+    }
+  };
 
   const { data, isLoading } = useGetAllFuelQuery({ ...query });
   if (isLoading) {
@@ -126,9 +149,20 @@ const RefuelingPage = () => {
                 <AddRefueling id={data?.id} />
               </ModalComponent>
             </div>
-            <Button onClick={() => console.log(data?.id)} type="primary" danger>
-              <DeleteOutlined />
-            </Button>
+            <div>
+              <Button
+                type="primary"
+                onClick={() => {
+                  //  console.log(data?.id);
+                  setOpen(true);
+                  setId(data?.id);
+                }}
+                danger
+                style={{ marginLeft: "3px" }}
+              >
+                <DeleteOutlined />
+              </Button>
+            </div>
           </div>
         );
       },
@@ -192,6 +226,14 @@ const RefuelingPage = () => {
         onTableChange={onTableChange}
         showPagination={true}
       />
+      <DeleteModal
+        title="Delete Refueling"
+        isOpen={open}
+        closeModal={() => setOpen(false)}
+        handleOk={() => deleteHandler(id)}
+      >
+        <p className="my-5">Do you want to delete this?</p>
+      </DeleteModal>
     </div>
   );
 };

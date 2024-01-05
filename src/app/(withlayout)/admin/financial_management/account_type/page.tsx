@@ -19,7 +19,6 @@ const AccountTypePage = () => {
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [open, setOpen] = useState(false);
 
   query["limit"] = size;
   query["page"] = page - 1;

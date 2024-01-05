@@ -3,16 +3,20 @@
 import AddEquipmentIn from "@/components/CreateUpdateFrom/AddEquipmentIn";
 import Loader from "@/components/Utlis/Loader";
 import ActionBar from "@/components/ui/ActionBar";
+import DeleteModal from "@/components/ui/DeleteModal";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
-import { useGetAllEquipmentInQuery } from "@/redux/api/equipmentIn/equipmentInApi";
+import {
+  useDeleteEquipmentInMutation,
+  useGetAllEquipmentInQuery,
+} from "@/redux/api/equipmentIn/equipmentInApi";
 import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
   EditOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { Button, Input } from "antd";
+import { Button, Input, message } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 
@@ -24,6 +28,8 @@ const EquipmentInList = () => {
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [open, setOpen] = useState(false);
+  const [id, setId] = useState<string>("");
 
   query["limit"] = size;
   query["page"] = page - 1;
@@ -38,6 +44,24 @@ const EquipmentInList = () => {
   if (!!debouncedTerm) {
     query["searchTerm"] = debouncedTerm;
   }
+
+  const [deleteEquipmentIn] = useDeleteEquipmentInMutation();
+  //delete
+  const deleteHandler = async (id: string) => {
+    message.loading("Deleting.....");
+    try {
+      const res = await deleteEquipmentIn(id);
+      if (!!res) {
+        message.success("delete successfully");
+        setOpen(false);
+      } else {
+        message.error("delete failed");
+      }
+    } catch (err: any) {
+      //   console.error(err.message);
+      message.error(err.message);
+    }
+  };
 
   const { data, isLoading } = useGetAllEquipmentInQuery({ ...query });
   if (isLoading) {
@@ -61,6 +85,8 @@ const EquipmentInList = () => {
       title: "Date",
       dataIndex: "date",
       key: "date",
+      render: (data: string) => dayjs(data).format("DD/MM/YYYY"),
+      sorter: true,
     },
     {
       title: "equipment",
@@ -109,9 +135,20 @@ const EquipmentInList = () => {
                 <AddEquipmentIn id={data?.id} />
               </ModalComponent>
             </div>
-            <Button onClick={() => console.log(data?.id)} type="primary" danger>
-              <DeleteOutlined />
-            </Button>
+            <div>
+              <Button
+                type="primary"
+                onClick={() => {
+                  //  console.log(data?.id);
+                  setOpen(true);
+                  setId(data?.id);
+                }}
+                danger
+                style={{ marginLeft: "3px" }}
+              >
+                <DeleteOutlined />
+              </Button>
+            </div>
           </div>
         );
       },
@@ -174,6 +211,14 @@ const EquipmentInList = () => {
         onTableChange={onTableChange}
         showPagination={true}
       />
+      <DeleteModal
+        title="Delete EquipmentIn"
+        isOpen={open}
+        closeModal={() => setOpen(false)}
+        handleOk={() => deleteHandler(id)}
+      >
+        <p className="my-5">Do you want to delete this?</p>
+      </DeleteModal>
     </div>
   );
 };
