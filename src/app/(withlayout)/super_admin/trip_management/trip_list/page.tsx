@@ -5,12 +5,7 @@ import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { useGetAllTripQuery } from "@/redux/api/trip/tripApi";
 import { useDebounced } from "@/redux/hooks";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  EyeOutlined,
-  MoneyCollectOutlined,
-} from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
 import Link from "next/link";
@@ -92,11 +87,7 @@ const TripListPage = () => {
           <div className="flex items-center gap-1">
             <Link
               href={`/super_admin/manage-fuel/refueling/details/${data?.id}`}
-            >
-              <Button onClick={() => console.log(data)} type="primary">
-                <EyeOutlined />
-              </Button>
-            </Link>
+            ></Link>
             <Link href={`/super_admin/manage-fuel/refueling/edit/${data?.id}`}>
               <Button onClick={() => console.log(data)} type="primary">
                 <EditOutlined />
@@ -106,9 +97,9 @@ const TripListPage = () => {
               <DeleteOutlined />
             </Button>
 
-            <ModalComponent icon={<MoneyCollectOutlined />}>
+            {/* <ModalComponent icon={<MoneyCollectOutlined />}>
               <AddTrip />
-            </ModalComponent>
+            </ModalComponent> */}
           </div>
         );
       },
