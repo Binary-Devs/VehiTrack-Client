@@ -3,12 +3,11 @@ import ActionBar from "@/components/ui/ActionBar";
 
 import { useDebounced } from "@/redux/hooks";
 import {
-  CarOutlined,
   DeleteOutlined,
   EditOutlined,
-  ReloadOutlined,
+  ReloadOutlined
 } from "@ant-design/icons";
-import { Avatar, Button, Input } from "antd";
+import { Button, Input } from "antd";
 import { useState } from "react";
 
 import dayjs from "dayjs";
@@ -25,6 +24,7 @@ import {
   useGetAllVehicleQuery,
   useUpdateVehicleMutation,
 } from "@/redux/api/vehicle/vehicleApi";
+import Image from "next/image";
 import { IoMdAdd } from "react-icons/io";
 
 const VehicleListPage = () => {
@@ -94,16 +94,17 @@ const VehicleListPage = () => {
       // fixed: "left",
       // width: 80,
       render: function (data: any) {
-        const fullName = `${data?.image} `;
+       
+        const image = `${data?.imageUrl || "https://res.cloudinary.com/dnzlgpcc3/image/upload/v1704419785/oiav6crzfltkswdrrrli.png"} `;
         return (
-          // <Image
-          //   src={fullName}
-          //   width={100}
-          //   height={100}
-          //   alt=""
-          //   style={{ width: "70px", height: "50px" }}
-          // />
-          <Avatar shape="square" size={64} icon={<CarOutlined />} />
+          <Image
+            src={image}
+            width={100}
+            height={100}
+            alt=""
+            style={{ width: "70px", height: "50px" }}
+          />
+          // <Avatar shape="square" size={64} icon={<CarOutlined />} />
         );
       },
     },

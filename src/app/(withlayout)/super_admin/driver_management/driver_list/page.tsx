@@ -19,6 +19,7 @@ import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
 import { useGetAllDriverQuery } from "@/redux/api/driver/driverApi";
 import { IoMdAdd } from "react-icons/io";
+import Image from "next/image";
 
 const AllDriverList = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
@@ -49,7 +50,17 @@ const AllDriverList = () => {
       title: "",
 
       render: function (data: any) {
-        return <Avatar size={64} icon={<UserOutlined />} />;
+        const image = `${data?.imageUrl || "https://res.cloudinary.com/dnzlgpcc3/image/upload/v1704419785/oiav6crzfltkswdrrrli.png"} `;
+        return (
+          <Image
+            src={image}
+            width={100}
+            height={100}
+            alt=""
+            style={{ width: "70px", height: "50px" }}
+          />
+          // <Avatar shape="square" size={64} icon={<CarOutlined />} />
+        );
       },
     },
     {

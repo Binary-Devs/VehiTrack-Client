@@ -5,12 +5,9 @@ import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
   EditOutlined,
-  EyeOutlined,
-  ReloadOutlined,
-  UserOutlined,
+  ReloadOutlined
 } from "@ant-design/icons";
-import { Avatar, Button, Input } from "antd";
-import Link from "next/link";
+import { Button, Input } from "antd";
 import { useState } from "react";
 
 import dayjs from "dayjs";
@@ -20,6 +17,7 @@ import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
 import { useGetAllHelperQuery } from "@/redux/api/helper/helperApi";
+import Image from "next/image";
 import { IoMdAdd } from "react-icons/io";
 
 const HelperListPage = () => {
@@ -88,7 +86,17 @@ const HelperListPage = () => {
       title: "",
 
       render: function (data: any) {
-        return <Avatar size={64} icon={<UserOutlined />} />;
+        const image = `${data?.imageUrl || "https://res.cloudinary.com/dnzlgpcc3/image/upload/v1704419785/oiav6crzfltkswdrrrli.png"} `;
+        return (
+          <Image
+            src={image}
+            width={100}
+            height={100}
+            alt=""
+            style={{ width: "70px", height: "50px" }}
+          />
+          // <Avatar shape="square" size={64} icon={<CarOutlined />} />
+        );
       },
     },
     {
