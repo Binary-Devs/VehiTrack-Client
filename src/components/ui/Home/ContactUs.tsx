@@ -1,4 +1,41 @@
+import { Error_model_hook, Success_model } from "@/utils/modalHook";
+import emailjs from "@emailjs/browser";
+import { useState } from "react";
 export default function ContactUs() {
+  const [user, setUser] = useState({
+    userFastName: "",
+    email: "",
+    message: "",
+    userLastName: "",
+  });
+
+  const sendEmail = async (e: any) => {
+    e.preventDefault();
+
+    const templateParams = {
+      from_name: (user.userFastName + user.userLastName) as string,
+      from_email: user.email as string,
+      message: user.message as string,
+    };
+
+    emailjs
+      .send(
+        "service_1n66zp3",
+        "template_fcbqjpe",
+        templateParams,
+        "SB0unnfYXIhE2N7rr"
+      )
+      .then(
+        (result) => {
+          // console.log(result.text);
+          Success_model("Successfully Send email");
+        },
+        (error) => {
+          // console.log(error.text);
+          Error_model_hook("Send email failed");
+        }
+      );
+  };
   return (
     <section className="bg-white py-24">
       <div className="container px-6 py-12 mx-auto shadow-xl">
@@ -145,13 +182,16 @@ export default function ContactUs() {
           </div>
 
           <div className="p-4 py-6 rounded-lg bg-gray-50 md:p-8">
-            <form>
+            <form onSubmit={sendEmail}>
               <div className="-mx-2 md:items-center md:flex">
                 <div className="flex-1 px-2">
                   <label className="block mb-2 text-sm text-gray-600">
                     First Name
                   </label>
                   <input
+                    onChange={(e) =>
+                      setUser({ ...user, userFastName: e.target.value })
+                    }
                     type="text"
                     placeholder="John"
                     className="block w-full px-5 py-2.5 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:ring-blue-400 focus:outline-none"
@@ -164,6 +204,9 @@ export default function ContactUs() {
                   </label>
                   <input
                     type="text"
+                    onChange={(e) =>
+                      setUser({ ...user, userLastName: e.target.value })
+                    }
                     placeholder="Doe"
                     className="block w-full px-5 py-2.5 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:ring-blue-400 focus:outline-none"
                   />
@@ -176,6 +219,7 @@ export default function ContactUs() {
                 </label>
                 <input
                   type="email"
+                  onChange={(e) => setUser({ ...user, email: e.target.value })}
                   placeholder="johndoe@example.com"
                   className="block w-full px-5 py-2.5 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:ring-blue-400 focus:outline-none"
                 />
@@ -189,10 +233,16 @@ export default function ContactUs() {
                   className="block w-full px-5 py-2.5 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:ring-blue-400 focus:outline-none"
                   rows={3}
                   placeholder="Message"
+                  onChange={(e) =>
+                    setUser({ ...user, message: e.target.value })
+                  }
                 ></textarea>
               </div>
 
-              <button className="w-full px-6 py-3 mt-4 text-sm font-medium tracking-wide text-white uppercase transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+              <button
+                type="submit"
+                className="w-full px-6 py-3 mt-4 text-sm font-medium tracking-wide text-white uppercase transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+              >
                 Send message
               </button>
             </form>
