@@ -1,6 +1,6 @@
 "use client";
 
-import AddPartyList from "@/components/CreateUpdateFrom/AddPartyList";
+import AddUpdateParty from "@/components/CreateUpdateFrom/AddUpdateParty";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
@@ -134,7 +134,7 @@ const TripExpenseHeadPage = () => {
           }}
         />
         <ModalComponent buttonText="Add Party">
-          <AddPartyList />
+          <AddUpdateParty />
         </ModalComponent>
       </ActionBar>
 

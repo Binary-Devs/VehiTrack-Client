@@ -1,5 +1,6 @@
 "use client";
-import AddPartyList from "@/components/CreateUpdateFrom/AddPartyList";
+
+import AddUpdateParty from "@/components/CreateUpdateFrom/AddUpdateParty";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
@@ -10,6 +11,7 @@ import { Button, Input, Tag } from "antd";
 import dayjs from "dayjs";
 import Link from "next/link";
 import { useState } from "react";
+
 
 const PartyListPage = () => {
   const query: Record<string, any> = {};
@@ -132,7 +134,7 @@ const PartyListPage = () => {
           }}
         />
         <ModalComponent buttonText="Add Party">
-          <AddPartyList />
+          <AddUpdateParty />
         </ModalComponent>
       </ActionBar>
 
