@@ -1,6 +1,4 @@
 // import { IMeta } from "@/types";
-import { getBaseUrl } from "@/helpers/config/envConfig";
-import { tagTypes } from "@/redux/teg-types";
 import io from "socket.io-client";
 import { baseApi } from "../baseApi";
 
@@ -20,7 +18,7 @@ export const conversationApi = baseApi.injectEndpoints({
         { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
       ) {
         // create socket
-        const socket = io("http://localhost:5000", {
+        const socket = io(`${process.env.NEXT_PUBLIC_API_SOCKET_URL}`, {
           reconnectionDelay: 1000,
           reconnection: true,
           reconnectionAttempts: 10,
@@ -39,7 +37,7 @@ export const conversationApi = baseApi.injectEndpoints({
           socket.close();
         }
       },
-      providesTags: [tagTypes.conversations],
+      // providesTags: [tagTypes.conversations],
     }),
 
     // get single
@@ -48,7 +46,7 @@ export const conversationApi = baseApi.injectEndpoints({
         url: `${CONVERSATION_URL}/${id}`,
         method: "GET",
       }),
-      providesTags: [tagTypes.conversation],
+      // providesTags: [tagTypes.conversation],
     }),
 
     // create
@@ -58,7 +56,30 @@ export const conversationApi = baseApi.injectEndpoints({
         method: "POST",
         data: data,
       }),
-      invalidatesTags: [tagTypes.conversations, tagTypes.messages],
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        // optimistic cache update start
+        const patchResult = dispatch(
+          baseApi.util.updateQueryData(
+            //@ts-ignore
+            "getAllConversation",
+            arg.senderId,
+            (draft) => {
+              console.log(JSON.stringify(draft));
+              // const draftConversation = draft.data.find((c) => c.id == arg.id);
+              // draftConversation.message = arg.data.message;
+              // draftConversation.timestamp = arg.data.timestamp;
+            }
+          )
+        );
+        // optimistic cache update end
+        try {
+          const conversation = await queryFulfilled;
+          console.log(conversation);
+        } catch (error) {
+          patchResult.undo();
+        }
+      },
+      // invalidatesTags: [tagTypes.conversations, tagTypes.messages],
     }),
 
     // update
@@ -68,7 +89,32 @@ export const conversationApi = baseApi.injectEndpoints({
         method: "PATCH",
         data: data?.data,
       }),
-      invalidatesTags: [tagTypes.conversations],
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        console.log(arg);
+        // optimistic cache update start
+        const patchResult = dispatch(
+          baseApi.util.updateQueryData(
+            //@ts-ignore
+            "getAllConversation",
+            arg.data.senderId,
+            (draft) => {
+              console.log("clicked");
+              console.log("clicked",JSON.stringify(draft));
+              // const draftConversation = draft.data.find((c) => c.id == arg.id);
+              // draftConversation.message = arg.data.message;
+              // draftConversation.timestamp = arg.data.timestamp;
+            }
+          )
+        );
+        // optimistic cache update end
+        try {
+          const conversation = await queryFulfilled;
+          console.log(conversation);
+        } catch (error) {
+          patchResult.undo();
+        }
+      },
+      // invalidatesTags: [tagTypes.conversations],
     }),
   }),
 });
