@@ -10,6 +10,7 @@ import { EditOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
+import { IoMdAdd } from "react-icons/io";
 
 const AccountTypePage = () => {
   const query: Record<string, any> = {};
@@ -117,7 +118,7 @@ const AccountTypePage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Account Type">
+          <ModalComponent buttonText="Add Account Type" icon={<IoMdAdd />}>
             <AddAccountType />
           </ModalComponent>
         </div>

@@ -11,6 +11,7 @@ import { EditOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
+import { IoMdAdd } from "react-icons/io";
 
 const EquipmentList = () => {
   const query: Record<string, any> = {};
@@ -126,7 +127,7 @@ const EquipmentList = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Equipment">
+          <ModalComponent buttonText="Add Equipment" icon={<IoMdAdd />}>
             <AddEquipment />
           </ModalComponent>
         </div>

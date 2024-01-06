@@ -18,6 +18,7 @@ import {
 import { Button, Input, message } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
+import { IoMdAdd } from "react-icons/io";
 
 const RegistrationPage = () => {
   const query: Record<string, any> = {};
@@ -186,7 +187,7 @@ const RegistrationPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Registration">
+          <ModalComponent buttonText="Add Registration" icon={<IoMdAdd />}>
             <AddRegistration />
           </ModalComponent>
         </div>
