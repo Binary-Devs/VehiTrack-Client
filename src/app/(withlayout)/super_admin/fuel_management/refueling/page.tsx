@@ -18,6 +18,7 @@ import {
 import { Button, Input, message } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
+import { IoMdAdd } from "react-icons/io";
 
 const RefuelingPage = () => {
   const query: Record<string, any> = {};
@@ -209,7 +210,7 @@ const RefuelingPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Refueling">
+          <ModalComponent buttonText="Add Refueling" icon={<IoMdAdd />}>
             <AddRefueling />
           </ModalComponent>
         </div>

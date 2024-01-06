@@ -10,6 +10,7 @@ import { EditOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
+import { IoMdAdd } from "react-icons/io";
 
 const PumpStationPage = () => {
   const query: Record<string, any> = {};
@@ -133,7 +134,7 @@ const PumpStationPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Pump Station">
+          <ModalComponent buttonText="Add Pump Station" icon={<IoMdAdd />}>
             <AddPumpStation />
           </ModalComponent>
         </div>

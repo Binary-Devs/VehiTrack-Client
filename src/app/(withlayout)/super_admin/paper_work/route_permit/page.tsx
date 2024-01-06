@@ -18,6 +18,7 @@ import {
 import { Button, Input, message } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
+import { IoMdAdd } from "react-icons/io";
 
 const RoutePermitPage = () => {
   const query: Record<string, any> = {};
@@ -187,7 +188,7 @@ const RoutePermitPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Route permit">
+          <ModalComponent buttonText="Add Route permit" icon={<IoMdAdd />}>
             <AddRoutePermit />
           </ModalComponent>
         </div>

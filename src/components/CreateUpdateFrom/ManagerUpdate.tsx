@@ -4,8 +4,8 @@ import FormInput from "@/components/Forms/FormInput";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import ButtonLoading from "@/components/ui/Loader/ButtonLoading";
 import {
-    useGetSingleAdminQuery,
-    useUpdateAdminMutation,
+  useGetSingleAdminQuery,
+  useUpdateAdminMutation,
 } from "@/redux/api/admin/adminApi";
 import { Button, Col, Row, message } from "antd";
 import LoadingSkeleton from "../ui/Loader/LoadingSkeleton";
@@ -48,7 +48,10 @@ const ManagerUpdate = ({ id }: { id: string }) => {
           </h1>
 
           <div>
-            <Form submitHandler={onSubmit} defaultValues={data}>
+            <Form
+              submitHandler={onSubmit}
+              defaultValues={id ? { ...data } : {}}
+            >
               <div
                 style={{
                   border: "1px solid #d9d9d9",

@@ -1,6 +1,10 @@
 "use client";
 
+<<<<<<< HEAD
 import AddUpdateTripExpenseHead from "@/components/CreateUpdateFrom/AddUpdateTripExpenseHead";
+=======
+import AddUpdateParty from "@/components/CreateUpdateFrom/AddUpdateParty";
+>>>>>>> fa58f2919deb94b276aaeb882f44c761f859e18c
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
@@ -114,8 +118,13 @@ const TripExpenseHeadPage = () => {
             maxWidth: "200px",
           }}
         />
+<<<<<<< HEAD
         <ModalComponent buttonText="Add Expense Head" icon={<IoMdAdd />}>
           <AddUpdateTripExpenseHead />
+=======
+        <ModalComponent buttonText="Add Party">
+          <AddUpdateParty />
+>>>>>>> fa58f2919deb94b276aaeb882f44c761f859e18c
         </ModalComponent>
       </ActionBar>
 

@@ -49,7 +49,7 @@ const AddPumpStation = ({ id }: { id?: string }) => {
         {id ? "Update Fuel Station" : "Add Fuel Station"}
       </h1>
       {/*  */}
-      <Form submitHandler={onSubmit} defaultValues={data}>
+      <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
         <div
           style={{
             border: "1px solid #d9d9d9",

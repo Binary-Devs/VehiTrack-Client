@@ -18,6 +18,7 @@ import {
 import { Button, Input, message } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
+import { IoMdAdd } from "react-icons/io";
 
 const TaxTokenPage = () => {
   const query: Record<string, any> = {};
@@ -187,7 +188,7 @@ const TaxTokenPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Tax/Token">
+          <ModalComponent buttonText="Add Tax/Token" icon={<IoMdAdd />}>
             <AddTaxToken />
           </ModalComponent>
         </div>

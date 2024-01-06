@@ -11,6 +11,7 @@ import { EditOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
+import { IoMdAdd } from "react-icons/io";
 
 const UnitOfMeasurement = () => {
   const query: Record<string, any> = {};
@@ -127,7 +128,7 @@ const UnitOfMeasurement = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add UOM">
+          <ModalComponent buttonText="Add Unit" icon={<IoMdAdd />}>
             <AddUnitOfMeasurement />
           </ModalComponent>
         </div>
