@@ -1,33 +1,25 @@
 "use client";
 import Loader from "@/components/Utlis/Loader";
 import { useGetProfileQuery } from "@/redux/api/profile/profileApi";
-import { Col, Divider, Row, Statistic } from "antd";
+import { Col, Divider, Flex, Row, Statistic, Typography } from "antd";
+import dayjs from "dayjs";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+
 const ProfilePage = () => {
   const { data, isLoading, error } = useGetProfileQuery(undefined);
-  const [allUserData, setAllUserData] = useState({});
 
-  useEffect(() => {
-    if (data?.role) {
-      setAllUserData({ ...data, userInfo: data[data?.role] });
-    }
-
-    return () => {};
-  }, [data]);
-
-  console.log(allUserData);
+  const { Title } = Typography;
 
   if (isLoading) {
     return <Loader />;
   }
-  console.log(allUserData);
+
   return (
     <section className="">
-      <div className="h-[80vh]">
-        <Row gutter={16}>
-          <Col md={12}>
-            <div className="w-full max-w-3xl md:max-w-sm lg:max-w-lg rounded-3xl bg-white shadow-xl p-4 mx-auto">
+      <div className="min-h-[80vh]">
+        <Row gutter={[30, 24]} className="flex justify-center">
+          <Col md={10} className="w-full">
+            <div className="w-full rounded-3xl bg-white shadow-xl p-4 mx-auto">
               <Image
                 className="object-cover object-center w-[250px] h-[250px] mx-auto"
                 src={"https://joesch.moe/api/v1/random"}
@@ -85,50 +77,103 @@ const ProfilePage = () => {
             </div>
           </Col>
 
-          <Col md={12}>
-            <div className="">
-              <Row
-                gutter={[20, 20]}
-                className="w-full rounded-3xl bg-white shadow-xl p-6 px-10"
-              >
-                <Col span={12} className="">
-                  <Statistic
-                    title="vehicles"
-                    className="mx-auto"
-                    valueStyle={{ color: "#1890ff" }}
-                    value={data[data?.role]?.vehicles?.length}
-                    style={{ color: "#1890ff" }}
-                  />
-                </Col>
-                <Col span={12}>
-                  <Statistic
-                    title="Completed Trip"
-                    valueStyle={{ color: "#1890ff" }}
-                    value={
-                      data[data?.role]?.trips.filter(
-                        (trips: any) => trips.status === "Completed"
-                      ).length
-                    }
-                    suffix={` / ${data[data?.role]?.trips?.length}`}
-                  />
-                </Col>
-                <Col span={12}>
-                  <Statistic
-                    title="Maintenances"
-                    valueStyle={{ color: "#1890ff" }}
-                    value={data[data?.role]?.maintenances?.length}
-                  />
-                </Col>
-                <Col span={12}>
-                  <Statistic
-                    title="Completed Trip"
-                    valueStyle={{ color: "#1890ff" }}
-                    value={data[data?.role]?.accidentHistories?.length}
-                  />
-                </Col>
-              </Row>
-            </div>
-          </Col>
+          {data.role !== "super_admin" && data.role !== "admin" && (
+            <Col md={14} className={`w-full`}>
+              <Flex gap={30} vertical>
+                <div className="">
+                  <Row
+                    gutter={[20, 20]}
+                    className="w-full rounded-3xl bg-white shadow-xl p-6 md:px-10 mx-auto !m-0"
+                  >
+                    <Col span={12} className="">
+                      <Statistic
+                        title="vehicles"
+                        className="mx-auto"
+                        valueStyle={{ color: "#1890ff" }}
+                        value={data[data?.role]?.vehicles?.length}
+                      />
+                    </Col>
+                    <Col span={12}>
+                      <Statistic
+                        title="Completed Trip"
+                        valueStyle={{ color: "#1890ff" }}
+                        value={
+                          data[data?.role]?.trips.filter(
+                            (trips: any) => trips.status === "Completed"
+                          ).length
+                        }
+                        suffix={` / ${data[data?.role]?.trips?.length}`}
+                      />
+                    </Col>
+                    <Col span={12}>
+                      <Statistic
+                        title="Maintenances"
+                        valueStyle={{ color: "#1890ff" }}
+                        value={data[data?.role]?.maintenances?.length}
+                      />
+                    </Col>
+                    <Col span={12}>
+                      <Statistic
+                        title="Accident History"
+                        valueStyle={{ color: "#1890ff" }}
+                        value={data[data?.role]?.accidentHistories?.length}
+                      />
+                    </Col>
+                  </Row>
+                </div>
+                <div className="w-full rounded-3xl bg-white shadow-xl p-6  md:px-10 overflow-auto h-96">
+                  <div className="">
+                    <Title level={5} className="text-center">
+                      Trip History
+                    </Title>
+                  </div>
+                  <Divider />
+                  <div className="overflow-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-blue-200 scrollbar-track-rounded-full scrollbar-thumb-rounded-full">
+                    <ul className="my-1 flex flex-col gap-2">
+                      {data[data?.role]?.trips.map(
+                        (trip: any, index: number) => (
+                          <li
+                            key={index}
+                            className="flex flex-col md:flex-row ring-1 md:ring-0 justify-around m-1 rounded-2xl md:rounded-full hover:bg-sky-100 p-4 md:p-1"
+                          >
+                            <p className="text-lg font-medium">
+                              Trip ID : {trip?.tripNo}
+                            </p>
+                            <Divider type="vertical" />
+                            <p className="text-lg font-medium">
+                              Date :{" "}
+                              {dayjs(trip?.startDate).format("MMM D, YYYY")}
+                            </p>
+                            <Divider type="vertical" />
+
+                            <p className="text-lg font-medium ">
+                              From : {trip?.from} ➡ to : {trip.to}
+                            </p>
+                          </li>
+                        )
+                      )}
+                      <li className="flex flex-col md:flex-row ring-1 md:ring-0 justify-around m-1 rounded-2xl md:rounded-full hover:bg-sky-100 p-4 md:p-1">
+                        <p className="text-lg font-medium">Trip ID :</p>
+                        <Divider type="vertical" />
+                        <p className="text-lg font-medium">Date :</p>
+                        <Divider type="vertical" />
+
+                        <p className="text-lg font-medium ">From :</p>
+                      </li>
+                      <li className="flex flex-col md:flex-row ring-1 md:ring-0 justify-around m-1 rounded-2xl md:rounded-full hover:bg-sky-100 p-4 md:p-1">
+                        <p className="text-lg font-medium">Trip ID :</p>
+                        <Divider type="vertical" />
+                        <p className="text-lg font-medium">Date :</p>
+                        <Divider type="vertical" />
+
+                        <p className="text-lg font-medium ">From :</p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </Flex>
+            </Col>
+          )}
         </Row>
       </div>
     </section>

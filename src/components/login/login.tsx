@@ -42,7 +42,7 @@ const LoginPage = () => {
         message.success("User logged in successfully");
         storeUserInfo({ accessToken: res?.accessToken });
       } else {
-        message.error("Not a valid user");
+        message.error(res?.message);
       }
     } catch (error: any) {
       message.error(error?.message);
@@ -180,7 +180,7 @@ const LoginPage = () => {
                         <Button
                           type="link"
                           onClick={() => setUser("manager")}
-                          className="!p-0 "
+                          className="!p-0 text-[#a18dff]"
                           size="large"
                         >
                           Manager

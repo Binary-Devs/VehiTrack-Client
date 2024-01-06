@@ -5,8 +5,7 @@ import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
   EditOutlined,
-
-  ReloadOutlined
+  ReloadOutlined,
 } from "@ant-design/icons";
 import { Button, Input } from "antd";
 
@@ -51,7 +50,10 @@ const HelperListPage = () => {
       title: "",
 
       render: function (data: any) {
-        const image = `${data?.imageUrl || "https://res.cloudinary.com/dnzlgpcc3/image/upload/v1704419785/oiav6crzfltkswdrrrli.png"} `;
+        const image = `${
+          data?.imageUrl ||
+          "https://res.cloudinary.com/dnzlgpcc3/image/upload/v1704419785/oiav6crzfltkswdrrrli.png"
+        } `;
         return (
           <Image
             src={image}
@@ -104,7 +106,7 @@ const HelperListPage = () => {
     },
     {
       title: "Action",
-      dataIndex: "id",
+
       // width: "15%",
       render: function (data: any) {
         return (
