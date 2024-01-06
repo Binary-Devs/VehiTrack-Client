@@ -3,6 +3,7 @@ import { useLoginMutation } from "@/redux/api/auth/authApi";
 import { storeUserInfo } from "@/services/auth.service";
 import { Button, Divider, message } from "antd";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -41,7 +42,7 @@ const LoginPage = () => {
         message.success("User logged in successfully");
         storeUserInfo({ accessToken: res?.accessToken });
       } else {
-        message.error("Not a valid user");
+        message.error(res?.message);
       }
     } catch (error: any) {
       message.error(error?.message);
@@ -71,10 +72,12 @@ const LoginPage = () => {
       variants={pageVariants}
       className="relative "
     >
-      <img
-        src="https://media.giphy.com/media/21QEGwILf5SGDRRHMn/giphy.gif"
-        alt=""
-        className="absolute inset-0 object-cover w-full h-screen"
+      <Image
+        src={"/login.webp"}
+        width={100}
+        height={100}
+        alt="login gif"
+        className="absolute inset-0 object-cover w-full h-full"
       />
       <motion.div
         initial={{ opacity: 0 }}
@@ -88,7 +91,7 @@ const LoginPage = () => {
           transition={{ delay: 1 }}
           className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20 "
         >
-          <div className="flex flex-col items-center justify-center mt-[15%]">
+          <div className="flex flex-col items-center justify-center h-[80vh]">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -177,7 +180,7 @@ const LoginPage = () => {
                         <Button
                           type="link"
                           onClick={() => setUser("manager")}
-                          className="!p-0 "
+                          className="!p-0 text-[#a18dff]"
                           size="large"
                         >
                           Manager
