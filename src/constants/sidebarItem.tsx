@@ -1,7 +1,6 @@
 import {
   BankOutlined,
   CarOutlined,
-  DashboardFilled,
   DashboardOutlined,
   HistoryOutlined,
   HomeOutlined,
@@ -39,7 +38,7 @@ export const sidebarItem = (role: string) => {
         </Link>
       ),
       key: "/dashboard",
-      icon: <DashboardOutlined/>,
+      icon: <DashboardOutlined />,
     },
     {
       label: (
@@ -505,15 +504,6 @@ export const sidebarItem = (role: string) => {
     ...defaultSidebarItems,
     {
       label: (
-        <Link className="text-sm " href={`/dashboard`}>
-          Dashboard
-        </Link>
-      ),
-      key: "/dashboard",
-      icon: <DashboardFilled />,
-    },
-    {
-      label: (
         <Link className="text-sm " href={`/${role}/upcoming_trip`}>
           Upcoming Trip
         </Link>
@@ -543,15 +533,6 @@ export const sidebarItem = (role: string) => {
 
   const helperSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
-    {
-      label: (
-        <Link className="text-sm " href={`/${role}/upcoming_trip`}>
-          Upcoming Trip
-        </Link>
-      ),
-      icon: <MdOutlineUpcoming />,
-      key: `/${role}/upcoming_trip`,
-    },
     {
       label: (
         <Link className="text-sm " href={`/${role}/my_trip`}>
