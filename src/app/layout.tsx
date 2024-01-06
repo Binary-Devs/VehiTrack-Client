@@ -23,6 +23,19 @@ export default function RootLayout({
 
       <Providers>
         <html lang="en">
+          <head>
+            {/* <script
+              src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.2/socket.io.min.js"
+              integrity="sha512-xzC4RSo+4m1clLhr0pQr6yFjO9bJ0py6+l65SBibI8/pSEU8U4iVZ7xm95WRq8PXw2MKv8SSR3QkqR2jciG5Ug=="
+              crossorigin="anonymous"
+              referrerpolicy="no-referrer"
+              async
+            ></script> */}
+            <script
+              src="https://cdn.socket.io/4.7.2/socket.io.min.js"
+              async
+            ></script>
+          </head>
           <body
             // style={{
             //   maxWidth: "1990px",
