@@ -19,6 +19,7 @@ import {
 import { Button, Input, message } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
+import { IoMdAdd } from "react-icons/io";
 
 const EquipmentInList = () => {
   const query: Record<string, any> = {};
@@ -194,7 +195,7 @@ const EquipmentInList = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add EquipmentIn">
+          <ModalComponent buttonText="Add EquipmentIn" icon={<IoMdAdd />}>
             <AddEquipmentIn />
           </ModalComponent>
         </div>
