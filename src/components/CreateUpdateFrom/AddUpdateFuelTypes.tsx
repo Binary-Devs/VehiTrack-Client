@@ -12,7 +12,7 @@ import Loader from "../Utlis/Loader";
 const AddFuelTypes = ({ id }: { id?: string }) => {
   //Get
   const { data, isLoading: getLoad } = useGetSingleFuelTypeQuery(id ? id : "");
-  console.log(data);
+  // console.log(data);
   //Update
   const [updateFuelType, { isLoading: updateLoad }] =
     useUpdateFuelTypeMutation();

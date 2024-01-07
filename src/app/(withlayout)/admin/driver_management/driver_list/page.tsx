@@ -149,6 +149,8 @@ const AllDriverList = () => {
   const drivers = data?.drivers;
   const meta = data?.meta;
 
+  // console.log(drivers);
+
   const onPaginationChange = (page: number, pageSize: number) => {
     setPage(page);
     setSize(pageSize);

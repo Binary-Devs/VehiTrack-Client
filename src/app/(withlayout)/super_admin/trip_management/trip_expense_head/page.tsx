@@ -82,7 +82,7 @@ const TripExpenseHeadPage = () => {
   ];
 
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
+    // console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };

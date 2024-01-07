@@ -1,8 +1,10 @@
 const upload_preset = "f4fg9x1n";
 const cloud_name = "dnzlgpcc3";
+// console.log(cloud_name);
 const url = `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`;
 
 const uploadImgCloudinary = async (file: any) => {
+  // console.log(file);
   try {
     const formData = new FormData();
     formData.append("file", file as Blob);

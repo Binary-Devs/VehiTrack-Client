@@ -41,9 +41,9 @@ const AccountHeadsPage = () => {
   }
   const accountHeads = data?.accountHeads;
   const meta = data?.meta;
-  console.log(accountHeads);
+  // console.log(accountHeads);
   const deleteHandler = async (id: string) => {
-    console.log(id);
+    // console.log(id);
   };
 
   const columns = [
@@ -109,7 +109,7 @@ const AccountHeadsPage = () => {
   ];
 
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
+    // console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };

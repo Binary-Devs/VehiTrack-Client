@@ -15,7 +15,7 @@ const BalanceSheet = () => {
 
   const allBalanceData = data?.balanceSheet || [];
 
-  console.log(data);
+  // console.log(data);
   // calculation
 
   // fixed asset

@@ -1,10 +1,9 @@
-import Loader from "@/components/Utlis/Loader";
 import {
   useCreateConversationMutation,
   useUpdateConversationMutation,
 } from "@/redux/api/conversation/conversationApi";
 import { getUserInfo } from "@/services/auth.service";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function Options({ info }: { info?: any }) {
   const [message, setMessage] = useState("");
@@ -15,30 +14,32 @@ export default function Options({ info }: { info?: any }) {
 
   const user = getUserInfo() as any;
 
-  useEffect(() => {
-    if (isSuccess) {
-      setMessage("");
-    }
-  }, [isSuccess]);
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     setMessage("");
+  //   }
+  // }, [isSuccess]);
 
   // const participantUser =
   //   info.receiver.email !== loggedInUser.email ? info.receiver : info.sender;
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    // createConversation({
-    //   senderId: user?.id,
-    //   receiverId: info.conversation.receiverId,
-    //   message,
-    // });
-    updateConversation({
-      id: info.conversation.id,
-      data: {
-        senderId: user?.id,
-        receiverId: info.conversation.receiverId,
-        message,
-      },
+    createConversation({
+      participants: `${user?.id}_${info.conversation.receiverId}`,
+      senderId: user?.id,
+      receiverId: info.conversation.receiverId,
+      message,
     });
+    setMessage("");
+    // updateConversation({
+    //   id: info.conversation.id,
+    //   data: {
+    //     senderId: user?.id,
+    //     receiverId: info.conversation.receiverId,
+    //     message,
+    //   },
+    // });
   };
   return (
     <form
@@ -54,20 +55,17 @@ export default function Options({ info }: { info?: any }) {
         value={message}
         onChange={(e) => setMessage(e.target.value)}
       />
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <button type="submit">
-          <svg
-            className="w-5 h-5 text-gray-500 origin-center transform rotate-90"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
-          </svg>
-        </button>
-      )}
+
+      <button type="submit">
+        <svg
+          className="w-5 h-5 text-gray-500 origin-center transform rotate-90"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+        </svg>
+      </button>
     </form>
   );
 }

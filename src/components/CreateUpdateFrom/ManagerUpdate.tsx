@@ -14,7 +14,7 @@ const ManagerUpdate = ({ id }: { id: string }) => {
 
   const [updateManager, { isLoading, error }] = useUpdateAdminMutation();
   const { data, isLoading: getAdminLoading } = useGetSingleAdminQuery(id);
-  console.log(data);
+  // console.log(data);
   const onSubmit = async (values: any) => {
     message.loading("Updating Manager!");
     // console.log(values);

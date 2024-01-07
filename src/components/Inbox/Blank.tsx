@@ -8,8 +8,11 @@ export default function Blank() {
         alt="No messages"
         className="w-10 hidden md:block"
       /> */}
-      <div className="-rotate-90 md:rotate-0 min-w-[130px] md:min-w-0">
-        No messages yet
+      <div className="text-center px-10">
+        <p>
+          No conversation selected! Select an user from left sidebar to view all
+          messages
+        </p>
       </div>
     </div>
   );

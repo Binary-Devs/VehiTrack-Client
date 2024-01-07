@@ -24,11 +24,15 @@ export default function ChatItems() {
     isLoading,
     isError,
     error,
-  } = useGetAllConversationQuery({ page, senderId: user.id }) || {};
+  } = useGetAllConversationQuery({
+    searchTerm: user.id,
+    // senderId: user.id,
+    // receiverId: user.id,
+  }) || {};
 
   // const { data: conversations, meta } = data || {};
 
-  console.log(user, conversations);
+  // console.log(user, conversations);
 
   const [hasMore, setHasMore] = useState(true);
   const dispatch = useDispatch();
@@ -62,7 +66,7 @@ export default function ChatItems() {
   let content = null;
 
   if (isLoading) {
-    content = <Loader className="h-[50vh] flex items-end justify-center" />;
+    content = <Loader className="h-[40vh] flex items-end justify-center" />;
   } else if (!isLoading && isError) {
     content = (
       <li className="m-2 text-center">
@@ -75,7 +79,7 @@ export default function ChatItems() {
     content = (
       <>
         {conversations.map((conversation: any) => {
-          const { id, message, receiver, updatedAt } = conversation;
+          const { id, message, sender, receiver, updatedAt } = conversation;
           // const { name, email } = getPartnerInfo(
           //   conversation.users,
           //   user.email
@@ -85,7 +89,11 @@ export default function ChatItems() {
               <Link href={`/inbox/${id}`}>
                 <ChatItem
                   // avatar={<UserOutlined />}
-                  name={receiver.userName}
+                  name={
+                    sender?.id === user?.id
+                      ? receiver?.userName
+                      : sender?.userName
+                  }
                   lastMessage={message}
                   lastTime={moment(updatedAt).fromNow()}
                 />

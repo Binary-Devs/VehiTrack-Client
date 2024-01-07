@@ -21,7 +21,7 @@ const AddUpdateParty = ({ id }: { id?: string }) => {
   const [createParty, { isLoading: createLoad }] = useCreatePartyMutation();
 
   const onSubmit = async (values: any) => {
-    console.log(values);
+    // console.log(values);
 
     message.loading(id ? "Updating...." : "Adding....");
     try {

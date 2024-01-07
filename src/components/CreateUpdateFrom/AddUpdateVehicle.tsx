@@ -27,6 +27,7 @@ const AddUpdateVehicle = ({
 }) => {
   const [image, setimage] = useState("");
   //Get
+  // console.log(image);
   const { data, isLoading: getLoad } = useGetSingleVehicleQuery(id ? id : "");
 
   //Update

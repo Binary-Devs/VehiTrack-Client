@@ -79,7 +79,9 @@ const EquipmentList = () => {
               style={{
                 margin: "0px 5px",
               }}
-              onClick={() => console.log(data?.id)}
+              onClick={() => {
+                // console.log(data?.id);
+              }}
             >
               <ModalComponent icon={<EditOutlined />}>
                 <AddEquipment id={data?.id} />
@@ -91,7 +93,7 @@ const EquipmentList = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
+    // console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };

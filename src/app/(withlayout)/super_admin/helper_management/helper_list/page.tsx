@@ -149,7 +149,7 @@ const HelperListPage = () => {
   const helpers = data?.helpers;
   const meta = data?.meta;
 
-  console.log(helpers);
+  // console.log(helpers);
 
   const onPaginationChange = (page: number, pageSize: number) => {
     setPage(page);
