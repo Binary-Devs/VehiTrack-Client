@@ -1,7 +1,6 @@
 // import { IMeta } from "@/types";
-import { tagTypes } from "@/redux/teg-types";
-import { baseApi } from "../baseApi";
 import { io } from "socket.io-client";
+import { baseApi } from "../baseApi";
 
 const MESSAGE_URL = "/messages";
 
@@ -40,8 +39,13 @@ export const messageApi = baseApi.injectEndpoints({
         });
         try {
           await cacheDataLoaded;
-          socket.on("message", (data) => {
-            console.log(data);
+          socket.on("conversation-message", (data) => {
+            // console.log(data);
+            updateCachedData((draft) => {
+              if (arg?.conversationId === data?.message?.conversationId) {
+                draft.unshift(data?.message);
+              }
+            });
           });
         } catch (error) {
           await cacheEntryRemoved;

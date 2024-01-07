@@ -12,7 +12,6 @@ import dayjs from "dayjs";
 import Link from "next/link";
 import { useState } from "react";
 
-
 const PartyListPage = () => {
   const query: Record<string, any> = {};
 
@@ -85,13 +84,21 @@ const PartyListPage = () => {
                 style={{
                   margin: "0px 5px",
                 }}
-                onClick={() => console.log(data)}
+                onClick={() => {
+                  // console.log(data);
+                }}
                 type="primary"
               >
                 <EditOutlined />
               </Button>
             </Link>
-            <Button onClick={() => console.log(data?.id)} type="primary" danger>
+            <Button
+              onClick={() => {
+                // console.log(data?.id);
+              }}
+              type="primary"
+              danger
+            >
               <DeleteOutlined />
             </Button>
           </>
@@ -101,7 +108,7 @@ const PartyListPage = () => {
   ];
 
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
+    // console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };

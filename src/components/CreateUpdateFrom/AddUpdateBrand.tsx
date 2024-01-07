@@ -19,7 +19,7 @@ const AddUpdateBrand = ({ id }: { id?: string }) => {
   //Create
   const [createBrand, { isLoading: createLoad }] = useCreateBrandMutation();
 
-  console.log(id, data);
+  // console.log(id, data);
 
   const onSubmit = async (values: any) => {
     message.loading(id ? "Updating...." : "Adding....");

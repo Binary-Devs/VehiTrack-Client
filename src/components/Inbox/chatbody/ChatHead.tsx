@@ -5,7 +5,7 @@ import { Avatar } from "antd";
 export default function ChatHead({ message }: { message?: any }) {
   const user = getUserInfo() as any;
 
-  const { receiver } = message?.conversation;
+  const { sender, receiver } = message?.conversation;
 
   // const partnerImage =
   //   sender.email === user.email ? receiver.email : sender.email;
@@ -19,7 +19,7 @@ export default function ChatHead({ message }: { message?: any }) {
       /> */}
       <Avatar size={64} icon={<UserOutlined />} />
       <span className="block ml-2 font-bold text-gray-600">
-        {receiver.userName}
+        {sender?.id === user?.id ? receiver?.userName : sender?.userName}
       </span>
     </div>
   );

@@ -93,16 +93,32 @@ const TripListPage = () => {
             <Link
               href={`/super_admin/manage-fuel/refueling/details/${data?.id}`}
             >
-              <Button onClick={() => console.log(data)} type="primary">
+              <Button
+                onClick={() => {
+                  // console.log(data);
+                }}
+                type="primary"
+              >
                 <EyeOutlined />
               </Button>
             </Link>
             <Link href={`/super_admin/manage-fuel/refueling/edit/${data?.id}`}>
-              <Button onClick={() => console.log(data)} type="primary">
+              <Button
+                onClick={() => {
+                  // console.log(data);
+                }}
+                type="primary"
+              >
                 <EditOutlined />
               </Button>
             </Link>
-            <Button onClick={() => console.log(data?.id)} type="primary" danger>
+            <Button
+              onClick={() => {
+                // console.log(data?.id);
+              }}
+              type="primary"
+              danger
+            >
               <DeleteOutlined />
             </Button>
 

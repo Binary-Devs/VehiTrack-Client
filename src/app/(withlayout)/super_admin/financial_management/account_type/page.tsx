@@ -65,7 +65,9 @@ const AccountTypePage = () => {
               style={{
                 margin: "0px 5px",
               }}
-              onClick={() => console.log(data?.id)}
+              onClick={() => {
+                // console.log(data?.id);
+              }}
             >
               <ModalComponent icon={<EditOutlined />}>
                 <AddAccountType id={data?.id} />
@@ -78,7 +80,7 @@ const AccountTypePage = () => {
   ];
 
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
+    // console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };

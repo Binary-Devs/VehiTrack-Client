@@ -505,15 +505,6 @@ export const sidebarItem = (role: string) => {
     ...defaultSidebarItems,
     {
       label: (
-        <Link className="text-sm " href={`/dashboard`}>
-          Dashboard
-        </Link>
-      ),
-      key: "/dashboard",
-      icon: <DashboardFilled />,
-    },
-    {
-      label: (
         <Link className="text-sm " href={`/${role}/upcoming_trip`}>
           Upcoming Trip
         </Link>

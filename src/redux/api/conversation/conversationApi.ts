@@ -29,8 +29,21 @@ export const conversationApi = baseApi.injectEndpoints({
         });
         try {
           await cacheDataLoaded;
-          socket.on("conversation", (data) => {
-            console.log(data);
+          socket.on("conversation-message", (data) => {
+            // console.log(data);
+            updateCachedData((draft) => {
+              const conversation = draft?.find(
+                (c: any) => c.id === data?.conversation?.id
+              );
+              if (conversation?.id) {
+                conversation.message = data?.conversation?.message;
+                conversation.updatedAt = data?.conversation?.updatedAt;
+              } else if (
+                data?.conversation?.participants.includes(arg?.searchTerm)
+              ) {
+                draft.unshift(data?.conversation);
+              }
+            });
           });
         } catch (error) {
           await cacheEntryRemoved;
@@ -56,29 +69,6 @@ export const conversationApi = baseApi.injectEndpoints({
         method: "POST",
         data: data,
       }),
-      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-        // optimistic cache update start
-        const patchResult = dispatch(
-          baseApi.util.updateQueryData(
-            //@ts-ignore
-            "getAllConversation",
-            arg.senderId,
-            (draft) => {
-              console.log(JSON.stringify(draft));
-              // const draftConversation = draft.data.find((c) => c.id == arg.id);
-              // draftConversation.message = arg.data.message;
-              // draftConversation.timestamp = arg.data.timestamp;
-            }
-          )
-        );
-        // optimistic cache update end
-        try {
-          const conversation = await queryFulfilled;
-          console.log(conversation);
-        } catch (error) {
-          patchResult.undo();
-        }
-      },
       // invalidatesTags: [tagTypes.conversations, tagTypes.messages],
     }),
 
@@ -89,31 +79,6 @@ export const conversationApi = baseApi.injectEndpoints({
         method: "PATCH",
         data: data?.data,
       }),
-      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-        console.log(arg);
-        // optimistic cache update start
-        const patchResult = dispatch(
-          baseApi.util.updateQueryData(
-            //@ts-ignore
-            "getAllConversation",
-            arg.data.senderId,
-            (draft) => {
-              console.log("clicked");
-              console.log("clicked",JSON.stringify(draft));
-              // const draftConversation = draft.data.find((c) => c.id == arg.id);
-              // draftConversation.message = arg.data.message;
-              // draftConversation.timestamp = arg.data.timestamp;
-            }
-          )
-        );
-        // optimistic cache update end
-        try {
-          const conversation = await queryFulfilled;
-          console.log(conversation);
-        } catch (error) {
-          patchResult.undo();
-        }
-      },
       // invalidatesTags: [tagTypes.conversations],
     }),
   }),

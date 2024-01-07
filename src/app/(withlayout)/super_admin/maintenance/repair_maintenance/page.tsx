@@ -147,7 +147,12 @@ const RepairMaintenancePage = () => {
             <Link
               href={`/super_admin/maintenance/repair-maintenance/details/${data?.id}`}
             >
-              <Button onClick={() => console.log(data)} type="primary">
+              <Button
+                onClick={() => {
+                  // console.log(data);
+                }}
+                type="primary"
+              >
                 <EyeOutlined />
               </Button>
             </Link>
@@ -158,13 +163,21 @@ const RepairMaintenancePage = () => {
                 style={{
                   margin: "0px 5px",
                 }}
-                onClick={() => console.log(data)}
+                onClick={() => {
+                  // console.log(data);
+                }}
                 type="primary"
               >
                 <EditOutlined />
               </Button>
             </Link>
-            <Button onClick={() => console.log(data?.id)} type="primary" danger>
+            <Button
+              onClick={() => {
+                // console.log(data?.id);
+              }}
+              type="primary"
+              danger
+            >
               <DeleteOutlined />
             </Button>
           </>
@@ -174,7 +187,7 @@ const RepairMaintenancePage = () => {
   ];
 
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
+    // console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
