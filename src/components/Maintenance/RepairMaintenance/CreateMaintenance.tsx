@@ -60,7 +60,6 @@ const CreateMaintenance = () => {
         inHouse: data?.workshopType === 'InHouse' ? true : false,
       })),
     };
-    console.log(newData);
     try {
       const res = await createMaintenance({ ...newData }).unwrap();
       if (res.id) {
