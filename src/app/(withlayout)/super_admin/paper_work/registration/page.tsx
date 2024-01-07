@@ -15,7 +15,7 @@ import {
   EditOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { Button, Input, message } from "antd";
+import { Button, Grid, Input, message } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
@@ -30,6 +30,9 @@ const RegistrationPage = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [open, setOpen] = useState(false);
   const [id, setId] = useState<string>("");
+
+  const { useBreakpoint } = Grid;
+  const screens = useBreakpoint();
 
   query["limit"] = size;
   query["page"] = page;
@@ -107,6 +110,7 @@ const RegistrationPage = () => {
     {
       title: "CreatedAt",
       dataIndex: "createdAt",
+      responsive: ["xxl"],
       render: function (data: any) {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
       },
@@ -166,11 +170,12 @@ const RegistrationPage = () => {
   };
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
-      <ActionBar inline title="Registration List">
-        <div className="flex items-center gap-2">
+      <ActionBar inline={screens.xs ? false : true} title="Registration List">
+        <div className="flex items-center justify-between flex-grow gap-2">
           <Input
             // size="large"
             placeholder="Search"
+            value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             // style={{
             //   minWidth: "150px",
