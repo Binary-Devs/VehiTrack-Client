@@ -1,6 +1,6 @@
 "use client";
-import Loader from "@/components/Utlis/Loader";
 // import LoadingForDataFetch from "@/components/Utlis/LoadingForDataFetch";
+import Loader from "@/components/Utlis/Loader";
 import Contents from "@/components/ui/Contents";
 import SideBar from "@/components/ui/Sidebar";
 import { isLoggedIn } from "@/services/auth.service";
@@ -28,17 +28,16 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           className="h-[50vh] flex items-end justify-center"
           size="large"
         />
+        {/* <Loading /> */}
       </>
     );
   }
 
   return (
-
-      <Layout hasSider>
-        <SideBar />
-        <Contents>{children}</Contents>
-      </Layout>
-
+    <Layout hasSider>
+      <SideBar />
+      <Contents>{children}</Contents>
+    </Layout>
   );
 };
 
