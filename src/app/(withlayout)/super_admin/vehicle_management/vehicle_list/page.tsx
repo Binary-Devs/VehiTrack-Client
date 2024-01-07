@@ -61,8 +61,6 @@ const VehicleListPage = () => {
   const vehicles = data?.vehicles;
   const meta = data?.meta;
 
-  console.log(vehicles);
-
   // BrandData for creating vehicle
   const { data: brandData, isLoading: brandLoad } = useGetAllBrandQuery({});
   const brands = brandData?.brands;
@@ -93,9 +91,10 @@ const VehicleListPage = () => {
       title: "",
       // fixed: "left",
       // width: 80,
+      dataIndex: "imageUrl",
       render: function (data: any) {
         const image = `${
-          data?.imageUrl ||
+          data ||
           "https://res.cloudinary.com/dnzlgpcc3/image/upload/v1704419785/oiav6crzfltkswdrrrli.png"
         } `;
         return (
@@ -211,7 +210,6 @@ const VehicleListPage = () => {
   ];
 
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
@@ -250,6 +248,7 @@ const VehicleListPage = () => {
   // if (isLoading) {
   //   return <Loader className="h-[50vh] flex items-end justify-center" />;
   // }
+
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
       <ActionBar inline title="Vehicle List">

@@ -27,7 +27,6 @@ const AddUpdateVehicle = ({
 }) => {
   const [image, setimage] = useState("");
   //Get
-  console.log(image);
   const { data, isLoading: getLoad } = useGetSingleVehicleQuery(id ? id : "");
 
   //Update
@@ -38,6 +37,8 @@ const AddUpdateVehicle = ({
 
   const onSubmit = async (values: any) => {
     values.imageUrl = image;
+
+    console.log(values);
 
     message.loading(id ? "Updating...." : "Adding....");
     try {

@@ -59,7 +59,7 @@ const AllDriverList = () => {
             width={100}
             height={100}
             alt=""
-            style={{ width: "70px", height: "50px" }}
+            style={{ width: "50px", height: "50px" }}
           />
           // <Avatar shape="square" size={64} icon={<CarOutlined />} />
         );
