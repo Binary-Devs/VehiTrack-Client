@@ -16,7 +16,7 @@ import {
   EditOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { Button, Input, message } from "antd";
+import { Button, Grid, Input, message } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
@@ -36,6 +36,9 @@ const EquipmentInList = () => {
   query["page"] = page - 1;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
+
+  const { useBreakpoint } = Grid;
+  const screens = useBreakpoint();
 
   const debouncedTerm = useDebounced({
     searchQuery: searchTerm,
@@ -174,11 +177,12 @@ const EquipmentInList = () => {
   };
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
-      <ActionBar inline title="EquipmentIn List">
-        <div className="flex items-center gap-2">
+      <ActionBar inline={screens.xs ? false : true} title="Equipment In List">
+        <div className="flex items-center justify-between flex-grow gap-2">
           <Input
             // size="large"
             placeholder="Search"
+            value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             // style={{
             //   minWidth: "150px",

@@ -15,7 +15,7 @@ import {
   EditOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { Button, Input, message } from "antd";
+import { Button, Grid, Input, message } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
@@ -44,6 +44,9 @@ const TaxTokenPage = () => {
   if (!!debouncedTerm) {
     query["searchTerm"] = debouncedTerm;
   }
+
+  const { useBreakpoint } = Grid;
+  const screens = useBreakpoint();
 
   const [deletePaperWork] = useDeletePaperWorkMutation();
   //delete
@@ -111,6 +114,7 @@ const TaxTokenPage = () => {
       render: function (data: any) {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
       },
+      responsive: ["xxl"],
       sorter: true,
     },
     {
@@ -149,7 +153,6 @@ const TaxTokenPage = () => {
   ];
 
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
@@ -167,11 +170,12 @@ const TaxTokenPage = () => {
   };
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
-      <ActionBar inline title="Tax/Token List">
-        <div className="flex items-center gap-2">
+      <ActionBar inline={screens.xs ? false : true} title="Tax/Token List">
+        <div className="flex items-center justify-between flex-grow gap-2">
           <Input
             // size="large"
             placeholder="Search"
+            value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             // style={{
             //   minWidth: "150px",
