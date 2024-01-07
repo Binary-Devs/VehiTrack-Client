@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { totalSum } from '@/components/Utlis/needyFunction';
-import MainCard from '@/components/ui/MainCard';
-import UMTable from '@/components/ui/Table';
-import { useSummaryReportQuery } from '@/redux/api/report/reportApi';
-import { useGetAllVehicleQuery } from '@/redux/api/vehicle/vehicleApi';
-import { Col, DatePicker, Row, Select } from 'antd';
-import { useState } from 'react';
+import { totalSum } from "@/components/Utlis/needyFunction";
+import MainCard from "@/components/ui/MainCard";
+import UMTable from "@/components/ui/Table";
+import { useSummaryReportQuery } from "@/redux/api/report/reportApi";
+import { useGetAllVehicleQuery } from "@/redux/api/vehicle/vehicleApi";
+import { Col, DatePicker, Row, Select } from "antd";
+import { useState } from "react";
 import {
   totalAnnualExpense,
   totalAnnualProfit,
-} from './annualReportCalculation';
+} from "./annualReportCalculation";
 
 const { RangePicker } = DatePicker;
 
@@ -28,22 +28,22 @@ const AnnualReport = () => {
   const query: Record<string, any> = {};
 
   const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(10);
-  const [sortBy, setSortBy] = useState<string>('');
-  const [sortOrder, setSortOrder] = useState<string>('');
+  const [size, setSize] = useState<number>(5);
+  const [sortBy, setSortBy] = useState<string>("");
+  const [sortOrder, setSortOrder] = useState<string>("");
 
-  query['limit'] = size;
-  query['page'] = page;
-  query['sortBy'] = sortBy;
-  query['sortOrder'] = sortOrder;
+  query["limit"] = size;
+  query["page"] = page;
+  query["sortBy"] = sortBy;
+  query["sortOrder"] = sortOrder;
 
   if (vehicle) {
-    query['vehicleId'] = vehicle;
+    query["vehicleId"] = vehicle;
   }
 
   if (year) {
-    query['startDate'] = `${year}-01-01`;
-    query['endDate'] = `${year}-12-31`;
+    query["startDate"] = `${year}-01-01`;
+    query["endDate"] = `${year}-12-31`;
   }
 
   const { data, isLoading } = useSummaryReportQuery({ ...query });
@@ -53,29 +53,29 @@ const AnnualReport = () => {
 
   const columns = [
     {
-      title: 'SN',
-      align: 'center',
+      title: "SN",
+      align: "center",
       render: (data: any, item: any, index: any) => (page - 1) * 10 + index + 1,
     },
     {
-      title: 'Vehicle',
-      dataIndex: 'regNo',
+      title: "Vehicle",
+      dataIndex: "regNo",
     },
     {
-      title: 'Annual Earning',
-      dataIndex: 'trips',
-      render: (el: any) => totalSum(el || [], 'amount'),
-      align: 'right',
+      title: "Annual Earning",
+      dataIndex: "trips",
+      render: (el: any) => totalSum(el || [], "amount"),
+      align: "right",
     },
     {
-      title: 'Annual Expense',
+      title: "Annual Expense",
       render: (el: any) => totalAnnualExpense(el),
-      align: 'right',
+      align: "right",
     },
     {
-      title: 'Annual Profit',
+      title: "Annual Profit",
       render: (el: any) => totalAnnualProfit(el),
-      align: 'right',
+      align: "right",
     },
   ];
 
@@ -86,7 +86,7 @@ const AnnualReport = () => {
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
     setSortBy(field as string);
-    setSortOrder(order === 'ascend' ? 'asc' : 'desc');
+    setSortOrder(order === "ascend" ? "asc" : "desc");
   };
 
   return (
@@ -101,7 +101,7 @@ const AnnualReport = () => {
               input: string,
               option?: { label: string; value: string }
             ) =>
-              (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+              (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
             }
             onChange={(value) => setVehicle(value)}
             size="large"
@@ -110,13 +110,13 @@ const AnnualReport = () => {
               value: el.id,
             }))}
             value={vehicle}
-            style={{ width: '100%' }}
+            style={{ width: "100%" }}
             placeholder="Select Vehicle"
           />
         </Col>
         <Col xs={24} md={8}>
           <DatePicker
-            style={{ width: '100%' }}
+            style={{ width: "100%" }}
             picker="year"
             size="large"
             onChange={(_, dateString) => setYear(dateString)}

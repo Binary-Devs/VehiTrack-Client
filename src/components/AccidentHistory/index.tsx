@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import UMTable from '@/components/ui/Table';
-import { useGetAllAccidentHistoriesQuery } from '@/redux/api/accidentHistory/accidentHistoryApi';
-import { useDebounced } from '@/redux/hooks';
-import { ReloadOutlined } from '@ant-design/icons';
-import { Button, Input, Row } from 'antd';
-import dayjs from 'dayjs';
-import { useState } from 'react';
-import MainCard from '../ui/MainCard';
-import AccidentHistoryAction from './AccidentHistoryAction';
-import AddAccidentHistory from './AddAccidentHistory';
+import UMTable from "@/components/ui/Table";
+import { useGetAllAccidentHistoriesQuery } from "@/redux/api/accidentHistory/accidentHistoryApi";
+import { useDebounced } from "@/redux/hooks";
+import { ReloadOutlined } from "@ant-design/icons";
+import { Button, Input, Row } from "antd";
+import dayjs from "dayjs";
+import { useState } from "react";
+import MainCard from "../ui/MainCard";
+import AccidentHistoryAction from "./AccidentHistoryAction";
+import AddAccidentHistory from "./AddAccidentHistory";
 
 const AccidentHistory = () => {
   const [open, setOpen] = useState(false);
@@ -18,15 +18,15 @@ const AccidentHistory = () => {
   const query: Record<string, any> = {};
 
   const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(10);
-  const [sortBy, setSortBy] = useState<string>('');
-  const [sortOrder, setSortOrder] = useState<string>('');
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [size, setSize] = useState<number>(5);
+  const [sortBy, setSortBy] = useState<string>("");
+  const [sortOrder, setSortOrder] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
-  query['limit'] = size;
-  query['page'] = page;
-  query['sortBy'] = sortBy;
-  query['sortOrder'] = sortOrder;
+  query["limit"] = size;
+  query["page"] = page;
+  query["sortBy"] = sortBy;
+  query["sortOrder"] = sortOrder;
 
   const debouncedTerm = useDebounced({
     searchQuery: searchTerm,
@@ -34,7 +34,7 @@ const AccidentHistory = () => {
   });
 
   if (!!debouncedTerm) {
-    query['searchTerm'] = debouncedTerm;
+    query["searchTerm"] = debouncedTerm;
   }
 
   const { data, isLoading } = useGetAllAccidentHistoriesQuery({ ...query });
@@ -44,46 +44,46 @@ const AccidentHistory = () => {
 
   const columns = [
     {
-      title: 'SN',
-      align: 'center',
+      title: "SN",
+      align: "center",
       render: (data: any, item: any, index: any) => (page - 1) * 10 + index + 1,
     },
     {
-      title: 'Date',
-      dataIndex: 'date',
-      render: (data: string) => dayjs(data).format('DD/MM/YYYY'),
+      title: "Date",
+      dataIndex: "date",
+      render: (data: string) => dayjs(data).format("DD/MM/YYYY"),
       sorter: true,
     },
     {
-      title: 'Vehicle',
-      dataIndex: 'vehicle',
+      title: "Vehicle",
+      dataIndex: "vehicle",
       render: (vehicle: any) => vehicle?.regNo,
     },
     {
-      title: 'Driver',
-      dataIndex: 'driver',
+      title: "Driver",
+      dataIndex: "driver",
       render: (driver: any) => driver?.fullName,
     },
     {
-      title: 'Location',
-      dataIndex: 'location',
+      title: "Location",
+      dataIndex: "location",
     },
     {
-      title: 'Details',
-      dataIndex: 'details',
+      title: "Details",
+      dataIndex: "details",
     },
     {
-      title: 'Payment Status',
-      dataIndex: 'paymentStatus',
+      title: "Payment Status",
+      dataIndex: "paymentStatus",
     },
     {
-      title: 'Amount',
-      dataIndex: 'amount',
-      align: 'right',
+      title: "Amount",
+      dataIndex: "amount",
+      align: "right",
     },
     {
-      title: 'Action',
-      align: 'center',
+      title: "Action",
+      align: "center",
       render: (data: any) => <AccidentHistoryAction data={data} />,
     },
   ];
@@ -96,13 +96,13 @@ const AccidentHistory = () => {
     const { order, field } = sorter;
     // console.log(order, field);
     setSortBy(field as string);
-    setSortOrder(order === 'ascend' ? 'asc' : 'desc');
+    setSortOrder(order === "ascend" ? "asc" : "desc");
   };
 
   const resetFilters = () => {
-    setSortBy('');
-    setSortOrder('');
-    setSearchTerm('');
+    setSortBy("");
+    setSortOrder("");
+    setSearchTerm("");
   };
   return (
     <MainCard
@@ -130,7 +130,7 @@ const AccidentHistory = () => {
         <div>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
-              style={{ margin: '0px 5px' }}
+              style={{ margin: "0px 5px" }}
               type="primary"
               onClick={resetFilters}
             >

@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { totalSum } from '@/components/Utlis/needyFunction';
-import MainCard from '@/components/ui/MainCard';
-import UMTable from '@/components/ui/Table';
-import { useSummaryReportQuery } from '@/redux/api/report/reportApi';
-import { useGetAllVehicleQuery } from '@/redux/api/vehicle/vehicleApi';
-import { Col, DatePicker, Row, Select } from 'antd';
-import dayjs from 'dayjs';
-import { useState } from 'react';
+import { totalSum } from "@/components/Utlis/needyFunction";
+import MainCard from "@/components/ui/MainCard";
+import UMTable from "@/components/ui/Table";
+import { useSummaryReportQuery } from "@/redux/api/report/reportApi";
+import { useGetAllVehicleQuery } from "@/redux/api/vehicle/vehicleApi";
+import { Col, DatePicker, Row, Select } from "antd";
+import dayjs from "dayjs";
+import { useState } from "react";
 
 const { RangePicker } = DatePicker;
 
@@ -36,25 +36,25 @@ const SummaryReport = () => {
   const query: Record<string, any> = {};
 
   const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(10);
-  const [sortBy, setSortBy] = useState<string>('');
-  const [sortOrder, setSortOrder] = useState<string>('');
+  const [size, setSize] = useState<number>(5);
+  const [sortBy, setSortBy] = useState<string>("");
+  const [sortOrder, setSortOrder] = useState<string>("");
 
-  query['limit'] = size;
-  query['page'] = page;
-  query['sortBy'] = sortBy;
-  query['sortOrder'] = sortOrder;
+  query["limit"] = size;
+  query["page"] = page;
+  query["sortBy"] = sortBy;
+  query["sortOrder"] = sortOrder;
 
   if (vehicle) {
-    query['vehicleId'] = vehicle;
+    query["vehicleId"] = vehicle;
   }
 
   if (startDate) {
-    query['startDate'] = dayjs(startDate).format('YYYY-MM-DD');
+    query["startDate"] = dayjs(startDate).format("YYYY-MM-DD");
   }
 
   if (endDate) {
-    query['endDate'] = dayjs(endDate).format('YYYY-MM-DD');
+    query["endDate"] = dayjs(endDate).format("YYYY-MM-DD");
   }
 
   const { data, isLoading } = useSummaryReportQuery({ ...query });
@@ -64,57 +64,60 @@ const SummaryReport = () => {
 
   const columns = [
     {
-      title: 'SN',
-      align: 'center',
+      title: "SN",
+      align: "center",
       render: (data: any, item: any, index: any) => (page - 1) * 10 + index + 1,
     },
     {
-      title: 'Vehicle',
-      dataIndex: 'regNo',
+      title: "Vehicle",
+      dataIndex: "regNo",
     },
     {
-      title: 'Total Trip',
-      dataIndex: 'trips',
+      title: "Total Trip",
+      dataIndex: "trips",
       render: (el: any) => el.length || 0,
-      align: 'right',
+      align: "right",
     },
     {
-      title: 'Income',
-      dataIndex: 'trips',
-      render: (el: any) => totalSum(el || [], 'amount'),
-      align: 'right',
+      title: "Income",
+      dataIndex: "trips",
+      render: (el: any) => totalSum(el || [], "amount"),
+      align: "right",
     },
     {
-      title: 'Trip Expense',
-      dataIndex: 'expenses',
+      title: "Trip Expense",
+      dataIndex: "expenses",
       render: (el: any) =>
-        totalSum(el?.filter((ex: any) => !ex.isMisc) || [], 'amount'),
-      align: 'right',
+        totalSum(el?.filter((ex: any) => !ex.isMisc) || [], "amount"),
+      align: "right",
     },
     {
-      title: 'Maintain',
-      dataIndex: 'maintenances',
-      render: (el: any) => totalSum(el || [], 'serviceCharge'),
-      align: 'right',
+      title: "Maintain",
+      dataIndex: "maintenances",
+      render: (el: any) => totalSum(el || [], "serviceCharge"),
+      align: "right",
     },
     {
-      title: 'Mis. Expense',
-      dataIndex: 'expenses',
+      title: "Mis. Expense",
+      dataIndex: "expenses",
       render: (el: any) =>
-        totalSum(el?.filter((ex: any) => ex.isMisc) || [], 'amount'),
-      align: 'right',
+        totalSum(el?.filter((ex: any) => ex.isMisc) || [], "amount"),
+      align: "right",
+      responsive: ["lg"],
     },
     {
-      title: 'Legal Expense',
-      dataIndex: 'paperWorks',
-      render: (el: any) => totalSum(el || [], 'totalAmount'),
-      align: 'right',
+      title: "Legal Expense",
+      dataIndex: "paperWorks",
+      render: (el: any) => totalSum(el || [], "totalAmount"),
+      align: "right",
+      responsive: ["lg"],
     },
     {
-      title: 'Equip. Expense',
-      dataIndex: 'equipmentUses',
-      render: (el: any) => totalSum(el || [], 'totalPrice'),
-      align: 'right',
+      title: "Equip. Expense",
+      dataIndex: "equipmentUses",
+      render: (el: any) => totalSum(el || [], "totalPrice"),
+      align: "right",
+      responsive: ["lg"],
     },
   ];
 
@@ -126,7 +129,7 @@ const SummaryReport = () => {
     const { order, field } = sorter;
     // console.log(order, field);
     setSortBy(field as string);
-    setSortOrder(order === 'ascend' ? 'asc' : 'desc');
+    setSortOrder(order === "ascend" ? "asc" : "desc");
   };
 
   return (
@@ -141,7 +144,7 @@ const SummaryReport = () => {
               input: string,
               option?: { label: string; value: string }
             ) =>
-              (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+              (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
             }
             onChange={(value) => setVehicle(value)}
             size="large"
@@ -150,7 +153,7 @@ const SummaryReport = () => {
               value: el.id,
             }))}
             value={vehicle}
-            style={{ width: '100%' }}
+            style={{ width: "100%" }}
             placeholder="Select Vehicle"
           />
         </Col>
@@ -158,8 +161,8 @@ const SummaryReport = () => {
           <RangePicker
             size="large"
             onChange={(values) => handleDate(values)}
-            style={{ width: '100%' }}
-            placeholder={['Start Date', 'End Date']}
+            style={{ width: "100%" }}
+            placeholder={["Start Date", "End Date"]}
           />
         </Col>
       </Row>
