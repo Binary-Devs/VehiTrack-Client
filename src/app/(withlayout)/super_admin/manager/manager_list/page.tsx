@@ -5,12 +5,11 @@ import {
   DeleteOutlined,
   EditOutlined,
   ReloadOutlined,
-  UserOutlined
+  UserOutlined,
 } from "@ant-design/icons";
 import { Avatar, Button, Input, Tag, message } from "antd";
 import { useState } from "react";
-
-import dayjs from "dayjs";
+import { IoMdAdd } from "react-icons/io";
 
 import CreateManager from "@/components/CreateUpdateFrom/ManagerCreate";
 import ManagerUpdate from "@/components/CreateUpdateFrom/ManagerUpdate";
@@ -56,7 +55,8 @@ const AllManagerList = () => {
       render: function (data: any) {
         return <Avatar size={64} icon={<UserOutlined />} />;
       },
-      width:100
+      width: 100,
+      responsive: ["md"],
     },
     {
       title: "Name",
@@ -65,7 +65,7 @@ const AllManagerList = () => {
     {
       title: "Active",
       dataIndex: "isActive",
-      width:100,
+      width: 100,
       render: (isActive: boolean) =>
         isActive ? (
           <Tag color="green">Active</Tag>
@@ -82,17 +82,8 @@ const AllManagerList = () => {
       dataIndex: "address",
     },
     {
-      title: "Created at",
-      dataIndex: "createdAt",
-      render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
-      },
-      sorter: true,
-    },
-    {
       title: "Action",
       dataIndex: "id",
-      width: "15%",
       render: function (data: any) {
         return (
           <>
@@ -117,7 +108,12 @@ const AllManagerList = () => {
                 <EditOutlined />
               </Button>
             </Link> */}
-            <Button style={{margin:"7px"}} onClick={() => handleDelete(data)} type="primary" danger>
+            <Button
+              style={{ margin: "7px" }}
+              onClick={() => handleDelete(data)}
+              type="primary"
+              danger
+            >
               <DeleteOutlined />
             </Button>
           </>
@@ -131,7 +127,6 @@ const AllManagerList = () => {
   const meta = data?.meta;
 
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
@@ -176,11 +171,11 @@ const AllManagerList = () => {
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            width: "20%",
+            width: "200px",
           }}
         />
         <div>
-          <ModalComponent buttonText="Create Manager">
+          <ModalComponent buttonText="Create Manager" icon={<IoMdAdd />}>
             <CreateManager />
           </ModalComponent>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
