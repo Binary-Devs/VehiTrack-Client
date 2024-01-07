@@ -3,6 +3,7 @@ import Loader from "@/components/Utlis/Loader";
 import { useGetProfileQuery } from "@/redux/api/profile/profileApi";
 import { Col, Divider, Flex, Row, Statistic, Typography } from "antd";
 import dayjs from "dayjs";
+import { motion } from "framer-motion";
 import Image from "next/image";
 
 const ProfilePage = () => {
@@ -10,24 +11,57 @@ const ProfilePage = () => {
 
   const { Title } = Typography;
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: 0.5 } },
+  };
+
+  const imageVariants = {
+    hidden: { scale: 0.8, opacity: 0 },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      transition: { duration: 0.5, delay: 0.5 },
+    },
+  };
+
+  const infoVariants = {
+    hidden: { x: -50, opacity: 0 },
+    visible: { x: 0, opacity: 1, transition: { duration: 0.5, delay: 1 } },
+  };
+
   if (isLoading) {
     return <Loader />;
   }
 
   return (
-    <section className="">
-      <div className="min-h-[80vh]">
+    <motion.section
+      className=""
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      <motion.div className="min-h-[80vh]" variants={containerVariants}>
         <Row gutter={[30, 24]} className="flex justify-center">
           <Col md={10} className="w-full">
-            <div className="w-full rounded-3xl bg-white shadow-xl p-4 mx-auto">
-              <Image
+            <motion.div
+              className="w-full rounded-3xl bg-white shadow-xl p-4 mx-auto"
+              variants={infoVariants}
+            >
+              <motion.div
                 className="object-cover object-center w-[250px] h-[250px] mx-auto"
-                src={"https://joesch.moe/api/v1/random"}
-                unoptimized
-                alt=""
-                height={500}
-                width={500}
-              />
+                variants={imageVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                <Image
+                  src={"https://joesch.moe/api/v1/random"}
+                  unoptimized
+                  alt=""
+                  height={500}
+                  width={500}
+                />
+              </motion.div>
               <div className="text-center mt-2">
                 <h2 className="font-semibold text-4xl">
                   {data.role === "super_admin"
@@ -74,7 +108,7 @@ const ProfilePage = () => {
                   </span>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </Col>
 
           {data.role !== "super_admin" && data.role !== "admin" && (
@@ -175,8 +209,8 @@ const ProfilePage = () => {
             </Col>
           )}
         </Row>
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   );
 };
 
