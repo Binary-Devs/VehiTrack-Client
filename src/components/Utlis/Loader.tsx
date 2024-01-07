@@ -16,7 +16,7 @@ const Loader = ({
         className ? className : "flex justify-center items-center"
       }`}
     >
-      <Flex align="center" gap="middle">
+      <Flex justify="center" align="center" gap="middle">
         <Spin size={size ? size : "default"} />
       </Flex>
       {/* <HashLoader

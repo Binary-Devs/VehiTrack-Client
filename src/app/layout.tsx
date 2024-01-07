@@ -2,10 +2,10 @@
 import Providers from "@/lib/Providers";
 // import type { Metadata } from "next";
 import { StyleProvider } from "@ant-design/cssinjs";
-import { Playfair_Display } from "next/font/google";
+// import { Playfair_Display } from "next/font/google";
 import "./globals.css";
 
-const inter = Playfair_Display({ subsets: ["cyrillic"], weight: "500" });
+// const inter = Playfair_Display({ subsets: ["cyrillic"], weight: "500" });
 
 // export const metadata: Metadata = {
 //   title: "Next Js Starter",
@@ -23,6 +23,19 @@ export default function RootLayout({
 
       <Providers>
         <html lang="en">
+          <head>
+            {/* <script
+              src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.2/socket.io.min.js"
+              integrity="sha512-xzC4RSo+4m1clLhr0pQr6yFjO9bJ0py6+l65SBibI8/pSEU8U4iVZ7xm95WRq8PXw2MKv8SSR3QkqR2jciG5Ug=="
+              crossorigin="anonymous"
+              referrerpolicy="no-referrer"
+              async
+            ></script> */}
+            <script
+              src="https://cdn.socket.io/4.7.2/socket.io.min.js"
+              async
+            ></script>
+          </head>
           <body
             // style={{
             //   maxWidth: "1990px",
@@ -30,7 +43,9 @@ export default function RootLayout({
             //   boxShadow:
             //     "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
             // }}
-            className={inter.className}
+            className={
+              "scrollbar scrollbar-track-transparent scrollbar-thumb-blue-200 scrollbar-track-rounded-full scrollbar-thumb-rounded-full"
+            }
           >
             {children}
           </body>

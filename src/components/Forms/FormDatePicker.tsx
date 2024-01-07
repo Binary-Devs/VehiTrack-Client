@@ -1,5 +1,5 @@
 import { DatePicker, DatePickerProps } from "antd";
-import dayjs, { Dayjs } from "dayjs";
+import { Dayjs } from "dayjs";
 import { Controller, useFormContext } from "react-hook-form";
 
 type UMDatePikerProps = {
@@ -44,16 +44,16 @@ const FormDatePicker = ({
   };
 
   return (
-    <div>
+    <div className="">
       {label ? label : null}
-      <br />
+
       <Controller
         name={name}
         control={control}
         render={({ field }) =>
           disablePrevious ? (
             <DatePicker
-              defaultValue={dayjs(field.value) || Date.now()}
+              // defaultValue={dayjs(field.value) || Date.now()}
               disabledDate={disabledDate}
               size={size}
               onChange={handleOnChange}
@@ -61,7 +61,7 @@ const FormDatePicker = ({
             />
           ) : (
             <DatePicker
-              defaultValue={dayjs(field.value) || Date.now()}
+              // defaultValue={dayjs(field.value) || Date.now()}
               size={size}
               onChange={handleOnChange}
               style={{ width: "100%" }}

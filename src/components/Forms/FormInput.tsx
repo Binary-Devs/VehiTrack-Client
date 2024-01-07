@@ -2,13 +2,13 @@
 
 import { getErrorMessageByPropertyName } from "@/utils/schema-validator";
 import { Input, InputNumber } from "antd";
-import { spawn } from "child_process";
-import { useFormContext, Controller } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 interface IInput {
   name: string;
   type?: string;
   size?: "large" | "small";
   value?: string | string[] | undefined;
+  defaultValue?: string | string[] | undefined;
   id?: string;
   placeholder?: string;
   validation?: object;
@@ -23,13 +23,14 @@ const FormInput = ({
   type,
   size = "large",
   value,
+  defaultValue,
   id,
   placeholder,
   validation,
   label,
   required,
   disabled = false,
-  readOnly=false,
+  readOnly = false,
 }: IInput) => {
   const {
     control,
@@ -40,7 +41,8 @@ const FormInput = ({
 
   return (
     <>
-      {required && type !== "number" ? (
+      {label && label}
+      {required && (
         <span
           style={{
             color: "red",
@@ -48,8 +50,7 @@ const FormInput = ({
         >
           *
         </span>
-      ) : null}
-      {label && type !== "number" ? label : null}
+      )}
       <Controller
         control={control}
         name={name}
@@ -59,14 +60,17 @@ const FormInput = ({
               disabled={disabled}
               type={type}
               size={size}
+              required={required}
               readOnly={readOnly}
               placeholder={placeholder}
               {...field}
+              defaultValue={defaultValue}
               value={value ? value : field.value}
             />
           ) : type === "number" ? (
-            <div className="flex flex-col" >
-              <h1>
+            <div className="flex flex-col">
+              {/* <p>
+                {label}
                 {required ? (
                   <span
                     style={{
@@ -76,17 +80,17 @@ const FormInput = ({
                     *
                   </span>
                 ) : null}
-                {label}
-              </h1>
+              </p> */}
               <InputNumber
                 type={type}
-                style={{width: "100%", marginRight:"2px"}}
+                style={{ width: "100%", marginRight: "2px" }}
                 readOnly={readOnly}
                 disabled={disabled}
                 min={0}
                 size={size}
                 placeholder={placeholder}
                 {...field}
+                defaultValue={defaultValue}
                 value={value ? value : field.value}
               />
             </div>
@@ -99,6 +103,7 @@ const FormInput = ({
               readOnly={readOnly}
               placeholder={placeholder}
               {...field}
+              defaultValue={defaultValue}
               value={value ? value : field.value}
             />
           )

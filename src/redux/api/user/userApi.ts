@@ -1,7 +1,7 @@
-import { tagTypes } from '@/redux/teg-types';
-import { baseApi } from '../baseApi';
+import { tagTypes } from "@/redux/teg-types";
+import { baseApi } from "../baseApi";
 
-const USER_URL = '/user';
+const USER_URL = "/user";
 
 export const userApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -9,7 +9,7 @@ export const userApi = baseApi.injectEndpoints({
     createSuperAdmin: build.mutation({
       query: (data) => ({
         url: `${USER_URL}/create-super-admin`,
-        method: 'POST',
+        method: "POST",
         data: data,
       }),
       invalidatesTags: [tagTypes.user],
@@ -19,7 +19,7 @@ export const userApi = baseApi.injectEndpoints({
     createAdmin: build.mutation({
       query: (data) => ({
         url: `${USER_URL}/create-admin`,
-        method: 'POST',
+        method: "POST",
         data: data,
       }),
       invalidatesTags: [tagTypes.user],
@@ -29,17 +29,17 @@ export const userApi = baseApi.injectEndpoints({
     createDriver: build.mutation({
       query: (data) => ({
         url: `${USER_URL}/create-driver`,
-        method: 'POST',
+        method: "POST",
         data: data,
       }),
-      invalidatesTags: [tagTypes.user],
+      invalidatesTags: [tagTypes.user, tagTypes.driver],
     }),
 
     // create helper
     createHelper: build.mutation({
       query: (data) => ({
         url: `${USER_URL}/create-helper`,
-        method: 'POST',
+        method: "POST",
         data: data,
       }),
       invalidatesTags: [tagTypes.user],

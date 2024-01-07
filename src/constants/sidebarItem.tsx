@@ -1,10 +1,12 @@
 import {
   BankOutlined,
   CarOutlined,
-  DashboardFilled,
+  DashboardOutlined,
+  HistoryOutlined,
+  HomeOutlined,
+  MessageOutlined,
   MoneyCollectOutlined,
   PaperClipOutlined,
-  ProfileOutlined,
   StrikethroughOutlined,
   TaobaoOutlined,
   ThunderboltOutlined,
@@ -13,302 +15,344 @@ import {
 } from "@ant-design/icons";
 import { MenuProps } from "antd";
 import Link from "next/link";
+import { FaRoadCircleCheck } from "react-icons/fa6";
+import { MdOutlineUpcoming } from "react-icons/md";
 import { TbReportAnalytics } from "react-icons/tb";
 import { USER_ROLE } from "./role";
 
 export const sidebarItem = (role: string) => {
   const defaultSidebarItems: MenuProps["items"] = [
     {
-      key: "profile",
+      key: "/home",
       label: (
-        <Link className="text-sm " href={`/${role}`}>
-          Profile
+        <Link className="text-sm" href={`/`}>
+          Home
         </Link>
       ),
-      icon: <ProfileOutlined />,
-
-      // children: [
-      //   {
-      //     label: (
-      //       <Link className="text-sm " href={`/${role}`}>
-      //         Account Profile
-      //       </Link>
-      //     ),
-      //     key: `/${role}/profile`,
-      //   },
-      // ],
+      icon: <HomeOutlined />,
     },
-  ];
-
-  const commonAdminSidebarItems: MenuProps["items"] = [
     {
       label: (
         <Link className="text-sm " href={`/dashboard`}>
           Dashboard
         </Link>
       ),
-      key: "dashboard",
-      icon: <DashboardFilled />,
+      key: "/dashboard",
+      icon: <DashboardOutlined />,
     },
+    {
+      label: (
+        <Link className="text-sm " href={`/inbox`}>
+          Inbox
+        </Link>
+      ),
+      key: "/inbox",
+      icon: <MessageOutlined />,
+    },
+  ];
 
-    // {
-    //   label: "Manage Users",
-    //   key: "manage-user",
-    //   icon: <ScheduleOutlined />,
-    //   children: [
-    //     {
-    //       label: "Admin",
-    //       key: "Admin",
-    //       icon: <UserOutlined />,
-    //       children: [
-    //         {
-    //           label: (
-    //             <Link className="text-sm " href={`/${role}/admin/create`}>
-    //               Create Admin{" "}
-    //             </Link>
-    //           ),
-    //           key: `${role}/admin/create`,
-    //         },
-    //         {
-    //           label: (
-    //             <Link className="text-sm " href={`/${role}/admin/all_admin`}>
-    //               Admin List
-    //             </Link>
-    //           ),
-    //           key: `${role}/admin/all_admin`,
-    //         },
-    //       ],
-    //     },
-    //     {
-    //       label: "Driver",
-    //       key: "Driver",
-    //       icon: <UserOutlined />,
-    //       children: [
-    //         {
-    //           label: (
-    //             <Link className="text-sm " href={`/${role}/driver/create`}>
-    //               Create Driver
-    //             </Link>
-    //           ),
-    //           key: `${role}/driver/create`,
-    //         },
-    //         {
-    //           label: (
-    //             <Link className="text-sm " href={`/${role}/driver/all_driver`}>
-    //               Driver List
-    //             </Link>
-    //           ),
-    //           key: `${role}/driver/all_driver`,
-    //         },
-    //       ],
-    //     },
-    //     {
-    //       label: "Helper",
-    //       key: "Helper",
-    //       icon: <UserOutlined />,
-    //       children: [
-    //         {
-    //           label: (
-    //             <Link className="text-sm " href={`/${role}/helper/create`}>
-    //               Create Helper
-    //             </Link>
-    //           ),
-    //           key: `${role}/helper/create`,
-    //         },
-    //         {
-    //           label: (
-    //             <Link className="text-sm " href={`/${role}/helper/all_helper`}>
-    //               Helper List
-    //             </Link>
-    //           ),
-    //           key: `${role}/helper/all-helper`,
-    //         },
-    //       ],
-    //     },
-    //   ],
-    // },
+  const commonAdminSidebarItems: MenuProps["items"] = [
+    ...defaultSidebarItems,
     {
       label: "Vehicle Management",
       icon: <CarOutlined />,
-      key: `Vehicle`,
+      key: `/${role}/vehicle_management`,
       children: [
         {
           label: (
-            <Link className="text-sm " href={`/${role}/vehicle/create`}>
-              Add New Vehicle
+            <Link
+              className="text-sm "
+              href={`/${role}/vehicle_management/brand_list`}
+            >
+              Brand List
             </Link>
           ),
-          key: `/${role}/vehicle/create`,
+          key: `/${role}/vehicle_management/brand_list`,
         },
         {
           label: (
-            <Link className="text-sm " href={`/${role}/vehicle/vehicle_list`}>
+            <Link
+              className="text-sm "
+              href={`/${role}/vehicle_management/model_list`}
+            >
+              Model List
+            </Link>
+          ),
+          key: `/${role}/vehicle_management/model_list`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/vehicle_management/vehicle_list`}
+            >
               Vehicle List
             </Link>
           ),
-          key: `/${role}/vehicle/vehicle_list`,
+          key: `/${role}/vehicle_management/vehicle_list`,
         },
       ],
     },
     {
       label: "Driver Management",
-      key: "Driver",
+      key: `/${role}/driver_management`,
       icon: <UserOutlined />,
       children: [
         {
           label: (
-            <Link className="text-sm " href={`/${role}/driver/create`}>
-              Create Driver
-            </Link>
-          ),
-          key: `${role}/driver/create`,
-        },
-        {
-          label: (
-            <Link className="text-sm " href={`/${role}/driver/all_driver`}>
+            <Link
+              className="text-sm "
+              href={`/${role}/driver_management/driver_list`}
+            >
               Driver List
             </Link>
           ),
-          key: `${role}/driver/all_driver`,
+          key: `/${role}/driver_management/driver_list`,
         },
       ],
     },
     {
       label: "Helper Management",
-      key: "Helper",
+      key: `/${role}/helper_management`,
       icon: <UserOutlined />,
       children: [
         {
           label: (
-            <Link className="text-sm " href={`/${role}/helper/create`}>
-              Create Helper
-            </Link>
-          ),
-          key: `${role}/helper/create`,
-        },
-        {
-          label: (
-            <Link className="text-sm " href={`/${role}/helper/all_helper`}>
+            <Link
+              className="text-sm "
+              href={`/${role}/helper_management/helper_list`}
+            >
               Helper List
             </Link>
           ),
-          key: `${role}/helper/all-helper`,
+          key: `/${role}/helper_management/helper_list`,
         },
       ],
     },
     {
       label: "Trip Management",
       icon: <TaobaoOutlined />,
-      key: "Trip",
+      key: `/${role}/trip_management`,
       children: [
         {
           label: (
-            <Link className="text-sm " href={`/${role}/trip/party_list`}>
+            <Link
+              className="text-sm "
+              href={`/${role}/trip_management/party_list`}
+            >
               Party List
             </Link>
           ),
-          key: `/${role}/trip/party_list`,
+          key: `/${role}/trip_management/party_list`,
         },
         {
           label: (
-            <Link className="text-sm " href={`/${role}/trip/trip_expense_head`}>
-              Trip Expense Head
-            </Link>
-          ),
-          key: `/${role}/trip/trip_expense_head`,
-        },
-        {
-          label: (
-            <Link className="text-sm " href={`/${role}/trip/trip_list`}>
+            <Link
+              className="text-sm "
+              href={`/${role}/trip_management/trip_list`}
+            >
               Trip List
             </Link>
           ),
-          key: `/${role}/trip/trip_list`,
+          key: `/${role}/trip_management/trip_list`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/trip_management/trip_expense_head`}
+            >
+              Trip Expense Head
+            </Link>
+          ),
+          key: `/${role}/trip_management/trip_expense_head`,
         },
       ],
     },
     {
       label: "Financial  Management",
       icon: <BankOutlined />,
-      key: `/${role}/manage-financial`,
+      key: `/${role}/financial_management`,
       children: [
         {
           label: (
             <Link
               className="text-sm "
-              href={`/${role}/manage-financial/account-type`}
+              href={`/${role}/financial_management/account_type`}
             >
               Account Type
             </Link>
           ),
-          key: `/${role}/manage-financial/account-type`,
+          key: `/${role}/financial_management/account_type`,
         },
         {
           label: (
             <Link
               className="text-sm "
-              href={`/${role}/manage-financial/account-heads`}
+              href={`/${role}/financial_management/account_heads`}
             >
               Account Heads
             </Link>
           ),
-          key: `/${role}/manage-financial/account-heads`,
+          key: `/${role}/financial_management/account_heads`,
         },
         {
           label: (
             <Link
               className="text-sm "
-              href={`/${role}/manage-financial/balance-sheet`}
+              href={`/${role}/financial_management/balance_sheet`}
             >
               Balance Sheet
             </Link>
           ),
-          key: `/${role}/manage-financial/balance-sheet`,
+          key: `/${role}/financial_management/balance_sheet`,
         },
       ],
     },
     {
       label: "Fuel Management",
       icon: <ThunderboltOutlined />,
-      key: `/${role}/manage-fuel`,
+      key: `/${role}/fuel_management`,
       children: [
         {
           label: (
-            <Link className="text-sm " href={`/${role}/manage-fuel/fuel-types`}>
+            <Link
+              className="text-sm "
+              href={`/${role}/fuel_management/fuel_types`}
+            >
               Fuel Types
             </Link>
           ),
-          key: `/${role}/manage-fuel/fuel-types`,
+          key: `/${role}/fuel_management/fuel_types`,
         },
         {
           label: (
             <Link
               className="text-sm "
-              href={`/${role}/manage-fuel/pump-station`}
+              href={`/${role}/fuel_management/pump_station`}
             >
               Pump Station
             </Link>
           ),
-          key: `/${role}/manage-fuel/pump-station`,
-        },
-        {
-          label: (
-            <Link className="text-sm " href={`/${role}/manage-fuel/refueling`}>
-              Refueling
-            </Link>
-          ),
-          key: `/${role}/manage-fuel/refueling`,
+          key: `/${role}/fuel_management/pump_station`,
         },
         {
           label: (
             <Link
               className="text-sm "
-              href={`/${role}/manage-fuel/fuel-status`}
+              href={`/${role}/fuel_management/refueling`}
+            >
+              Refueling
+            </Link>
+          ),
+          key: `/${role}/fuel_management/refueling`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/fuel_management/fuel_status`}
             >
               Fuel Status
             </Link>
           ),
-          key: `/${role}/manage-financial/fuel-status`,
+          key: `/${role}/fuel_management/fuel_status`,
+        },
+      ],
+    },
+    {
+      label: "Paper Work",
+      icon: <PaperClipOutlined />,
+      key: `/${role}/paper_work`,
+      children: [
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/paper_work/registration`}
+            >
+              Registration
+            </Link>
+          ),
+          key: `/${role}/paper_work/registration`,
+        },
+        {
+          label: (
+            <Link className="text-sm " href={`/${role}/paper_work/tax_token`}>
+              Tax/Token
+            </Link>
+          ),
+          key: `/${role}/paper_work/tax_token`,
+        },
+        {
+          label: (
+            <Link className="text-sm " href={`/${role}/paper_work/fitness`}>
+              Fitness
+            </Link>
+          ),
+          key: `/${role}/paper_work/fitness`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/paper_work/route_permit`}
+            >
+              Route Permit
+            </Link>
+          ),
+          key: `/${role}/paper_work/route_permit`,
+        },
+      ],
+    },
+    {
+      label: "Store Management",
+      icon: <StrikethroughOutlined />,
+      key: `/${role}/store_management`,
+      children: [
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/store_management/equipment`}
+            >
+              Equipment
+            </Link>
+          ),
+          key: `/${role}/store_management/equipment`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/store_management/equipment_in`}
+            >
+              Equipment In
+            </Link>
+          ),
+          key: `/${role}/store_management/equipment_in`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/store_management/stock_status`}
+            >
+              Stock Status
+            </Link>
+          ),
+          key: `/${role}/store_management/stock_status`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/store_management/unit_of_measurement`}
+            >
+              Unit of Measurement
+            </Link>
+          ),
+          key: `/${role}/store_management/unit_of_measurement`,
         },
       ],
     },
@@ -321,216 +365,55 @@ export const sidebarItem = (role: string) => {
           label: (
             <Link
               className="text-sm "
-              href={`/${role}/maintenance/repair-maintenance`}
+              href={`/${role}/maintenance/maintenance_head`}
+            >
+              Maintenance Heads
+            </Link>
+          ),
+          key: `/${role}/maintenance/maintenance_head`,
+        },
+        {
+          label: (
+            <Link
+              className="text-sm "
+              href={`/${role}/maintenance/repair_maintenance`}
             >
               Repair Maintenance
             </Link>
           ),
-          key: `/${role}/maintenance/repair-maintenance`,
-        },
-        {
-          label: (
-            <Link
-              className="text-sm "
-              href={`/${role}/maintenance/accident-history`}
-            >
-              Accident History
-            </Link>
-          ),
-          key: `/${role}/maintenance/accident-history`,
-        },
-      ],
-    },
-    {
-      label: "Paper Work",
-      icon: <PaperClipOutlined />,
-      key: `/${role}/paper-work`,
-      children: [
-        {
-          label: (
-            <Link
-              className="text-sm "
-              href={`/${role}/paper-work/registration`}
-            >
-              Registration
-            </Link>
-          ),
-          key: `/${role}/paper-work/repair-paper-work`,
-        },
-        {
-          label: (
-            <Link className="text-sm " href={`/${role}/paper-work/tax-token`}>
-              Tax/Token
-            </Link>
-          ),
-          key: `/${role}/maintenance/tax-token`,
-        },
-        {
-          label: (
-            <Link className="text-sm " href={`/${role}/paper-work/fitness`}>
-              Fitness
-            </Link>
-          ),
-          key: `/${role}/maintenance/fitness`,
-        },
-        {
-          label: (
-            <Link
-              className="text-sm "
-              href={`/${role}/paper-work/route-permit`}
-            >
-              Route Permit
-            </Link>
-          ),
-          key: `/${role}/paper-work/route-permit`,
+          key: `/${role}/maintenance/repair_maintenance`,
         },
       ],
     },
     {
       label: "Miscellaneous Expenses",
       icon: <MoneyCollectOutlined />,
-      key: `/${role}/miscellaneous-expenses`,
+      key: `/${role}/miscellaneous_expenses`,
       children: [
         {
           label: (
             <Link
               className="text-sm "
-              href={`/${role}/miscellaneous-expenses/expense-heads`}
+              href={`/${role}/miscellaneous_expenses/expense_heads`}
             >
               Expense Heads
             </Link>
           ),
-          key: `/${role}/miscellaneous-expenses/expense-heads`,
+          key: `/${role}/miscellaneous_expenses/expense_heads`,
         },
         {
           label: (
             <Link
               className="text-sm "
-              href={`/${role}/miscellaneous-expenses/expense-list`}
+              href={`/${role}/miscellaneous_expenses/expense_list`}
             >
               Expense List
             </Link>
           ),
-          key: `/${role}/maintenance/list`,
+          key: `/${role}/miscellaneous_expenses/expense_list`,
         },
       ],
     },
-    {
-      label: "Store Management",
-      icon: <StrikethroughOutlined />,
-      key: `/${role}/store`,
-      children: [
-        {
-          label: (
-            <Link className="text-sm " href={`/${role}/store/equipment`}>
-              Equipment
-            </Link>
-          ),
-          key: `/${role}/store/equipment`,
-        },
-        {
-          label: (
-            <Link className="text-sm " href={`/${role}/store/equipment_In`}>
-              Equipment In
-            </Link>
-          ),
-          key: `/${role}/store/equipment_In`,
-        },
-        {
-          label: (
-            <Link className="text-sm " href={`/${role}/store/stock_status`}>
-              Stock Status
-            </Link>
-          ),
-          key: `/${role}/store/stock_status`,
-        },
-        {
-          label: (
-            <Link
-              className="text-sm "
-              href={`/${role}/store/unit_of_measurement`}
-            >
-              Unit of Measurement
-            </Link>
-          ),
-          key: `/${role}/store/unit_of_measurement`,
-        },
-      ],
-    },
-    // {
-    //   label: "Paper work",
-    //   icon: <PaperClipOutlined />,
-    //   key: `/${role}/paper_work`,
-    //   children: [
-    //     {
-    //       label: (
-    //         <Link className="text-sm " href={`/${role}/paper_work/fitness`}>
-    //           Fitness
-    //         </Link>
-    //       ),
-    //       key: `/${role}/paper_work/fitness`,
-    //     },
-    //     {
-    //       label: (
-    //         <Link
-    //           className="text-sm "
-    //           href={`/${role}/paper_work/registration`}
-    //         >
-    //           Registration
-    //         </Link>
-    //       ),
-    //       key: `/${role}/paper_work/registration`,
-    //     },
-    //     {
-    //       label: (
-    //         <Link
-    //           className="text-sm "
-    //           href={`/${role}/paper_work/route_permit`}
-    //         >
-    //           Route permit
-    //         </Link>
-    //       ),
-    //       key: `/${role}/paper_work/route_permit`,
-    //     },
-    //     {
-    //       label: (
-    //         <Link className="text-sm " href={`/${role}/paper_work/tax_token`}>
-    //           Tax token
-    //         </Link>
-    //       ),
-    //       key: `/${role}/paper_work/tax_token`,
-    //     },
-    //   ],
-    // },
-    // {
-    //   label: "Miscellaneous Expenses",
-    //   icon: <StrikethroughOutlined />,
-    //   key: `/${role}/miscellaneous_expenses`,
-    //   children: [
-    //     {
-    //       label: (
-    //         <Link
-    //           className="text-sm "
-    //           href={`/${role}/miscellaneous_expenses/expense_heads`}
-    //         >
-    //           Expense heads
-    //         </Link>
-    //       ),
-    //       key: `/${role}/miscellaneous_expenses/expense_heads`,
-    //     },
-    //     {
-    //       label: (
-    //         <Link
-    //           className="text-sm "
-    //           href={`/${role}/miscellaneous_expenses/expense_list`}
-    //         >
-    //           Expense List
-    //         </Link>
-    //       ),
-    //       key: `/${role}/miscellaneous_expenses/expense_list`,
-    //     },
-    //   ],
-    // },
     {
       label: "Report",
       icon: <TbReportAnalytics />,
@@ -546,48 +429,143 @@ export const sidebarItem = (role: string) => {
         },
         {
           label: (
-            <Link className="text-sm " href={`/${role}/report/annual-report`}>
+            <Link className="text-sm " href={`/${role}/report/annual_report`}>
               Annual Report
             </Link>
           ),
-          key: `/${role}/report/annual-report`,
+          key: `/${role}/report/annual_report`,
         },
       ],
     },
     {
-      label: "Admin",
-      key: "Admin",
+      label: (
+        <Link className="text-sm " href={`/${role}/accident_history`}>
+          Accident History
+        </Link>
+      ),
+      icon: <HistoryOutlined />,
+      key: `/${role}/accident_history`,
+    },
+  ];
+
+  const superAdminSidebarItems: MenuProps["items"] = [
+    ...commonAdminSidebarItems,
+    {
+      label: "Manger Management",
+      key: `/${role}/manager`,
       icon: <UserOutlined />,
       children: [
         {
           label: (
-            <Link className="text-sm " href={`/${role}/admin/create`}>
-              Create Admin{" "}
+            <Link
+              className="text-sm "
+              href={`/${role}/manager/add_new_manager`}
+            >
+              Add New Manager
             </Link>
           ),
-          key: `${role}/admin/create`,
+          key: `${role}/manager/add_new_manager`,
         },
         {
           label: (
-            <Link className="text-sm " href={`/${role}/admin/all_admin`}>
-              Admin List
+            <Link className="text-sm " href={`/${role}/manager/manager_list`}>
+              Manager List
             </Link>
           ),
-          key: `${role}/admin/all_admin`,
+          key: `${role}/manager/manager_list`,
         },
       ],
     },
+    {
+      label: (
+        <Link className="text-sm " href={`/profile`}>
+          Profile
+        </Link>
+      ),
+      icon: <UserOutlined />,
+      key: `/profile`,
+    },
   ];
 
-  const adminSidebarItems: MenuProps["items"] = [...commonAdminSidebarItems];
-
-  const superAdminSidebarItems: MenuProps["items"] = [
+  const adminSidebarItems: MenuProps["items"] = [
     ...commonAdminSidebarItems,
+    {
+      label: (
+        <Link className="text-sm " href={`/profile`}>
+          Profile
+        </Link>
+      ),
+      icon: <UserOutlined />,
+      key: `/profile`,
+    },
+  ];
+
+  const driverSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
+    {
+      label: (
+        <Link className="text-sm " href={`/${role}/upcoming_trip`}>
+          Upcoming Trip
+        </Link>
+      ),
+      icon: <MdOutlineUpcoming />,
+      key: `/${role}/upcoming_trip`,
+    },
+    {
+      label: (
+        <Link className="text-sm " href={`/${role}/my_trip`}>
+          My Trip
+        </Link>
+      ),
+      icon: <FaRoadCircleCheck />,
+      key: `/${role}/my_trip`,
+    },
+    {
+      label: (
+        <Link className="text-sm " href={`/profile`}>
+          Profile
+        </Link>
+      ),
+      icon: <UserOutlined />,
+      key: `/profile`,
+    },
+  ];
+
+  const helperSidebarItems: MenuProps["items"] = [
+    ...defaultSidebarItems,
+    {
+      label: (
+        <Link className="text-sm " href={`/${role}/upcoming_trip`}>
+          Upcoming Trip
+        </Link>
+      ),
+      icon: <MdOutlineUpcoming />,
+      key: `/${role}/upcoming_trip`,
+    },
+    {
+      label: (
+        <Link className="text-sm " href={`/${role}/my_trip`}>
+          My Trip
+        </Link>
+      ),
+      icon: <FaRoadCircleCheck />,
+      key: `/${role}/my_trip`,
+    },
+    {
+      label: (
+        <Link className="text-sm " href={`/profile`}>
+          Profile
+        </Link>
+      ),
+      icon: <UserOutlined />,
+      key: `/profile`,
+    },
   ];
 
   if (role === USER_ROLE.SUPER_ADMIN) return superAdminSidebarItems;
   else if (role === USER_ROLE.ADMIN) return adminSidebarItems;
+  else if (role === USER_ROLE.DRIVER) return driverSidebarItems;
+  else if (role === USER_ROLE.HELPER) return helperSidebarItems;
   else {
     return defaultSidebarItems;
   }

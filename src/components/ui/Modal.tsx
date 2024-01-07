@@ -1,25 +1,26 @@
 "use client";
-import React, { ReactElement, useState } from "react";
 import { Button, Modal } from "antd";
-import ModalComponentWrapper from "./ModalComponentWrapper";
-import { PlusOutlined } from "@ant-design/icons";
+import React, { useState } from "react";
 
 const ModalComponent = ({
   children,
+  icon,
   buttonText,
-  loading = false,
+  buttonDanger,
+  loading,
   setSetModel,
   showModel,
 }: {
   children: React.ReactElement;
   buttonText?: string;
+  buttonDanger?: boolean;
   loading?: boolean;
   showModel?: any;
   setSetModel?: any;
+  icon?: any;
 }) => {
   const [open, setOpen] = useState(false);
   //   const [confirmLoading, setConfirmLoading] = useState(false);
-  const [modalText, setModalText] = useState("Content of the modal");
 
   const showModal = () => {
     setOpen(true);
@@ -36,34 +37,38 @@ const ModalComponent = ({
 
   return (
     <>
-      <div>
-      
-        <div className="lg:hidden px-2 py-1 rounded-lg border ml-1  flex justify-center items-center">
-        <Button onClick={showModal} type="primary" >
-
-          <PlusOutlined />
-      </Button>
+      <div style={{ display: "inline-block" }}>
+        <div className="lg:hidden">
+          <Button onClick={showModal} type="primary" danger={buttonDanger}>
+            {icon}
+          </Button>
         </div>
         <div className="hidden lg:block">
-          <Button type="primary" onClick={showModal}>
-            {buttonText || "Open Modal"}
+          <Button
+            danger={buttonDanger}
+            type="primary"
+            onClick={showModal}
+            className="!flex !items-center !gap-2 "
+          >
+            {icon && <span className="m-1">{icon}</span>}
+            {buttonText && buttonText}
           </Button>
         </div>
       </div>
       <Modal
-        // title="Title"
         open={open}
-        confirmLoading={loading}
+        confirmLoading={loading ? loading : false}
         onCancel={handleCancel}
         //! when i went hidden ok and cancel button then it use
         footer={(_, { OkBtn, CancelBtn }) => (
           <>
             {/* <Button>Custom Button</Button>
-            <CancelBtn />
-            <OkBtn /> */}
+              <CancelBtn />
+              <OkBtn /> */}
           </>
         )}
-        width={1000}
+        // width="max-content"
+        width={900}
       >
         {children}
       </Modal>

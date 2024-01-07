@@ -1,11 +1,20 @@
 "use client";
 
-import ColumnChart from "@/components/Charts/ColumnChart";
-import LineChart from "@/components/Charts/LineChart";
+// import ColumnChart from "@/components/Charts/ColumnChart";
+// import LineChart from "@/components/Charts/LineChart";
 import type { RadioChangeEvent } from "antd";
 import { Radio, Typography } from "antd";
+import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
+import Image from "next/image";
 import { useState } from "react";
 
+const ColumnChart = dynamic(() => import("@/components/Charts/ColumnChart"), {
+  ssr: false,
+});
+const LineChart = dynamic(() => import("@/components/Charts/LineChart"), {
+  ssr: false,
+});
 const DashboardPage = () => {
   const { Title, Text } = Typography;
   const [recentTabData, setRecentTabData] = useState("trip");
@@ -476,276 +485,79 @@ const DashboardPage = () => {
     },
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: 0.8 } },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeInOut" },
+    },
+  };
+
   return (
-    <>
-      <div>
-        {/* Section 1 */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-5">
-          {count.map((c, index) => (
-            <div
-              key={index}
-              className="flex items-center justify-between bg-white rounded-lg p-5"
-            >
-              <div>
-                <span className="text-[#8c8c8c] font-semibold text-sm">
-                  {c.today}
-                </span>
-                <p className="text-3xl font-bold ">
-                  {c.title}{" "}
-                  {/* <small
+    <motion.div
+      className="your-container-styles"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      {/* Section 1 */}
+      <motion.div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-5">
+        {count.map((c, index) => (
+          <motion.div
+            key={index}
+            className="flex items-center justify-between bg-white border border-blue-200 shadow-md shadow-blue-200 rounded-lg p-5"
+            variants={itemVariants}
+          >
+            <div>
+              <span className="text-[#8c8c8c] font-semibold text-sm">
+                {c.today}
+              </span>
+              <p className="text-3xl font-bold ">
+                {c.title}{" "}
+                {/* 
+                  <small
                     className={`text-sm font-semibold ${
                       c.bnb === "redtext" ? "text-red-500" : "text-[#52c41a]"
                     }`}
                   >
                     {c.percent}
-                  </small> */}
-                </p>
-              </div>
-              <div>
-                <div className="flex items-center justify-center w-12 h-12 bg-[#1890ff] rounded-[0.5rem]">
-                  {c.icon}
-                </div>
+                  </small> 
+                  */}
+              </p>
+            </div>
+            <div>
+              <div className="flex items-center justify-center w-12 h-12 bg-[#1890ff] rounded-[0.5rem]">
+                {c.icon}
               </div>
             </div>
-          ))}
-        </div>
+          </motion.div>
+        ))}
+      </motion.div>
 
-        {/* Section 2 */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-5">
-          <div className="bg-white rounded-lg p-5">
-            <ColumnChart />
-          </div>
-          <div className="bg-white rounded-lg p-5">
-            <LineChart />
-          </div>
+      {/* Section 2 */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-5">
+        <div className="bg-white border border-blue-200 shadow-md shadow-blue-200 rounded-lg p-5">
+          <ColumnChart />
         </div>
-
-        {/* Section 3 */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 mb-5">
-          {/* Recent Data */}
-          <div className="bg-white rounded-lg py-5 pl-5 pr-1.5 lg:col-span-7">
-            <div className="flex justify-between items-center pr-3.5 mb-3">
-              <div>
-                <Title level={5} className="!m-0">
-                  Recent Data
-                </Title>
-                {/* <Paragraph className="lastweek !m-0">
-                than last year <span className="blue">+10%</span>
-              </Paragraph> */}
-              </div>
-              <div>
-                <Radio.Group
-                  onChange={recentTabChange}
-                  defaultValue={recentTabData}
-                >
-                  <Radio.Button value="trip">TRIP</Radio.Button>
-                  <Radio.Button value="maintenance">MAINTENANCE</Radio.Button>
-                </Radio.Group>
-              </div>
-            </div>
-            {/* Trip */}
-            {recentTabData === "trip" && (
-              <div className="inline-block min-w-full align-middle overflow-auto h-[340px] scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-300 scrollbar-track-rounded-full scrollbar-thumb-rounded-full pr-1.5">
-                <table className="min-w-full divide-y divide-gray-300">
-                  <thead>
-                    <tr className="">
-                      <th
-                        scope="col"
-                        className="py-2 pl-3 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
-                      >
-                        Vehicle
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-3 py-2 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Address
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200">
-                    {data.length ? (
-                      data.map(
-                        ({ businessDetails, address, _id, create_date }, i) => (
-                          <tr key={_id} className="hover:bg-slate-50 w-full">
-                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                              <div className="flex items-center gap-x-4 group">
-                                <img
-                                  src={businessDetails?.businessLogo}
-                                  alt="Image"
-                                  className="h-9 w-9 rounded-full bg-gray-800"
-                                />
-                                <div className="truncate font-medium leading-6 text-gray-700 group-hover:text-gray-900 capitalize duration-200 ">
-                                  <p>{businessDetails?.businessName}</p>
-                                  <p>
-                                    {new Date(create_date).toLocaleString()}
-                                  </p>
-                                </div>
-                              </div>
-                            </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 capitalize truncate hover:text-clip">
-                              <span>{address.country},</span> <br />
-                              <span>
-                                {address.city}, {address.state}
-                              </span>
-                            </td>
-                          </tr>
-                        )
-                      )
-                    ) : (
-                      <tr>
-                        <td className="py-20 w-full text-center text-red-400">
-                          Empty !
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            )}
-            {/* Maintenance */}
-            {recentTabData === "maintenance" && (
-              <div className="inline-block min-w-full align-middle overflow-auto h-[340px] scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-300 scrollbar-track-rounded-full scrollbar-thumb-rounded-full pr-1.5">
-                <table className="min-w-full divide-y divide-gray-300">
-                  <thead>
-                    <tr className="">
-                      <th
-                        scope="col"
-                        className="py-2 pl-3 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
-                      >
-                        Vehicle
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-3 py-2 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Address
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200">
-                    {dataM?.length ? (
-                      dataM?.map(
-                        ({ businessDetails, address, _id, create_date }, i) => (
-                          <tr key={_id} className="hover:bg-slate-50 w-full">
-                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                              <div className="flex items-center gap-x-4 group">
-                                <img
-                                  src={businessDetails?.businessLogo}
-                                  alt="Image"
-                                  className="h-9 w-9 rounded-full bg-gray-800"
-                                />
-                                <div className="truncate font-medium leading-6 text-gray-700 group-hover:text-gray-900 capitalize duration-200">
-                                  <p>{businessDetails?.businessName}</p>
-                                  <p>
-                                    {new Date(create_date).toLocaleString()}
-                                  </p>
-                                </div>
-                              </div>
-                            </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500  capitalize truncate hover:text-clip">
-                              <span>{address.country},</span> <br />
-                              <span>
-                                {address.city}, {address.state}
-                              </span>
-                            </td>
-                          </tr>
-                        )
-                      )
-                    ) : (
-                      <tr>
-                        <td className="py-20 w-full text-center text-red-400">
-                          Empty !
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
-          {/* Income/Expense */}
-          <div className="bg-white rounded-lg py-5 pl-5 pr-1.5 lg:col-span-5">
-            <div className="pr-3.5">
-              <Title level={5}>Income/Expenses</Title>
-              {/* <Paragraph className="lastweek !m-0">
-                than last year <span className="blue">+10%</span>
-              </Paragraph> */}
-            </div>
-            <div className="overflow-auto h-[352px] scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-300 scrollbar-track-rounded-full scrollbar-thumb-rounded-full pr-1.5">
-              <header className="text-xs uppercase text-slate-400 bg-slate-50 rounded-sm font-semibold p-2">
-                Today
-              </header>
-              <ul className="my-1">
-                {/* Item */}
-                {incomeExpenseData.map((d, i) => (
-                  <li key={i} className="flex px-2 hover:bg-slate-50">
-                    <div
-                      className={`w-9 h-9 rounded-full shrink-0 ${
-                        d.type === "income"
-                          ? "bg-emerald-500"
-                          : d.type === "expense"
-                          ? "bg-rose-500"
-                          : "bg-slate-200"
-                      } my-2 mr-3`}
-                    >
-                      {d.type === "income" && (
-                        <svg
-                          className="w-9 h-9 fill-current text-emerald-50"
-                          viewBox="0 0 36 36"
-                        >
-                          <path d="M18.3 11.3l-1.4 1.4 4.3 4.3H11v2h10.2l-4.3 4.3 1.4 1.4L25 18z" />
-                        </svg>
-                      )}
-                      {d.type === "expense" && (
-                        <svg
-                          className="w-9 h-9 fill-current text-rose-50"
-                          viewBox="0 0 36 36"
-                        >
-                          <path d="M17.7 24.7l1.4-1.4-4.3-4.3H25v-2H14.8l4.3-4.3-1.4-1.4L11 18z" />
-                        </svg>
-                      )}
-                      {d.type === "cancel" && (
-                        <svg
-                          className="w-9 h-9 fill-current text-slate-400"
-                          viewBox="0 0 36 36"
-                        >
-                          <path d="M21.477 22.89l-8.368-8.367a6 6 0 008.367 8.367zm1.414-1.413a6 6 0 00-8.367-8.367l8.367 8.367zM18 26a8 8 0 110-16 8 8 0 010 16z" />
-                        </svg>
-                      )}
-                    </div>
-                    <div className="grow flex items-center border-b border-slate-100 text-sm py-2">
-                      <div className="grow flex justify-between">
-                        <div className="self-center">{d.name}</div>
-                        <div className="shrink-0 self-start ml-2">
-                          <span
-                            className={`font-medium  ${
-                              d.type === "income"
-                                ? "text-emerald-500"
-                                : d.type === "expense"
-                                ? "text-rose-500"
-                                : "text-slate-800 line-through"
-                            }`}
-                          >
-                            {d.amount}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
+        <div className="bg-white border border-blue-200 shadow-md shadow-blue-200 rounded-lg p-5">
+          <LineChart />
         </div>
+      </div>
 
-        {/* Section 4 */}
-        {/* Upcoming Data */}
-        <div className="bg-white rounded-lg py-5 pl-5 pr-1.5">
-          <div className="flex justify-between items-center mb-3 pr-3.5">
+      {/* Section 3 */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 mb-5">
+        {/* Recent Data */}
+        <div className="bg-white border border-blue-200 shadow-md shadow-blue-200 rounded-lg py-5 pl-5 pr-1.5 lg:col-span-7 overflow-x-auto">
+          <div className="flex justify-between items-center pr-3.5 mb-3">
             <div>
               <Title level={5} className="!m-0">
-                Upcoming Data
+                Recent Data
               </Title>
               {/* <Paragraph className="lastweek !m-0">
                 than last year <span className="blue">+10%</span>
@@ -753,7 +565,7 @@ const DashboardPage = () => {
             </div>
             <div>
               <Radio.Group
-                onChange={upcomingTabChange}
+                onChange={recentTabChange}
                 defaultValue={recentTabData}
               >
                 <Radio.Button value="trip">TRIP</Radio.Button>
@@ -762,8 +574,8 @@ const DashboardPage = () => {
             </div>
           </div>
           {/* Trip */}
-          {upcomingTabData === "trip" && (
-            <div className="inline-block min-w-full align-middle overflow-auto h-[340px] scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-300 scrollbar-track-rounded-full scrollbar-thumb-rounded-full pr-1.5">
+          {recentTabData === "trip" && (
+            <div className="inline-block min-w-full align-middle overflow-auto h-[340px] scrollbar-thin scrollbar-track-transparent scrollbar-thumb-blue-200 scrollbar-track-rounded-full scrollbar-thumb-rounded-full pr-1.5">
               <table className="min-w-full divide-y divide-gray-300">
                 <thead>
                   <tr className="">
@@ -782,24 +594,26 @@ const DashboardPage = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {data2?.length ? (
-                    data2?.map(
+                  {data.length ? (
+                    data.map(
                       ({ businessDetails, address, _id, create_date }, i) => (
                         <tr key={_id} className="hover:bg-slate-50 w-full">
                           <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                             <div className="flex items-center gap-x-4 group">
-                              <img
+                              <Image
+                                width={300}
+                                height={300}
                                 src={businessDetails?.businessLogo}
                                 alt="Image"
                                 className="h-9 w-9 rounded-full bg-gray-800"
                               />
-                              <div className="truncate font-medium leading-6 text-gray-700 group-hover:text-gray-900 capitalize duration-200">
-                                <p> {businessDetails?.businessName}</p>
+                              <div className="truncate font-medium leading-6 text-gray-700 group-hover:text-gray-900 capitalize duration-200 ">
+                                <p>{businessDetails?.businessName}</p>
                                 <p>{new Date(create_date).toLocaleString()}</p>
                               </div>
                             </div>
                           </td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500  capitalize truncate hover:text-clip">
+                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 capitalize truncate hover:text-clip">
                             <span>{address.country},</span> <br />
                             <span>
                               {address.city}, {address.state}
@@ -820,8 +634,8 @@ const DashboardPage = () => {
             </div>
           )}
           {/* Maintenance */}
-          {upcomingTabData === "maintenance" && (
-            <div className="inline-block min-w-full align-middle overflow-auto h-[340px] scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-300 scrollbar-track-rounded-full scrollbar-thumb-rounded-full pr-1.5">
+          {recentTabData === "maintenance" && (
+            <div className="inline-block min-w-full align-middle overflow-auto h-[340px] scrollbar-thin scrollbar-track-transparent scrollbar-thumb-blue-200 scrollbar-track-rounded-full scrollbar-thumb-rounded-full pr-1.5">
               <table className="min-w-full divide-y divide-gray-300">
                 <thead>
                   <tr className="">
@@ -846,9 +660,11 @@ const DashboardPage = () => {
                         <tr key={_id} className="hover:bg-slate-50 w-full">
                           <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                             <div className="flex items-center gap-x-4 group">
-                              <img
+                              <Image
                                 src={businessDetails?.businessLogo}
                                 alt="Image"
+                                width={300}
+                                height={300}
                                 className="h-9 w-9 rounded-full bg-gray-800"
                               />
                               <div className="truncate font-medium leading-6 text-gray-700 group-hover:text-gray-900 capitalize duration-200">
@@ -878,8 +694,222 @@ const DashboardPage = () => {
             </div>
           )}
         </div>
+        {/* Income/Expense */}
+        <div className="bg-white border border-blue-200 shadow-md shadow-blue-200 rounded-lg py-5 pl-5 pr-1.5 lg:col-span-5 overflow-auto">
+          <div className="pr-3.5">
+            <Title level={5}>Income/Expenses</Title>
+            {/* <Paragraph className="lastweek !m-0">
+                than last year <span className="blue">+10%</span>
+              </Paragraph> */}
+          </div>
+          <div className="overflow-auto h-[352px] scrollbar-thin scrollbar-track-transparent scrollbar-thumb-blue-200 scrollbar-track-rounded-full scrollbar-thumb-rounded-full pr-1.5">
+            <header className="text-xs uppercase text-slate-400 bg-slate-50 rounded-sm font-semibold p-2">
+              Today
+            </header>
+            <ul className="my-1">
+              {/* Item */}
+              {incomeExpenseData.map((d, i) => (
+                <li key={i} className="flex px-2 hover:bg-slate-50">
+                  <div
+                    className={`w-9 h-9 rounded-full shrink-0 ${
+                      d.type === "income"
+                        ? "bg-emerald-500"
+                        : d.type === "expense"
+                        ? "bg-rose-500"
+                        : "bg-slate-200"
+                    } my-2 mr-3`}
+                  >
+                    {d.type === "income" && (
+                      <svg
+                        className="w-9 h-9 fill-current text-emerald-50"
+                        viewBox="0 0 36 36"
+                      >
+                        <path d="M18.3 11.3l-1.4 1.4 4.3 4.3H11v2h10.2l-4.3 4.3 1.4 1.4L25 18z" />
+                      </svg>
+                    )}
+                    {d.type === "expense" && (
+                      <svg
+                        className="w-9 h-9 fill-current text-rose-50"
+                        viewBox="0 0 36 36"
+                      >
+                        <path d="M17.7 24.7l1.4-1.4-4.3-4.3H25v-2H14.8l4.3-4.3-1.4-1.4L11 18z" />
+                      </svg>
+                    )}
+                    {d.type === "cancel" && (
+                      <svg
+                        className="w-9 h-9 fill-current text-slate-400"
+                        viewBox="0 0 36 36"
+                      >
+                        <path d="M21.477 22.89l-8.368-8.367a6 6 0 008.367 8.367zm1.414-1.413a6 6 0 00-8.367-8.367l8.367 8.367zM18 26a8 8 0 110-16 8 8 0 010 16z" />
+                      </svg>
+                    )}
+                  </div>
+                  <div className="grow flex items-center border-b border-slate-100 text-sm py-2">
+                    <div className="grow flex justify-between">
+                      <div className="self-center">{d.name}</div>
+                      <div className="shrink-0 self-start ml-2">
+                        <span
+                          className={`font-medium  ${
+                            d.type === "income"
+                              ? "text-emerald-500"
+                              : d.type === "expense"
+                              ? "text-rose-500"
+                              : "text-slate-800 line-through"
+                          }`}
+                        >
+                          {d.amount}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
-    </>
+
+      {/* Section 4 */}
+      {/* Upcoming Data */}
+      <div className="bg-white border border-blue-200 shadow-md shadow-blue-200 rounded-lg py-5 pl-5 pr-1.5 lg:col-span-7 overflow-x-auto">
+        <div className="flex justify-between items-center mb-3 pr-3.5">
+          <div>
+            <Title level={5} className="!m-0 flex-1">
+              Upcoming Data
+            </Title>
+          </div>
+          <div>
+            <Radio.Group
+              onChange={upcomingTabChange}
+              defaultValue={recentTabData}
+            >
+              <Radio.Button value="trip">TRIP</Radio.Button>
+              <Radio.Button value="maintenance">MAINTENANCE</Radio.Button>
+            </Radio.Group>
+          </div>
+        </div>
+        {/* Trip */}
+        {upcomingTabData === "trip" && (
+          <div className="inline-block min-w-full align-middle overflow-auto h-[340px] scrollbar-thin scrollbar-track-transparent scrollbar-thumb-blue-200 scrollbar-track-rounded-full scrollbar-thumb-rounded-full pr-1.5">
+            <table className="min-w-full divide-y divide-gray-300">
+              <thead>
+                <tr className="">
+                  <th
+                    scope="col"
+                    className="py-2 pl-3 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
+                  >
+                    Vehicle
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-2 text-left text-sm font-semibold text-gray-900"
+                  >
+                    Address
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                {data2?.length ? (
+                  data2?.map(
+                    ({ businessDetails, address, _id, create_date }, i) => (
+                      <tr key={_id} className="hover:bg-slate-50 w-full">
+                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                          <div className="flex items-center gap-x-4 group">
+                            <Image
+                              src={businessDetails?.businessLogo}
+                              width={300}
+                              height={300}
+                              alt="Image"
+                              className="h-9 w-9 rounded-full bg-gray-800"
+                            />
+                            <div className="truncate font-medium leading-6 text-gray-700 group-hover:text-gray-900 capitalize duration-200">
+                              <p> {businessDetails?.businessName}</p>
+                              <p>{new Date(create_date).toLocaleString()}</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500  capitalize truncate hover:text-clip">
+                          <span>{address.country},</span> <br />
+                          <span>
+                            {address.city}, {address.state}
+                          </span>
+                        </td>
+                      </tr>
+                    )
+                  )
+                ) : (
+                  <tr>
+                    <td className="py-20 w-full text-center text-red-400">
+                      Empty !
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
+        {/* Maintenance */}
+        {upcomingTabData === "maintenance" && (
+          <div className="inline-block min-w-full align-middle overflow-auto h-[340px] scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-300 scrollbar-track-rounded-full scrollbar-thumb-rounded-full pr-1.5">
+            <table className="min-w-full divide-y divide-gray-300">
+              <thead>
+                <tr className="">
+                  <th
+                    scope="col"
+                    className="py-2 pl-3 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
+                  >
+                    Vehicle
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-2 text-left text-sm font-semibold text-gray-900"
+                  >
+                    Address
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                {dataM?.length ? (
+                  dataM?.map(
+                    ({ businessDetails, address, _id, create_date }, i) => (
+                      <tr key={_id} className="hover:bg-slate-50 w-full">
+                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                          <div className="flex items-center gap-x-4 group">
+                            <Image
+                              width={300}
+                              height={300}
+                              src={businessDetails?.businessLogo}
+                              alt="Image"
+                              className="h-9 w-9 rounded-full bg-gray-800"
+                            />
+                            <div className="truncate font-medium leading-6 text-gray-700 group-hover:text-gray-900 capitalize duration-200">
+                              <p>{businessDetails?.businessName}</p>
+                              <p>{new Date(create_date).toLocaleString()}</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500  capitalize truncate hover:text-clip">
+                          <span>{address.country},</span> <br />
+                          <span>
+                            {address.city}, {address.state}
+                          </span>
+                        </td>
+                      </tr>
+                    )
+                  )
+                ) : (
+                  <tr>
+                    <td className="py-20 w-full text-center text-red-400">
+                      Empty !
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </motion.div>
   );
 };
 
