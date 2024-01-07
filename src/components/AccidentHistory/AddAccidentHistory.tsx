@@ -46,6 +46,7 @@ const AddAccidentHistory = ({ open, handleClose }: IProps) => {
   return (
     <Modal
       title="Create Accident History"
+      centered
       open={open}
       onCancel={handleClose}
       width={700}

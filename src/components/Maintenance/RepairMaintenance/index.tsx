@@ -2,17 +2,19 @@
 
 import MainCard from '@/components/ui/MainCard';
 import UMTable from '@/components/ui/Table';
-import { useGetAllExpenseQuery } from '@/redux/api/expense/expenseApi';
+import { useGetAllMaintenanceQuery } from '@/redux/api/maintenance/maintenanceApi';
 import { useDebounced } from '@/redux/hooks';
+import { getUserInfo } from '@/services/auth.service';
 import { ReloadOutlined } from '@ant-design/icons';
 import { Button, Input, Row } from 'antd';
 import dayjs from 'dayjs';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import CreateExpense from './CreateExpense';
-import ExpenseAction from './ExpenseAction';
+import MaintenanceAction from './MaintenanceAction';
 
-const Expenses = () => {
-  const [open, setOpen] = useState(false);
+const RepairMaintenance = () => {
+  const router = useRouter();
+  const { role } = getUserInfo() as any;
 
   // fetching data
   const query: Record<string, any> = {};
@@ -27,7 +29,6 @@ const Expenses = () => {
   query['page'] = page;
   query['sortBy'] = sortBy;
   query['sortOrder'] = sortOrder;
-  query['isMisc'] = true;
 
   const debouncedTerm = useDebounced({
     searchQuery: searchTerm,
@@ -38,9 +39,9 @@ const Expenses = () => {
     query['searchTerm'] = debouncedTerm;
   }
 
-  const { data, isLoading } = useGetAllExpenseQuery({ ...query });
+  const { data, isLoading } = useGetAllMaintenanceQuery({ ...query });
 
-  const allExpenses = data?.expenses || [];
+  const allMaintenances = data?.maintenances || [];
   const meta = data?.meta;
 
   const columns = [
@@ -60,24 +61,28 @@ const Expenses = () => {
       dataIndex: 'vehicle',
       render: (vehicle: any) => vehicle?.regNo,
     },
+
     {
-      title: 'Expense Head',
-      dataIndex: 'expenseHead',
-      render: (el: any) => el?.label,
+      title: 'Workshop Type',
+      dataIndex: 'workshopType',
+    },
+    {
+      title: 'Maintenance Type',
+      dataIndex: 'maintenanceType',
     },
     {
       title: 'Remarks',
       dataIndex: 'remarks',
     },
     {
-      title: 'Amount',
-      dataIndex: 'amount',
+      title: 'Service Charge',
+      dataIndex: 'serviceCharge',
       align: 'right',
     },
     {
       title: 'Action',
       align: 'center',
-      render: (data: any) => <ExpenseAction data={data} />,
+      render: (data: any) => <MaintenanceAction data={data} />,
     },
   ];
 
@@ -98,17 +103,18 @@ const Expenses = () => {
   };
   return (
     <MainCard
-      title="Miscellaneous Expenses"
+      title="Maintenances"
       extra={
-        <Button type="primary" onClick={() => setOpen(true)}>
+        <Button
+          type="primary"
+          onClick={() =>
+            router.push(`/${role}/maintenance/repair_maintenance/create`)
+          }
+        >
           Create
         </Button>
       }
     >
-      {/* popup items */}
-      <CreateExpense open={open} handleClose={() => setOpen(false)} />
-      {/* end popup items */}
-
       {/* filter area */}
       <Row align="middle" justify="space-between" style={{ marginBottom: 20 }}>
         <Input
@@ -136,7 +142,7 @@ const Expenses = () => {
       <UMTable
         columns={columns}
         loading={isLoading}
-        dataSource={allExpenses}
+        dataSource={allMaintenances}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -148,4 +154,4 @@ const Expenses = () => {
   );
 };
 
-export default Expenses;
+export default RepairMaintenance;

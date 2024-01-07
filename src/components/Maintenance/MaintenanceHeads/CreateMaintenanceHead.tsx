@@ -30,6 +30,7 @@ const CreateMaintenanceHead = ({ open, handleClose }: IProps) => {
   return (
     <Modal
       title="Create Maintenance Head"
+      centered
       open={open}
       onCancel={handleClose}
       width={400}

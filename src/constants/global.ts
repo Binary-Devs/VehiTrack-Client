@@ -69,16 +69,16 @@ export const workshopType = [
 ];
 export const maintenanceType = [
   {
-    label: "Schedule",
-    value: "Schedule",
+    label: 'Scheduled',
+    value: 'Scheduled',
   },
   {
-    label: "Unschedule",
-    value: "Unschedule-",
+    label: 'Unscheduled',
+    value: 'Unscheduled',
   },
   {
-    label: "Accidental",
-    value: "Accidental-",
+    label: 'Accidental',
+    value: 'Accidental',
   },
 ];
 export const paperTypeFitness = [
