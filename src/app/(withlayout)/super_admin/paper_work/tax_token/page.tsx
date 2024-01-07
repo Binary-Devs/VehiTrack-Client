@@ -175,8 +175,8 @@ const TaxTokenPage = () => {
           <Input
             // size="large"
             placeholder="Search"
-            onChange={(e) => setSearchTerm(e.target.value)}
             value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
             // style={{
             //   minWidth: "150px",
             //   maxWidth: "300px",

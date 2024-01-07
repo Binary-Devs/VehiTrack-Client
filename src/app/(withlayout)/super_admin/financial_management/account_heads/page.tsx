@@ -7,7 +7,7 @@ import UMTable from "@/components/ui/Table";
 import { useGetAllAccountHeadQuery } from "@/redux/api/accountHead/accountHeadApi";
 import { useDebounced } from "@/redux/hooks";
 import { EditOutlined, ReloadOutlined } from "@ant-design/icons";
-import { Button, Input } from "antd";
+import { Button, Grid, Input } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
@@ -35,13 +35,16 @@ const AccountHeadsPage = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
+  const { useBreakpoint } = Grid;
+  const screens = useBreakpoint();
+
   const { data, isLoading } = useGetAllAccountHeadQuery({ ...query });
   if (isLoading) {
     return <Loader className="h-[50vh] flex items-end justify-center" />;
   }
   const accountHeads = data?.accountHeads;
   const meta = data?.meta;
-  console.log(accountHeads);
+
   const deleteHandler = async (id: string) => {
     console.log(id);
   };
@@ -128,11 +131,12 @@ const AccountHeadsPage = () => {
 
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
-      <ActionBar inline title="Account Head List">
-        <div className="flex items-center gap-2">
+      <ActionBar inline={screens.xs ? false : true} title="Account Head List">
+        <div className="flex items-center justify-between flex-grow gap-2">
           <Input
             // size="large"
             placeholder="Search"
+            value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             // style={{
             //   minWidth: "150px",

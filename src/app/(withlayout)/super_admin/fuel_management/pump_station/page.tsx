@@ -7,7 +7,7 @@ import UMTable from "@/components/ui/Table";
 import { useGetAllFuelStationQuery } from "@/redux/api/fuelStation/fuelStationApi";
 import { useDebounced } from "@/redux/hooks";
 import { EditOutlined, ReloadOutlined } from "@ant-design/icons";
-import { Button, Input } from "antd";
+import { Button, Grid, Input } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
@@ -30,6 +30,9 @@ const PumpStationPage = () => {
     searchQuery: searchTerm,
     delay: 600,
   });
+
+  const { useBreakpoint } = Grid;
+  const screens = useBreakpoint();
 
   if (!!debouncedTerm) {
     query["searchTerm"] = debouncedTerm;
@@ -113,11 +116,12 @@ const PumpStationPage = () => {
   };
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
-      <ActionBar inline title="Pump Station List">
-        <div className="flex items-center gap-2">
+      <ActionBar inline={screens.xs ? false : true} title="Pump Station List">
+        <div className="flex items-center justify-between flex-grow gap-2">
           <Input
             // size="large"
             placeholder="Search"
+            value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             // style={{
             //   minWidth: "150px",
