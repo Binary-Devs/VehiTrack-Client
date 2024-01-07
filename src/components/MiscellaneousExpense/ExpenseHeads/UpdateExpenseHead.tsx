@@ -33,6 +33,7 @@ const UpdateExpenseHead = ({ open, handleClose, preData }: IProps) => {
   return (
     <Modal
       title="Edit Expense Head"
+      centered
       open={open}
       onCancel={handleClose}
       width={400}
