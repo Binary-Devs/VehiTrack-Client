@@ -14,7 +14,7 @@ const AddPumpStation = ({ id }: { id?: string }) => {
   const { data, isLoading: getLoad } = useGetSingleFuelStationQuery(
     id ? id : ""
   );
-  console.log(data);
+  // console.log(data);
   //Update
   const [updateFuelStation, { isLoading: updateLoad }] =
     useUpdateFuelStationMutation();

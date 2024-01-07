@@ -59,7 +59,7 @@ const AllDriverList = () => {
             width={100}
             height={100}
             alt=""
-            style={{ width: "70px", height: "50px" }}
+            style={{ width: "50px", height: "50px" }}
           />
           // <Avatar shape="square" size={64} icon={<CarOutlined />} />
         );
@@ -171,12 +171,12 @@ const AllDriverList = () => {
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
       <ActionBar inline title="Driver List">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between flex-grow gap-2">
           <Input
             // size="large"
             placeholder="Search"
-            onChange={(e) => setSearchTerm(e.target.value)}
             value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
             style={
               {
                 // width: "100%",

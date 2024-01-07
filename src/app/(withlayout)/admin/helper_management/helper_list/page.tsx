@@ -49,7 +49,7 @@ const HelperListPage = () => {
       title: "",
 
       render: function (data: any) {
-        return <Avatar size={64} icon={<UserOutlined />} />;
+        return <Avatar size={48} icon={<UserOutlined />} />;
       },
     },
     {
@@ -135,7 +135,7 @@ const HelperListPage = () => {
   const helpers = data?.helpers;
   const meta = data?.meta;
 
-  console.log(helpers);
+  // console.log(helpers);
 
   const onPaginationChange = (page: number, pageSize: number) => {
     setPage(page);
@@ -160,12 +160,12 @@ const HelperListPage = () => {
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
       <ActionBar inline title="Helper List">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between flex-grow gap-2">
           <Input
             // size="large"
             placeholder="Search"
-            onChange={(e) => setSearchTerm(e.target.value)}
             value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
             style={
               {
                 // width: "100%",

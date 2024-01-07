@@ -53,7 +53,7 @@ const AllManagerList = () => {
       title: "Image",
 
       render: function (data: any) {
-        return <Avatar size={64} icon={<UserOutlined />} />;
+        return <Avatar size={48} icon={<UserOutlined />} />;
       },
       width: 100,
       responsive: ["md"],
@@ -127,6 +127,7 @@ const AllManagerList = () => {
   const meta = data?.meta;
 
   const onPaginationChange = (page: number, pageSize: number) => {
+    // console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };

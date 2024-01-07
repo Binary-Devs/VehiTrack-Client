@@ -67,7 +67,7 @@ const RefuelingPage = () => {
     return <Loader className="h-[50vh] flex items-end justify-center" />;
   }
   const fuels = data?.fuels;
-  console.log(fuels);
+  // console.log(fuels);
   const meta = data?.meta;
 
   const columns = [
@@ -150,20 +150,15 @@ const RefuelingPage = () => {
                 <AddRefueling id={data?.id} />
               </ModalComponent>
             </div>
-            <div>
-              <Button
-                type="primary"
-                onClick={() => {
-                  //  console.log(data?.id);
-                  setOpen(true);
-                  setId(data?.id);
-                }}
-                danger
-                style={{ marginLeft: "3px" }}
-              >
-                <DeleteOutlined />
-              </Button>
-            </div>
+            <Button
+              onClick={() => {
+                // console.log(data?.id);
+              }}
+              type="primary"
+              danger
+            >
+              <DeleteOutlined />
+            </Button>
           </div>
         );
       },
@@ -171,7 +166,7 @@ const RefuelingPage = () => {
   ];
 
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
+    // console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
@@ -190,10 +185,11 @@ const RefuelingPage = () => {
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
       <ActionBar inline title="Refueling List">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between flex-grow gap-2">
           <Input
             // size="large"
             placeholder="Search"
+            value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             // style={{
             //   minWidth: "150px",

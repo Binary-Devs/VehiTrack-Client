@@ -3,12 +3,11 @@ import ActionBar from "@/components/ui/ActionBar";
 
 import { useDebounced } from "@/redux/hooks";
 import {
-  CarOutlined,
   DeleteOutlined,
   EditOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { Avatar, Button, Input } from "antd";
+import { Button, Input } from "antd";
 import { useState } from "react";
 
 import dayjs from "dayjs";
@@ -25,6 +24,7 @@ import {
   useGetAllVehicleQuery,
   useUpdateVehicleMutation,
 } from "@/redux/api/vehicle/vehicleApi";
+import Image from "next/image";
 import { IoMdAdd } from "react-icons/io";
 
 const VehicleListPage = () => {
@@ -61,7 +61,7 @@ const VehicleListPage = () => {
   const vehicles = data?.vehicles;
   const meta = data?.meta;
 
-  console.log(vehicles);
+  // console.log(vehicles);
 
   // BrandData for creating vehicle
   const { data: brandData, isLoading: brandLoad } = useGetAllBrandQuery({});
@@ -93,17 +93,22 @@ const VehicleListPage = () => {
       title: "",
       // fixed: "left",
       // width: 80,
+      dataIndex: "imageUrl",
       render: function (data: any) {
-        const fullName = `${data?.image} `;
+        const image = `${
+          data ||
+          "https://res.cloudinary.com/dnzlgpcc3/image/upload/v1704419785/oiav6crzfltkswdrrrli.png"
+        } `;
+
         return (
-          // <Image
-          //   src={fullName}
-          //   width={100}
-          //   height={100}
-          //   alt=""
-          //   style={{ width: "70px", height: "50px" }}
-          // />
-          <Avatar shape="square" size={64} icon={<CarOutlined />} />
+          <Image
+            src={image}
+            width={100}
+            height={100}
+            alt=""
+            style={{ width: "70px", height: "50px" }}
+          />
+          // <Avatar shape="square" size={48} icon={<CarOutlined />} />
         );
       },
     },
@@ -208,7 +213,7 @@ const VehicleListPage = () => {
   ];
 
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
+    // console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
@@ -250,12 +255,12 @@ const VehicleListPage = () => {
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
       <ActionBar inline title="Vehicle List">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between flex-grow gap-2">
           <Input
             // size="large"
             placeholder="Search"
-            onChange={(e) => setSearchTerm(e.target.value)}
             value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
             // style={{
             //   minWidth: "150px",
             //   maxWidth: "300px",

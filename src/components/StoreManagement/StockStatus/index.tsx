@@ -79,7 +79,7 @@ const StockStatus = () => {
 
   return (
     <MainCard title="Stock Status">
-      <Row>
+      <Row className="mb-4">
         <Col xs={24} sm={12} md={8}>
           <Select
             loading={equipmentDataLoading}

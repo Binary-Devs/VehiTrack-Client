@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 // import { messagesApi } from "../../../features/messages/messagesApi";
 import { getUserInfo } from "@/services/auth.service";
 import Message from "./Message";
@@ -19,9 +19,9 @@ export default function Messages({
   const user = getUserInfo() as any;
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  console.log(messages);
+  // console.log(messages);
 
   // const fetchMoreData = () => {
   //   setPage((prevPage) => prevPage + 1);
@@ -54,7 +54,7 @@ export default function Messages({
   return (
     <div
       id="scrollableDiv"
-      className="relative w-full h-[calc(100vh_-_197px)] p-6 overflow-y-auto flex flex-col-reverse"
+      className="relative w-full h-[calc(100vh_-_269px)] scrollbar-thin scrollbar-track-transparent scrollbar-thumb-blue-200 scrollbar-track-rounded-full scrollbar-thumb-rounded-full p-6 overflow-y-auto flex flex-col-reverse"
     >
       {/* <InfiniteScroll
         dataLength={messages.length}
@@ -86,7 +86,7 @@ export default function Messages({
         .slice()
         .sort((a: any, b: any) => a.createdAt - b.createdAt)
         .map((message: any) => {
-          const justify = message.senderId !== user.id ? "start" : "end";
+          const justify = message.senderId === user.id ? "end" : "start";
           return (
             <Message
               key={message.id}

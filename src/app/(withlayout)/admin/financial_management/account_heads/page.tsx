@@ -41,9 +41,9 @@ const AccountHeadsPage = () => {
   }
   const accountHeads = data?.accountHeads;
   const meta = data?.meta;
-  console.log(accountHeads);
+  // console.log(accountHeads);
   const deleteHandler = async (id: string) => {
-    console.log(id);
+    // console.log(id);
   };
 
   const columns = [
@@ -109,7 +109,7 @@ const AccountHeadsPage = () => {
   ];
 
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
+    // console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
@@ -129,10 +129,11 @@ const AccountHeadsPage = () => {
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
       <ActionBar inline title="Account Head List">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between flex-grow gap-2">
           <Input
             // size="large"
             placeholder="Search"
+            value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             // style={{
             //   minWidth: "150px",

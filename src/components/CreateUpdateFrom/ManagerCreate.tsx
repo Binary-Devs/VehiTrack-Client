@@ -14,7 +14,7 @@ const CreateManager = () => {
     // console.log(values);
     try {
       const res = await createAdmin(values);
-      console.log(res);
+      // console.log(res);
       message.success("Manager created successfully!");
     } catch (err: any) {
       console.error(err.message);
