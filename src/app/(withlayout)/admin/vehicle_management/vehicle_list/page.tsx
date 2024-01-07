@@ -61,8 +61,6 @@ const VehicleListPage = () => {
   const vehicles = data?.vehicles;
   const meta = data?.meta;
 
-  console.log(vehicles);
-
   // BrandData for creating vehicle
   const { data: brandData, isLoading: brandLoad } = useGetAllBrandQuery({});
   const brands = brandData?.brands;
@@ -103,7 +101,7 @@ const VehicleListPage = () => {
           //   alt=""
           //   style={{ width: "70px", height: "50px" }}
           // />
-          <Avatar shape="square" size={64} icon={<CarOutlined />} />
+          <Avatar shape="square" size={48} icon={<CarOutlined />} />
         );
       },
     },

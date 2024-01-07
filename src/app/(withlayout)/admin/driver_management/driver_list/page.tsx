@@ -49,7 +49,7 @@ const AllDriverList = () => {
       title: "",
 
       render: function (data: any) {
-        return <Avatar size={64} icon={<UserOutlined />} />;
+        return <Avatar size={48} icon={<UserOutlined />} />;
       },
     },
     {

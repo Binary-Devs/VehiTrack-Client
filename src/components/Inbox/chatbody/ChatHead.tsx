@@ -17,7 +17,7 @@ export default function ChatHead({ message }: { message?: any }) {
         src={partnerImage}
         alt={receiver.userName}
       /> */}
-      <Avatar size={64} icon={<UserOutlined />} />
+      <Avatar size={48} icon={<UserOutlined />} />
       <span className="block ml-2 font-bold text-gray-600">
         {receiver.userName}
       </span>

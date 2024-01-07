@@ -53,7 +53,7 @@ const AllManagerList = () => {
       title: "Image",
 
       render: function (data: any) {
-        return <Avatar size={64} icon={<UserOutlined />} />;
+        return <Avatar size={48} icon={<UserOutlined />} />;
       },
       width: 100,
       responsive: ["md"],
