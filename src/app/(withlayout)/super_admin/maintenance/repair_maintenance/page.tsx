@@ -1,8 +1,8 @@
-import RepairMaintenance from '@/components/Maintenance/RepairMaintenance';
-import { Metadata } from 'next';
+import RepairMaintenance from "@/components/Maintenance/RepairMaintenance";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'VehiTrack | Maintenance',
+  title: "VehiTrack | Maintenance",
 };
 
 const MaintenancePage = () => {

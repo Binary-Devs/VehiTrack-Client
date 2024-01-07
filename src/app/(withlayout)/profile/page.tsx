@@ -60,6 +60,7 @@ const ProfilePage = () => {
                   alt=""
                   height={500}
                   width={500}
+                  className="mb-2"
                 />
               </motion.div>
               <div className="text-center mt-2">

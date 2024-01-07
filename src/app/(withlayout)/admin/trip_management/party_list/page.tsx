@@ -1,8 +1,4 @@
 "use client";
-<<<<<<< HEAD
-=======
-
->>>>>>> fa58f2919deb94b276aaeb882f44c761f859e18c
 import AddUpdateParty from "@/components/CreateUpdateFrom/AddUpdateParty";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
@@ -14,7 +10,6 @@ import { Button, Input, Tag } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
-
 
 const PartyListPage = () => {
   const query: Record<string, any> = {};
@@ -126,11 +121,7 @@ const PartyListPage = () => {
             maxWidth: "200px",
           }}
         />
-<<<<<<< HEAD
         <ModalComponent buttonText="Add Party" icon={<IoMdAdd />}>
-=======
-        <ModalComponent buttonText="Add Party">
->>>>>>> fa58f2919deb94b276aaeb882f44c761f859e18c
           <AddUpdateParty />
         </ModalComponent>
       </ActionBar>
