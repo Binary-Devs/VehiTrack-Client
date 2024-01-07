@@ -53,6 +53,7 @@ const CreateExpense = ({ open, handleClose }: IProps) => {
   return (
     <Modal
       title="Create Expense"
+      centered
       open={open}
       onCancel={handleClose}
       width={600}

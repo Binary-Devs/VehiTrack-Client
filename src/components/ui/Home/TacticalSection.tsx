@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
+import { motion, useAnimation, useInView } from "framer-motion";
 import Image from "next/image";
+import { useEffect, useRef } from "react";
 import one from "../../../assets/1h.png";
 import two from "../../../assets/2h.png";
 import trhee from "../../../assets/3h.png";
@@ -46,9 +47,17 @@ export default function TacticalSection() {
         "Provide your workforce with an easy-to-use automation system. Specify roles, manage activities, and monetize performance for a competent team.",
     },
   ];
+
+  const controls = useAnimation();
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, {});
+
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
+    visible: {
+      opacity: 1,
+      transition: { duration: 0.5, staggerChildren: 0.2, delayChildren: 0.8 },
+    },
   };
 
   const itemVariants = {
@@ -56,45 +65,54 @@ export default function TacticalSection() {
     visible: { opacity: 1, y: 0 },
   };
 
-  return (
-    <motion.div
-      className="container text-center mx-auto py-24 p-4"
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-    >
-      <h1 className="text-2xl md:text-4xl font-semibold mb-4">
-        Welcome to VehiTrack
-      </h1>
-      <p className="text-xl mx-auto mb-8">
-        VehiTrack is your all-in-one solution for efficient vehicle management
-      </p>
+  useEffect(() => {
+    if (!inView) {
+      controls.start("hidden"); // Reset animation when not in view
+    }
+  }, [inView, controls]);
 
-      <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8 mx-auto mt-10">
-        {data.map((item, index) => (
-          <motion.div
-            key={index}
-            className="bg-white p-6 rounded-lg shadow-lg text-center h-full"
-            variants={itemVariants}
-          >
-            <div
-              className="h-40 mb-4 overflow-hidden"
-              style={{ borderRadius: "50%" }}
+  return (
+    <>
+      <motion.div
+        className="container text-center mx-auto py-24 p-4"
+        variants={containerVariants}
+        ref={ref}
+        initial="hidden"
+        animate={"visible"}
+      >
+        <h1 className="text-2xl md:text-4xl font-semibold mb-4">
+          Welcome to VehiTrack
+        </h1>
+        <p className="text-xl mx-auto mb-8">
+          VehiTrack is your all-in-one solution for efficient vehicle management
+        </p>
+
+        <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8 mx-auto mt-10">
+          {data.map((item, index) => (
+            <motion.div
+              key={index}
+              className="bg-white p-6 rounded-lg shadow-lg text-center h-full"
+              variants={itemVariants}
             >
-              <Image
-                src={item.img}
-                width={200}
-                height={200}
-                alt={item.title}
-                objectFit="cover"
-                className="mx-auto my-auto"
-              />
-            </div>
-            <h2 className="text-xl font-semibold mb-2">{item.title}</h2>
-            <p className="text-sm text-gray-600">{item.details}</p>
-          </motion.div>
-        ))}
+              <div
+                className="h-40 mb-4 overflow-hidden"
+                style={{ borderRadius: "50%" }}
+              >
+                <Image
+                  src={item.img}
+                  width={200}
+                  height={200}
+                  alt={item.title}
+                  objectFit="cover"
+                  className="mx-auto my-auto"
+                />
+              </div>
+              <h2 className="text-xl font-semibold mb-2">{item.title}</h2>
+              <p className="text-sm text-gray-600">{item.details}</p>
+            </motion.div>
+          ))}
+        </motion.div>
       </motion.div>
-    </motion.div>
+    </>
   );
 }

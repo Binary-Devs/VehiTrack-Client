@@ -1,6 +1,7 @@
 // import { IMeta } from "@/types";
 import { tagTypes } from "@/redux/teg-types";
 import { baseApi } from "../baseApi";
+import { io } from "socket.io-client";
 
 const MESSAGE_URL = "/messages";
 
@@ -13,7 +14,7 @@ export const messageApi = baseApi.injectEndpoints({
         method: "POST",
         data: data,
       }),
-      invalidatesTags: [tagTypes.messages],
+      // invalidatesTags: [tagTypes.messages],
     }),
 
     // get all
@@ -23,7 +24,31 @@ export const messageApi = baseApi.injectEndpoints({
         method: "GET",
         params: arg,
       }),
-      providesTags: [tagTypes.messages],
+      async onCacheEntryAdded(
+        arg,
+        { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
+      ) {
+        // create socket
+        const socket = io(`${process.env.NEXT_PUBLIC_API_SOCKET_URL}`, {
+          reconnectionDelay: 1000,
+          reconnection: true,
+          reconnectionAttempts: 10,
+          transports: ["websocket"],
+          agent: false,
+          upgrade: false,
+          rejectUnauthorized: false,
+        });
+        try {
+          await cacheDataLoaded;
+          socket.on("message", (data) => {
+            console.log(data);
+          });
+        } catch (error) {
+          await cacheEntryRemoved;
+          socket.close();
+        }
+      },
+      // providesTags: [tagTypes.messages],
     }),
 
     // get single
@@ -32,7 +57,7 @@ export const messageApi = baseApi.injectEndpoints({
         url: `${MESSAGE_URL}/${id}`,
         method: "GET",
       }),
-      providesTags: [tagTypes.message],
+      // providesTags: [tagTypes.message],
     }),
 
     // update
@@ -42,7 +67,7 @@ export const messageApi = baseApi.injectEndpoints({
         method: "PATCH",
         data: data?.data,
       }),
-      invalidatesTags: [tagTypes.messages],
+      // invalidatesTags: [tagTypes.messages],
     }),
   }),
 });

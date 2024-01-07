@@ -1,5 +1,8 @@
 import Loader from "@/components/Utlis/Loader";
-import { useCreateConversationMutation } from "@/redux/api/conversation/conversationApi";
+import {
+  useCreateConversationMutation,
+  useUpdateConversationMutation,
+} from "@/redux/api/conversation/conversationApi";
 import { getUserInfo } from "@/services/auth.service";
 import { useEffect, useState } from "react";
 
@@ -7,6 +10,8 @@ export default function Options({ info }: { info?: any }) {
   const [message, setMessage] = useState("");
   const [createConversation, { isLoading, isSuccess }] =
     useCreateConversationMutation();
+  const [updateConversation, { isLoading: ul, isSuccess: us }] =
+    useUpdateConversationMutation();
 
   const user = getUserInfo() as any;
 
@@ -21,10 +26,18 @@ export default function Options({ info }: { info?: any }) {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    createConversation({
-      senderId: user?.id,
-      receiverId: info.conversation.receiverId,
-      message,
+    // createConversation({
+    //   senderId: user?.id,
+    //   receiverId: info.conversation.receiverId,
+    //   message,
+    // });
+    updateConversation({
+      id: info.conversation.id,
+      data: {
+        senderId: user?.id,
+        receiverId: info.conversation.receiverId,
+        message,
+      },
     });
   };
   return (

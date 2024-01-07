@@ -2,27 +2,34 @@
 import AddFitness from "@/components/CreateUpdateFrom/AddFitness";
 import Loader from "@/components/Utlis/Loader";
 import ActionBar from "@/components/ui/ActionBar";
+import DeleteModal from "@/components/ui/DeleteModal";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
-import { useGetAllPaperWorksQuery } from "@/redux/api/paperWork/paperWorkApi";
+import {
+  useDeletePaperWorkMutation,
+  useGetAllPaperWorksQuery,
+} from "@/redux/api/paperWork/paperWorkApi";
 import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
   EditOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { Button, Input } from "antd";
+import { Button, Input, message } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
+import { IoMdAdd } from "react-icons/io";
 
 const FitnessPage = () => {
   const query: Record<string, any> = {};
 
   const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(10);
+  const [size, setSize] = useState<number>(5);
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [open, setOpen] = useState(false);
+  const [id, setId] = useState<string>("");
 
   query["limit"] = size;
   query["page"] = page;
@@ -38,12 +45,30 @@ const FitnessPage = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
+  const [deletePaperWork] = useDeletePaperWorkMutation();
+  //delete
+  const deleteHandler = async (id: string) => {
+    message.loading("Deleting.....");
+    try {
+      const res = await deletePaperWork(id);
+      if (!!res) {
+        message.success("delete successfully");
+        setOpen(false);
+      } else {
+        message.error("delete failed");
+      }
+    } catch (err: any) {
+      //   console.error(err.message);
+      message.error(err.message);
+    }
+  };
+
   const { data, isLoading } = useGetAllPaperWorksQuery({ ...query });
   if (isLoading) {
     return <Loader className="h-[50vh] flex items-end justify-center" />;
   }
   const paperworkRecords = data?.paperWorks;
-  console.log(paperworkRecords);
+
   const meta = data?.meta;
 
   const columns = [
@@ -103,9 +128,20 @@ const FitnessPage = () => {
                 <AddFitness id={data?.id} />
               </ModalComponent>
             </div>
-            <Button onClick={() => console.log(data?.id)} type="primary" danger>
-              <DeleteOutlined />
-            </Button>
+            <div>
+              <Button
+                type="primary"
+                onClick={() => {
+                  //  console.log(data?.id);
+                  setOpen(true);
+                  setId(data?.id);
+                }}
+                danger
+                style={{ marginLeft: "3px" }}
+              >
+                <DeleteOutlined />
+              </Button>
+            </div>
           </div>
         );
       },
@@ -152,7 +188,7 @@ const FitnessPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Fitness">
+          <ModalComponent buttonText="Add Fitness" icon={<IoMdAdd />}>
             <AddFitness />
           </ModalComponent>
         </div>
@@ -169,6 +205,14 @@ const FitnessPage = () => {
         onTableChange={onTableChange}
         showPagination={true}
       />
+      <DeleteModal
+        title="Delete Fitness"
+        isOpen={open}
+        closeModal={() => setOpen(false)}
+        handleOk={() => deleteHandler(id)}
+      >
+        <p className="my-5">Do you want to delete this?</p>
+      </DeleteModal>
     </div>
   );
 };

@@ -57,6 +57,7 @@ const UpdateAccidentHistory = ({ open, handleClose, preData }: IProps) => {
   return (
     <Modal
       title="Edit Accident History"
+      centered
       open={open}
       onCancel={handleClose}
       width={700}

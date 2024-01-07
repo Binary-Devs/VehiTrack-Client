@@ -11,12 +11,13 @@ import { EditOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
+import { IoMdAdd } from "react-icons/io";
 
 const UnitOfMeasurement = () => {
   const query: Record<string, any> = {};
 
   const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(10);
+  const [size, setSize] = useState<number>(5);
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -127,7 +128,7 @@ const UnitOfMeasurement = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add UOM">
+          <ModalComponent buttonText="Add Unit" icon={<IoMdAdd />}>
             <AddUnitOfMeasurement />
           </ModalComponent>
         </div>

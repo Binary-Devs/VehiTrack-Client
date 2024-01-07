@@ -333,3 +333,9 @@ span.blue {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
+
+@media (max-width: 576px) {
+  .ant-picker-panels {
+    flex-direction: column;
+  }
+}

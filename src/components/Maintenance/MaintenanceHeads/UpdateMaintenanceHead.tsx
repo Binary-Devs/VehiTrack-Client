@@ -34,6 +34,7 @@ const UpdateMaintenanceHead = ({ open, handleClose, preData }: IProps) => {
   return (
     <Modal
       title="Edit Maintenance Head"
+      centered
       open={open}
       onCancel={handleClose}
       width={400}

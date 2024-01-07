@@ -11,12 +11,13 @@ import { EditOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
+import { IoMdAdd } from "react-icons/io";
 
 const EquipmentList = () => {
   const query: Record<string, any> = {};
 
   const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(10);
+  const [size, setSize] = useState<number>(5);
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -126,7 +127,7 @@ const EquipmentList = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Equipment">
+          <ModalComponent buttonText="Add Equipment" icon={<IoMdAdd />}>
             <AddEquipment />
           </ModalComponent>
         </div>

@@ -11,7 +11,7 @@ export type SelectOptions = {
 type SelectFieldProps = {
   options: SelectOptions[];
   name: string;
-  size?: "large" | "small";
+  size?: 'large' | 'middle' | 'small';
   value?: string | string[] | undefined;
   placeholder?: string;
   label?: string;
