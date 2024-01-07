@@ -1,5 +1,8 @@
 "use client";
+<<<<<<< HEAD
+=======
 
+>>>>>>> fa58f2919deb94b276aaeb882f44c761f859e18c
 import AddUpdateParty from "@/components/CreateUpdateFrom/AddUpdateParty";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
@@ -9,8 +12,8 @@ import { useDebounced } from "@/redux/hooks";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Button, Input, Tag } from "antd";
 import dayjs from "dayjs";
-import Link from "next/link";
 import { useState } from "react";
+import { IoMdAdd } from "react-icons/io";
 
 
 const PartyListPage = () => {
@@ -75,33 +78,23 @@ const PartyListPage = () => {
     },
     {
       title: "Action",
+      dataIndex: "id",
       render: function (data: any) {
         return (
-          <>
-            <Link
-              href={`/super_admin/trip_management/party_list/edit/${data?.id}`}
-            >
-              <Button
-                style={{
-                  margin: "0px 5px",
-                }}
-                onClick={() => console.log(data)}
-                type="primary"
-              >
-                <EditOutlined />
-              </Button>
-            </Link>
+          <div className="flex gap-2">
+            <ModalComponent icon={<EditOutlined />}>
+              <AddUpdateParty id={data} />
+            </ModalComponent>
             <Button onClick={() => console.log(data?.id)} type="primary" danger>
               <DeleteOutlined />
             </Button>
-          </>
+          </div>
         );
       },
     },
   ];
 
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
@@ -133,7 +126,11 @@ const PartyListPage = () => {
             maxWidth: "200px",
           }}
         />
+<<<<<<< HEAD
+        <ModalComponent buttonText="Add Party" icon={<IoMdAdd />}>
+=======
         <ModalComponent buttonText="Add Party">
+>>>>>>> fa58f2919deb94b276aaeb882f44c761f859e18c
           <AddUpdateParty />
         </ModalComponent>
       </ActionBar>

@@ -1,7 +1,7 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 import UMTable from "@/components/ui/Table";
-import { useGetAllTripQuery } from "@/redux/api/trip/tripApi";
+import { useGetProfileQuery } from "@/redux/api/profile/profileApi";
 import { useDebounced } from "@/redux/hooks";
 import { ReloadOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
@@ -32,21 +32,12 @@ const MyTrip = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const { data, isLoading } = useGetAllTripQuery({
-    ...query,
-    status: "Completed",
-  });
+  const { data: userData, isLoading } = useGetProfileQuery(undefined);
+  const trips = userData?.driver?.trips;
+  const filteredTrips = trips?.filter(
+    (trip: any) => trip.status === "Completed" || trip.status === "Running"
+  );
 
-  const trips = data?.trips;
-  const meta = data?.meta;
-  //   const { id: userId } = getUserInfo() as any;
-  //   const { data: driver, isLoading: getLoad } = useGetAllDriverQuery({
-  //     userId: userId,
-  //   });
-  //   console.log(driver);
-  // console.log(userId); //c111a14b-591f-4331-b649-cdd5bea082d6
-  const driverId = "51397d0f-f5e4-4a4a-b564-33b41f6913cc";
-  const upcomingTrips = trips?.filter((trip) => trip.driverId === driverId);
   const columns = [
     {
       title: "Trip No",
@@ -175,9 +166,9 @@ const MyTrip = () => {
 
       <UMTable
         columns={columns}
-        dataSource={upcomingTrips}
+        dataSource={filteredTrips}
         pageSize={size}
-        totalPages={meta?.total}
+        totalPages={filteredTrips?.length}
         showSizeChanger={true}
         onPaginationChange={onPaginationChange}
         onTableChange={onTableChange}
