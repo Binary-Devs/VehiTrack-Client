@@ -2,6 +2,7 @@
 import ActionBar from "@/components/ui/ActionBar";
 import UMTable from "@/components/ui/Table";
 import { useGetProfileQuery } from "@/redux/api/profile/profileApi";
+import { useGetAllTripQuery } from "@/redux/api/trip/tripApi";
 import { useDebounced } from "@/redux/hooks";
 import { ReloadOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
@@ -33,11 +34,11 @@ const UpcomingTrip = () => {
   }
 
   const { data: userData, isLoading } = useGetProfileQuery(undefined);
-  const trips = userData?.driver?.trips;
+  const trips = userData?.helper?.trips;
   const filteredTrips: any = trips?.filter(
     (trip: any) => trip.status === "Pending"
   );
-
+  const { data } = useGetAllTripQuery({ limit: 100 });
   const columns = [
     {
       title: "Trip No",

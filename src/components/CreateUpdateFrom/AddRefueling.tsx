@@ -68,16 +68,36 @@ const AddRefueling = ({ id }: { id?: string }) => {
 
   //Create
   const [createFuel, { isLoading: createLoad }] = useCreateFuelMutation();
-  const onSubmit = async (values: any) => {
-    console.log(values);
-    values.odometer = data.amount !== undefined ? parseInt(values.odometer) : 0;
-    values.quantity = data.amount !== undefined ? parseInt(values.quantity) : 0;
-    values.amount = data.amount !== undefined ? parseInt(data.amount) : 0;
+  const onSubmit = async (data: any) => {
+    // if(data){
+    //   values.odometer =
+    //   data.odometer !== undefined ? parseInt(values.odometer) : 0;
+    // values.quantity =
+    //   data.quantity !== undefined ? parseInt(values.quantity) : 0;
+    // values.amount = data.amount !== undefined ? parseInt(values.amount) : 0;
+
+    // }
+
     message.loading(id ? "Updating...." : "Adding....");
     try {
       const res = id
-        ? await updateFuel({ id: id, body: data }).unwrap()
-        : await createFuel({ ...values }).unwrap();
+        ? // ? await updateFuel({ id: id, body: data }).unwrap()
+          await updateFuel({
+            id,
+            data: {
+              date: data.date,
+              fuelTypeId: data.fuelTypeId,
+              vehicleId: data.vehicleId,
+              driverId: data.driverId,
+              fuelStationId: data.fuelStationId,
+              odometer: data.odometer,
+              quantity: data.quantity,
+              amount: data.amount,
+              remarks: data.remarks,
+            },
+          }).unwrap()
+        : await createFuel({ ...data }).unwrap();
+      //  const res = updateFuel({ id: id, body: data }).unwrap();
       if (res.id) {
         message.success(`Refueling ${id ? "updated" : "added"} successfully!`);
       } else {
@@ -176,6 +196,7 @@ const AddRefueling = ({ id }: { id?: string }) => {
               <FormInput
                 name="odometer"
                 label="Odometer"
+                type="number"
                 size="large"
                 required={true}
                 placeholder="enter odometer"
@@ -185,6 +206,7 @@ const AddRefueling = ({ id }: { id?: string }) => {
               <FormInput
                 name="quantity"
                 label="Quantity"
+                type="number"
                 size="large"
                 required={true}
                 placeholder="enter quantity"
@@ -194,6 +216,7 @@ const AddRefueling = ({ id }: { id?: string }) => {
               <FormInput
                 name="amount"
                 label="Amount"
+                type="number"
                 size="large"
                 required={true}
                 placeholder="enter amount"

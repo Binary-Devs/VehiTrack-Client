@@ -33,7 +33,7 @@ const MyTrip = () => {
   }
 
   const { data: userData, isLoading } = useGetProfileQuery(undefined);
-  const trips = userData?.driver?.trips;
+  const trips = userData?.helper?.trips;
   const filteredTrips = trips?.filter(
     (trip: any) => trip.status === "Completed" || trip.status === "Running"
   );
