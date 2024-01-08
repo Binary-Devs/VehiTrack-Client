@@ -5,7 +5,7 @@ import { baseApi } from '../baseApi';
 const PAPER_WORK_URL = '/paper-work';
 
 export const paperWorkApi = baseApi.injectEndpoints({
-  endpoints: (build: any) => ({
+  endpoints: (build) => ({
     // create
     createPaperWork: build.mutation({
       query: (data: any) => ({

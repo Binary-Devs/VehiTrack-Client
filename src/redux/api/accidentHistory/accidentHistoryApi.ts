@@ -5,7 +5,7 @@ import { baseApi } from '../baseApi';
 const ACCIDENT_HISTORY_URL = '/accident-history';
 
 export const accidentHistoryApi = baseApi.injectEndpoints({
-  endpoints: (build: any) => ({
+  endpoints: (build) => ({
     // create
     createAccidentHistory: build.mutation({
       query: (data: any) => ({

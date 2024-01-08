@@ -5,7 +5,7 @@ import { baseApi } from "../baseApi";
 const USER_URL = "/user";
 
 export const userApi = baseApi.injectEndpoints({
-  endpoints: (build: any) => ({
+  endpoints: (build) => ({
     //  create super admin
     createSuperAdmin: build.mutation({
       query: (data: any) => ({
@@ -50,7 +50,7 @@ export const userApi = baseApi.injectEndpoints({
     getAllUser: build.query({
       query: (arg: Record<string, any>) => ({
         url: `${USER_URL}`,
-        method: "GET",
+        method: 'GET',
         params: arg,
       }),
       transformResponse: (response: any[], meta: IMeta) => {

@@ -5,7 +5,7 @@ import { baseApi } from '../baseApi';
 const ACCOUNT_HEAD_URL = '/account-head';
 
 export const accountHeadApi = baseApi.injectEndpoints({
-  endpoints: (build: any) => ({
+  endpoints: (build) => ({
     // create
     createAccountHead: build.mutation({
       query: (data: any) => ({

@@ -5,7 +5,7 @@ import { baseApi } from '../baseApi';
 const FUEL_TYPE_URL = '/fuel-type';
 
 export const fuelTypeApi = baseApi.injectEndpoints({
-  endpoints: (build: any) => ({
+  endpoints: (build) => ({
     // create
     createFuelType: build.mutation({
       query: (data: any) => ({
