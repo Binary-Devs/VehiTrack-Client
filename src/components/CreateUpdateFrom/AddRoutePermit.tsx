@@ -42,12 +42,29 @@ const AddRoutePermit = ({ id }: { id?: string }) => {
   //Create
   const [createPaperWork, { isLoading: createLoad }] =
     useCreatePaperWorkMutation();
-  const onSubmit = async (values: any) => {
+  const onSubmit = async (data: any) => {
     message.loading(id ? "Updating...." : "Adding....");
     try {
       const res = id
-        ? await updatePaperWork({ id: id, body: data }).unwrap()
-        : await createPaperWork({ ...values }).unwrap();
+        ? await updatePaperWork({
+            id,
+            data: {
+              date: data.date,
+              certificateNo: data.certificateNo,
+              vehicleId: data.vehicleId,
+              effectiveDate: data.effectiveDate,
+              expiryDate: data.expiryDate,
+              odometer: data.odometer,
+              daysToRemind: data.daysToRemind,
+              paperType: data.paperType,
+              fee: data.fee,
+              otherAmount: data.otherAmount,
+              totalAmount: data.totalAmount,
+              remarks: data.remarks,
+              accountHeadId: data.accountHeadId,
+            },
+          }).unwrap()
+        : await createPaperWork({ ...data }).unwrap();
       if (res.id) {
         message.success(`PaperWork ${id ? "updated" : "added"} successfully!`);
       } else {
