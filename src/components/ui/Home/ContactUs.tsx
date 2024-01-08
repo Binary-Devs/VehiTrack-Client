@@ -1,3 +1,4 @@
+"use client";
 import { Error_model_hook, Success_model } from "@/utils/modalHook";
 import emailjs from "@emailjs/browser";
 import { useState } from "react";
