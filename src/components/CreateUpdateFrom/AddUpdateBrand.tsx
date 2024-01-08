@@ -8,7 +8,6 @@ import {
 import { Button, Col, Row, message } from "antd";
 
 const AddUpdateBrand = ({ updateData }: { updateData?: any }) => {
-
   //Update
   const [updateBrand, { isLoading: updateLoad }] = useUpdateBrandMutation();
 
@@ -19,9 +18,9 @@ const AddUpdateBrand = ({ updateData }: { updateData?: any }) => {
     message.loading(updateData ? "Updating...." : "Adding....");
     try {
       const res = updateData
-        ? await updateBrand({ updateData, data: values }).unwrap()
+        ? await updateBrand({ id: updateData.id, data: values }).unwrap()
         : await createBrand({ ...values }).unwrap();
-        console.log(res)
+
       if (res.id) {
         message.success(
           `Brand ${updateData ? "updated" : "added"} successfully!`

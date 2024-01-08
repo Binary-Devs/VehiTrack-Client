@@ -93,6 +93,7 @@ const BrandListPage = () => {
               onClick={() => {}}
             >
               <ModalComponent
+                width={500}
                 showModel={showModel}
                 setShowModel={setShowModel}
                 icon={<EditOutlined />}
