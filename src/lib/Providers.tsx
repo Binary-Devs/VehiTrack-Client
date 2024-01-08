@@ -16,6 +16,9 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
       Layout: {
         triggerBg: "#1890ff",
       },
+      Statistic: {
+        titleFontSize: 16,
+      },
     },
   };
 

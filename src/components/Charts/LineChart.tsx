@@ -1,13 +1,36 @@
 "use client";
 
-import React from "react";
-import ReactApexChart from "react-apexcharts";
-import { Typography } from "antd";
-import { MinusOutlined } from "@ant-design/icons";
-import lineChart from "./configs/lineChart";
+import { monthOfYear } from '@/constants/global';
+import { useFuelSummaryGroupByMonthYearQuery } from '@/redux/api/report/reportApi';
+import { MinusOutlined } from '@ant-design/icons';
+import { Typography } from 'antd';
+import ReactApexChart from 'react-apexcharts';
+import lineChart from './configs/lineChart';
 
 const LineChart = () => {
   const { Title, Paragraph } = Typography;
+
+  const { data, isLoading } = useFuelSummaryGroupByMonthYearQuery('', {
+    refetchOnMountOrArgChange: true,
+  });
+
+  const summaries = data?.summaries || [];
+  const filterByYear = summaries?.filter(
+    (el: any) => el.year === new Date().getFullYear()
+  );
+
+  const mappedData = monthOfYear?.map((el: number) => {
+    const findValue = filterByYear?.find((fv: any) => fv.month === el);
+    return findValue?.total_quantity || 0;
+  });
+
+  const series = [
+    {
+      name: 'Fuel',
+      data: mappedData,
+      offsetY: 0,
+    },
+  ];
 
   return (
     <div className="overflow-hidden">
@@ -20,8 +43,7 @@ const LineChart = () => {
         </div>
         <div className="sales">
           <ul>
-            <li>{<MinusOutlined />} Diesel</li>
-            <li>{<MinusOutlined />} Petrol</li>
+            <li>{<MinusOutlined />} Fuel</li>
           </ul>
         </div>
       </div>
@@ -29,10 +51,10 @@ const LineChart = () => {
       <ReactApexChart
         // @ts-ignore
         options={lineChart.options}
-        series={lineChart.series}
+        series={series}
         type="area"
         height={300}
-        width={"100%"}
+        width={'100%'}
       />
     </div>
   );

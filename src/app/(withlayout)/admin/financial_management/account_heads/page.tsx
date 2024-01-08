@@ -10,12 +10,14 @@ import { EditOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
+import { IoMdAdd } from "react-icons/io";
 
 const AccountHeadsPage = () => {
   const query: Record<string, any> = {};
+  const [showModel, setShowModel] = useState(false);
 
   const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(10);
+  const [size, setSize] = useState<number>(5);
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -40,9 +42,9 @@ const AccountHeadsPage = () => {
   }
   const accountHeads = data?.accountHeads;
   const meta = data?.meta;
-  console.log(accountHeads);
+  // console.log(accountHeads);
   const deleteHandler = async (id: string) => {
-    console.log(id);
+    // console.log(id);
   };
 
   const columns = [
@@ -97,7 +99,11 @@ const AccountHeadsPage = () => {
               }}
               onClick={() => {}}
             >
-              <ModalComponent icon={<EditOutlined />}>
+              <ModalComponent
+                showModel={showModel}
+                setShowModel={setShowModel}
+                icon={<EditOutlined />}
+              >
                 <AddAccountHeads id={data?.id} />
               </ModalComponent>
             </div>
@@ -108,7 +114,7 @@ const AccountHeadsPage = () => {
   ];
 
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
+    // console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
@@ -128,10 +134,11 @@ const AccountHeadsPage = () => {
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
       <ActionBar inline title="Account Head List">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between flex-grow gap-2">
           <Input
             // size="large"
             placeholder="Search"
+            value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             // style={{
             //   minWidth: "150px",
@@ -148,7 +155,12 @@ const AccountHeadsPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Account Head">
+          <ModalComponent
+            showModel={showModel}
+            setShowModel={setShowModel}
+            buttonText="Add Account Head"
+            icon={<IoMdAdd />}
+          >
             <AddAccountHeads />
           </ModalComponent>
         </div>

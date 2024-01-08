@@ -22,10 +22,14 @@ const AddUpdateModel = ({ id, brands }: { id?: string; brands?: any }) => {
   const [createModel, { isLoading: createLoad }] = useCreateModelMutation();
 
   const onSubmit = async (values: any) => {
+    const data = {
+      label: values.label,
+    };
+
     message.loading(id ? "Updating...." : "Adding....");
     try {
       const res = id
-        ? await updateModel({ id, data: values }).unwrap()
+        ? await updateModel({ id, data }).unwrap()
         : await createModel({ ...values }).unwrap();
       if (res.id) {
         message.success(`Model ${id ? "updated" : "added"} successfully!`);
@@ -47,7 +51,7 @@ const AddUpdateModel = ({ id, brands }: { id?: string; brands?: any }) => {
       </h1>
       {/*  */}
       <div>
-        <Form submitHandler={onSubmit} defaultValues={data}>
+        <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
           <div
             style={{
               border: "1px solid #d9d9d9",

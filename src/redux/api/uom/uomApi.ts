@@ -1,14 +1,14 @@
 import { tagTypes } from '@/redux/teg-types';
-import { baseApi } from '../baseApi';
 import { IMeta } from '@/types';
+import { baseApi } from '../baseApi';
 
 const UOM_URL = '/uom';
 
 export const uomApi = baseApi.injectEndpoints({
-  endpoints: (build) => ({
+  endpoints: (build: any) => ({
     // create
     createUom: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${UOM_URL}/create`,
         method: 'POST',
         data: data,
@@ -43,7 +43,7 @@ export const uomApi = baseApi.injectEndpoints({
 
     // update
     updateUom: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${UOM_URL}/${data?.id}`,
         method: 'PATCH',
         data: data?.data,

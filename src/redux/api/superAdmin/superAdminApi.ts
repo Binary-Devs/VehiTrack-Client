@@ -1,11 +1,11 @@
 import { tagTypes } from '@/redux/teg-types';
-import { baseApi } from '../baseApi';
 import { IMeta } from '@/types';
+import { baseApi } from '../baseApi';
 
 const SUPER_ADMIN_URL = '/super-admin';
 
 export const superAdminApi = baseApi.injectEndpoints({
-  endpoints: (build) => ({
+  endpoints: (build: any) => ({
     // get all
     getAllSuperAdmin: build.query({
       query: (arg: Record<string, any>) => ({
@@ -33,7 +33,7 @@ export const superAdminApi = baseApi.injectEndpoints({
 
     // update
     updateSuperAdmin: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${SUPER_ADMIN_URL}/${data?.id}`,
         method: 'PATCH',
         data: data?.data,

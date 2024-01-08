@@ -6,9 +6,8 @@ import {
   DeleteOutlined,
   EditOutlined,
   ReloadOutlined,
-  UserOutlined,
 } from "@ant-design/icons";
-import { Avatar, Button, Input } from "antd";
+import { Button, Input } from "antd";
 import { useState } from "react";
 
 import dayjs from "dayjs";
@@ -18,15 +17,16 @@ import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
 import { useGetAllDriverQuery } from "@/redux/api/driver/driverApi";
-import { IoMdAdd } from "react-icons/io";
 import Image from "next/image";
+import { IoMdAdd } from "react-icons/io";
 
 const AllDriverList = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
   const query: Record<string, any> = {};
+  const [showModel, setShowModel] = useState(false);
 
   const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(10);
+  const [size, setSize] = useState<number>(5);
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -48,16 +48,19 @@ const AllDriverList = () => {
   const columns = [
     {
       title: "",
-
+      dataIndex: "profileImg",
       render: function (data: any) {
-        const image = `${data?.imageUrl || "https://res.cloudinary.com/dnzlgpcc3/image/upload/v1704419785/oiav6crzfltkswdrrrli.png"} `;
+        const image = `${
+          data ||
+          "https://res.cloudinary.com/dnzlgpcc3/image/upload/v1704419785/oiav6crzfltkswdrrrli.png"
+        } `;
         return (
           <Image
             src={image}
             width={100}
             height={100}
             alt=""
-            style={{ width: "70px", height: "50px" }}
+            style={{ width: "50px", height: "50px" }}
           />
           // <Avatar shape="square" size={64} icon={<CarOutlined />} />
         );
@@ -126,7 +129,11 @@ const AllDriverList = () => {
                 margin: "0px 5px",
               }}
             >
-              <ModalComponent icon={<EditOutlined />}>
+              <ModalComponent
+                showModel={showModel}
+                setShowModel={setShowModel}
+                icon={<EditOutlined />}
+              >
                 <AddUpdateDriver id={data} />
               </ModalComponent>
             </div>
@@ -146,8 +153,6 @@ const AllDriverList = () => {
   const { data, isLoading } = useGetAllDriverQuery({ ...query });
   const drivers = data?.drivers;
   const meta = data?.meta;
-
-  console.log(drivers);
 
   const onPaginationChange = (page: number, pageSize: number) => {
     setPage(page);
@@ -171,12 +176,12 @@ const AllDriverList = () => {
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
       <ActionBar inline title="Driver List">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between flex-grow gap-2">
           <Input
             // size="large"
             placeholder="Search"
-            onChange={(e) => setSearchTerm(e.target.value)}
             value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
             style={
               {
                 // width: "100%",
@@ -192,7 +197,12 @@ const AllDriverList = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Driver" icon={<IoMdAdd />}>
+          <ModalComponent
+            showModel={showModel}
+            setShowModel={setShowModel}
+            buttonText="Add Driver"
+            icon={<IoMdAdd />}
+          >
             <AddUpdateDriver />
           </ModalComponent>
         </div>

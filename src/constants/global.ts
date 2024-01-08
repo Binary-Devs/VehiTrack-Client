@@ -69,16 +69,16 @@ export const workshopType = [
 ];
 export const maintenanceType = [
   {
-    label: "Schedule",
-    value: "Schedule",
+    label: 'Scheduled',
+    value: 'Scheduled',
   },
   {
-    label: "Unschedule",
-    value: "Unschedule-",
+    label: 'Unscheduled',
+    value: 'Unscheduled',
   },
   {
-    label: "Accidental",
-    value: "Accidental-",
+    label: 'Accidental',
+    value: 'Accidental',
   },
 ];
 export const paperTypeFitness = [
@@ -119,3 +119,7 @@ export const accidentPaymentStatus = [
     value: "Nothing",
   },
 ];
+
+
+// month of the year
+export const monthOfYear = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];

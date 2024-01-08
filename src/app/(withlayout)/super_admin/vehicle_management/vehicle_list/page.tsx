@@ -5,7 +5,7 @@ import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
   EditOutlined,
-  ReloadOutlined
+  ReloadOutlined,
 } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import { useState } from "react";
@@ -30,9 +30,10 @@ import { IoMdAdd } from "react-icons/io";
 const VehicleListPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
   const query: Record<string, any> = {};
+  const [showModel, setShowModel] = useState(false);
 
   const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(10);
+  const [size, setSize] = useState<number>(5);
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -61,7 +62,7 @@ const VehicleListPage = () => {
   const vehicles = data?.vehicles;
   const meta = data?.meta;
 
-  console.log(vehicles);
+  // console.log(vehicles);
 
   // BrandData for creating vehicle
   const { data: brandData, isLoading: brandLoad } = useGetAllBrandQuery({});
@@ -93,9 +94,12 @@ const VehicleListPage = () => {
       title: "",
       // fixed: "left",
       // width: 80,
+      dataIndex: "imageUrl",
       render: function (data: any) {
-       
-        const image = `${data?.imageUrl || "https://res.cloudinary.com/dnzlgpcc3/image/upload/v1704419785/oiav6crzfltkswdrrrli.png"} `;
+        const image = `${
+          data ||
+          "https://res.cloudinary.com/dnzlgpcc3/image/upload/v1704419785/oiav6crzfltkswdrrrli.png"
+        } `;
         return (
           <Image
             src={image}
@@ -185,7 +189,11 @@ const VehicleListPage = () => {
                 margin: "0px 5px",
               }}
             >
-              <ModalComponent icon={<EditOutlined />}>
+              <ModalComponent
+                showModel={showModel}
+                setShowModel={setShowModel}
+                icon={<EditOutlined />}
+              >
                 <AddUpdateVehicle
                   id={data}
                   brands={brands}
@@ -209,7 +217,7 @@ const VehicleListPage = () => {
   ];
 
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
+    // console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
@@ -248,15 +256,16 @@ const VehicleListPage = () => {
   // if (isLoading) {
   //   return <Loader className="h-[50vh] flex items-end justify-center" />;
   // }
+
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
       <ActionBar inline title="Vehicle List">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between flex-grow gap-2">
           <Input
             // size="large"
             placeholder="Search"
-            onChange={(e) => setSearchTerm(e.target.value)}
             value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
             // style={{
             //   minWidth: "150px",
             //   maxWidth: "300px",
@@ -271,7 +280,12 @@ const VehicleListPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Vehicle" icon={<IoMdAdd />}>
+          <ModalComponent
+            showModel={showModel}
+            setShowModel={setShowModel}
+            buttonText="Add Vehicle"
+            icon={<IoMdAdd />}
+          >
             <AddUpdateVehicle
               brands={brands}
               models={models}

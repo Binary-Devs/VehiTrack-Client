@@ -1,14 +1,14 @@
-import { tagTypes } from '@/redux/teg-types';
-import { baseApi } from '../baseApi';
-import { IMeta } from '@/types';
+import { tagTypes } from "@/redux/teg-types";
+import { IMeta } from "@/types";
+import { baseApi } from "../baseApi";
 
-const BRAND_URL = '/brand';
+const BRAND_URL = "/brand";
 
 export const brandApi = baseApi.injectEndpoints({
-  endpoints: (build) => ({
+  endpoints: (build: any) => ({
     // create
     createBrand: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${BRAND_URL}/create`,
         method: 'POST',
         data: data,
@@ -43,7 +43,7 @@ export const brandApi = baseApi.injectEndpoints({
 
     // update
     updateBrand: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${BRAND_URL}/${data?.id}`,
         method: 'PATCH',
         data: data?.data,

@@ -1,30 +1,30 @@
-'use client';
+"use client";
 
-import { totalSum } from '@/components/Utlis/needyFunction';
-import MainCard from '@/components/ui/MainCard';
-import UMTable from '@/components/ui/Table';
-import { useGetAllEquipmentQuery } from '@/redux/api/equipment/equipmentApi';
-import { useStockStatusQuery } from '@/redux/api/report/reportApi';
-import { Col, Row, Select } from 'antd';
-import { useState } from 'react';
+import { totalSum } from "@/components/Utlis/needyFunction";
+import MainCard from "@/components/ui/MainCard";
+import UMTable from "@/components/ui/Table";
+import { useGetAllEquipmentQuery } from "@/redux/api/equipment/equipmentApi";
+import { useStockStatusQuery } from "@/redux/api/report/reportApi";
+import { Col, Row, Select } from "antd";
+import { useState } from "react";
 
 const StockStatus = () => {
   const [equipment, setEquipment] = useState<string | null | undefined>(null);
   const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(10);
+  const [size, setSize] = useState<number>(5);
   // library
   const { data: equipmentData, isLoading: equipmentDataLoading } =
-    useGetAllEquipmentQuery({ limit: 100, sortBy: 'label', sortOrder: 'asc' });
+    useGetAllEquipmentQuery({ limit: 100, sortBy: "label", sortOrder: "asc" });
   const allEquipmentData = equipmentData?.equipments || [];
   // library
 
   // fetching
   const query: Record<string, any> = {};
-  query['limit'] = size;
-  query['page'] = page;
+  query["limit"] = size;
+  query["page"] = page;
 
   if (equipment) {
-    query['id'] = equipment;
+    query["id"] = equipment;
   }
 
   const { data, isLoading } = useStockStatusQuery(
@@ -43,50 +43,50 @@ const StockStatus = () => {
 
   const columns = [
     {
-      title: 'SN',
+      title: "SN",
       render: (el: any, item: any, index: any) => (page - 1) * 10 + index + 1,
     },
     {
-      title: 'Equipment',
-      dataIndex: 'label',
+      title: "Equipment",
+      dataIndex: "label",
     },
     {
-      title: 'Unit of Measurement',
-      dataIndex: 'uom',
+      title: "Unit of Measurement",
+      dataIndex: "uom",
       render: (el: any) => el?.label,
-      align: 'center',
+      align: "center",
     },
     {
-      title: 'Stock In',
-      dataIndex: 'equipmentIns',
-      render: (el: any) => totalSum(el || [], 'quantity'),
-      align: 'right',
+      title: "Stock In",
+      dataIndex: "equipmentIns",
+      render: (el: any) => totalSum(el || [], "quantity"),
+      align: "right",
     },
     {
-      title: 'Stock Out',
-      dataIndex: 'equipmentUses',
-      render: (el: any) => totalSum(el || [], 'quantity'),
-      align: 'right',
+      title: "Stock Out",
+      dataIndex: "equipmentUses",
+      render: (el: any) => totalSum(el || [], "quantity"),
+      align: "right",
     },
     {
-      title: 'Available',
+      title: "Available",
       render: (el: any) =>
-        totalSum(el?.equipmentIns || [], 'quantity') -
-        totalSum(el?.equipmentUses || [], 'quantity'),
-      align: 'right',
+        totalSum(el?.equipmentIns || [], "quantity") -
+        totalSum(el?.equipmentUses || [], "quantity"),
+      align: "right",
     },
   ];
 
   return (
     <MainCard title="Stock Status">
-      <Row>
+      <Row className="mb-4">
         <Col xs={24} sm={12} md={8}>
           <Select
             loading={equipmentDataLoading}
             allowClear
-            style={{ width: '100%' }}
+            style={{ width: "100%" }}
             placeholder="Select a Equipment"
-            fieldNames={{ label: 'label', value: 'id' }}
+            fieldNames={{ label: "label", value: "id" }}
             value={equipment}
             onChange={(value) => setEquipment(value)}
             options={allEquipmentData}

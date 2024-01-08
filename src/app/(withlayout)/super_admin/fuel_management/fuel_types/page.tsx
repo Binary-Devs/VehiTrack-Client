@@ -7,15 +7,17 @@ import UMTable from "@/components/ui/Table";
 import { useGetAllFuelTypeQuery } from "@/redux/api/fuelType/fuelTypeApi";
 import { useDebounced } from "@/redux/hooks";
 import { EditOutlined, ReloadOutlined } from "@ant-design/icons";
-import { Button, Input } from "antd";
+import { Button, Grid, Input } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
+import { IoMdAdd } from "react-icons/io";
 
 const FuelTypesPage = () => {
   const query: Record<string, any> = {};
+  const [showModel, setShowModel] = useState(false);
 
   const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(10);
+  const [size, setSize] = useState<number>(5);
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -24,6 +26,9 @@ const FuelTypesPage = () => {
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
+
+  const { useBreakpoint } = Grid;
+  const screens = useBreakpoint();
 
   const debouncedTerm = useDebounced({
     searchQuery: searchTerm,
@@ -53,7 +58,7 @@ const FuelTypesPage = () => {
       title: "CreatedAt",
       dataIndex: "createdAt",
       render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+        return data && dayjs(data).format("MMM D, YYYY");
       },
       sorter: true,
     },
@@ -86,7 +91,11 @@ const FuelTypesPage = () => {
               }}
               onClick={() => {}}
             >
-              <ModalComponent icon={<EditOutlined />}>
+              <ModalComponent
+                showModel={showModel}
+                setShowModel={setShowModel}
+                icon={<EditOutlined />}
+              >
                 <AddFuelTypes id={data?.id} />
               </ModalComponent>
             </div>
@@ -100,7 +109,7 @@ const FuelTypesPage = () => {
   ];
 
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
+    // console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
@@ -118,11 +127,12 @@ const FuelTypesPage = () => {
   };
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
-      <ActionBar inline title="Fuel Type List">
-        <div className="flex items-center gap-2">
+      <ActionBar inline={screens.xs ? false : true} title="Fuel Type List">
+        <div className="flex items-center justify-between flex-grow gap-2">
           <Input
             // size="large"
             placeholder="Search"
+            value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             // style={{
             //   minWidth: "150px",
@@ -139,7 +149,12 @@ const FuelTypesPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Fuel Type">
+          <ModalComponent
+            showModel={showModel}
+            setShowModel={setShowModel}
+            buttonText="Add Fuel Type"
+            icon={<IoMdAdd />}
+          >
             <AddFuelTypes />
           </ModalComponent>
         </div>

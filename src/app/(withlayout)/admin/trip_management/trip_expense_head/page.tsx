@@ -1,18 +1,21 @@
 "use client";
 
-import AddPartyList from "@/components/CreateUpdateFrom/AddPartyList";
+import AddUpdateTripExpenseHead from "@/components/CreateUpdateFrom/AddUpdateTripExpenseHead";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
+import { useGetAllTripExpenseHeadQuery } from "@/redux/api/trip/tripApi";
+import { IoMdAdd } from "react-icons/io";
+
 import { useDebounced } from "@/redux/hooks";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Button, Input, Tag } from "antd";
+import { EditOutlined } from "@ant-design/icons";
+import { Input } from "antd";
 import dayjs from "dayjs";
-import Link from "next/link";
 import { useState } from "react";
 
 const TripExpenseHeadPage = () => {
   const query: Record<string, any> = {};
+  const [showModel, setShowModel] = useState(false);
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
@@ -20,10 +23,10 @@ const TripExpenseHeadPage = () => {
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  // query["limit"] = size;
-  // query["page"] = page;
-  // query["sortBy"] = sortBy;
-  // query["sortOrder"] = sortOrder;
+  query["limit"] = size;
+  query["page"] = page;
+  query["sortBy"] = sortBy;
+  query["sortOrder"] = sortOrder;
   query["searchTerm"] = searchTerm;
 
   const debouncedTerm = useDebounced({
@@ -35,39 +38,24 @@ const TripExpenseHeadPage = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  // const { data, isLoading } = useGetAllPartiesQuery({ ...query });
+  const { data, isLoading } = useGetAllTripExpenseHeadQuery({ ...query });
 
-  // const parties = data?.parties;
-  // const meta = data?.meta;
-  // const parties = [];
-  const meta = null;
+  const tripExpenseHeads = data?.tripExpenseHeads;
+  const meta = data?.meta;
 
   const columns = [
     {
-      title: "Name",
-      dataIndex: "fullName",
+      title: "SN",
+      dataIndex: "",
+      render: (data: any, text: any, index: number) => index + 1,
     },
     {
-      title: "Mobile",
-      dataIndex: "mobile",
+      title: "Label",
+      dataIndex: "label",
     },
     {
-      title: "Address",
-      dataIndex: "address",
-    },
-    {
-      title: "Active",
-      dataIndex: "isActive",
-      render: (isActive: boolean) =>
-        isActive ? (
-          <Tag color="green">Active</Tag>
-        ) : (
-          <Tag color="red">Not Active</Tag>
-        ),
-    },
-    {
-      title: "CreatedAt",
-      dataIndex: "createdAt",
+      title: "Updated At",
+      dataIndex: "updatedAt",
       render: function (data: any) {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
       },
@@ -75,33 +63,31 @@ const TripExpenseHeadPage = () => {
     },
     {
       title: "Action",
+      dataIndex: "id",
       render: function (data: any) {
         return (
-          <>
-            <Link
-              href={`/super_admin/trip_management/party_list/edit/${data?.id}`}
+          <div className="">
+            <div
+              style={{
+                margin: "0px 5px",
+              }}
             >
-              <Button
-                style={{
-                  margin: "0px 5px",
-                }}
-                onClick={() => console.log(data)}
-                type="primary"
+              <ModalComponent
+                showModel={showModel}
+                setShowModel={setShowModel}
+                icon={<EditOutlined />}
               >
-                <EditOutlined />
-              </Button>
-            </Link>
-            <Button onClick={() => console.log(data?.id)} type="primary" danger>
-              <DeleteOutlined />
-            </Button>
-          </>
+                <AddUpdateTripExpenseHead id={data} />
+              </ModalComponent>
+            </div>
+          </div>
         );
       },
     },
   ];
 
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
+    // console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
@@ -120,7 +106,7 @@ const TripExpenseHeadPage = () => {
 
   return (
     <div>
-      <ActionBar title="Party List">
+      <ActionBar title="Trip Expense Head List">
         <Input
           type="text"
           size="large"
@@ -133,22 +119,26 @@ const TripExpenseHeadPage = () => {
             maxWidth: "200px",
           }}
         />
-        <ModalComponent buttonText="Add Party">
-          <AddPartyList />
+        <ModalComponent
+          showModel={showModel}
+          setShowModel={setShowModel}
+          buttonText="Add Expense Head"
+          icon={<IoMdAdd />}
+        >
+          <AddUpdateTripExpenseHead />
         </ModalComponent>
       </ActionBar>
 
       <UMTable
         columns={columns}
-        dataSource={[]}
+        dataSource={tripExpenseHeads}
         pageSize={size}
-        // totalPages={meta?.total}
-        totalPages={5}
+        totalPages={meta?.total}
         showSizeChanger={true}
         onPaginationChange={onPaginationChange}
         onTableChange={onTableChange}
         showPagination={true}
-        // loading={isLoading}
+        loading={isLoading}
       />
     </div>
   );

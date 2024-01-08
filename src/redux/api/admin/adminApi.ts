@@ -1,11 +1,11 @@
 import { tagTypes } from '@/redux/teg-types';
-import { baseApi } from '../baseApi';
 import { IMeta } from '@/types';
+import { baseApi } from '../baseApi';
 
 const ADMIN_URL = '/admin';
 
 export const adminApi = baseApi.injectEndpoints({
-  endpoints: (build) => ({
+  endpoints: (build: any) => ({
     // get all
     getAllAdmin: build.query({
       query: (arg: Record<string, any>) => ({
@@ -33,7 +33,7 @@ export const adminApi = baseApi.injectEndpoints({
 
     // update
     updateAdmin: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${ADMIN_URL}/${data?.id}`,
         method: 'PATCH',
         data: data?.data,

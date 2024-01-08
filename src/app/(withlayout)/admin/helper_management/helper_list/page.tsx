@@ -5,12 +5,10 @@ import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
   EditOutlined,
-  EyeOutlined,
   ReloadOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { Avatar, Button, Input } from "antd";
-import Link from "next/link";
 import { useState } from "react";
 
 import dayjs from "dayjs";
@@ -25,9 +23,10 @@ import { IoMdAdd } from "react-icons/io";
 const HelperListPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
   const query: Record<string, any> = {};
+  const [showModel, setShowModel] = useState(false);
 
   const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(10);
+  const [size, setSize] = useState<number>(5);
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -46,49 +45,12 @@ const HelperListPage = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  //@ts-ignore
-  // const AllHelperData = [
-  //   {
-  //     _id: 1,
-  //     name: "sampood",
-  //     email: "sampood@gmail.com",
-  //     createdAt: "2023-01-01",
-  //     phoneNumber: "014741154151",
-  //     profileImage:
-  //       "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //   },
-  //   {
-  //     _id: 2,
-  //     name: "akahs",
-  //     email: "kakspood@gmail.com",
-  //     createdAt: "2023-01-01",
-  //     phoneNumber: "018044518521",
-  //     profileImage:
-  //       "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //   },
-  //   {
-  //     _id: 3,
-  //     name: "roihime",
-  //     email: "roihime@gmail.com",
-  //     phoneNumber: "018769988521",
-  //     createdAt: "2023-01-01",
-  //     profileImage:
-  //       "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //   },
-  // ];
-  //@ts-ignore
-  //   const meta = {
-  //     "page": 1,
-  //     "limit": 10,
-  //     "total": 3
-  // };
-
   const columns = [
     {
       title: "",
 
       render: function (data: any) {
-        return <Avatar size={64} icon={<UserOutlined />} />;
+        return <Avatar size={48} icon={<UserOutlined />} />;
       },
     },
     {
@@ -131,7 +93,7 @@ const HelperListPage = () => {
     },
     {
       title: "Action",
-      dataIndex: "_id",
+      dataIndex: "id",
       // width: "15%",
       render: function (data: any) {
         return (
@@ -146,17 +108,33 @@ const HelperListPage = () => {
                 margin: "0px 5px",
               }}
             >
-              <ModalComponent icon={<EditOutlined />}>
+              <ModalComponent
+                showModel={showModel}
+                setShowModel={setShowModel}
+                icon={<EditOutlined />}
+              >
                 <AddUpdateHelper id={data} />
               </ModalComponent>
             </div>
-            <Button
-              //   onClick={() => deleteGeneralUserHandler(data)}
-              type="primary"
-              danger
-            >
-              <DeleteOutlined />
-            </Button>
+            <div>
+              <ModalComponent
+                showModel={showModel}
+                setShowModel={setShowModel}
+                icon={<DeleteOutlined />}
+                buttonDanger={true}
+              >
+                <div>
+                  <h1 className="text-center my-1 font-bold text-2xl">
+                    Delete Helper
+                  </h1>
+                  <div className="flex justify-end items-center mt-[5px]">
+                    <Button htmlType="submit" type="primary">
+                      Ok
+                    </Button>
+                  </div>
+                </div>
+              </ModalComponent>
+            </div>
           </div>
         );
       },
@@ -167,7 +145,7 @@ const HelperListPage = () => {
   const helpers = data?.helpers;
   const meta = data?.meta;
 
-  console.log(helpers);
+  // console.log(helpers);
 
   const onPaginationChange = (page: number, pageSize: number) => {
     setPage(page);
@@ -186,37 +164,18 @@ const HelperListPage = () => {
     setSearchTerm("");
   };
 
-  //   const deleteGeneralUserHandler = async (id: string) => {
-  //     console.log(id);
-  //     confirm_modal(`Are you sure you want to delete`).then(async (res) => {
-  //       if (res.isConfirmed) {
-  //         try {
-  //           const res = await deleteGeneralUser(id).unwrap();
-  //           if (res.success == false) {
-  //             // message.success("Admin Successfully Deleted!");
-  //             // setOpen(false);
-  //             Error_model_hook(res?.message);
-  //           } else {
-  //             Success_model("Customer Successfully Deleted");
-  //           }
-  //         } catch (error: any) {
-  //           message.error(error.message);
-  //         }
-  //       }
-  //     });
-  //   };
   // if (isLoading) {
   //   return <Loader className="h-[50vh] flex items-end justify-center" />;
   // }
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
       <ActionBar inline title="Helper List">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between flex-grow gap-2">
           <Input
             // size="large"
             placeholder="Search"
-            onChange={(e) => setSearchTerm(e.target.value)}
             value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
             style={
               {
                 // width: "100%",
@@ -232,7 +191,12 @@ const HelperListPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Helper" icon={<IoMdAdd />}>
+          <ModalComponent
+            showModel={showModel}
+            setShowModel={setShowModel}
+            buttonText="Add Helper"
+            icon={<IoMdAdd />}
+          >
             <AddUpdateHelper />
           </ModalComponent>
         </div>

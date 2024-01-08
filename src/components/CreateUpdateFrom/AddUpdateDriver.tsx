@@ -15,7 +15,7 @@ import Loader from "../Utlis/Loader";
 import UploadImage from "../ui/uploadImage";
 
 const AddUpdateDriver = ({ id }: { id?: string }) => {
-    const [image, setimage] = useState("");
+  const [image, setimage] = useState("");
   //Get
   const { data, isLoading: getLoad } = useGetSingleDriverQuery(id ? id : "");
 
@@ -25,12 +25,9 @@ const AddUpdateDriver = ({ id }: { id?: string }) => {
   //Create
   const [createDriver, { isLoading: createLoad }] = useCreateDriverMutation();
 
-  console.log(data);
-
   const onSubmit = async (values: any) => {
     message.loading(id ? "Updating...." : "Adding....");
-    console.log(values);
-    values.imageUrl = image;
+    id ? values.profileImg : (values.driver.profileImg = image);
     try {
       const res = id
         ? await updateDriver({
@@ -57,14 +54,16 @@ const AddUpdateDriver = ({ id }: { id?: string }) => {
   if (id && getLoad) {
     return <Loader className="h-[40vh] flex items-center justify-center" />;
   }
+
+  // console.log(data);
+
   return (
     <div>
       <h1 className="text-center my-1 font-bold text-2xl">
         {id ? "Update Driver" : "Add Driver"}
       </h1>
       <div>
-     <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
-
+        <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -91,7 +90,7 @@ const AddUpdateDriver = ({ id }: { id?: string }) => {
                 //   marginBottom: "10px",
                 // }}
               >
-                <UploadImage setImageStatus={setimage} name="imageUrl" />
+                <UploadImage setImageStatus={setimage} name="profileImg" />
               </Col>
 
               <Col
@@ -151,7 +150,7 @@ const AddUpdateDriver = ({ id }: { id?: string }) => {
               >
                 <FormInput
                   type="text"
-                  name="driver.fullName"
+                  name={id ? "fullName" : "driver.fullName"}
                   size="large"
                   label="Full Name"
                   required={true}
@@ -170,7 +169,7 @@ const AddUpdateDriver = ({ id }: { id?: string }) => {
               >
                 <FormInput
                   type="tel"
-                  name="driver.mobile"
+                  name={id ? "mobile" : "driver.mobile"}
                   size="large"
                   label="Mobile"
                   required={true}
@@ -188,7 +187,7 @@ const AddUpdateDriver = ({ id }: { id?: string }) => {
               >
                 <FormInput
                   type="text"
-                  name="driver.licenseNo"
+                  name={id ? "licenseNo" : "driver.licenseNo"}
                   size="large"
                   label="License No"
                   // required={true}
@@ -206,7 +205,7 @@ const AddUpdateDriver = ({ id }: { id?: string }) => {
               >
                 <FormSelectField
                   size="large"
-                  name="driver.bloodGroup"
+                  name={id ? "bloodGroup" : "driver.bloodGroup"}
                   options={bloodGroupOptions}
                   label="Blood Group"
                   placeholder="Select driver blood group"
@@ -224,7 +223,7 @@ const AddUpdateDriver = ({ id }: { id?: string }) => {
                 }}
               >
                 <FormTextArea
-                  name="driver.address"
+                  name={id ? "address" : "driver.address"}
                   label="Address"
                   rows={3}
                   placeholder="Enter driver address"

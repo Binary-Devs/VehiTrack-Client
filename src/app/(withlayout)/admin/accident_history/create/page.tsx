@@ -10,7 +10,7 @@ import { Button, Col, Row } from "antd";
 const CreateAccidentHistory = () => {
   const query: Record<string, any> = {};
   const { data: driver, isLoading, error } = useGetAllDriverQuery({});
-  console.log(driver);
+  // console.log(driver);
   query["limit"] = 99999;
   query["sortBy"] = "fullName";
   query["sortOrder"] = "asc";
@@ -135,7 +135,7 @@ const CreateAccidentHistory = () => {
     },
   ];
   if (error) {
-    console.log(error);
+    // console.log(error);
   }
   const vehicleOptions = vehicles?.map((vehicle) => {
     return {
@@ -150,7 +150,7 @@ const CreateAccidentHistory = () => {
     };
   });
   const onSubmit = async (data: any) => {
-    console.log(data);
+    // console.log(data);
   };
 
   return (

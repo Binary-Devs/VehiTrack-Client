@@ -1,14 +1,14 @@
 import { tagTypes } from '@/redux/teg-types';
-import { baseApi } from '../baseApi';
 import { IMeta } from '@/types';
+import { baseApi } from '../baseApi';
 
 const EXPENSE_URL = '/expense';
 
 export const expenseApi = baseApi.injectEndpoints({
-  endpoints: (build) => ({
+  endpoints: (build: any) => ({
     // create
     createExpense: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${EXPENSE_URL}/create`,
         method: 'POST',
         data: data,
@@ -43,7 +43,7 @@ export const expenseApi = baseApi.injectEndpoints({
 
     // update
     updateExpense: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${EXPENSE_URL}/${data?.id}`,
         method: 'PATCH',
         data: data?.data,

@@ -23,12 +23,12 @@ const FuelStatus = () => {
   const allFuelStatus = data?.fuelStatus || [];
 
   // filter
-  const filterFuelStatus = allFuelStatus?.filter((el) =>
+  const filterFuelStatus = allFuelStatus?.filter((el: any) =>
     vehicle ? el.id === vehicle : true
   );
 
   // mapping
-  const mapFuelStatus = filterFuelStatus.map((el) => ({
+  const mapFuelStatus = filterFuelStatus.map((el: any) => ({
     fuelAmount: totalSum(el.fuels || [], 'amount'),
     expenseAmount: totalSum(el.expenses || [], 'amount'),
   }));

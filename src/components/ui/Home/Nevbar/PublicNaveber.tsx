@@ -7,7 +7,7 @@ import { Avatar, Button, Dropdown, MenuProps, Space } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import logo from "../../../../../public/logo.jpg";
+import logo from "../../../../../public/logo.png";
 
 // Define NavbarPublic component
 const NavbarPublic = () => {
@@ -50,10 +50,10 @@ const NavbarPublic = () => {
 
   return (
     <header className="text-gray-600 body-font">
-      <div className="mx-auto flex flex-wrap p-3 flex-row items-center justify-between">
+      <div className="mx-auto flex flex-wrap p-2 flex-row items-center justify-between md:px-10">
         {/* Logo */}
         <div className="flex-shrink-0">
-          <Image className="rounded-xl" height={50} src={logo} alt="Logo" />
+          <Image className="" height={40} src={logo} alt="Logo" />
         </div>
 
         {/* Navigation and User Info */}

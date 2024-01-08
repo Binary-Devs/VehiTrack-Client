@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import MainCard from '@/components/ui/MainCard';
-import UMTable from '@/components/ui/Table';
-import { useGetAllExpenseQuery } from '@/redux/api/expense/expenseApi';
-import { useDebounced } from '@/redux/hooks';
-import { ReloadOutlined } from '@ant-design/icons';
-import { Button, Input, Row } from 'antd';
-import dayjs from 'dayjs';
-import { useState } from 'react';
-import ExpenseAction from './ExpenseAction';
-import CreateExpense from './CreateExpense';
+import MainCard from "@/components/ui/MainCard";
+import UMTable from "@/components/ui/Table";
+import { useGetAllExpenseQuery } from "@/redux/api/expense/expenseApi";
+import { useDebounced } from "@/redux/hooks";
+import { ReloadOutlined } from "@ant-design/icons";
+import { Button, Input, Row } from "antd";
+import dayjs from "dayjs";
+import { useState } from "react";
+import CreateExpense from "./CreateExpense";
+import ExpenseAction from "./ExpenseAction";
 
 const Expenses = () => {
   const [open, setOpen] = useState(false);
@@ -18,16 +18,16 @@ const Expenses = () => {
   const query: Record<string, any> = {};
 
   const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(10);
-  const [sortBy, setSortBy] = useState<string>('');
-  const [sortOrder, setSortOrder] = useState<string>('');
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [size, setSize] = useState<number>(5);
+  const [sortBy, setSortBy] = useState<string>("");
+  const [sortOrder, setSortOrder] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
-  query['limit'] = size;
-  query['page'] = page;
-  query['sortBy'] = sortBy;
-  query['sortOrder'] = sortOrder;
-  query['isMisc'] = true;
+  query["limit"] = size;
+  query["page"] = page;
+  query["sortBy"] = sortBy;
+  query["sortOrder"] = sortOrder;
+  query["isMisc"] = true;
 
   const debouncedTerm = useDebounced({
     searchQuery: searchTerm,
@@ -35,7 +35,7 @@ const Expenses = () => {
   });
 
   if (!!debouncedTerm) {
-    query['searchTerm'] = debouncedTerm;
+    query["searchTerm"] = debouncedTerm;
   }
 
   const { data, isLoading } = useGetAllExpenseQuery({ ...query });
@@ -45,38 +45,38 @@ const Expenses = () => {
 
   const columns = [
     {
-      title: 'SN',
-      align: 'center',
+      title: "SN",
+      align: "center",
       render: (data: any, item: any, index: any) => (page - 1) * 10 + index + 1,
     },
     {
-      title: 'Date',
-      dataIndex: 'date',
-      render: (data: string) => dayjs(data).format('DD/MM/YYYY'),
+      title: "Date",
+      dataIndex: "date",
+      render: (data: string) => dayjs(data).format("DD/MM/YYYY"),
       sorter: true,
     },
     {
-      title: 'Vehicle',
-      dataIndex: 'vehicle',
+      title: "Vehicle",
+      dataIndex: "vehicle",
       render: (vehicle: any) => vehicle?.regNo,
     },
     {
-      title: 'Expense Head',
-      dataIndex: 'expenseHead',
+      title: "Expense Head",
+      dataIndex: "expenseHead",
       render: (el: any) => el?.label,
     },
     {
-      title: 'Remarks',
-      dataIndex: 'remarks',
+      title: "Remarks",
+      dataIndex: "remarks",
     },
     {
-      title: 'Amount',
-      dataIndex: 'amount',
-      align: 'right',
+      title: "Amount",
+      dataIndex: "amount",
+      align: "right",
     },
     {
-      title: 'Action',
-      align: 'center',
+      title: "Action",
+      align: "center",
       render: (data: any) => <ExpenseAction data={data} />,
     },
   ];
@@ -87,15 +87,14 @@ const Expenses = () => {
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
     setSortBy(field as string);
-    setSortOrder(order === 'ascend' ? 'asc' : 'desc');
+    setSortOrder(order === "ascend" ? "asc" : "desc");
   };
 
   const resetFilters = () => {
-    setSortBy('');
-    setSortOrder('');
-    setSearchTerm('');
+    setSortBy("");
+    setSortOrder("");
+    setSearchTerm("");
   };
   return (
     <MainCard
@@ -123,7 +122,7 @@ const Expenses = () => {
         <div>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
-              style={{ margin: '0px 5px' }}
+              style={{ margin: "0px 5px" }}
               type="primary"
               onClick={resetFilters}
             >

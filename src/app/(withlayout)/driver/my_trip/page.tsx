@@ -1,7 +1,7 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 import UMTable from "@/components/ui/Table";
-import { useGetAllTripQuery } from "@/redux/api/trip/tripApi";
+import { useGetProfileQuery } from "@/redux/api/profile/profileApi";
 import { useDebounced } from "@/redux/hooks";
 import { ReloadOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
@@ -10,9 +10,10 @@ import { useState } from "react";
 
 const MyTrip = () => {
   const query: Record<string, any> = {};
+  const [showModel, setShowModel] = useState(false);
 
   const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(10);
+  const [size, setSize] = useState<number>(5);
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -32,21 +33,12 @@ const MyTrip = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const { data, isLoading } = useGetAllTripQuery({
-    ...query,
-    status: "Completed",
-  });
+  const { data: userData, isLoading } = useGetProfileQuery(undefined);
+  const trips = userData?.driver?.trips;
+  const filteredTrips = trips?.filter(
+    (trip: any) => trip.status === "Completed" || trip.status === "Running"
+  );
 
-  const trips = data?.trips;
-  const meta = data?.meta;
-  //   const { id: userId } = getUserInfo() as any;
-  //   const { data: driver, isLoading: getLoad } = useGetAllDriverQuery({
-  //     userId: userId,
-  //   });
-  //   console.log(driver);
-  // console.log(userId); //c111a14b-591f-4331-b649-cdd5bea082d6
-  const driverId = "51397d0f-f5e4-4a4a-b564-33b41f6913cc";
-  const upcomingTrips = trips?.filter((trip) => trip.driverId === driverId);
   const columns = [
     {
       title: "Trip No",
@@ -122,7 +114,11 @@ const MyTrip = () => {
     //           <DeleteOutlined />
     //         </Button>
 
-    //         <ModalComponent icon={<MoneyCollectOutlined />}>
+    //         <ModalComponent
+    //           showModel={showModel}
+    //           setShowModel={setShowModel}
+    //           icon={<MoneyCollectOutlined />}
+    //         >
     //           <AddTrip />
     //         </ModalComponent>
     //       </div>
@@ -150,10 +146,11 @@ const MyTrip = () => {
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
       <ActionBar inline title="Upcoming Trip">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between flex-grow gap-2">
           <Input
             // size="large"
             placeholder="Search"
+            value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             // style={{
             //   minWidth: "150px",
@@ -175,9 +172,9 @@ const MyTrip = () => {
 
       <UMTable
         columns={columns}
-        dataSource={upcomingTrips}
+        dataSource={filteredTrips}
         pageSize={size}
-        totalPages={meta?.total}
+        totalPages={filteredTrips?.length}
         showSizeChanger={true}
         onPaginationChange={onPaginationChange}
         onTableChange={onTableChange}

@@ -1,9 +1,10 @@
 import {
   BankOutlined,
   CarOutlined,
-  DashboardFilled,
+  DashboardOutlined,
   HistoryOutlined,
   HomeOutlined,
+  MessageOutlined,
   MoneyCollectOutlined,
   PaperClipOutlined,
   StrikethroughOutlined,
@@ -30,10 +31,6 @@ export const sidebarItem = (role: string) => {
       ),
       icon: <HomeOutlined />,
     },
-  ];
-
-  const commonAdminSidebarItems: MenuProps["items"] = [
-    ...defaultSidebarItems,
     {
       label: (
         <Link className="text-sm " href={`/dashboard`}>
@@ -41,8 +38,21 @@ export const sidebarItem = (role: string) => {
         </Link>
       ),
       key: "/dashboard",
-      icon: <DashboardFilled />,
+      icon: <DashboardOutlined />,
     },
+    {
+      label: (
+        <Link className="text-sm " href={`/inbox`}>
+          Inbox
+        </Link>
+      ),
+      key: "/inbox",
+      icon: <MessageOutlined />,
+    },
+  ];
+
+  const commonAdminSidebarItems: MenuProps["items"] = [
+    ...defaultSidebarItems,
     {
       label: "Vehicle Management",
       icon: <CarOutlined />,
@@ -494,15 +504,6 @@ export const sidebarItem = (role: string) => {
     ...defaultSidebarItems,
     {
       label: (
-        <Link className="text-sm " href={`/dashboard`}>
-          Dashboard
-        </Link>
-      ),
-      key: "/dashboard",
-      icon: <DashboardFilled />,
-    },
-    {
-      label: (
         <Link className="text-sm " href={`/${role}/upcoming_trip`}>
           Upcoming Trip
         </Link>
@@ -532,15 +533,6 @@ export const sidebarItem = (role: string) => {
 
   const helperSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
-    {
-      label: (
-        <Link className="text-sm " href={`/dashboard`}>
-          Dashboard
-        </Link>
-      ),
-      key: "/dashboard",
-      icon: <DashboardFilled />,
-    },
     {
       label: (
         <Link className="text-sm " href={`/${role}/upcoming_trip`}>

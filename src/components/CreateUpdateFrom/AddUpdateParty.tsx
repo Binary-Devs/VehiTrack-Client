@@ -21,7 +21,7 @@ const AddUpdateParty = ({ id }: { id?: string }) => {
   const [createParty, { isLoading: createLoad }] = useCreatePartyMutation();
 
   const onSubmit = async (values: any) => {
-    console.log(values);
+    // console.log(values);
 
     message.loading(id ? "Updating...." : "Adding....");
     try {
@@ -55,7 +55,7 @@ const AddUpdateParty = ({ id }: { id?: string }) => {
         {id ? "Update Party" : "Add Party"}
       </h1>
       <div>
-        <Form submitHandler={onSubmit} defaultValues={id ? data : {}}>
+        <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
           <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
             <Col xs={24} md={12} lg={8} style={{ margin: "10px 0" }}>
               <FormInput name="fullName" label="Full Name" />

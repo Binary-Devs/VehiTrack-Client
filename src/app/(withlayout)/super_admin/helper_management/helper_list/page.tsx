@@ -5,8 +5,7 @@ import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
   EditOutlined,
-
-  ReloadOutlined
+  ReloadOutlined,
 } from "@ant-design/icons";
 import { Button, Input } from "antd";
 
@@ -25,9 +24,10 @@ import { IoMdAdd } from "react-icons/io";
 const HelperListPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
   const query: Record<string, any> = {};
+  const [showModel, setShowModel] = useState(false);
 
   const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(10);
+  const [size, setSize] = useState<number>(5);
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -51,7 +51,10 @@ const HelperListPage = () => {
       title: "",
 
       render: function (data: any) {
-        const image = `${data?.imageUrl || "https://res.cloudinary.com/dnzlgpcc3/image/upload/v1704419785/oiav6crzfltkswdrrrli.png"} `;
+        const image = `${
+          data?.imageUrl ||
+          "https://res.cloudinary.com/dnzlgpcc3/image/upload/v1704419785/oiav6crzfltkswdrrrli.png"
+        } `;
         return (
           <Image
             src={image}
@@ -104,7 +107,7 @@ const HelperListPage = () => {
     },
     {
       title: "Action",
-      dataIndex: "id",
+
       // width: "15%",
       render: function (data: any) {
         return (
@@ -119,12 +122,21 @@ const HelperListPage = () => {
                 margin: "0px 5px",
               }}
             >
-              <ModalComponent icon={<EditOutlined />}>
+              <ModalComponent
+                showModel={showModel}
+                setShowModel={setShowModel}
+                icon={<EditOutlined />}
+              >
                 <AddUpdateHelper id={data} />
               </ModalComponent>
             </div>
             <div>
-              <ModalComponent icon={<DeleteOutlined />} buttonDanger={true}>
+              <ModalComponent
+                showModel={showModel}
+                setShowModel={setShowModel}
+                icon={<DeleteOutlined />}
+                buttonDanger={true}
+              >
                 <div>
                   <h1 className="text-center my-1 font-bold text-2xl">
                     Delete Helper
@@ -147,7 +159,7 @@ const HelperListPage = () => {
   const helpers = data?.helpers;
   const meta = data?.meta;
 
-  console.log(helpers);
+  // console.log(helpers);
 
   const onPaginationChange = (page: number, pageSize: number) => {
     setPage(page);
@@ -172,12 +184,12 @@ const HelperListPage = () => {
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
       <ActionBar inline title="Helper List">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between flex-grow gap-2">
           <Input
             // size="large"
             placeholder="Search"
-            onChange={(e) => setSearchTerm(e.target.value)}
             value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
             style={
               {
                 // width: "100%",
@@ -193,7 +205,12 @@ const HelperListPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Helper" icon={<IoMdAdd />}>
+          <ModalComponent
+            showModel={showModel}
+            setShowModel={setShowModel}
+            buttonText="Add Helper"
+            icon={<IoMdAdd />}
+          >
             <AddUpdateHelper />
           </ModalComponent>
         </div>

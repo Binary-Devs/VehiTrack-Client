@@ -5,12 +5,12 @@ import { baseApi } from "../baseApi";
 export const EXPENSE_TYPE_URL = "/expense-head";
 
 export const expenseHeadApi = baseApi.injectEndpoints({
-  endpoints: (build) => ({
+  endpoints: (build: any) => ({
     // create
     createExpenseHead: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${EXPENSE_TYPE_URL}/create`,
-        method: "POST",
+        method: 'POST',
         data: data,
       }),
       invalidatesTags: [tagTypes.expenseHead],
@@ -20,7 +20,7 @@ export const expenseHeadApi = baseApi.injectEndpoints({
     getAllExpenseHead: build.query({
       query: (arg: Record<string, any>) => ({
         url: `${EXPENSE_TYPE_URL}`,
-        method: "GET",
+        method: 'GET',
         params: arg,
       }),
       transformResponse: (response: any[], meta: IMeta) => {
@@ -36,16 +36,16 @@ export const expenseHeadApi = baseApi.injectEndpoints({
     getSingleExpenseHead: build.query({
       query: (id: string) => ({
         url: `${EXPENSE_TYPE_URL}/${id}`,
-        method: "GET",
+        method: 'GET',
       }),
       providesTags: [tagTypes.expenseHead],
     }),
 
     // update
     updateExpenseHead: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${EXPENSE_TYPE_URL}/${data?.id}`,
-        method: "PATCH",
+        method: 'PATCH',
         data: data?.data,
       }),
       invalidatesTags: [tagTypes.expenseHead],

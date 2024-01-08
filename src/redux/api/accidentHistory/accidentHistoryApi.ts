@@ -5,10 +5,10 @@ import { baseApi } from '../baseApi';
 const ACCIDENT_HISTORY_URL = '/accident-history';
 
 export const accidentHistoryApi = baseApi.injectEndpoints({
-  endpoints: (build) => ({
+  endpoints: (build: any) => ({
     // create
     createAccidentHistory: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${ACCIDENT_HISTORY_URL}/create`,
         method: 'POST',
         data: data,
@@ -43,7 +43,7 @@ export const accidentHistoryApi = baseApi.injectEndpoints({
 
     // update
     updateAccidentHistory: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${ACCIDENT_HISTORY_URL}/${data?.id}`,
         method: 'PATCH',
         data: data?.data,

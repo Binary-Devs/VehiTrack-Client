@@ -12,7 +12,7 @@ import Loader from "../Utlis/Loader";
 const AddFuelTypes = ({ id }: { id?: string }) => {
   //Get
   const { data, isLoading: getLoad } = useGetSingleFuelTypeQuery(id ? id : "");
-  console.log(data);
+  // console.log(data);
   //Update
   const [updateFuelType, { isLoading: updateLoad }] =
     useUpdateFuelTypeMutation();
@@ -46,7 +46,7 @@ const AddFuelTypes = ({ id }: { id?: string }) => {
         {id ? "Update Fuel Type" : "Add Fuel Type"}
       </h1>
       {/*  */}
-      <Form submitHandler={onSubmit} defaultValues={data}>
+      <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
         <div
           style={{
             border: "1px solid #d9d9d9",

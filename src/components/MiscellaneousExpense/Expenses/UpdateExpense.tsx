@@ -56,6 +56,7 @@ const UpdateExpense = ({ open, handleClose, preData }: IProps) => {
   return (
     <Modal
       title="Edit Expense"
+      centered
       open={open}
       onCancel={handleClose}
       width={600}
@@ -80,7 +81,7 @@ const UpdateExpense = ({ open, handleClose, preData }: IProps) => {
               <FormSelectField
                 size="large"
                 name="vehicleId"
-                options={allVehicles?.map((el) => ({
+                options={allVehicles?.map((el: any) => ({
                   label: el.regNo,
                   value: el.id,
                 }))}
@@ -93,7 +94,7 @@ const UpdateExpense = ({ open, handleClose, preData }: IProps) => {
               <FormSelectField
                 size="large"
                 name="expenseHeadId"
-                options={allExpenseHeads?.map((el) => ({
+                options={allExpenseHeads?.map((el: any) => ({
                   label: el.label,
                   value: el.id,
                 }))}

@@ -1,5 +1,5 @@
 "use client";
-import AddTrip from "@/components/CreateUpdateFrom/AddTrip";
+import AddUpdateTrip from "@/components/CreateUpdateFrom/AddUpdateTrip";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
@@ -8,15 +8,15 @@ import { useDebounced } from "@/redux/hooks";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import dayjs from "dayjs";
-import Link from "next/link";
 import { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 
 const TripListPage = () => {
   const query: Record<string, any> = {};
+  const [showModel, setShowModel] = useState(false);
 
   const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(10);
+  const [size, setSize] = useState<number>(5);
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -51,10 +51,16 @@ const TripListPage = () => {
     {
       title: "Start Date",
       dataIndex: "startDate",
+      render: function (data: any) {
+        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+      },
     },
     {
       title: "End Date",
       dataIndex: "endDate",
+      render: function (data: any) {
+        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+      },
     },
     {
       title: "From",
@@ -82,24 +88,26 @@ const TripListPage = () => {
     },
     {
       title: "Action",
+      dataIndex: "id",
       render: function (data: any) {
         return (
           <div className="flex items-center gap-1">
-            <Link
-              href={`/super_admin/manage-fuel/refueling/details/${data?.id}`}
-            ></Link>
-            <Link href={`/super_admin/manage-fuel/refueling/edit/${data?.id}`}>
-              <Button onClick={() => console.log(data)} type="primary">
-                <EditOutlined />
-              </Button>
-            </Link>
-            <Button onClick={() => console.log(data?.id)} type="primary" danger>
+            <ModalComponent
+              showModel={showModel}
+              setShowModel={setShowModel}
+              icon={<EditOutlined />}
+            >
+              <AddUpdateTrip id={data} />
+            </ModalComponent>
+            <Button
+              onClick={() => {
+                // console.log(data?.id);
+              }}
+              type="primary"
+              danger
+            >
               <DeleteOutlined />
             </Button>
-
-            {/* <ModalComponent icon={<MoneyCollectOutlined />}>
-              <AddTrip />
-            </ModalComponent> */}
           </div>
         );
       },
@@ -137,8 +145,13 @@ const TripListPage = () => {
             setSearchTerm(e.target.value);
           }}
         />
-        <ModalComponent buttonText="Add Trip" icon={<IoMdAdd />}>
-          <AddTrip />
+        <ModalComponent
+          showModel={showModel}
+          setShowModel={setShowModel}
+          buttonText="Add Trip"
+          icon={<IoMdAdd />}
+        >
+          <AddUpdateTrip />
         </ModalComponent>
       </ActionBar>
 

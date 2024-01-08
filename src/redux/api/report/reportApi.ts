@@ -5,7 +5,7 @@ import { baseApi } from '../baseApi';
 const REPORT_URL = '/report';
 
 export const reportApi = baseApi.injectEndpoints({
-  endpoints: (build) => ({
+  endpoints: (build: any) => ({
     // balance sheet
     balanceSheet: build.query({
       query: () => ({
@@ -113,6 +113,84 @@ export const reportApi = baseApi.injectEndpoints({
         tagTypes.vehicle,
       ],
     }),
+
+    // trip summary
+    tripSummary: build.query({
+      query: () => ({
+        url: `${REPORT_URL}/trip-summary`,
+        method: 'GET',
+      }),
+      transformResponse: (response: any) => {
+        return {
+          summaries: response,
+        };
+      },
+      providesTags: [
+        tagTypes.vehicle,
+        tagTypes.accountHead,
+        tagTypes.accountType,
+        tagTypes.accidentHistory,
+        tagTypes.equipmentIn,
+        tagTypes.expense,
+        tagTypes.expenseHead,
+        tagTypes.fuel,
+        tagTypes.maintenance,
+        tagTypes.paperWork,
+        tagTypes.vehicle,
+      ],
+    }),
+
+    // get trip summary by grouping year, month
+    tripSummaryGroupByMonthYear: build.query({
+      query: () => ({
+        url: `${REPORT_URL}/trip-summary-year-month`,
+        method: 'GET',
+      }),
+      transformResponse: (response: any) => {
+        return {
+          summaries: response,
+        };
+      },
+      providesTags: [
+        tagTypes.vehicle,
+        tagTypes.accountHead,
+        tagTypes.accountType,
+        tagTypes.accidentHistory,
+        tagTypes.equipmentIn,
+        tagTypes.expense,
+        tagTypes.expenseHead,
+        tagTypes.fuel,
+        tagTypes.maintenance,
+        tagTypes.paperWork,
+        tagTypes.vehicle,
+      ],
+    }),
+
+    // get fuel summary by grouping year, month
+    fuelSummaryGroupByMonthYear: build.query({
+      query: () => ({
+        url: `${REPORT_URL}/fuel-summary-year-month`,
+        method: 'GET',
+      }),
+      transformResponse: (response: any) => {
+        return {
+          summaries: response,
+        };
+      },
+      providesTags: [
+        tagTypes.vehicle,
+        tagTypes.accountHead,
+        tagTypes.accountType,
+        tagTypes.accidentHistory,
+        tagTypes.equipmentIn,
+        tagTypes.expense,
+        tagTypes.expenseHead,
+        tagTypes.fuel,
+        tagTypes.maintenance,
+        tagTypes.paperWork,
+        tagTypes.vehicle,
+      ],
+    }),
   }),
 });
 
@@ -121,4 +199,7 @@ export const {
   useFuelStatusQuery,
   useStockStatusQuery,
   useSummaryReportQuery,
+  useTripSummaryQuery,
+  useTripSummaryGroupByMonthYearQuery,
+  useFuelSummaryGroupByMonthYearQuery,
 } = reportApi;

@@ -1,11 +1,11 @@
 import { tagTypes } from '@/redux/teg-types';
-import { baseApi } from '../baseApi';
 import { IMeta } from '@/types';
+import { baseApi } from '../baseApi';
 
 const DRIVER_URL = '/driver';
 
 export const driverApi = baseApi.injectEndpoints({
-  endpoints: (build) => ({
+  endpoints: (build: any) => ({
     // get all
     getAllDriver: build.query({
       query: (arg: Record<string, any>) => ({
@@ -33,7 +33,7 @@ export const driverApi = baseApi.injectEndpoints({
 
     // update
     updateDriver: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${DRIVER_URL}/${data?.id}`,
         method: 'PATCH',
         data: data?.data,

@@ -1,5 +1,5 @@
 "use client";
-import AddTrip from "@/components/CreateUpdateFrom/AddTrip";
+import AddTrip from "@/components/CreateUpdateFrom/AddUpdateTrip";
 import ActionBar from "@/components/ui/ActionBar";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
@@ -19,9 +19,10 @@ import { IoMdAdd } from "react-icons/io";
 
 const TripListPage = () => {
   const query: Record<string, any> = {};
+  const [showModel, setShowModel] = useState(false);
 
   const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(10);
+  const [size, setSize] = useState<number>(5);
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -93,20 +94,40 @@ const TripListPage = () => {
             <Link
               href={`/super_admin/manage-fuel/refueling/details/${data?.id}`}
             >
-              <Button onClick={() => console.log(data)} type="primary">
+              <Button
+                onClick={() => {
+                  // console.log(data);
+                }}
+                type="primary"
+              >
                 <EyeOutlined />
               </Button>
             </Link>
             <Link href={`/super_admin/manage-fuel/refueling/edit/${data?.id}`}>
-              <Button onClick={() => console.log(data)} type="primary">
+              <Button
+                onClick={() => {
+                  // console.log(data);
+                }}
+                type="primary"
+              >
                 <EditOutlined />
               </Button>
             </Link>
-            <Button onClick={() => console.log(data?.id)} type="primary" danger>
+            <Button
+              onClick={() => {
+                // console.log(data?.id);
+              }}
+              type="primary"
+              danger
+            >
               <DeleteOutlined />
             </Button>
 
-            <ModalComponent icon={<MoneyCollectOutlined />}>
+            <ModalComponent
+              showModel={showModel}
+              setShowModel={setShowModel}
+              icon={<MoneyCollectOutlined />}
+            >
               <AddTrip />
             </ModalComponent>
           </div>
@@ -146,7 +167,12 @@ const TripListPage = () => {
             setSearchTerm(e.target.value);
           }}
         />
-        <ModalComponent buttonText="Add Trip" icon={<IoMdAdd />}>
+        <ModalComponent
+          showModel={showModel}
+          setShowModel={setShowModel}
+          buttonText="Add Trip"
+          icon={<IoMdAdd />}
+        >
           <AddTrip />
         </ModalComponent>
       </ActionBar>

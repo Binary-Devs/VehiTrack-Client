@@ -25,11 +25,11 @@ const AddUpdateHelper = ({ id }: { id?: any }) => {
   //Create
   const [createHelper, { isLoading: createLoad }] = useCreateHelperMutation();
 
-  console.log(id, data);
+  // console.log(id, data);
 
   const onSubmit = async (values: any) => {
     message.loading(id ? "Updating...." : "Adding....");
-    console.log(values);
+    // console.log(values);
     values.imageUrl = image;
     try {
       const res = id

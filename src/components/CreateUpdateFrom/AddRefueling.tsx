@@ -28,6 +28,8 @@ const AddRefueling = ({ id }: { id?: string }) => {
   const fuelTypes = fuelTypesData?.fuelTypes;
   const fuelPumps = fuelStationData?.fuelStations;
 
+  console.log(id);
+
   const vehicleOptions = vehicles?.map((vehicle) => {
     return {
       label: vehicle?.regNo,
@@ -66,12 +68,36 @@ const AddRefueling = ({ id }: { id?: string }) => {
 
   //Create
   const [createFuel, { isLoading: createLoad }] = useCreateFuelMutation();
-  const onSubmit = async (values: any) => {
+  const onSubmit = async (data: any) => {
+    // if(data){
+    //   values.odometer =
+    //   data.odometer !== undefined ? parseInt(values.odometer) : 0;
+    // values.quantity =
+    //   data.quantity !== undefined ? parseInt(values.quantity) : 0;
+    // values.amount = data.amount !== undefined ? parseInt(values.amount) : 0;
+
+    // }
+
     message.loading(id ? "Updating...." : "Adding....");
     try {
       const res = id
-        ? await updateFuel({ id: id, body: data }).unwrap()
-        : await createFuel({ ...values }).unwrap();
+        ? // ? await updateFuel({ id: id, body: data }).unwrap()
+          await updateFuel({
+            id,
+            data: {
+              date: data.date,
+              fuelTypeId: data.fuelTypeId,
+              vehicleId: data.vehicleId,
+              driverId: data.driverId,
+              fuelStationId: data.fuelStationId,
+              odometer: data.odometer,
+              quantity: data.quantity,
+              amount: data.amount,
+              remarks: data.remarks,
+            },
+          }).unwrap()
+        : await createFuel({ ...data }).unwrap();
+      //  const res = updateFuel({ id: id, body: data }).unwrap();
       if (res.id) {
         message.success(`Refueling ${id ? "updated" : "added"} successfully!`);
       } else {
@@ -92,7 +118,7 @@ const AddRefueling = ({ id }: { id?: string }) => {
         {id ? "Update Refueling" : "Add Refueling"}
       </h1>
       {/*  */}
-      <Form submitHandler={onSubmit} defaultValues={data}>
+      <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
         <div
           style={{
             border: "1px solid #d9d9d9",

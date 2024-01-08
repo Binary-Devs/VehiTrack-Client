@@ -1,14 +1,14 @@
 import { tagTypes } from '@/redux/teg-types';
-import { baseApi } from '../baseApi';
 import { IMeta } from '@/types';
+import { baseApi } from '../baseApi';
 
 const FUEL_TYPE_URL = '/fuel-type';
 
 export const fuelTypeApi = baseApi.injectEndpoints({
-  endpoints: (build) => ({
+  endpoints: (build: any) => ({
     // create
     createFuelType: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${FUEL_TYPE_URL}/create`,
         method: 'POST',
         data: data,
@@ -43,7 +43,7 @@ export const fuelTypeApi = baseApi.injectEndpoints({
 
     // update
     updateFuelType: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${FUEL_TYPE_URL}/${data?.id}`,
         method: 'PATCH',
         data: data?.data,

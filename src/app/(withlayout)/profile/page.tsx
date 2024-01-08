@@ -1,352 +1,217 @@
 "use client";
-import { AllImage } from "@/components/Image";
 import Loader from "@/components/Utlis/Loader";
-import { USER_ROLE } from "@/constants/role";
 import { useGetProfileQuery } from "@/redux/api/profile/profileApi";
-import { Col, Row } from "antd";
+import { Col, Divider, Flex, Row, Statistic, Typography } from "antd";
+import dayjs from "dayjs";
+import { motion } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { FaAccessibleIcon } from "react-icons/fa";
-import { FaCarSide } from "react-icons/fa6";
-import { GrHostMaintenance } from "react-icons/gr";
-import { MdElectricCar } from "react-icons/md";
-import formatMongoCreatedAtDate from "../../../utils/formateMongoTimeToLocal";
+
 const ProfilePage = () => {
   const { data, isLoading, error } = useGetProfileQuery(undefined);
-  const [allUserData, setAllUserData] = useState({});
 
-  useEffect(() => {
-    if (data?.role) {
-      setAllUserData({ ...data, userInfo: data[data?.role] });
-    }
+  const { Title } = Typography;
 
-    return () => {};
-  }, [data]);
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: 0.5 } },
+  };
+
+  const imageVariants = {
+    hidden: { scale: 0.8, opacity: 0 },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      transition: { duration: 0.5, delay: 0.5 },
+    },
+  };
+
+  const infoVariants = {
+    hidden: { x: -50, opacity: 0 },
+    visible: { x: 0, opacity: 1, transition: { duration: 0.5, delay: 1 } },
+  };
 
   if (isLoading) {
     return <Loader />;
   }
-console.log(allUserData);
-  return (
-    <section className="mx-[-25px] md:mx-0">
-      <div className="">
-        {
-          //@ts-ignore
-          data?.role !== USER_ROLE.ADMIN &&
-          //@ts-ignore
-          data?.role !== USER_ROLE.SUPER_ADMIN ? (
-            <Row gutter={[16, 16]}>
-              <Col sm={24} md={12}>
-              <div className="max-w-3xl  sm:max-w-sm md:max-w-sm lg:max-w-2xl xl:max-w-2xl sm:mx-auto md:mx-auto lg:mx-auto xl:mx-auto  bg-white shadow-xl rounded-lg text-gray-900 pb-14 px-6">
-              <div className="rounded-t-lg h-32 overflow-hidden">
-                <Image
-                  className="object-cover object-top w-full"
-                  src={AllImage.webLogo}
-                  alt="Mountain"
-                  width={300}
-                  height={300}
-                />
-              </div>
-              <div className="mx-auto w-[150px] h-[150px] relative -mt-16 border-4 border-white rounded-full overflow-hidden">
-                {/* <img
-                  className="object-cover object-center h-32"
-                  src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ"
-                  alt="Woman looking front"
-                /> */}
-                <Image
-                  className="object-cover object-center w-[150px] h-[150px]"
-                  src={AllImage.profileImageAvator}
-                  alt=""
-                  height={500}
-                  width={500}
-                />
-              </div>
-              <div className="text-center mt-2">
-                <h2 className="font-semibold text-3xl px-2">
-                  {data.role === "super_admin"
-                    ? data.superAdmin.fullName
-                    : data[data.role]["fullName"]}
-                </h2>
-              </div>
 
-              <div className="p-1 md:p-4 border-t md:mx-8 mt-2 space-y-6 ">
-                <div className="text-base md:text-xl font-semibold px-8 py-4 rounded-xl ring-1 ring-sky-200 shadow-md flex  items-center">
-                  Phone :
-                  <span className="ml-6 md:ml-20">
-                    {data.role === "super_admin"
-                      ? data.superAdmin.mobile
-                      : data[data.role]["mobile"]}
-                  </span>
-                </div>
-                <p className="text-base md:text-xl font-semibold px-8 py-4 rounded-xl ring-1 ring-sky-200 shadow-md flex  items-center">
-                 UserId :<span className="ml-6 md:ml-20"> {data["userName"]}</span>
-                </p>
-                <p className="text-base md:text-xl font-semibold px-8 py-4 rounded-xl ring-1 ring-sky-200 shadow-md flex  items-center">
-                  Address :
-                  <span className="ml-4 md:ml-16">
-                    {data.role === "super_admin"
-                      ? data.superAdmin.mobile
-                      : data[data.role]["address"]}
-                  </span>
-                </p>
-              </div>
-              {/* <div className="p-1 md:p-4 border-t md:mx-8 mt-2  ">
-                Professional Summary :
-                <p className="text-black  border-2 rounded-md p-3">
-                  Friendly and outgoing car driver proficient in safe
-                  operations, passenger transportation and inclement weather
-                  driving. Excellent communicator and problem solver with a
-                  solid track record in the field. Outstanding safety background
-                  and consistently requested by repeat customers for regular
-                  transportation.
-                </p>
-              </div> */}
-            </div>
-              </Col>
-              <Col sm={24} md={12}>
-                <div className="grid grid-cols-1 sm:grid-cols-2  gap-5 mb-5">
-                  <div className="flex items-center justify-between bg-white border border-blue-200 shadow-md shadow-blue-200 rounded-lg p-5">
-                    <div>
-                      <span className="text-[#8c8c8c] font-semibold text-sm">
-                        Total Trip
-                      </span>
-                      <p className="text-3xl font-bold ">
-                        {
-                          //@ts-ignore
-                          allUserData?.userInfo?.trips?.length
-                        }
-                        {/* 
-                  <small
-                    className={`text-sm font-semibold ${
-                      c.bnb === "redtext" ? "text-red-500" : "text-[#52c41a]"
-                    }`}
-                  >
-                    {c.percent}
-                  </small> 
-                  */}
-                      </p>
-                    </div>
-                    <div>
-                      <div className="flex items-center justify-center w-12 h-12 bg-[#1890ff] rounded-[0.5rem]">
-                        {<FaCarSide className="text-4xl text-white" />}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between bg-white border border-blue-200 shadow-md shadow-blue-200 rounded-lg p-5">
-                    <div>
-                      <span className="text-[#8c8c8c] font-semibold text-sm">
-                        Total Accident Histories
-                      </span>
-                      <p className="text-3xl font-bold ">
-                        {
-                          //@ts-ignore
-                          allUserData?.userInfo?.accidentHistories?.length
-                        }
-                        {/* 
-                  <small
-                    className={`text-sm font-semibold ${
-                      c.bnb === "redtext" ? "text-red-500" : "text-[#52c41a]"
-                    }`}
-                  >
-                    {c.percent}
-                  </small> 
-                  */}
-                      </p>
-                    </div>
-                    <div>
-                      <div className="flex items-center justify-center w-12 h-12 bg-[#1890ff] rounded-[0.5rem]">
-                        {<FaAccessibleIcon className="text-4xl text-white" />}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between bg-white border border-blue-200 shadow-md shadow-blue-200 rounded-lg p-5">
-                    <div>
-                      <span className="text-[#8c8c8c] font-semibold text-sm">
-                        Total maintenances
-                      </span>
-                      <p className="text-3xl font-bold ">
-                        {
-                          //@ts-ignore
-                          allUserData?.userInfo?.maintenances?.length
-                        }
-                        {/* 
-                  <small
-                    className={`text-sm font-semibold ${
-                      c.bnb === "redtext" ? "text-red-500" : "text-[#52c41a]"
-                    }`}
-                  >
-                    {c.percent}
-                  </small> 
-                  */}
-                      </p>
-                    </div>
-                    <div>
-                      <div className="flex items-center justify-center w-12 h-12 bg-[#1890ff] rounded-[0.5rem]">
-                        {<GrHostMaintenance className="text-4xl text-white" />}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between bg-white border border-blue-200 shadow-md shadow-blue-200 rounded-lg p-5">
-                    <div>
-                      <span className="text-[#8c8c8c] font-semibold text-sm">
-                        Total vehicles Drive
-                      </span>
-                      <p className="text-3xl font-bold ">
-                        {
-                          //@ts-ignore
-                          allUserData?.userInfo?.vehicles?.length
-                        }
-                        {/* 
-                  <small
-                    className={`text-sm font-semibold ${
-                      c.bnb === "redtext" ? "text-red-500" : "text-[#52c41a]"
-                    }`}
-                  >
-                    {c.percent}
-                  </small> 
-                  */}
-                      </p>
-                    </div>
-                    <div>
-                      <div className="flex items-center justify-center w-12 h-12 bg-[#1890ff] rounded-[0.5rem]">
-                        {<MdElectricCar className="text-4xl text-white" />}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-white border border-blue-200 shadow-md shadow-blue-200 rounded-lg py-5 pl-5 pr-1.5 lg:col-span-5 overflow-auto">
-                  <div className="pr-3.5">
-                    {/* <h1 className="text-lg">Trip history</h1> */}
-                    {/* <Paragraph className="lastweek !m-0">
-                than last year <span className="blue">+10%</span>
-              </Paragraph> */}
-                  </div>
-                  <div className="overflow-auto  scrollbar-thin scrollbar-track-transparent scrollbar-thumb-blue-200 scrollbar-track-rounded-full scrollbar-thumb-rounded-full pr-1.5">
-                    <header className="text-xs uppercase text-slate-400 bg-slate-50 rounded-sm d p-2 md:text-base font-bold">
-                      Trip history
-                    </header>
-                    <ul className="my-1">
-                      {
-                        //@ts-ignore
-                        allUserData?.userInfo?.trips.slice(0, 5)?.map((data, i) => (
-                          <li
-                            key={i}
-                            className="flex px-2 items-center gap-2 hover:bg-slate-50 "
-                          >
-                            {data.status ==='complete' ? <div
-                              className={`w-9 h-9 rounded-full shrink-0 bg-emerald-500 my-2 mr-3`}
-                            >
-                              <svg
-                                className="w-9 h-9 fill-current text-emerald-50"
-                                viewBox="0 0 36 36"
-                              >
-                                <path d="M18.3 11.3l-1.4 1.4 4.3 4.3H11v2h10.2l-4.3 4.3 1.4 1.4L25 18z" />
-                              </svg>
-                            </div>: <div
-                              className={`w-9 h-9 rounded-full shrink-0 bg-red-500 my-2 mr-3`}
-                            >
-                              <svg
-                                className="w-9 h-9 fill-current text-emerald-50"
-                                viewBox="0 0 36 36"
-                              >
-                                <path d="M18.3 11.3l-1.4 1.4 4.3 4.3H11v2h10.2l-4.3 4.3 1.4 1.4L25 18z" />
-                              </svg>
-                            </div>}
-                            <div>
-                              <h1 className="md:text-base font-bold whitespace-nowrap">{data?.tripNo}</h1>
-                            </div>
-                            <div className="md:text-base font-bold whitespace-nowrap">
-                              Start time :{" "}
-                              {formatMongoCreatedAtDate(data?.startedTime)}
-                            </div>
-                            <div className="grow flex items-center border-b border-slate-100 text-sm ">
-                              <div className="grow flex justify-between items-cente">
-                                <div className="self-center whitespace-nowrap">{data.name}</div>
-                                <div className="shrink-0 self-start ml-2 md:text-base font-bold">
-                                  <span className="whitespace-nowrap">
-                                    From:{data?.from} ➡ to: {data.to}
-                                  </span>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                        ))
-                      }
-                    </ul>
-                  </div>
-                </div>
-              </Col>
-            </Row>
-          ) : (
-            <div className="max-w-3xl  sm:max-w-sm md:max-w-sm lg:max-w-2xl xl:max-w-2xl sm:mx-auto md:mx-auto lg:mx-auto xl:mx-auto  bg-white shadow-xl rounded-lg text-gray-900 pb-14">
-              <div className="rounded-t-lg h-32 overflow-hidden">
+  return (
+    <motion.section
+      className=""
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      <motion.div className="min-h-[80vh]" variants={containerVariants}>
+        <Row gutter={[30, 24]} className="flex justify-center">
+          <Col md={10} className="w-full">
+            <motion.div
+              className="w-full rounded-3xl bg-white shadow-xl p-4 mx-auto"
+              variants={infoVariants}
+            >
+              <motion.div
+                className="object-cover object-center w-[250px] h-[250px] mx-auto"
+                variants={imageVariants}
+                initial="hidden"
+                animate="visible"
+              >
                 <Image
-                  className="object-cover object-top w-full"
-                  src={AllImage.webLogo}
-                  alt="Mountain"
-                  width={300}
-                  height={300}
-                />
-              </div>
-              <div className="mx-auto w-[150px] h-[150px] relative -mt-16 border-4 border-white rounded-full overflow-hidden">
-                {/* <img
-                  className="object-cover object-center h-32"
-                  src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ"
-                  alt="Woman looking front"
-                /> */}
-                <Image
-                  className="object-cover object-center w-[150px] h-[150px]"
-                  src={AllImage.profileImageAvator}
+                  src={"https://joesch.moe/api/v1/random"}
+                  unoptimized
                   alt=""
                   height={500}
                   width={500}
+                  className="mb-2"
                 />
-              </div>
+              </motion.div>
               <div className="text-center mt-2">
                 <h2 className="font-semibold text-4xl">
                   {data.role === "super_admin"
                     ? data.superAdmin.fullName
                     : data[data.role]["fullName"]}
                 </h2>
+
+                <p className="font-medium text-base my-1">
+                  {data.role === "super_admin"
+                    ? "Super Admin"
+                    : data.role === "admin"
+                    ? "Manager"
+                    : data.role === "driver"
+                    ? "Driver"
+                    : "Helper"}
+                </p>
               </div>
 
-              <div className="p-1 md:p-4 border-t md:mx-8 mt-2 space-y-6 ">
-                <div className="text-xl font-semibold px-8 py-4 rounded-xl ring-1 ring-sky-200 shadow-md flex  items-center">
-                  Phone :
-                  <span className="ml-20">
+              <div className="p-6 border-2 py-8 rounded-3xl border-[#a18dff] m-3 md:m-6 space-y-4 ">
+                <div className="text-lg font-normal mx-2 flex items-center justify-between">
+                  <span>Phone :</span>
+                  <span className="">
                     {data.role === "super_admin"
                       ? data.superAdmin.mobile
                       : data[data.role]["mobile"]}
                   </span>
                 </div>
-                <p className="text-xl font-semibold px-8 py-4 rounded-xl ring-1 ring-sky-200 shadow-md flex  items-center">
-                 UserId :<span className="ml-20"> {data["userName"]}</span>
-                </p>
-                <p className="text-xl font-semibold px-8 py-4 rounded-xl ring-1 ring-sky-200 shadow-md flex  items-center">
-                  Address :
-                  <span className="ml-16">
+
+                <Divider className="bg-[#1890ff]" />
+
+                <div className="text-lg font-normal mx-2 flex items-center justify-between">
+                  <span>UserId :</span>
+                  <span className="">{data["userName"]}</span>
+                </div>
+
+                <Divider className="bg-[#1890ff]" />
+
+                <div className="text-lg font-normal mx-2 flex items-center justify-between">
+                  <span>Address :</span>
+                  <span className="">
                     {data.role === "super_admin"
-                      ? data.superAdmin.mobile
+                      ? data.superAdmin.address
                       : data[data.role]["address"]}
                   </span>
-                </p>
+                </div>
               </div>
-              {/* <div className="p-1 md:p-4 border-t md:mx-8 mt-2  ">
-                Professional Summary :
-                <p className="text-black  border-2 rounded-md p-3">
-                  Friendly and outgoing car driver proficient in safe
-                  operations, passenger transportation and inclement weather
-                  driving. Excellent communicator and problem solver with a
-                  solid track record in the field. Outstanding safety background
-                  and consistently requested by repeat customers for regular
-                  transportation.
-                </p>
-              </div> */}
-            </div>
-          )
-        }
-      </div>
-    </section>
+            </motion.div>
+          </Col>
+
+          {data.role !== "super_admin" && data.role !== "admin" && (
+            <Col md={14} className={`w-full`}>
+              <Flex gap={30} vertical>
+                <div className="">
+                  <Row
+                    gutter={[20, 20]}
+                    className="w-full rounded-3xl bg-white shadow-xl p-6 md:px-10 mx-auto !m-0"
+                  >
+                    <Col span={12} className="">
+                      <Statistic
+                        title="vehicles"
+                        className="mx-auto"
+                        valueStyle={{ color: "#1890ff" }}
+                        value={data[data?.role]?.vehicles?.length}
+                      />
+                    </Col>
+                    <Col span={12}>
+                      <Statistic
+                        title="Completed Trip"
+                        valueStyle={{ color: "#1890ff" }}
+                        value={
+                          data[data?.role]?.trips.filter(
+                            (trips: any) => trips.status === "Completed"
+                          ).length
+                        }
+                        suffix={` / ${data[data?.role]?.trips?.length}`}
+                      />
+                    </Col>
+                    <Col span={12}>
+                      <Statistic
+                        title="Maintenances"
+                        valueStyle={{ color: "#1890ff" }}
+                        value={data[data?.role]?.maintenances?.length}
+                      />
+                    </Col>
+                    <Col span={12}>
+                      <Statistic
+                        title="Accident History"
+                        valueStyle={{ color: "#1890ff" }}
+                        value={data[data?.role]?.accidentHistories?.length}
+                      />
+                    </Col>
+                  </Row>
+                </div>
+                <div className="w-full rounded-3xl bg-white shadow-xl p-6  md:px-10 overflow-auto h-96">
+                  <div className="">
+                    <Title level={5} className="text-center">
+                      Trip History
+                    </Title>
+                  </div>
+                  <Divider />
+                  <div className="overflow-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-blue-200 scrollbar-track-rounded-full scrollbar-thumb-rounded-full">
+                    <ul className="my-1 flex flex-col gap-2">
+                      {data[data?.role]?.trips.map(
+                        (trip: any, index: number) => (
+                          <li
+                            key={index}
+                            className="flex flex-col md:flex-row ring-1 md:ring-0 justify-around m-1 rounded-2xl md:rounded-full hover:bg-sky-100 p-4 md:p-1"
+                          >
+                            <p className="text-lg font-medium">
+                              Trip ID : {trip?.tripNo}
+                            </p>
+                            <Divider type="vertical" />
+                            <p className="text-lg font-medium">
+                              Date :{" "}
+                              {dayjs(trip?.startDate).format("MMM D, YYYY")}
+                            </p>
+                            <Divider type="vertical" />
+
+                            <p className="text-lg font-medium ">
+                              From : {trip?.from} ➡ to : {trip.to}
+                            </p>
+                          </li>
+                        )
+                      )}
+                      <li className="flex flex-col md:flex-row ring-1 md:ring-0 justify-around m-1 rounded-2xl md:rounded-full hover:bg-sky-100 p-4 md:p-1">
+                        <p className="text-lg font-medium">Trip ID :</p>
+                        <Divider type="vertical" />
+                        <p className="text-lg font-medium">Date :</p>
+                        <Divider type="vertical" />
+
+                        <p className="text-lg font-medium ">From :</p>
+                      </li>
+                      <li className="flex flex-col md:flex-row ring-1 md:ring-0 justify-around m-1 rounded-2xl md:rounded-full hover:bg-sky-100 p-4 md:p-1">
+                        <p className="text-lg font-medium">Trip ID :</p>
+                        <Divider type="vertical" />
+                        <p className="text-lg font-medium">Date :</p>
+                        <Divider type="vertical" />
+
+                        <p className="text-lg font-medium ">From :</p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </Flex>
+            </Col>
+          )}
+        </Row>
+      </motion.div>
+    </motion.section>
   );
 };
 

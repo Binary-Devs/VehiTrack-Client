@@ -47,7 +47,7 @@ const UploadImage = ({
     try {
       setLoading(true);
       const imgUrl = await uploadImgCloudinary(file); // Cloudinary upload
-      console.log("Cloudinary URL:", imgUrl);
+      // console.log("Cloudinary URL:", imgUrl);
       setImageStatus(imgUrl)
       setValue(name, setImg);
       setImg(imgUrl);
