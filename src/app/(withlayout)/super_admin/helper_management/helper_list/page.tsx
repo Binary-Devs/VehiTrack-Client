@@ -48,32 +48,31 @@ const HelperListPage = () => {
 
   const columns = [
     {
-      title: "",
-
+      title: '',
+      dataIndex: 'profileImg',
       render: function (data: any) {
-        const image = `${
-          data?.imageUrl ||
-          "https://res.cloudinary.com/dnzlgpcc3/image/upload/v1704419785/oiav6crzfltkswdrrrli.png"
-        } `;
+        const image =
+          data ||
+          'https://res.cloudinary.com/dnzlgpcc3/image/upload/v1704419785/oiav6crzfltkswdrrrli.png';
         return (
           <Image
             src={image}
             width={100}
             height={100}
             alt=""
-            style={{ width: "70px", height: "50px" }}
+            style={{ width: '70px', height: '50px' }}
           />
           // <Avatar shape="square" size={64} icon={<CarOutlined />} />
         );
       },
     },
     {
-      title: "Name",
-      dataIndex: "fullName",
+      title: 'Name',
+      dataIndex: 'fullName',
     },
     {
-      title: "User ID",
-      dataIndex: "helperId",
+      title: 'User ID',
+      dataIndex: 'helperId',
     },
     // {
     //   title: "Active",
@@ -86,27 +85,27 @@ const HelperListPage = () => {
     //     ),
     // },
     {
-      title: "Mobile",
-      dataIndex: "mobile",
+      title: 'Mobile',
+      dataIndex: 'mobile',
     },
     {
-      title: "Address",
-      dataIndex: "address",
+      title: 'Address',
+      dataIndex: 'address',
     },
     {
-      title: "Blood Group",
-      dataIndex: "bloodGroup",
+      title: 'Blood Group',
+      dataIndex: 'bloodGroup',
     },
     {
-      title: "Joined at",
-      dataIndex: "createdAt",
+      title: 'Joined at',
+      dataIndex: 'createdAt',
       render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+        return data && dayjs(data).format('MMM D, YYYY hh:mm A');
       },
       sorter: true,
     },
     {
-      title: "Action",
+      title: 'Action',
 
       // width: "15%",
       render: function (data: any) {
@@ -119,7 +118,7 @@ const HelperListPage = () => {
             </Link> */}
             <div
               style={{
-                margin: "0px 5px",
+                margin: '0px 5px',
               }}
             >
               <ModalComponent
