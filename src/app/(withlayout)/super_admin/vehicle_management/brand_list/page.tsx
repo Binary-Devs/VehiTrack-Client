@@ -78,7 +78,6 @@ const BrandListPage = () => {
     },
     {
       title: "Action",
-      dataIndex: "id",
       render: function (data: any) {
         return (
           <div className="flex">
@@ -98,7 +97,7 @@ const BrandListPage = () => {
                 setShowModel={setShowModel}
                 icon={<EditOutlined />}
               >
-                <AddUpdateBrand id={data} />
+                <AddUpdateBrand updateData={data} />
               </ModalComponent>
             </div>
             {/* <Button
@@ -185,6 +184,7 @@ const BrandListPage = () => {
             </Button>
           )}
           <ModalComponent
+            width={500}
             showModel={showModel}
             setShowModel={setShowModel}
             buttonText="Add Brand"
