@@ -5,7 +5,7 @@ import { baseApi } from '../baseApi';
 const SUPER_ADMIN_URL = '/super-admin';
 
 export const superAdminApi = baseApi.injectEndpoints({
-  endpoints: (build: any) => ({
+  endpoints: (build) => ({
     // get all
     getAllSuperAdmin: build.query({
       query: (arg: Record<string, any>) => ({

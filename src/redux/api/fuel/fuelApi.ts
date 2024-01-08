@@ -5,7 +5,7 @@ import { baseApi } from '../baseApi';
 const FUEL_URL = '/fuel';
 
 export const fuelApi = baseApi.injectEndpoints({
-  endpoints: (build: any) => ({
+  endpoints: (build) => ({
     // create
     createFuel: build.mutation({
       query: (data: any) => ({
