@@ -14,6 +14,7 @@ import { IoMdAdd } from "react-icons/io";
 
 const AccountHeadsPage = () => {
   const query: Record<string, any> = {};
+  const [showModel, setShowModel] = useState(false);
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
@@ -101,7 +102,11 @@ const AccountHeadsPage = () => {
               }}
               onClick={() => {}}
             >
-              <ModalComponent icon={<EditOutlined />}>
+              <ModalComponent
+                showModel={showModel}
+                setShowModel={setShowModel}
+                icon={<EditOutlined />}
+              >
                 <AddAccountHeads id={data?.id} />
               </ModalComponent>
             </div>
@@ -153,7 +158,12 @@ const AccountHeadsPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Account Head" icon={<IoMdAdd />}>
+          <ModalComponent
+            showModel={showModel}
+            setShowModel={setShowModel}
+            buttonText="Add Account Head"
+            icon={<IoMdAdd />}
+          >
             <AddAccountHeads />
           </ModalComponent>
         </div>

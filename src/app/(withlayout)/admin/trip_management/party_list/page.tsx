@@ -13,6 +13,7 @@ import { IoMdAdd } from "react-icons/io";
 
 const PartyListPage = () => {
   const query: Record<string, any> = {};
+  const [showModel, setShowModel] = useState(false);
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
@@ -77,7 +78,11 @@ const PartyListPage = () => {
       render: function (data: any) {
         return (
           <div className="flex gap-2">
-            <ModalComponent icon={<EditOutlined />}>
+            <ModalComponent
+              showModel={showModel}
+              setShowModel={setShowModel}
+              icon={<EditOutlined />}
+            >
               <AddUpdateParty id={data} />
             </ModalComponent>
             <Button
@@ -128,7 +133,12 @@ const PartyListPage = () => {
             maxWidth: "200px",
           }}
         />
-        <ModalComponent buttonText="Add Party" icon={<IoMdAdd />}>
+        <ModalComponent
+          showModel={showModel}
+          setShowModel={setShowModel}
+          buttonText="Add Party"
+          icon={<IoMdAdd />}
+        >
           <AddUpdateParty />
         </ModalComponent>
       </ActionBar>

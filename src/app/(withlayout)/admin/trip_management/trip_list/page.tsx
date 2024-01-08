@@ -19,6 +19,7 @@ import { IoMdAdd } from "react-icons/io";
 
 const TripListPage = () => {
   const query: Record<string, any> = {};
+  const [showModel, setShowModel] = useState(false);
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
@@ -122,7 +123,11 @@ const TripListPage = () => {
               <DeleteOutlined />
             </Button>
 
-            <ModalComponent icon={<MoneyCollectOutlined />}>
+            <ModalComponent
+              showModel={showModel}
+              setShowModel={setShowModel}
+              icon={<MoneyCollectOutlined />}
+            >
               <AddTrip />
             </ModalComponent>
           </div>
@@ -162,7 +167,12 @@ const TripListPage = () => {
             setSearchTerm(e.target.value);
           }}
         />
-        <ModalComponent buttonText="Add Trip" icon={<IoMdAdd />}>
+        <ModalComponent
+          showModel={showModel}
+          setShowModel={setShowModel}
+          buttonText="Add Trip"
+          icon={<IoMdAdd />}
+        >
           <AddTrip />
         </ModalComponent>
       </ActionBar>

@@ -15,6 +15,7 @@ import { IoMdAdd } from "react-icons/io";
 
 const UnitOfMeasurement = () => {
   const query: Record<string, any> = {};
+  const [showModel, setShowModel] = useState(false);
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
@@ -82,7 +83,11 @@ const UnitOfMeasurement = () => {
                 // console.log(data?.id);
               }}
             >
-              <ModalComponent icon={<EditOutlined />}>
+              <ModalComponent
+                showModel={showModel}
+                setShowModel={setShowModel}
+                icon={<EditOutlined />}
+              >
                 <AddUnitOfMeasurement id={data?.id} />
               </ModalComponent>
             </div>
@@ -137,7 +142,12 @@ const UnitOfMeasurement = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Unit" icon={<IoMdAdd />}>
+          <ModalComponent
+            showModel={showModel}
+            setShowModel={setShowModel}
+            buttonText="Add Unit"
+            icon={<IoMdAdd />}
+          >
             <AddUnitOfMeasurement />
           </ModalComponent>
         </div>

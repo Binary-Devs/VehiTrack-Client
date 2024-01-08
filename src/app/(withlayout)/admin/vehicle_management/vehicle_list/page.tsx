@@ -30,6 +30,7 @@ import { IoMdAdd } from "react-icons/io";
 const VehicleListPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
   const query: Record<string, any> = {};
+  const [showModel, setShowModel] = useState(false);
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
@@ -189,7 +190,11 @@ const VehicleListPage = () => {
                 margin: "0px 5px",
               }}
             >
-              <ModalComponent icon={<EditOutlined />}>
+              <ModalComponent
+                showModel={showModel}
+                setShowModel={setShowModel}
+                icon={<EditOutlined />}
+              >
                 <AddUpdateVehicle
                   id={data}
                   brands={brands}
@@ -275,7 +280,12 @@ const VehicleListPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Vehicle" icon={<IoMdAdd />}>
+          <ModalComponent
+            showModel={showModel}
+            setShowModel={setShowModel}
+            buttonText="Add Vehicle"
+            icon={<IoMdAdd />}
+          >
             <AddUpdateVehicle
               brands={brands}
               models={models}

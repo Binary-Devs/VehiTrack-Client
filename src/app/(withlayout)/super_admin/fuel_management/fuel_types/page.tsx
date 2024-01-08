@@ -14,6 +14,7 @@ import { IoMdAdd } from "react-icons/io";
 
 const FuelTypesPage = () => {
   const query: Record<string, any> = {};
+  const [showModel, setShowModel] = useState(false);
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
@@ -90,7 +91,11 @@ const FuelTypesPage = () => {
               }}
               onClick={() => {}}
             >
-              <ModalComponent icon={<EditOutlined />}>
+              <ModalComponent
+                showModel={showModel}
+                setShowModel={setShowModel}
+                icon={<EditOutlined />}
+              >
                 <AddFuelTypes id={data?.id} />
               </ModalComponent>
             </div>
@@ -144,7 +149,12 @@ const FuelTypesPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Fuel Type" icon={<IoMdAdd />}>
+          <ModalComponent
+            showModel={showModel}
+            setShowModel={setShowModel}
+            buttonText="Add Fuel Type"
+            icon={<IoMdAdd />}
+          >
             <AddFuelTypes />
           </ModalComponent>
         </div>
