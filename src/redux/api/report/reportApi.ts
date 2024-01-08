@@ -5,7 +5,7 @@ import { baseApi } from '../baseApi';
 const REPORT_URL = '/report';
 
 export const reportApi = baseApi.injectEndpoints({
-  endpoints: (build: any) => ({
+  endpoints: (build) => ({
     // balance sheet
     balanceSheet: build.query({
       query: () => ({
