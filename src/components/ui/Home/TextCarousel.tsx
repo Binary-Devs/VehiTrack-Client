@@ -1,3 +1,4 @@
+"use client";
 import { Carousel } from "antd";
 import { FaQuoteLeft } from "react-icons/fa";
 
