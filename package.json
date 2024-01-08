@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@netlify/plugin-nextjs": "appdir",
     "@ant-design/charts": "^2.0.3",
     "@ant-design/cssinjs": "^1.17.0",
     "@ant-design/icons": "^5.2.6",
