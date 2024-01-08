@@ -1,14 +1,15 @@
 "use client";
-import AddRoutePermit from "@/components/CreateUpdateFrom/AddRoutePermit";
+
+import AddEquipmentIn from "@/components/CreateUpdateFrom/AddEquipmentIn";
 import Loader from "@/components/Utlis/Loader";
 import ActionBar from "@/components/ui/ActionBar";
 import DeleteModal from "@/components/ui/DeleteModal";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import {
-  useDeletePaperWorkMutation,
-  useGetAllPaperWorksQuery,
-} from "@/redux/api/paperWork/paperWorkApi";
+  useDeleteEquipmentInMutation,
+  useGetAllEquipmentInQuery,
+} from "@/redux/api/equipmentIn/equipmentInApi";
 import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
@@ -20,7 +21,7 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 
-const RoutePermitPage = () => {
+const EquipmentIn = () => {
   const query: Record<string, any> = {};
   const [showModel, setShowModel] = useState(false);
 
@@ -33,28 +34,28 @@ const RoutePermitPage = () => {
   const [id, setId] = useState<string>("");
 
   query["limit"] = size;
-  query["page"] = page;
+  query["page"] = page - 1;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
+
+  const { useBreakpoint } = Grid;
+  const screens = useBreakpoint();
 
   const debouncedTerm = useDebounced({
     searchQuery: searchTerm,
     delay: 600,
   });
 
-  const { useBreakpoint } = Grid;
-  const screens = useBreakpoint();
-
   if (!!debouncedTerm) {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const [deletePaperWork] = useDeletePaperWorkMutation();
+  const [deleteEquipmentIn] = useDeleteEquipmentInMutation();
   //delete
   const deleteHandler = async (id: string) => {
     message.loading("Deleting.....");
     try {
-      const res = await deletePaperWork(id);
+      const res = await deleteEquipmentIn(id);
       if (!!res) {
         message.success("delete successfully");
         setOpen(false);
@@ -67,47 +68,55 @@ const RoutePermitPage = () => {
     }
   };
 
-  const { data, isLoading } = useGetAllPaperWorksQuery({ ...query });
+  const { data, isLoading } = useGetAllEquipmentInQuery({ ...query });
   if (isLoading) {
     return <Loader className="h-[50vh] flex items-end justify-center" />;
   }
-  const paperworkRecords = data?.paperWorks;
-  // console.log(paperworkRecords);
+
+  const equipments = data?.equipmentIns;
   const meta = data?.meta;
 
   const columns = [
+    // {
+    //   title: "SN",
+    //   dataIndex: "sn",
+    //   key: "sn",
+    //   width: "5%",
+    //   render: (text: any, record: any, index: number) => {
+    //     return index + 1;
+    //   },
+    // },
     {
-      title: "Vehicle",
-      dataIndex: "vehicle",
-      render: (vehicle: any) => <span>{vehicle && vehicle.regNo}</span>,
-    },
-    {
-      title: "effectiveDate",
-      dataIndex: "effectiveDate",
+      title: "Date",
+      dataIndex: "date",
+      key: "date",
       render: (data: string) => dayjs(data).format("DD/MM/YYYY"),
       sorter: true,
     },
     {
-      title: "expiryDate",
-      dataIndex: "expiryDate",
-      render: (data: string) => dayjs(data).format("DD/MM/YYYY"),
-      sorter: true,
+      title: "equipment",
+      dataIndex: "equipment",
+      render: (equipment: any) => <span>{equipment && equipment.label}</span>,
     },
     {
-      title: "daysToRemind",
-      dataIndex: "daysToRemind",
+      title: "Quantity",
+      dataIndex: "quantity",
+      key: "quantity",
     },
     {
-      title: "paperType",
-      dataIndex: "paperType",
+      title: "Unit price",
+      dataIndex: "unitPrice",
+      key: "unitPrice",
     },
     {
-      title: "fee",
-      dataIndex: "fee",
+      title: "Total price",
+      dataIndex: "totalPrice",
+      key: "totalPrice",
     },
     {
-      title: "remarks",
+      title: "Remarks",
       dataIndex: "remarks",
+      key: "remarks",
     },
     {
       title: "CreatedAt",
@@ -115,7 +124,6 @@ const RoutePermitPage = () => {
       render: function (data: any) {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
       },
-      responsive: ["xxl"],
       sorter: true,
     },
     {
@@ -127,14 +135,13 @@ const RoutePermitPage = () => {
               style={{
                 margin: "0px 5px",
               }}
-              onClick={() => {}}
             >
               <ModalComponent
                 showModel={showModel}
                 setShowModel={setShowModel}
                 icon={<EditOutlined />}
               >
-                <AddRoutePermit id={data?.id} />
+                <AddEquipmentIn id={data?.id} />
               </ModalComponent>
             </div>
             <div>
@@ -156,7 +163,6 @@ const RoutePermitPage = () => {
       },
     },
   ];
-
   const onPaginationChange = (page: number, pageSize: number) => {
     // console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
@@ -176,7 +182,7 @@ const RoutePermitPage = () => {
   };
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
-      <ActionBar inline={screens.xs ? false : true} title="Route permit List">
+      <ActionBar inline={screens.xs ? false : true} title="Equipment In List">
         <div className="flex items-center justify-between flex-grow gap-2">
           <Input
             // size="large"
@@ -201,16 +207,18 @@ const RoutePermitPage = () => {
           <ModalComponent
             showModel={showModel}
             setShowModel={setShowModel}
-            buttonText="Add Route permit"
+            buttonText="Add EquipmentIn"
             icon={<IoMdAdd />}
           >
-            <AddRoutePermit />
+            <AddEquipmentIn />
           </ModalComponent>
         </div>
       </ActionBar>
+
       <UMTable
+        loading={false}
         columns={columns}
-        dataSource={paperworkRecords}
+        dataSource={equipments}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -219,7 +227,7 @@ const RoutePermitPage = () => {
         showPagination={true}
       />
       <DeleteModal
-        title="Delete Route Permit"
+        title="Delete EquipmentIn"
         isOpen={open}
         closeModal={() => setOpen(false)}
         handleOk={() => deleteHandler(id)}
@@ -230,4 +238,4 @@ const RoutePermitPage = () => {
   );
 };
 
-export default RoutePermitPage;
+export default EquipmentIn;
