@@ -5,7 +5,7 @@ import { baseApi } from '../baseApi';
 const PARTY_URL = '/party';
 
 export const partyApi = baseApi.injectEndpoints({
-  endpoints: (build: any) => ({
+  endpoints: (build) => ({
     // create
     createParty: build.mutation({
       query: (data: any) => ({

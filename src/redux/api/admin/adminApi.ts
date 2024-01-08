@@ -5,7 +5,7 @@ import { baseApi } from '../baseApi';
 const ADMIN_URL = '/admin';
 
 export const adminApi = baseApi.injectEndpoints({
-  endpoints: (build: any) => ({
+  endpoints: (build) => ({
     // get all
     getAllAdmin: build.query({
       query: (arg: Record<string, any>) => ({
