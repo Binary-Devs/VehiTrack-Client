@@ -23,6 +23,7 @@ import { IoMdAdd } from "react-icons/io";
 const HelperListPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
   const query: Record<string, any> = {};
+  const [showModel, setShowModel] = useState(false);
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
@@ -107,12 +108,21 @@ const HelperListPage = () => {
                 margin: "0px 5px",
               }}
             >
-              <ModalComponent icon={<EditOutlined />}>
+              <ModalComponent
+                showModel={showModel}
+                setShowModel={setShowModel}
+                icon={<EditOutlined />}
+              >
                 <AddUpdateHelper id={data} />
               </ModalComponent>
             </div>
             <div>
-              <ModalComponent icon={<DeleteOutlined />} buttonDanger={true}>
+              <ModalComponent
+                showModel={showModel}
+                setShowModel={setShowModel}
+                icon={<DeleteOutlined />}
+                buttonDanger={true}
+              >
                 <div>
                   <h1 className="text-center my-1 font-bold text-2xl">
                     Delete Helper
@@ -181,7 +191,12 @@ const HelperListPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Helper" icon={<IoMdAdd />}>
+          <ModalComponent
+            showModel={showModel}
+            setShowModel={setShowModel}
+            buttonText="Add Helper"
+            icon={<IoMdAdd />}
+          >
             <AddUpdateHelper />
           </ModalComponent>
         </div>

@@ -13,6 +13,7 @@ import { IoMdAdd } from "react-icons/io";
 
 const TripListPage = () => {
   const query: Record<string, any> = {};
+  const [showModel, setShowModel] = useState(false);
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
@@ -91,7 +92,11 @@ const TripListPage = () => {
       render: function (data: any) {
         return (
           <div className="flex items-center gap-1">
-            <ModalComponent icon={<EditOutlined />}>
+            <ModalComponent
+              showModel={showModel}
+              setShowModel={setShowModel}
+              icon={<EditOutlined />}
+            >
               <AddUpdateTrip id={data} />
             </ModalComponent>
             <Button
@@ -140,7 +145,12 @@ const TripListPage = () => {
             setSearchTerm(e.target.value);
           }}
         />
-        <ModalComponent buttonText="Add Trip" icon={<IoMdAdd />}>
+        <ModalComponent
+          showModel={showModel}
+          setShowModel={setShowModel}
+          buttonText="Add Trip"
+          icon={<IoMdAdd />}
+        >
           <AddUpdateTrip />
         </ModalComponent>
       </ActionBar>

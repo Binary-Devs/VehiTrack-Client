@@ -23,6 +23,7 @@ import { IoMdAdd } from "react-icons/io";
 const AllDriverList = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
   const query: Record<string, any> = {};
+  const [showModel, setShowModel] = useState(false);
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
@@ -128,7 +129,11 @@ const AllDriverList = () => {
                 margin: "0px 5px",
               }}
             >
-              <ModalComponent icon={<EditOutlined />}>
+              <ModalComponent
+                showModel={showModel}
+                setShowModel={setShowModel}
+                icon={<EditOutlined />}
+              >
                 <AddUpdateDriver id={data} />
               </ModalComponent>
             </div>
@@ -192,7 +197,12 @@ const AllDriverList = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Driver" icon={<IoMdAdd />}>
+          <ModalComponent
+            showModel={showModel}
+            setShowModel={setShowModel}
+            buttonText="Add Driver"
+            icon={<IoMdAdd />}
+          >
             <AddUpdateDriver />
           </ModalComponent>
         </div>

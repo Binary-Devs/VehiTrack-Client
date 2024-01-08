@@ -10,6 +10,7 @@ import { useState } from "react";
 
 const MyTrip = () => {
   const query: Record<string, any> = {};
+  const [showModel, setShowModel] = useState(false);
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
@@ -113,7 +114,11 @@ const MyTrip = () => {
     //           <DeleteOutlined />
     //         </Button>
 
-    //         <ModalComponent icon={<MoneyCollectOutlined />}>
+    //         <ModalComponent
+    //           showModel={showModel}
+    //           setShowModel={setShowModel}
+    //           icon={<MoneyCollectOutlined />}
+    //         >
     //           <AddTrip />
     //         </ModalComponent>
     //       </div>
