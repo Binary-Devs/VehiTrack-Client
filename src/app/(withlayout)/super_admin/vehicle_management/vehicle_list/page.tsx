@@ -96,10 +96,9 @@ const VehicleListPage = () => {
       // width: 80,
       dataIndex: "imageUrl",
       render: function (data: any) {
-        const image = `${
+        const image =
           data ||
-          "https://res.cloudinary.com/dnzlgpcc3/image/upload/v1704419785/oiav6crzfltkswdrrrli.png"
-        } `;
+          'https://res.cloudinary.com/dnzlgpcc3/image/upload/v1704419785/oiav6crzfltkswdrrrli.png';
         return (
           <Image
             src={image}
