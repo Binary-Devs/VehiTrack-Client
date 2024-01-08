@@ -1,5 +1,5 @@
 "use client";
-import AddRoutePermit from "@/components/CreateUpdateFrom/AddRoutePermit";
+import AddTaxToken from "@/components/CreateUpdateFrom/AddTaxToken";
 import Loader from "@/components/Utlis/Loader";
 import ActionBar from "@/components/ui/ActionBar";
 import DeleteModal from "@/components/ui/DeleteModal";
@@ -20,7 +20,7 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 
-const RoutePermitPage = () => {
+const TaxToken = () => {
   const query: Record<string, any> = {};
   const [showModel, setShowModel] = useState(false);
 
@@ -42,12 +42,12 @@ const RoutePermitPage = () => {
     delay: 600,
   });
 
-  const { useBreakpoint } = Grid;
-  const screens = useBreakpoint();
-
   if (!!debouncedTerm) {
     query["searchTerm"] = debouncedTerm;
   }
+
+  const { useBreakpoint } = Grid;
+  const screens = useBreakpoint();
 
   const [deletePaperWork] = useDeletePaperWorkMutation();
   //delete
@@ -134,7 +134,7 @@ const RoutePermitPage = () => {
                 setShowModel={setShowModel}
                 icon={<EditOutlined />}
               >
-                <AddRoutePermit id={data?.id} />
+                <AddTaxToken id={data?.id} />
               </ModalComponent>
             </div>
             <div>
@@ -176,7 +176,7 @@ const RoutePermitPage = () => {
   };
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
-      <ActionBar inline={screens.xs ? false : true} title="Route permit List">
+      <ActionBar inline={screens.xs ? false : true} title="Tax/Token List">
         <div className="flex items-center justify-between flex-grow gap-2">
           <Input
             // size="large"
@@ -201,15 +201,17 @@ const RoutePermitPage = () => {
           <ModalComponent
             showModel={showModel}
             setShowModel={setShowModel}
-            buttonText="Add Route permit"
+            buttonText="Add Tax/Token"
             icon={<IoMdAdd />}
           >
-            <AddRoutePermit />
+            <AddTaxToken />
           </ModalComponent>
         </div>
       </ActionBar>
+
       <UMTable
         columns={columns}
+        loading={false}
         dataSource={paperworkRecords}
         pageSize={size}
         totalPages={meta?.total}
@@ -219,7 +221,7 @@ const RoutePermitPage = () => {
         showPagination={true}
       />
       <DeleteModal
-        title="Delete Route Permit"
+        title="Delete Tax/Token"
         isOpen={open}
         closeModal={() => setOpen(false)}
         handleOk={() => deleteHandler(id)}
@@ -230,4 +232,4 @@ const RoutePermitPage = () => {
   );
 };
 
-export default RoutePermitPage;
+export default TaxToken;

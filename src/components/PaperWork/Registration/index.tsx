@@ -1,5 +1,5 @@
 "use client";
-import AddRoutePermit from "@/components/CreateUpdateFrom/AddRoutePermit";
+import AddRegistration from "@/components/CreateUpdateFrom/AddRegistration";
 import Loader from "@/components/Utlis/Loader";
 import ActionBar from "@/components/ui/ActionBar";
 import DeleteModal from "@/components/ui/DeleteModal";
@@ -20,7 +20,7 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 
-const RoutePermitPage = () => {
+const Registration = () => {
   const query: Record<string, any> = {};
   const [showModel, setShowModel] = useState(false);
 
@@ -32,6 +32,9 @@ const RoutePermitPage = () => {
   const [open, setOpen] = useState(false);
   const [id, setId] = useState<string>("");
 
+  const { useBreakpoint } = Grid;
+  const screens = useBreakpoint();
+
   query["limit"] = size;
   query["page"] = page;
   query["sortBy"] = sortBy;
@@ -41,9 +44,6 @@ const RoutePermitPage = () => {
     searchQuery: searchTerm,
     delay: 600,
   });
-
-  const { useBreakpoint } = Grid;
-  const screens = useBreakpoint();
 
   if (!!debouncedTerm) {
     query["searchTerm"] = debouncedTerm;
@@ -72,7 +72,6 @@ const RoutePermitPage = () => {
     return <Loader className="h-[50vh] flex items-end justify-center" />;
   }
   const paperworkRecords = data?.paperWorks;
-  // console.log(paperworkRecords);
   const meta = data?.meta;
 
   const columns = [
@@ -112,10 +111,10 @@ const RoutePermitPage = () => {
     {
       title: "CreatedAt",
       dataIndex: "createdAt",
+      responsive: ["xxl"],
       render: function (data: any) {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
       },
-      responsive: ["xxl"],
       sorter: true,
     },
     {
@@ -134,7 +133,7 @@ const RoutePermitPage = () => {
                 setShowModel={setShowModel}
                 icon={<EditOutlined />}
               >
-                <AddRoutePermit id={data?.id} />
+                <AddRegistration id={data?.id} />
               </ModalComponent>
             </div>
             <div>
@@ -176,7 +175,7 @@ const RoutePermitPage = () => {
   };
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
-      <ActionBar inline={screens.xs ? false : true} title="Route permit List">
+      <ActionBar inline={screens.xs ? false : true} title="Registration List">
         <div className="flex items-center justify-between flex-grow gap-2">
           <Input
             // size="large"
@@ -201,15 +200,16 @@ const RoutePermitPage = () => {
           <ModalComponent
             showModel={showModel}
             setShowModel={setShowModel}
-            buttonText="Add Route permit"
+            buttonText="Add Registration"
             icon={<IoMdAdd />}
           >
-            <AddRoutePermit />
+            <AddRegistration />
           </ModalComponent>
         </div>
       </ActionBar>
       <UMTable
         columns={columns}
+        loading={false}
         dataSource={paperworkRecords}
         pageSize={size}
         totalPages={meta?.total}
@@ -219,7 +219,7 @@ const RoutePermitPage = () => {
         showPagination={true}
       />
       <DeleteModal
-        title="Delete Route Permit"
+        title="Delete Registration"
         isOpen={open}
         closeModal={() => setOpen(false)}
         handleOk={() => deleteHandler(id)}
@@ -230,4 +230,4 @@ const RoutePermitPage = () => {
   );
 };
 
-export default RoutePermitPage;
+export default Registration;
