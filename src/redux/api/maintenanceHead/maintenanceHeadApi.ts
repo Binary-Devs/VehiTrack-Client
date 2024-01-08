@@ -5,7 +5,7 @@ import { baseApi } from '../baseApi';
 const MAINTENANCE_HEAD_URL = '/maintenance-head';
 
 export const maintenanceHeadApi = baseApi.injectEndpoints({
-  endpoints: (build: any) => ({
+  endpoints: (build) => ({
     // create
     createMaintenanceHead: build.mutation({
       query: (data: any) => ({
