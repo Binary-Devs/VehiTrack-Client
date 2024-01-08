@@ -1,3 +1,4 @@
+"use client";
 import { Divider } from "antd";
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 
