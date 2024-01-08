@@ -87,7 +87,6 @@ const ModelListPage = () => {
     },
     {
       title: "Action",
-      dataIndex: "id",
       render: function (data: any) {
         return (
           <div className="flex">
@@ -103,11 +102,12 @@ const ModelListPage = () => {
               onClick={() => {}}
             >
               <ModalComponent
+                width={600}
                 showModel={showModel}
                 setShowModel={setShowModel}
                 icon={<EditOutlined />}
               >
-                <AddUpdateModel id={data} brands={brands} />
+                <AddUpdateModel updateData={data} brands={brands} />
               </ModalComponent>
             </div>
             {/* <Button
@@ -190,6 +190,7 @@ const ModelListPage = () => {
             </Button>
           )}
           <ModalComponent
+            width={600}
             showModel={showModel}
             setShowModel={setShowModel}
             buttonText="Add Model"

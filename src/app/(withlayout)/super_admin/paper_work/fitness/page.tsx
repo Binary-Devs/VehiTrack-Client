@@ -146,7 +146,6 @@ const FitnessPage = () => {
                   setId(data?.id);
                 }}
                 danger
-                style={{ marginLeft: "3px" }}
               >
                 <DeleteOutlined />
               </Button>
