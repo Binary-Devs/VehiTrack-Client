@@ -27,6 +27,7 @@ const AllManagerList = () => {
   const [deleteAdmin, { isLoading: adminUpdateLoading }] =
     useInactiveAdminMutation();
   const query: Record<string, any> = {};
+  const [showModel, setShowModel] = useState(false);
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
@@ -93,7 +94,11 @@ const AllManagerList = () => {
               </Button>
             </Link> */}
 
-            <ModalComponent icon={<EditOutlined />}>
+            <ModalComponent
+              showModel={showModel}
+              setShowModel={setShowModel}
+              icon={<EditOutlined />}
+            >
               <ManagerUpdate id={data} />
             </ModalComponent>
 
@@ -176,7 +181,12 @@ const AllManagerList = () => {
           }}
         />
         <div>
-          <ModalComponent buttonText="Create Manager" icon={<IoMdAdd />}>
+          <ModalComponent
+            showModel={showModel}
+            setShowModel={setShowModel}
+            buttonText="Create Manager"
+            icon={<IoMdAdd />}
+          >
             <CreateManager />
           </ModalComponent>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (

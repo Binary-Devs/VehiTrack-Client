@@ -22,6 +22,7 @@ import { IoMdAdd } from "react-icons/io";
 
 const FitnessPage = () => {
   const query: Record<string, any> = {};
+  const [showModel, setShowModel] = useState(false);
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
@@ -128,7 +129,11 @@ const FitnessPage = () => {
               }}
               onClick={() => {}}
             >
-              <ModalComponent icon={<EditOutlined />}>
+              <ModalComponent
+                showModel={showModel}
+                setShowModel={setShowModel}
+                icon={<EditOutlined />}
+              >
                 <AddFitness id={data?.id} />
               </ModalComponent>
             </div>
@@ -193,7 +198,12 @@ const FitnessPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Fitness" icon={<IoMdAdd />}>
+          <ModalComponent
+            showModel={showModel}
+            setShowModel={setShowModel}
+            buttonText="Add Fitness"
+            icon={<IoMdAdd />}
+          >
             <AddFitness />
           </ModalComponent>
         </div>

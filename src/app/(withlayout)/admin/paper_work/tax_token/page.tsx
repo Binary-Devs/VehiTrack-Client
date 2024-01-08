@@ -22,6 +22,7 @@ import { IoMdAdd } from "react-icons/io";
 
 const TaxTokenPage = () => {
   const query: Record<string, any> = {};
+  const [showModel, setShowModel] = useState(false);
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
@@ -124,7 +125,11 @@ const TaxTokenPage = () => {
               }}
               onClick={() => {}}
             >
-              <ModalComponent icon={<EditOutlined />}>
+              <ModalComponent
+                showModel={showModel}
+                setShowModel={setShowModel}
+                icon={<EditOutlined />}
+              >
                 <AddTaxToken id={data?.id} />
               </ModalComponent>
             </div>
@@ -189,7 +194,12 @@ const TaxTokenPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Tax/Token" icon={<IoMdAdd />}>
+          <ModalComponent
+            showModel={showModel}
+            setShowModel={setShowModel}
+            buttonText="Add Tax/Token"
+            icon={<IoMdAdd />}
+          >
             <AddTaxToken />
           </ModalComponent>
         </div>

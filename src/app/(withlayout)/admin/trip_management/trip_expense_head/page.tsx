@@ -15,6 +15,7 @@ import { useState } from "react";
 
 const TripExpenseHeadPage = () => {
   const query: Record<string, any> = {};
+  const [showModel, setShowModel] = useState(false);
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
@@ -71,7 +72,11 @@ const TripExpenseHeadPage = () => {
                 margin: "0px 5px",
               }}
             >
-              <ModalComponent icon={<EditOutlined />}>
+              <ModalComponent
+                showModel={showModel}
+                setShowModel={setShowModel}
+                icon={<EditOutlined />}
+              >
                 <AddUpdateTripExpenseHead id={data} />
               </ModalComponent>
             </div>
@@ -114,7 +119,12 @@ const TripExpenseHeadPage = () => {
             maxWidth: "200px",
           }}
         />
-        <ModalComponent buttonText="Add Expense Head" icon={<IoMdAdd />}>
+        <ModalComponent
+          showModel={showModel}
+          setShowModel={setShowModel}
+          buttonText="Add Expense Head"
+          icon={<IoMdAdd />}
+        >
           <AddUpdateTripExpenseHead />
         </ModalComponent>
       </ActionBar>

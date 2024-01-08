@@ -23,6 +23,7 @@ import { IoMdAdd } from "react-icons/io";
 
 const EquipmentInList = () => {
   const query: Record<string, any> = {};
+const [showModel, setShowModel] = useState(false);
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
@@ -132,7 +133,11 @@ const EquipmentInList = () => {
                 margin: "0px 5px",
               }}
             >
-              <ModalComponent icon={<EditOutlined />}>
+              <ModalComponent
+                showModel={showModel}
+                setShowModel={setShowModel}
+                icon={<EditOutlined />}
+              >
                 <AddEquipmentIn id={data?.id} />
               </ModalComponent>
             </div>
@@ -196,7 +201,12 @@ const EquipmentInList = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add EquipmentIn" icon={<IoMdAdd />}>
+          <ModalComponent
+            showModel={showModel}
+            setShowModel={setShowModel}
+            buttonText="Add EquipmentIn"
+            icon={<IoMdAdd />}
+          >
             <AddEquipmentIn />
           </ModalComponent>
         </div>
