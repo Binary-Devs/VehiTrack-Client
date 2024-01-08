@@ -1,11 +1,11 @@
 import { tagTypes } from '@/redux/teg-types';
-import { baseApi } from '../baseApi';
 import { IMeta } from '@/types';
+import { baseApi } from '../baseApi';
 
 const HELPER_URL = '/helper';
 
 export const helperApi = baseApi.injectEndpoints({
-  endpoints: (build) => ({
+  endpoints: (build: any) => ({
     // get all
     getAllHelper: build.query({
       query: (arg: Record<string, any>) => ({
@@ -33,7 +33,7 @@ export const helperApi = baseApi.injectEndpoints({
 
     // update
     updateHelper: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${HELPER_URL}/${data?.id}`,
         method: 'PATCH',
         data: data?.data,

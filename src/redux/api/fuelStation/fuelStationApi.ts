@@ -1,14 +1,14 @@
 import { tagTypes } from '@/redux/teg-types';
-import { baseApi } from '../baseApi';
 import { IMeta } from '@/types';
+import { baseApi } from '../baseApi';
 
 const FUEL_STATION_URL = '/fuel-station';
 
 export const fuelStationApi = baseApi.injectEndpoints({
-  endpoints: (build) => ({
+  endpoints: (build: any) => ({
     // create
     createFuelStation: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${FUEL_STATION_URL}/create`,
         method: 'POST',
         data: data,
@@ -43,7 +43,7 @@ export const fuelStationApi = baseApi.injectEndpoints({
 
     // update
     updateFuelStation: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${FUEL_STATION_URL}/${data?.id}`,
         method: 'PATCH',
         data: data?.data,

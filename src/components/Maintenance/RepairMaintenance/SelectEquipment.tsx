@@ -25,7 +25,7 @@ const SelectEquipment = () => {
   const handleRemove = (index: number) => remove(index);
   return (
     <Row gutter={[16, 16]}>
-      {fields?.map((el, index) => (
+      {fields?.map((el: any, index: number) => (
         <EquipmentField
           key={el.id}
           field={el}
@@ -69,7 +69,7 @@ const EquipmentField = ({ index, handleRemove }: Record<string, any>) => {
           <FormSelectField
             size="middle"
             name={`equipmentUses[${index}].equipmentId`}
-            options={allEquipments?.map((el) => ({
+            options={allEquipments?.map((el: any) => ({
               label: el.label,
               value: el.id,
             }))}

@@ -1,12 +1,35 @@
-"use client";
+'use client';
 
-import React from "react";
-import ReactApexChart from "react-apexcharts";
-import { Typography } from "antd";
-import columnChart from "./configs/columnChart";
+import { monthOfYear } from '@/constants/global';
+import { useTripSummaryGroupByMonthYearQuery } from '@/redux/api/report/reportApi';
+import { Typography } from 'antd';
+import ReactApexChart from 'react-apexcharts';
+import columnChart from './configs/columnChart';
 
 const ColumnChart = () => {
   const { Title, Paragraph } = Typography;
+
+  const { data, isLoading } = useTripSummaryGroupByMonthYearQuery('', {
+    refetchOnMountOrArgChange: true,
+  });
+
+  const summaries = data?.summaries || [];
+  const filterByYear = summaries?.filter(
+    (el: any) => el.year === new Date().getFullYear()
+  );
+
+  const mappedData = monthOfYear?.map((el: number) => {
+    const findValue = filterByYear?.find((fv: any) => fv.month === el);
+    return findValue?.total_quantity || 0;
+  });
+
+  const series = [
+    {
+      name: 'Trip Income',
+      data: mappedData,
+      color: '#fff',
+    },
+  ];
 
   return (
     <div className="overflow-hidden">
@@ -21,7 +44,7 @@ const ColumnChart = () => {
           className="bar-chart"
           // @ts-ignore
           options={columnChart.options}
-          series={columnChart.series}
+          series={series}
           type="bar"
           height={300}
         />

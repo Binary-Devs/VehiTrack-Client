@@ -58,7 +58,8 @@ const ViewMaintenance = ({ open, handleClose, data }: IProps) => {
               fontSize: 22,
               textTransform: 'uppercase',
               fontWeight: 700,
-              marginBottom: 16,
+              marginBottom: 32,
+              marginTop: 16,
               lineHeight: 1,
               color: '#614cab',
             }}

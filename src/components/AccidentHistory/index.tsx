@@ -37,7 +37,12 @@ const AccidentHistory = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const { data, isLoading } = useGetAllAccidentHistoriesQuery({ ...query });
+  const { data, isLoading } = useGetAllAccidentHistoriesQuery(
+    { ...query },
+    {
+      refetchOnMountOrArgChange: true,
+    }
+  );
 
   const accidentHistories = data?.accidentHistories || [];
   const meta = data?.meta;

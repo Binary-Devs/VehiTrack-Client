@@ -5,12 +5,12 @@ import { baseApi } from "../baseApi";
 const BRAND_URL = "/brand";
 
 export const brandApi = baseApi.injectEndpoints({
-  endpoints: (build) => ({
+  endpoints: (build: any) => ({
     // create
     createBrand: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${BRAND_URL}/create`,
-        method: "POST",
+        method: 'POST',
         data: data,
       }),
       invalidatesTags: [tagTypes.brand],
@@ -20,7 +20,7 @@ export const brandApi = baseApi.injectEndpoints({
     getAllBrand: build.query({
       query: (arg: Record<string, any>) => ({
         url: `${BRAND_URL}`,
-        method: "GET",
+        method: 'GET',
         params: arg,
       }),
       transformResponse: (response: any[], meta: IMeta) => {
@@ -36,16 +36,16 @@ export const brandApi = baseApi.injectEndpoints({
     getSingleBrand: build.query({
       query: (id: string) => ({
         url: `${BRAND_URL}/${id}`,
-        method: "GET",
+        method: 'GET',
       }),
       providesTags: [tagTypes.brand],
     }),
 
     // update
     updateBrand: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${BRAND_URL}/${data?.id}`,
-        method: "PATCH",
+        method: 'PATCH',
         data: data?.data,
       }),
       invalidatesTags: [tagTypes.brand],

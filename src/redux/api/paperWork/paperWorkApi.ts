@@ -1,14 +1,14 @@
 import { tagTypes } from '@/redux/teg-types';
-import { baseApi } from '../baseApi';
 import { IMeta } from '@/types';
+import { baseApi } from '../baseApi';
 
 const PAPER_WORK_URL = '/paper-work';
 
 export const paperWorkApi = baseApi.injectEndpoints({
-  endpoints: (build) => ({
+  endpoints: (build: any) => ({
     // create
     createPaperWork: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${PAPER_WORK_URL}/create`,
         method: 'POST',
         data: data,
@@ -43,7 +43,7 @@ export const paperWorkApi = baseApi.injectEndpoints({
 
     // update
     updatePaperWork: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${PAPER_WORK_URL}/${data?.id}`,
         method: 'PATCH',
         data: data?.data,

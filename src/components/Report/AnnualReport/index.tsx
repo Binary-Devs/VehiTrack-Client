@@ -105,7 +105,7 @@ const AnnualReport = () => {
             }
             onChange={(value) => setVehicle(value)}
             size="large"
-            options={allVehicles?.map((el) => ({
+            options={allVehicles?.map((el: any) => ({
               label: el.regNo,
               value: el.id,
             }))}
