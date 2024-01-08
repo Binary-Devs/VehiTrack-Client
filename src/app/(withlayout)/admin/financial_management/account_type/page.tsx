@@ -14,6 +14,7 @@ import { IoMdAdd } from "react-icons/io";
 
 const AccountTypePage = () => {
   const query: Record<string, any> = {};
+  const [showModel, setShowModel] = useState(false);
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
@@ -67,7 +68,11 @@ const AccountTypePage = () => {
               }}
               // onClick={() => console.log(data?.id)}
             >
-              <ModalComponent icon={<EditOutlined />}>
+              <ModalComponent
+                showModel={showModel}
+                setShowModel={setShowModel}
+                icon={<EditOutlined />}
+              >
                 <AddAccountType id={data?.id} />
               </ModalComponent>
             </div>
@@ -119,7 +124,12 @@ const AccountTypePage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Account Type" icon={<IoMdAdd />}>
+          <ModalComponent
+            showModel={showModel}
+            setShowModel={setShowModel}
+            buttonText="Add Account Type"
+            icon={<IoMdAdd />}
+          >
             <AddAccountType />
           </ModalComponent>
         </div>

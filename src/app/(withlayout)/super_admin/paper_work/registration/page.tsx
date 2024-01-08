@@ -22,6 +22,7 @@ import { IoMdAdd } from "react-icons/io";
 
 const RegistrationPage = () => {
   const query: Record<string, any> = {};
+  const [showModel, setShowModel] = useState(false);
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
@@ -127,7 +128,11 @@ const RegistrationPage = () => {
               }}
               onClick={() => {}}
             >
-              <ModalComponent icon={<EditOutlined />}>
+              <ModalComponent
+                showModel={showModel}
+                setShowModel={setShowModel}
+                icon={<EditOutlined />}
+              >
                 <AddRegistration id={data?.id} />
               </ModalComponent>
             </div>
@@ -192,7 +197,12 @@ const RegistrationPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent buttonText="Add Registration" icon={<IoMdAdd />}>
+          <ModalComponent
+            showModel={showModel}
+            setShowModel={setShowModel}
+            buttonText="Add Registration"
+            icon={<IoMdAdd />}
+          >
             <AddRegistration />
           </ModalComponent>
         </div>
