@@ -104,7 +104,7 @@ const CreateMaintenance = () => {
                 <FormSelectField
                   size="large"
                   name="vehicleId"
-                  options={allVehicles?.map((el) => ({
+                  options={allVehicles?.map((el: any) => ({
                     label: el.regNo,
                     value: el.id,
                   }))}
@@ -117,7 +117,7 @@ const CreateMaintenance = () => {
                 <FormSelectField
                   size="large"
                   name="driverId"
-                  options={allDrivers?.map((el) => ({
+                  options={allDrivers?.map((el: any) => ({
                     label: el.fullName,
                     value: el.id,
                   }))}
@@ -151,7 +151,7 @@ const CreateMaintenance = () => {
                 <FormSelectField
                   size="large"
                   name="maintenanceHeadId"
-                  options={allMaintenanceHeads.map((el) => ({
+                  options={allMaintenanceHeads.map((el: any) => ({
                     label: el.label,
                     value: el.id,
                   }))}

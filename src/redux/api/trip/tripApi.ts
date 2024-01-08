@@ -6,12 +6,12 @@ import { EXPENSE_TYPE_URL } from "../expenseHead/expenseHeadApi";
 const TRIP_URL = "/trip";
 
 export const tripApi = baseApi.injectEndpoints({
-  endpoints: (build) => ({
+  endpoints: (build: any) => ({
     // create
     createTrip: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${TRIP_URL}/create`,
-        method: "POST",
+        method: 'POST',
         data: data,
       }),
       invalidatesTags: [tagTypes.trip],
@@ -21,7 +21,7 @@ export const tripApi = baseApi.injectEndpoints({
     getAllTrip: build.query({
       query: (arg: Record<string, any>) => ({
         url: `${TRIP_URL}`,
-        method: "GET",
+        method: 'GET',
         params: arg,
       }),
       transformResponse: (response: any[], meta: IMeta) => {
@@ -37,16 +37,16 @@ export const tripApi = baseApi.injectEndpoints({
     getSingleTrip: build.query({
       query: (id: string) => ({
         url: `${TRIP_URL}/${id}`,
-        method: "GET",
+        method: 'GET',
       }),
       providesTags: [tagTypes.trip],
     }),
 
     // update
     updateTrip: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${TRIP_URL}/${data?.id}`,
-        method: "PATCH",
+        method: 'PATCH',
         data: data?.data,
       }),
       invalidatesTags: [tagTypes.trip],
@@ -56,16 +56,16 @@ export const tripApi = baseApi.injectEndpoints({
     deleteTrip: build.mutation({
       query: (id: string) => ({
         url: `${TRIP_URL}/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
       invalidatesTags: [tagTypes.trip],
     }),
 
     // trip expense
     updateTripExpense: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${TRIP_URL}/${data?.id}/trip-expense`,
-        method: "PATCH",
+        method: 'PATCH',
         data: data?.data,
       }),
       invalidatesTags: [tagTypes.trip],
@@ -75,7 +75,7 @@ export const tripApi = baseApi.injectEndpoints({
     getAllTripExpenseHead: build.query({
       query: (arg: Record<string, any>) => ({
         url: `${EXPENSE_TYPE_URL}?isTripExpense=true`,
-        method: "GET",
+        method: 'GET',
         params: arg,
       }),
       transformResponse: (response: any[], meta: IMeta) => {
@@ -89,9 +89,9 @@ export const tripApi = baseApi.injectEndpoints({
 
     // create trip expense head
     createTripExpenseHead: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${EXPENSE_TYPE_URL}/create`,
-        method: "POST",
+        method: 'POST',
         data: { ...data, isTripExpense: true },
       }),
       invalidatesTags: [tagTypes.expenseHead],

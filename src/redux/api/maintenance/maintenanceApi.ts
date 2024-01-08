@@ -1,14 +1,14 @@
 import { tagTypes } from '@/redux/teg-types';
-import { baseApi } from '../baseApi';
 import { IMeta } from '@/types';
+import { baseApi } from '../baseApi';
 
 const MAINTENANCE_URL = '/maintenance';
 
 export const maintenanceApi = baseApi.injectEndpoints({
-  endpoints: (build) => ({
+  endpoints: (build: any) => ({
     // create
     createMaintenance: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${MAINTENANCE_URL}/create`,
         method: 'POST',
         data: data,
@@ -43,7 +43,7 @@ export const maintenanceApi = baseApi.injectEndpoints({
 
     // update
     updateMaintenance: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${MAINTENANCE_URL}/${data?.id}`,
         method: 'PATCH',
         data: data?.data,

@@ -1,17 +1,29 @@
+import { useTripSummaryQuery } from '@/redux/api/report/reportApi';
 import { motion } from 'framer-motion';
 
 const HeaderSummaryCard = () => {
+  const { data, isLoading } = useTripSummaryQuery('', {
+    refetchOnMountOrArgChange: true,
+  });
+
+  const summaries = data?.summaries;
+
+  const totalTrip = summaries?.count || 0;
+  const totalIncome = summaries?.amount || 0;
+  const totalExpense = summaries?.expense || 0;
+  const netProfit = totalIncome - totalExpense;
+
   const count = [
     {
       today: 'Total Trip',
-      title: '3,200',
+      title: totalTrip,
       percent: '+20%',
       icon: profile,
       bnb: 'bnb2',
     },
     {
       today: 'Total Trip Income',
-      title: '$53,000',
+      title: `৳${totalIncome}`,
       percent: '+30%',
       icon: dollar,
       bnb: 'bnb2',
@@ -19,14 +31,14 @@ const HeaderSummaryCard = () => {
 
     {
       today: 'Total Trip Expense',
-      title: '$1,200',
+      title: `৳${totalExpense}`,
       percent: '-20%',
       icon: dollar,
       bnb: 'redtext',
     },
     {
       today: 'Net Profit',
-      title: '$13,200',
+      title: `৳${netProfit}`,
       percent: '10%',
       icon: dollar,
       bnb: 'bnb2',

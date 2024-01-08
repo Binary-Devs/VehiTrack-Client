@@ -5,12 +5,12 @@ import { baseApi } from "../baseApi";
 const USER_URL = "/user";
 
 export const userApi = baseApi.injectEndpoints({
-  endpoints: (build) => ({
+  endpoints: (build: any) => ({
     //  create super admin
     createSuperAdmin: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${USER_URL}/create-super-admin`,
-        method: "POST",
+        method: 'POST',
         data: data,
       }),
       invalidatesTags: [tagTypes.user],
@@ -18,9 +18,9 @@ export const userApi = baseApi.injectEndpoints({
 
     // create admin
     createAdmin: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${USER_URL}/create-admin`,
-        method: "POST",
+        method: 'POST',
         data: data,
       }),
       invalidatesTags: [tagTypes.user],
@@ -28,9 +28,9 @@ export const userApi = baseApi.injectEndpoints({
 
     // create driver
     createDriver: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${USER_URL}/create-driver`,
-        method: "POST",
+        method: 'POST',
         data: data,
       }),
       invalidatesTags: [tagTypes.user, tagTypes.driver],
@@ -38,9 +38,9 @@ export const userApi = baseApi.injectEndpoints({
 
     // create helper
     createHelper: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${USER_URL}/create-helper`,
-        method: "POST",
+        method: 'POST',
         data: data,
       }),
       invalidatesTags: [tagTypes.user],
