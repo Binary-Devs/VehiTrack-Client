@@ -1,6 +1,4 @@
 // import { IMeta } from "@/types";
-import { getBaseUrl } from "@/helpers/config/envConfig";
-import { tagTypes } from "@/redux/teg-types";
 import io from "socket.io-client";
 import { baseApi } from "../baseApi";
 
@@ -20,7 +18,7 @@ export const conversationApi = baseApi.injectEndpoints({
         { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
       ) {
         // create socket
-        const socket = io("http://localhost:5000", {
+        const socket = io(`${process.env.NEXT_PUBLIC_API_SOCKET_URL}`, {
           reconnectionDelay: 1000,
           reconnection: true,
           reconnectionAttempts: 10,
@@ -31,15 +29,28 @@ export const conversationApi = baseApi.injectEndpoints({
         });
         try {
           await cacheDataLoaded;
-          socket.on("conversation", (data) => {
-            console.log(data);
+          socket.on("conversation-message", (data) => {
+            // console.log(data);
+            updateCachedData((draft) => {
+              const conversation = draft?.find(
+                (c: any) => c.id === data?.conversation?.id
+              );
+              if (conversation?.id) {
+                conversation.message = data?.conversation?.message;
+                conversation.updatedAt = data?.conversation?.updatedAt;
+              } else if (
+                data?.conversation?.participants.includes(arg?.searchTerm)
+              ) {
+                draft.unshift(data?.conversation);
+              }
+            });
           });
         } catch (error) {
           await cacheEntryRemoved;
           socket.close();
         }
       },
-      providesTags: [tagTypes.conversations],
+      // providesTags: [tagTypes.conversations],
     }),
 
     // get single
@@ -48,7 +59,7 @@ export const conversationApi = baseApi.injectEndpoints({
         url: `${CONVERSATION_URL}/${id}`,
         method: "GET",
       }),
-      providesTags: [tagTypes.conversation],
+      // providesTags: [tagTypes.conversation],
     }),
 
     // create
@@ -58,7 +69,7 @@ export const conversationApi = baseApi.injectEndpoints({
         method: "POST",
         data: data,
       }),
-      invalidatesTags: [tagTypes.conversations, tagTypes.messages],
+      // invalidatesTags: [tagTypes.conversations, tagTypes.messages],
     }),
 
     // update
@@ -68,7 +79,7 @@ export const conversationApi = baseApi.injectEndpoints({
         method: "PATCH",
         data: data?.data,
       }),
-      invalidatesTags: [tagTypes.conversations],
+      // invalidatesTags: [tagTypes.conversations],
     }),
   }),
 });

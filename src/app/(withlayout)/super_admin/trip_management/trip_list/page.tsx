@@ -94,7 +94,13 @@ const TripListPage = () => {
             <ModalComponent icon={<EditOutlined />}>
               <AddUpdateTrip id={data} />
             </ModalComponent>
-            <Button onClick={() => console.log(data?.id)} type="primary" danger>
+            <Button
+              onClick={() => {
+                // console.log(data?.id);
+              }}
+              type="primary"
+              danger
+            >
               <DeleteOutlined />
             </Button>
           </div>

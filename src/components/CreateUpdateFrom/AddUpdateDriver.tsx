@@ -55,7 +55,7 @@ const AddUpdateDriver = ({ id }: { id?: string }) => {
     return <Loader className="h-[40vh] flex items-center justify-center" />;
   }
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <div>

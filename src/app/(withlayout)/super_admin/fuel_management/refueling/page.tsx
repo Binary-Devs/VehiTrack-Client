@@ -67,7 +67,7 @@ const RefuelingPage = () => {
     return <Loader className="h-[50vh] flex items-end justify-center" />;
   }
   const fuels = data?.fuels;
-  console.log(fuels);
+  // console.log(fuels);
   const meta = data?.meta;
 
   const columns = [
@@ -144,7 +144,9 @@ const RefuelingPage = () => {
               style={{
                 margin: "0px 5px",
               }}
-              onClick={() => console.log(data?.id)}
+              onClick={() => {
+                // console.log(data?.id);
+              }}
             >
               <ModalComponent icon={<EditOutlined />}>
                 <AddRefueling id={data?.id} />
@@ -171,7 +173,7 @@ const RefuelingPage = () => {
   ];
 
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
+    // console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };

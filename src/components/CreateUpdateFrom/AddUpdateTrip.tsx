@@ -29,7 +29,7 @@ const AddUpdateTrip = ({ id }: { id?: string }) => {
   const parties = partiesData?.parties;
   const accountHead = accountHeadsData?.accountHeads;
 
-  console.log(id);
+  // console.log(id);
 
   const vehicleOptions = vehicles?.map((vehicle: any) => {
     return {

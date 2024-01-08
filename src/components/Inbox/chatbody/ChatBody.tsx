@@ -15,7 +15,7 @@ export default function ChatBody({ id }: { id?: any }) {
     error,
   } = useGetAllMessageQuery({ conversationId: id }) || {};
 
-  console.log(id, messages);
+  // console.log(id, messages);
 
   // const { data: messages, totalCount } = data || {};
 
@@ -23,7 +23,7 @@ export default function ChatBody({ id }: { id?: any }) {
   let content = null;
 
   if (isLoading) {
-    content = <Loader className="h-[50vh] flex items-end justify-center" />;
+    content = <Loader className="h-[40vh] flex items-end justify-center" />;
   } else if (!isLoading && isError) {
     content = <div>{/* <Error message={error?.data} /> */}</div>;
   } else if (!isLoading && !isError && messages?.length === 0) {

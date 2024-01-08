@@ -1,4 +1,5 @@
 import { tagTypes } from "@/redux/teg-types";
+import { IMeta } from "@/types";
 import { baseApi } from "../baseApi";
 
 const USER_URL = "/user";
@@ -44,6 +45,22 @@ export const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.user],
     }),
+
+    // get all
+    getAllUser: build.query({
+      query: (arg: Record<string, any>) => ({
+        url: `${USER_URL}`,
+        method: "GET",
+        params: arg,
+      }),
+      transformResponse: (response: any[], meta: IMeta) => {
+        return {
+          users: response,
+          meta,
+        };
+      },
+      providesTags: [tagTypes.user],
+    }),
   }),
 });
 
@@ -52,4 +69,5 @@ export const {
   useCreateAdminMutation,
   useCreateDriverMutation,
   useCreateHelperMutation,
+  useGetAllUserQuery,
 } = userApi;

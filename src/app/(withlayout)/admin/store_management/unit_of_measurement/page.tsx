@@ -75,7 +75,9 @@ const UnitOfMeasurement = () => {
               style={{
                 margin: "0px 5px",
               }}
-              onClick={() => console.log(data?.id)}
+              onClick={() => {
+                // console.log(data?.id);
+              }}
             >
               <ModalComponent icon={<EditOutlined />}>
                 <AddUnitOfMeasurement id={data?.id} />
@@ -88,7 +90,7 @@ const UnitOfMeasurement = () => {
   ];
 
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
+    // console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };

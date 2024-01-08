@@ -61,6 +61,8 @@ const VehicleListPage = () => {
   const vehicles = data?.vehicles;
   const meta = data?.meta;
 
+  // console.log(vehicles);
+
   // BrandData for creating vehicle
   const { data: brandData, isLoading: brandLoad } = useGetAllBrandQuery({});
   const brands = brandData?.brands;
@@ -211,7 +213,7 @@ const VehicleListPage = () => {
   ];
 
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
+    // console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };

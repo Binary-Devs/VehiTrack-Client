@@ -46,7 +46,7 @@ const LoginPage = () => {
       }
     } catch (error: any) {
       message.error(error?.message);
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -74,10 +74,12 @@ const LoginPage = () => {
     >
       <Image
         src={"/login.webp"}
-        width={100}
-        height={100}
+        width={500}
+        height={500}
         alt="login gif"
         className="absolute inset-0 object-cover w-full h-full"
+        unoptimized
+        priority
       />
       <motion.div
         initial={{ opacity: 0 }}

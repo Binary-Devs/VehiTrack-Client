@@ -5,7 +5,7 @@ import Sidebar from "./Sidebar";
 
 const Conversation = () => {
   return (
-    <div className="max-w-7xl mx-auto -mt-1">
+    <div className="mx-auto -mt-1">
       <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 min-w-full flex lg:grid lg:grid-cols-3">
         <Sidebar />
         <div className="w-full lg:col-span-2 lg:block">

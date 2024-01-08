@@ -68,7 +68,7 @@ const FitnessPage = () => {
     return <Loader className="h-[50vh] flex items-end justify-center" />;
   }
   const paperworkRecords = data?.paperWorks;
-
+  // console.log(paperworkRecords);
   const meta = data?.meta;
 
   const columns = [
@@ -149,7 +149,7 @@ const FitnessPage = () => {
   ];
 
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
+    // console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };

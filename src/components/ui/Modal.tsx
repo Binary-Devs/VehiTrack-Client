@@ -1,6 +1,6 @@
 "use client";
 import { Button, Modal } from "antd";
-import React, { useState } from "react";
+import React from "react";
 
 const ModalComponent = ({
   children,
@@ -8,47 +8,56 @@ const ModalComponent = ({
   buttonText,
   buttonDanger,
   loading,
-  setSetModel,
+  setShowModel,
   showModel,
+  width,
 }: {
   children: React.ReactElement;
   buttonText?: string;
   buttonDanger?: boolean;
   loading?: boolean;
   showModel?: any;
-  setSetModel?: any;
+  setShowModel?: any;
   icon?: any;
+  width?: any;
 }) => {
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
   //   const [confirmLoading, setConfirmLoading] = useState(false);
 
   const showModal = () => {
-    setOpen(true);
+    setShowModel(true);
   };
 
   const handleOk = () => {
     // setModalText("The modal will be closed after two seconds");
-    setOpen(false);
+    setShowModel(false);
   };
 
   const handleCancel = () => {
-    setOpen(false);
+    setShowModel(false);
   };
 
   return (
     <>
-      <div style={{ display: "inline-block" }}>
-        <div className="lg:hidden">
-          <Button onClick={showModal} type="primary" danger={buttonDanger}>
+      <div>
+        <div className="md:hidden ">
+          <Button
+            onClick={showModal}
+            type="primary"
+            danger={buttonDanger}
+            style={{ width: "100%" }}
+            className="!flex !items-center !gap-2 !justify-center"
+          >
             {icon}
           </Button>
         </div>
-        <div className="hidden lg:block">
+        <div className="hidden md:block">
           <Button
+            style={{ width: "100%" }}
             danger={buttonDanger}
             type="primary"
             onClick={showModal}
-            className="!flex !items-center !gap-2 "
+            className="!flex !items-center !gap-2 !justify-center"
           >
             {icon && <span className="m-1">{icon}</span>}
             {buttonText && buttonText}
@@ -56,7 +65,7 @@ const ModalComponent = ({
         </div>
       </div>
       <Modal
-        open={open}
+        open={showModel}
         confirmLoading={loading ? loading : false}
         onCancel={handleCancel}
         //! when i went hidden ok and cancel button then it use
@@ -68,7 +77,7 @@ const ModalComponent = ({
           </>
         )}
         // width="max-content"
-        width={900}
+        width={width ? width : 900}
       >
         {children}
       </Modal>
