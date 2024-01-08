@@ -71,7 +71,7 @@ const AddAccidentHistory = ({ open, handleClose }: IProps) => {
               <FormSelectField
                 size="large"
                 name="vehicleId"
-                options={allVehicles?.map((el) => ({
+                options={allVehicles?.map((el: any) => ({
                   label: el.regNo,
                   value: el.id,
                 }))}
@@ -84,7 +84,7 @@ const AddAccidentHistory = ({ open, handleClose }: IProps) => {
               <FormSelectField
                 size="large"
                 name="driverId"
-                options={allDrivers?.map((el) => ({
+                options={allDrivers?.map((el: any) => ({
                   label: el.fullName,
                   value: el.id,
                 }))}

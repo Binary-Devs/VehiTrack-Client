@@ -85,46 +85,46 @@ const incomeExpenseData = [
   {
     type: 'expense',
     name: 'Fuel bill',
-    amount: '-$49.88',
+    amount: '-৳700',
   },
   {
     type: 'income',
     name: 'Trip bonus',
-    amount: '+99.99',
+    amount: '+1000',
   },
   {
     type: 'income',
     name: 'Trip completed',
-    amount: '+1,200.88',
+    amount: '+12000',
   },
   {
     type: 'cancel',
     name: 'Trip cancel',
-    amount: '+$99.99',
+    amount: '+৳800',
   },
   {
     type: 'expense',
     name: 'Glass repair',
-    amount: '-$49.88',
+    amount: '-৳1350',
   },
   {
     type: 'expense',
     name: 'Bumper repair',
-    amount: '-$68.88',
+    amount: '-৳680',
   },
   {
     type: 'income',
     name: 'Trip completed',
-    amount: '+600.88',
+    amount: '+20000',
   },
   {
     type: 'cancel',
     name: 'Trip cancel',
-    amount: '+$1300.99',
+    amount: '+৳1300',
   },
   {
     type: 'expense',
     name: 'Tire change',
-    amount: '-$78.88',
+    amount: '-৳2000',
   },
 ];

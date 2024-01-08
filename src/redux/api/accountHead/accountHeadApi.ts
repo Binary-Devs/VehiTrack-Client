@@ -1,14 +1,14 @@
 import { tagTypes } from '@/redux/teg-types';
-import { baseApi } from '../baseApi';
 import { IMeta } from '@/types';
+import { baseApi } from '../baseApi';
 
 const ACCOUNT_HEAD_URL = '/account-head';
 
 export const accountHeadApi = baseApi.injectEndpoints({
-  endpoints: (build) => ({
+  endpoints: (build: any) => ({
     // create
     createAccountHead: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${ACCOUNT_HEAD_URL}/create`,
         method: 'POST',
         data: data,
@@ -43,7 +43,7 @@ export const accountHeadApi = baseApi.injectEndpoints({
 
     // update
     updateAccountHead: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${ACCOUNT_HEAD_URL}/${data?.id}`,
         method: 'PATCH',
         data: data?.data,

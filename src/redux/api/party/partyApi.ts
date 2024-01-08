@@ -1,14 +1,14 @@
 import { tagTypes } from '@/redux/teg-types';
-import { baseApi } from '../baseApi';
 import { IMeta } from '@/types';
+import { baseApi } from '../baseApi';
 
 const PARTY_URL = '/party';
 
 export const partyApi = baseApi.injectEndpoints({
-  endpoints: (build) => ({
+  endpoints: (build: any) => ({
     // create
     createParty: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${PARTY_URL}/create`,
         method: 'POST',
         data: data,
@@ -43,7 +43,7 @@ export const partyApi = baseApi.injectEndpoints({
 
     // update
     updateParty: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${PARTY_URL}/${data?.id}`,
         method: 'PATCH',
         data: data?.data,

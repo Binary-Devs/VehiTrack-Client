@@ -19,16 +19,20 @@ const BalanceSheet = () => {
   // calculation
 
   // fixed asset
-  const fixedAsset = allBalanceData?.find((el) => el.label === 'Fixed Asset');
+  const fixedAsset = allBalanceData?.find(
+    (el: any) => el.label === 'Fixed Asset'
+  );
   const fixedAssetAmount = totalSum(fixedAsset?.vehicles || [], 'vehicleValue');
 
   // trip income
-  const tripIncome = allBalanceData?.find((el) => el.label === 'Trip Income');
+  const tripIncome = allBalanceData?.find(
+    (el: any) => el.label === 'Trip Income'
+  );
   const tripIncomeAmount = totalSum(tripIncome?.trips || [], 'amount');
 
   // accidental income expense
   const accidental = allBalanceData?.find(
-    (el) => el.label === 'Accidental Income'
+    (el: any) => el.label === 'Accidental Income'
   );
   const accidentalIncomeAmount = totalSum(
     accidental?.accidentHistories?.filter(
@@ -53,12 +57,14 @@ const BalanceSheet = () => {
   const totalIncome = tripIncomeAmount + accidentalIncomeAmount;
 
   // trip expense
-  const tripExpense = allBalanceData?.find((el) => el.label === 'Trip Expense');
+  const tripExpense = allBalanceData?.find(
+    (el: any) => el.label === 'Trip Expense'
+  );
   const tripExpenseAmount = totalSum(tripExpense?.expenses || [], 'amount');
 
   // maintenance expense
   const maintenanceExpense = allBalanceData?.find(
-    (el) => el.label === 'Maintenance Expense'
+    (el: any) => el.label === 'Maintenance Expense'
   );
   const maintenanceExpenseAmount = totalSum(
     maintenanceExpense?.maintenances || [],
@@ -67,7 +73,7 @@ const BalanceSheet = () => {
 
   // equipment expense
   const equipmentExpense = allBalanceData?.find(
-    (el) => el.label === 'Equipment Expense'
+    (el: any) => el.label === 'Equipment Expense'
   );
   const equipmentExpenseAmount = totalSum(
     equipmentExpense?.equipmentUses || [],
@@ -76,7 +82,7 @@ const BalanceSheet = () => {
 
   // miscellaneous expense
   const miscellaneousExpense = allBalanceData?.find(
-    (el) => el.label === 'Miscellaneous Expense'
+    (el: any) => el.label === 'Miscellaneous Expense'
   );
   const miscellaneousExpenseAmount = totalSum(
     miscellaneousExpense?.expenses || [],
@@ -85,7 +91,7 @@ const BalanceSheet = () => {
 
   // paper expense
   const paperExpense = allBalanceData?.find(
-    (el) => el.label === 'Paper Expense'
+    (el: any) => el.label === 'Paper Expense'
   );
   const paperExpenseAmount = totalSum(
     paperExpense?.paperWorks || [],
