@@ -1,26 +1,26 @@
 "use client";
-import AddRoutePermit from "@/components/CreateUpdateFrom/AddRoutePermit";
+import AddRefueling from "@/components/CreateUpdateFrom/AddRefueling";
 import Loader from "@/components/Utlis/Loader";
 import ActionBar from "@/components/ui/ActionBar";
 import DeleteModal from "@/components/ui/DeleteModal";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import {
-  useDeletePaperWorkMutation,
-  useGetAllPaperWorksQuery,
-} from "@/redux/api/paperWork/paperWorkApi";
+  useDeleteFuelMutation,
+  useGetAllFuelQuery,
+} from "@/redux/api/fuel/fuelApi";
 import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
   EditOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { Button, Grid, Input, message } from "antd";
+import { Button, Input, message } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 
-const RoutePermitPage = () => {
+const RefuelingPage = () => {
   const query: Record<string, any> = {};
   const [showModel, setShowModel] = useState(false);
 
@@ -42,19 +42,15 @@ const RoutePermitPage = () => {
     delay: 600,
   });
 
-  const { useBreakpoint } = Grid;
-  const screens = useBreakpoint();
-
   if (!!debouncedTerm) {
     query["searchTerm"] = debouncedTerm;
   }
-
-  const [deletePaperWork] = useDeletePaperWorkMutation();
+  const [deleteFuel] = useDeleteFuelMutation();
   //delete
   const deleteHandler = async (id: string) => {
     message.loading("Deleting.....");
     try {
-      const res = await deletePaperWork(id);
+      const res = await deleteFuel(id);
       if (!!res) {
         message.success("delete successfully");
         setOpen(false);
@@ -67,43 +63,48 @@ const RoutePermitPage = () => {
     }
   };
 
-  const { data, isLoading } = useGetAllPaperWorksQuery({ ...query });
+  const { data, isLoading } = useGetAllFuelQuery({ ...query });
   if (isLoading) {
     return <Loader className="h-[50vh] flex items-end justify-center" />;
   }
-  const paperworkRecords = data?.paperWorks;
-  // console.log(paperworkRecords);
+  const fuels = data?.fuels;
+  // console.log(fuels);
   const meta = data?.meta;
 
   const columns = [
     {
-      title: "Vehicle",
+      title: "vehicle",
       dataIndex: "vehicle",
       render: (vehicle: any) => <span>{vehicle && vehicle.regNo}</span>,
     },
     {
-      title: "effectiveDate",
-      dataIndex: "effectiveDate",
-      render: (data: string) => dayjs(data).format("DD/MM/YYYY"),
-      sorter: true,
+      title: "driver",
+      dataIndex: "driver",
+      render: (driver: any) => <span>{driver && driver.fullName}</span>,
     },
     {
-      title: "expiryDate",
-      dataIndex: "expiryDate",
-      render: (data: string) => dayjs(data).format("DD/MM/YYYY"),
-      sorter: true,
+      title: "fuel Station",
+      dataIndex: "fuelStation",
+      render: (fuelStation: any) => (
+        <span>{fuelStation && fuelStation.label}</span>
+      ),
     },
     {
-      title: "daysToRemind",
-      dataIndex: "daysToRemind",
+      title: "fuelType",
+      dataIndex: "fuelType",
+      render: (fuelType: any) => <span>{fuelType && fuelType.label}</span>,
     },
     {
-      title: "paperType",
-      dataIndex: "paperType",
+      title: "odometer",
+      dataIndex: "odometer",
     },
     {
-      title: "fee",
-      dataIndex: "fee",
+      title: "quantity",
+      dataIndex: "quantity",
+    },
+    {
+      title: "amount",
+      dataIndex: "amount",
     },
     {
       title: "remarks",
@@ -115,7 +116,6 @@ const RoutePermitPage = () => {
       render: function (data: any) {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
       },
-      responsive: ["xxl"],
       sorter: true,
     },
     {
@@ -123,18 +123,38 @@ const RoutePermitPage = () => {
       render: function (data: any) {
         return (
           <div className="flex">
+            {/* <Link
+              href={`/super_admin/manage-fuel/refueling/details/${data?.id}`}
+            >
+              <Button onClick={() => console.log(data)} type="primary">
+                <EyeOutlined />
+              </Button>
+            </Link> */}
+            {/* <Link href={`/super_admin/manage-fuel/refueling/edit/${data?.id}`}>
+              <Button
+                style={{
+                  margin: "0px 5px",
+                }}
+                onClick={() => console.log(data)}
+                type="primary"
+              >
+                <EditOutlined />
+              </Button>
+            </Link> */}
             <div
               style={{
                 margin: "0px 5px",
               }}
-              onClick={() => {}}
+              onClick={() => {
+                // console.log(data?.id);
+              }}
             >
               <ModalComponent
                 showModel={showModel}
                 setShowModel={setShowModel}
                 icon={<EditOutlined />}
               >
-                <AddRoutePermit id={data?.id} />
+                <AddRefueling id={data?.id} />
               </ModalComponent>
             </div>
             <div>
@@ -176,7 +196,7 @@ const RoutePermitPage = () => {
   };
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
-      <ActionBar inline={screens.xs ? false : true} title="Route permit List">
+      <ActionBar inline title="Refueling List">
         <div className="flex items-center justify-between flex-grow gap-2">
           <Input
             // size="large"
@@ -201,16 +221,18 @@ const RoutePermitPage = () => {
           <ModalComponent
             showModel={showModel}
             setShowModel={setShowModel}
-            buttonText="Add Route permit"
+            buttonText="Add Refueling"
             icon={<IoMdAdd />}
           >
-            <AddRoutePermit />
+            <AddRefueling />
           </ModalComponent>
         </div>
       </ActionBar>
+
       <UMTable
         columns={columns}
-        dataSource={paperworkRecords}
+        loading={false}
+        dataSource={fuels}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -219,7 +241,7 @@ const RoutePermitPage = () => {
         showPagination={true}
       />
       <DeleteModal
-        title="Delete Route Permit"
+        title="Delete Refueling"
         isOpen={open}
         closeModal={() => setOpen(false)}
         handleOk={() => deleteHandler(id)}
@@ -230,4 +252,4 @@ const RoutePermitPage = () => {
   );
 };
 
-export default RoutePermitPage;
+export default RefuelingPage;
