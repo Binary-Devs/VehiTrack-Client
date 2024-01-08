@@ -24,6 +24,9 @@ const DashboardPage = () => {
   const filteredTripsComplete: any = trips?.filter(
     (trip: any) => trip.status === "Completed"
   );
+  const accidentHistories = userData?.driver?.accidentHistories;
+  const maintenances = userData?.driver?.maintenances;
+  const vehicles = userData?.driver?.vehicles;
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -38,17 +41,17 @@ const DashboardPage = () => {
     },
     {
       title: "Total Accident Histories",
-      today: trips ? trips.length : 0,
+      today: accidentHistories ? accidentHistories.length : 0,
       icon: <CarOutlined />,
     },
     {
       title: "Total maintenances",
-      today: trips ? trips.length : 0,
+      today: maintenances ? maintenances.length : 0,
       icon: <CarOutlined />,
     },
     {
       title: "Total vehicles Drive",
-      today: trips ? trips.length : 0,
+      today: vehicles ? vehicles.length : 0,
       icon: <CarOutlined />,
     },
     // Add more trip-related counts as needed
@@ -58,6 +61,15 @@ const DashboardPage = () => {
     //   icon: ...,
     // },
   ];
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeInOut" },
+    },
+  };
 
   return (
     <motion.div
@@ -77,15 +89,29 @@ const DashboardPage = () => {
           <motion.div
             key={index}
             className="flex items-center justify-between bg-white border border-blue-200 shadow-md shadow-blue-200 rounded-lg p-5"
+            variants={itemVariants}
           >
             <div>
-              <span className="w-70% text-[#8c8c8c] font-semibold text-sm">
+              <span className="text-[#8c8c8c] font-semibold text-sm">
                 {c.today}
               </span>
-              <p className="text-3xl font-bold">{c.title}</p>
+              <p className="text-3xl font-bold ">
+                {c.title}{" "}
+                {/* 
+                 <small
+                   className={`text-sm font-semibold ${
+                     c.bnb === "redtext" ? "text-red-500" : "text-[#52c41a]"
+                   }`}
+                 >
+                   {c.percent}
+                 </small> 
+                 */}
+              </p>
             </div>
-            <div className="flex items-center justify-center w-12 h-12 bg-[#1890ff] rounded-[0.5rem]">
-              {c.icon}
+            <div>
+              <div className="flex items-center justify-center w-12 h-12 bg-[#1890ff] rounded-[0.5rem]">
+                {c.icon}
+              </div>
             </div>
           </motion.div>
         ))}

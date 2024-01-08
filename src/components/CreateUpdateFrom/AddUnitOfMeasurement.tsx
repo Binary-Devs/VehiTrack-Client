@@ -21,7 +21,12 @@ const AddUnitOfMeasurement = ({ id }: { id?: string }) => {
     message.loading(id ? "Updating...." : "Adding....");
     try {
       const res = id
-        ? await updateUom({ id, data }).unwrap()
+        ? await updateUom({
+            id,
+            data: {
+              label: data.label,
+            },
+          }).unwrap()
         : await createUom({ ...data }).unwrap();
       if (res.id) {
         message.success(`Unit ${id ? "updated" : "added"} successfully!`);
