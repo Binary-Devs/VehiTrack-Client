@@ -36,8 +36,8 @@ const LoginPage = () => {
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
-      const res = await login({ ...data }).unwrap();
-      if (res.accessToken) {
+      const res:any = await login({ ...data }).unwrap();
+      if (res?.accessToken) {
         router.push("/dashboard");
         message.success("User logged in successfully");
         storeUserInfo({ accessToken: res?.accessToken });

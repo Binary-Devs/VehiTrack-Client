@@ -1,6 +1,12 @@
+
+"use client";
+import { Divider } from "antd";
+import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+
 import { Input } from "antd";
 import Image from "next/image";
 import logo from "../../../../public/logo.png";
+
 
 const Footer = () => {
   const { Search } = Input;
