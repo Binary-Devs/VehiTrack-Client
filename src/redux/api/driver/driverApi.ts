@@ -5,7 +5,7 @@ import { baseApi } from '../baseApi';
 const DRIVER_URL = '/driver';
 
 export const driverApi = baseApi.injectEndpoints({
-  endpoints: (build: any) => ({
+  endpoints: (build) => ({
     // get all
     getAllDriver: build.query({
       query: (arg: Record<string, any>) => ({

@@ -5,7 +5,7 @@ import { baseApi } from '../baseApi';
 const ACCOUNT_TYPE_URL = '/account-type';
 
 export const accountTypeApi = baseApi.injectEndpoints({
-  endpoints: (build: any) => ({
+  endpoints: (build) => ({
     // create
     createAccountType: build.mutation({
       query: (data: any) => ({
