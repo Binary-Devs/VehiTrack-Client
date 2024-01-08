@@ -1,6 +1,7 @@
-import { motion, useAnimation, useInView } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 import one from "../../../assets/1h.png";
 import two from "../../../assets/2h.png";
 import trhee from "../../../assets/3h.png";
@@ -49,8 +50,7 @@ export default function TacticalSection() {
   ];
 
   const controls = useAnimation();
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, {});
+  const [ref, inView] = useInView();
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -66,8 +66,10 @@ export default function TacticalSection() {
   };
 
   useEffect(() => {
-    if (!inView) {
-      controls.start("hidden"); // Reset animation when not in view
+    if (inView) {
+      controls.start("visible");
+    } else {
+      controls.start("hidden");
     }
   }, [inView, controls]);
 
@@ -78,7 +80,7 @@ export default function TacticalSection() {
         variants={containerVariants}
         ref={ref}
         initial="hidden"
-        animate={"visible"}
+        animate={controls}
       >
         <h1 className="text-2xl md:text-4xl font-semibold mb-4">
           Welcome to VehiTrack

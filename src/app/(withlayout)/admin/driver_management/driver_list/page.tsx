@@ -138,7 +138,10 @@ const AllDriverList = () => {
   ];
 
   const { data, isLoading } = useGetAllDriverQuery({ ...query });
+
+  //@ts-ignore
   const drivers = data?.drivers;
+  //@ts-ignore
   const meta = data?.meta;
 
   // console.log(drivers);
