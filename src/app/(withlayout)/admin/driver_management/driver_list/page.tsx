@@ -6,8 +6,9 @@ import {
   DeleteOutlined,
   EditOutlined,
   ReloadOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
-import { Button, Input } from "antd";
+import { Avatar, Button, Input } from "antd";
 import { useState } from "react";
 
 import dayjs from "dayjs";
@@ -17,7 +18,6 @@ import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
 import { useGetAllDriverQuery } from "@/redux/api/driver/driverApi";
-import Image from "next/image";
 import { IoMdAdd } from "react-icons/io";
 
 const AllDriverList = () => {
@@ -47,22 +47,9 @@ const AllDriverList = () => {
   const columns = [
     {
       title: "",
-      dataIndex: "profileImg",
+
       render: function (data: any) {
-        const image = `${
-          data ||
-          "https://res.cloudinary.com/dnzlgpcc3/image/upload/v1704419785/oiav6crzfltkswdrrrli.png"
-        } `;
-        return (
-          <Image
-            src={image}
-            width={100}
-            height={100}
-            alt=""
-            style={{ width: "50px", height: "50px" }}
-          />
-          // <Avatar size={48} icon={<UserOutlined />} />;
-        );
+        return <Avatar size={48} icon={<UserOutlined />} />;
       },
     },
     {
@@ -148,6 +135,8 @@ const AllDriverList = () => {
   const { data, isLoading } = useGetAllDriverQuery({ ...query });
   const drivers = data?.drivers;
   const meta = data?.meta;
+
+  console.log(drivers);
 
   const onPaginationChange = (page: number, pageSize: number) => {
     setPage(page);
