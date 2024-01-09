@@ -32,6 +32,10 @@ const AddRoutePermit = ({ id }: { id?: string }) => {
     };
   });
 
+  const newAccountHeadOptions = accountHeadOptions?.filter(
+    (item) => item.label === "Paper Expense"
+  );
+
   //Get
   const { data, isLoading: getLoad } = useGetSinglePaperWorkQuery(id ? id : "");
 
@@ -169,7 +173,7 @@ const AddRoutePermit = ({ id }: { id?: string }) => {
                 <FormSelectField
                   size="large"
                   name="accountHeadId"
-                  options={accountHeadOptions as any}
+                  options={newAccountHeadOptions as any}
                   label="Account Head"
                   placeholder="Select"
                   required={true}

@@ -1,12 +1,16 @@
 "use client";
 import AddUpdateParty from "@/components/CreateUpdateFrom/AddUpdateParty";
 import ActionBar from "@/components/ui/ActionBar";
+import DeleteModal from "@/components/ui/DeleteModal";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
-import { useGetAllPartiesQuery } from "@/redux/api/party/partyApi";
+import {
+  useGetAllPartiesQuery,
+  useInactivePartyMutation,
+} from "@/redux/api/party/partyApi";
 import { useDebounced } from "@/redux/hooks";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Input, Tag } from "antd";
+import { Button, Input, message } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
@@ -20,6 +24,8 @@ const PartyListPage = () => {
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [open, setOpen] = useState(false);
+  const [id, setId] = useState<string>("");
 
   // query["limit"] = size;
   // query["page"] = page;
@@ -38,7 +44,7 @@ const PartyListPage = () => {
 
   const { data, isLoading } = useGetAllPartiesQuery({ ...query });
 
-  const parties = data?.parties;
+  const parties = data?.parties.filter((item) => item.isActive);
   const meta = data?.meta;
 
   const columns = [
@@ -54,21 +60,21 @@ const PartyListPage = () => {
       title: "Address",
       dataIndex: "address",
     },
-    {
-      title: "Active",
-      dataIndex: "isActive",
-      render: (isActive: boolean) =>
-        isActive ? (
-          <Tag color="green">Active</Tag>
-        ) : (
-          <Tag color="red">Not Active</Tag>
-        ),
-    },
+    // {
+    //   title: "Active",
+    //   dataIndex: "isActive",
+    //   render: (isActive: boolean) =>
+    //     isActive ? (
+    //       <Tag color="green">Active</Tag>
+    //     ) : (
+    //       <Tag color="red">Not Active</Tag>
+    //     ),
+    // },
     {
       title: "CreatedAt",
       dataIndex: "createdAt",
       render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+        return data && dayjs(data).format("MMM D, YYYY");
       },
       sorter: true,
     },
@@ -85,13 +91,16 @@ const PartyListPage = () => {
             >
               <AddUpdateParty id={data} />
             </ModalComponent>
-            <ModalComponent
-              showModel={showModel}
-              setShowModel={setShowModel}
-              icon={<DeleteOutlined />}
+            <Button
+              type="primary"
+              onClick={() => {
+                setOpen(true);
+                setId(data);
+              }}
+              danger
             >
-              <AddUpdateParty id={data} />
-            </ModalComponent>
+              <DeleteOutlined />
+            </Button>
           </div>
         );
       },
@@ -115,12 +124,29 @@ const PartyListPage = () => {
     setSearchTerm("");
   };
 
+  const [inactiveParty] = useInactivePartyMutation();
+
+  const deleteHandler = async (id: string) => {
+    message.loading("Deleting.....");
+    try {
+      const res = await inactiveParty(id);
+      if (!!res) {
+        message.success("delete successfully");
+        setOpen(false);
+      } else {
+        message.error("delete failed");
+      }
+    } catch (err: any) {
+      message.error(err.message);
+    }
+  };
+
   return (
     <div>
       <ActionBar title="Party List">
         <Input
           type="text"
-          size="large"
+          size="middle"
           placeholder="Search..."
           onChange={(e) => {
             setSearchTerm(e.target.value);
@@ -151,6 +177,15 @@ const PartyListPage = () => {
         showPagination={true}
         loading={isLoading}
       />
+
+      <DeleteModal
+        title="Delete Party"
+        isOpen={open}
+        closeModal={() => setOpen(false)}
+        handleOk={() => deleteHandler(id)}
+      >
+        <p className="my-5">Do you want to delete this?</p>
+      </DeleteModal>
     </div>
   );
 };

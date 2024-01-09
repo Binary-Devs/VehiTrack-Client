@@ -7,10 +7,12 @@ import { Avatar, Button, Dropdown, MenuProps, Space } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import logo from "../../../../../public/logo.png";
 
 // Define NavbarPublic component
 const NavbarPublic = () => {
+  const [roleData, setRoleData] = useState(false);
   const router = useRouter();
   const { role } = getUserInfo() as any;
 
@@ -19,6 +21,10 @@ const NavbarPublic = () => {
     removeUserInfo(authKey);
     router.push("/login");
   };
+
+  useEffect(() => {
+    setRoleData(!!role);
+  }, [role]);
 
   // Dropdown menu items
   const items: MenuProps["items"] = [
@@ -57,7 +63,7 @@ const NavbarPublic = () => {
         </div>
 
         {/* Navigation and User Info */}
-        {role ? (
+        {roleData ? (
           <div className="flex justify-between items-center mt-4 md:mt-0">
             <Link href={"/dashboard"}>
               <Button type="text" size="large" className="mr-2">
