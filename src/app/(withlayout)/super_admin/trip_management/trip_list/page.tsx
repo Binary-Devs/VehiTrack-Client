@@ -135,7 +135,7 @@ const TripListPage = () => {
       <ActionBar title="Trip List">
         <Input
           type="text"
-          size="large"
+          size="middle"
           placeholder="Search..."
           style={{
             width: "100%",
