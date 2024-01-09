@@ -74,6 +74,7 @@ const AddUpdateTrip = ({ id }: { id?: string }) => {
 
   const onSubmit = async (values: any) => {
     message.loading(id ? "Updating...." : "Adding....");
+
     try {
       const res = id
         ? await updateTrip({
@@ -113,6 +114,7 @@ const AddUpdateTrip = ({ id }: { id?: string }) => {
                   options={vehicleOptions as any}
                   label="Vehicle"
                   placeholder="Select"
+                  required
                 />
               </div>
             </Col>
@@ -124,6 +126,7 @@ const AddUpdateTrip = ({ id }: { id?: string }) => {
                   options={driverOptions as any}
                   label="Driver"
                   placeholder="Select"
+                  required
                 />
               </div>
             </Col>
@@ -146,26 +149,32 @@ const AddUpdateTrip = ({ id }: { id?: string }) => {
                   options={partiOptions as any}
                   label="Party"
                   placeholder="Select"
+                  required
                 />
               </div>
             </Col>
             <Col className="my-auto" xs={24} md={12} lg={8}>
-              <FormDatePicker name="startDate" label="startDate" />
+              <FormDatePicker name="startDate" label="startDate" required />
             </Col>
             <Col className="my-auto" xs={24} md={12} lg={8}>
-              <FormDatePicker name="endDate" label="endDate" />
+              <FormDatePicker name="endDate" label="endDate" required />
             </Col>
             <Col xs={24} md={12} lg={8}>
-              <FormInput name="from" label="from" />
+              <FormInput name="from" label="from" required />
             </Col>
             <Col xs={24} md={12} lg={8}>
-              <FormInput name="to" label="to" />
+              <FormInput name="to" label="to" required />
             </Col>
             <Col xs={24} md={12} lg={8}>
-              <FormInput name="distance" label="distance" type="number" />
+              <FormInput
+                name="distance"
+                label="distance"
+                type="number"
+                required
+              />
             </Col>
             <Col xs={24} md={12} lg={8}>
-              <FormInput name="amount" label="Amount" type="number" />
+              <FormInput name="amount" label="Amount" type="number" required />
             </Col>
             <Col xs={24} md={12} lg={8}>
               <FormInput name="remarks" label="Remarks" />
