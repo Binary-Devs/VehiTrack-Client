@@ -1,12 +1,16 @@
 "use client";
 import AddUpdateTrip from "@/components/CreateUpdateFrom/AddUpdateTrip";
 import ActionBar from "@/components/ui/ActionBar";
+import DeleteModal from "@/components/ui/DeleteModal";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
-import { useGetAllTripQuery } from "@/redux/api/trip/tripApi";
+import {
+  useDeleteTripMutation,
+  useGetAllTripQuery,
+} from "@/redux/api/trip/tripApi";
 import { useDebounced } from "@/redux/hooks";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Button, Input } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
+import { Button, Input, message } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
@@ -20,6 +24,8 @@ const TripListPage = () => {
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [open, setOpen] = useState(false);
+  const [id, setId] = useState<string>("");
 
   // query["limit"] = size;
   // query["page"] = page;
@@ -52,14 +58,14 @@ const TripListPage = () => {
       title: "Start Date",
       dataIndex: "startDate",
       render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+        return data && dayjs(data).format("MMM D, YYYY");
       },
     },
     {
       title: "End Date",
       dataIndex: "endDate",
       render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+        return data && dayjs(data).format("MMM D, YYYY");
       },
     },
     {
@@ -82,7 +88,7 @@ const TripListPage = () => {
       title: "CreatedAt",
       dataIndex: "createdAt",
       render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+        return data && dayjs(data).format("MMM D, YYYY");
       },
       sorter: true,
     },
@@ -92,18 +98,19 @@ const TripListPage = () => {
       render: function (data: any) {
         return (
           <div className="flex items-center gap-1">
-            <ModalComponent
+            {/* <ModalComponent
               showModel={showModel}
               setShowModel={setShowModel}
               icon={<EditOutlined />}
             >
               <AddUpdateTrip id={data} />
-            </ModalComponent>
+            </ModalComponent> */}
             <Button
-              onClick={() => {
-                // console.log(data?.id);
-              }}
               type="primary"
+              onClick={() => {
+                setOpen(true);
+                setId(data);
+              }}
               danger
             >
               <DeleteOutlined />
@@ -130,12 +137,30 @@ const TripListPage = () => {
     setSortOrder("");
     setSearchTerm("");
   };
+
+  const [deleteTrip] = useDeleteTripMutation();
+
+  const deleteHandler = async (id: string) => {
+    message.loading("Deleting.....");
+    try {
+      const res = await deleteTrip(id);
+      if (!!res) {
+        message.success("delete successfully");
+        setOpen(false);
+      } else {
+        message.error("delete failed");
+      }
+    } catch (err: any) {
+      message.error(err.message);
+    }
+  };
+
   return (
     <div>
       <ActionBar title="Trip List">
         <Input
           type="text"
-          size="large"
+          size="middle"
           placeholder="Search..."
           style={{
             width: "100%",
@@ -166,6 +191,15 @@ const TripListPage = () => {
         showPagination={true}
         loading={isLoading}
       />
+
+      <DeleteModal
+        title="Delete Party"
+        isOpen={open}
+        closeModal={() => setOpen(false)}
+        handleOk={() => deleteHandler(id)}
+      >
+        <p className="my-5">Do you want to delete this Trip?</p>
+      </DeleteModal>
     </div>
   );
 };
