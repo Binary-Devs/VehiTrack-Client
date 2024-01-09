@@ -4,7 +4,7 @@ import { baseApi } from "../baseApi";
 const AUTH_URL = "/auth";
 
 export const authApi = baseApi.injectEndpoints({
-  endpoints: (build: any) => ({
+  endpoints: (build) => ({
     // login
     login: build.mutation({
       query: (data: any) => ({

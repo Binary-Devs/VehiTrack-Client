@@ -5,7 +5,7 @@ import { baseApi } from '../baseApi';
 const UOM_URL = '/uom';
 
 export const uomApi = baseApi.injectEndpoints({
-  endpoints: (build: any) => ({
+  endpoints: (build) => ({
     // create
     createUom: build.mutation({
       query: (data: any) => ({

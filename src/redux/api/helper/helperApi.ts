@@ -5,7 +5,7 @@ import { baseApi } from '../baseApi';
 const HELPER_URL = '/helper';
 
 export const helperApi = baseApi.injectEndpoints({
-  endpoints: (build: any) => ({
+  endpoints: (build) => ({
     // get all
     getAllHelper: build.query({
       query: (arg: Record<string, any>) => ({

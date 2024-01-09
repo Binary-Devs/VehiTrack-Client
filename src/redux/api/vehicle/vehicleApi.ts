@@ -5,7 +5,7 @@ import { baseApi } from '../baseApi';
 const VEHICLE_URL = '/vehicle';
 
 export const vehicleApi = baseApi.injectEndpoints({
-  endpoints: (build: any) => ({
+  endpoints: (build) => ({
     // create
     createVehicle: build.mutation({
       query: (data: any) => ({

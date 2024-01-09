@@ -1,12 +1,12 @@
-import AdminDashboard from '@/components/Dashboard/AdminDashboard';
-import { Metadata } from 'next';
+import Dashboard from "@/components/Dashboard/Dashboard";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'VehiTrack | Dashboard',
+  title: "VehiTrack | Dashboard",
 };
 
 const DashboardPage = () => {
-  return <AdminDashboard />;
+  return <Dashboard />;
 };
 
 export default DashboardPage;

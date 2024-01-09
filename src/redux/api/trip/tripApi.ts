@@ -6,7 +6,7 @@ import { EXPENSE_TYPE_URL } from "../expenseHead/expenseHeadApi";
 const TRIP_URL = "/trip";
 
 export const tripApi = baseApi.injectEndpoints({
-  endpoints: (build: any) => ({
+  endpoints: (build) => ({
     // create
     createTrip: build.mutation({
       query: (data: any) => ({

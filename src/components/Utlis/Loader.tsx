@@ -24,8 +24,18 @@ const Loader = ({
     //     size={50}
     //   /> */}
     // </div>
-    <div className="h-[50vh] flex items-end justify-center">
-      <Image width={100} height={100} src={"/loading.gif"} alt="loading" />
+    <div
+      className={`${
+        className ? className : "flex justify-center items-center"
+      }`}
+    >
+      <Image
+        priority
+        width={60}
+        height={60}
+        src={"/loading.gif"}
+        alt="loading"
+      />
     </div>
   );
 };

@@ -78,7 +78,6 @@ const BrandListPage = () => {
     },
     {
       title: "Action",
-      dataIndex: "id",
       render: function (data: any) {
         return (
           <div className="flex">
@@ -94,11 +93,12 @@ const BrandListPage = () => {
               onClick={() => {}}
             >
               <ModalComponent
+                width={500}
                 showModel={showModel}
                 setShowModel={setShowModel}
                 icon={<EditOutlined />}
               >
-                <AddUpdateBrand id={data} />
+                <AddUpdateBrand updateData={data} />
               </ModalComponent>
             </div>
             {/* <Button
@@ -168,6 +168,7 @@ const BrandListPage = () => {
             placeholder="Search"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+
             // style={{
             //   minWidth: "150px",
             //   maxWidth: "300px",
@@ -184,6 +185,7 @@ const BrandListPage = () => {
             </Button>
           )}
           <ModalComponent
+            width={500}
             showModel={showModel}
             setShowModel={setShowModel}
             buttonText="Add Brand"

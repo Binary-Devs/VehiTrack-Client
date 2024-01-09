@@ -4,7 +4,7 @@ import { baseApi } from '../baseApi';
 const PROFILE_URL = '/profile';
 
 export const profileApi = baseApi.injectEndpoints({
-  endpoints: (build: any) => ({
+  endpoints: (build) => ({
     getProfile: build.query({
       query: () => ({
         url: `${PROFILE_URL}`,
