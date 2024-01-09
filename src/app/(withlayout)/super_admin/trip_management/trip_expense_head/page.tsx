@@ -64,6 +64,7 @@ const TripExpenseHeadPage = () => {
     {
       title: "Action",
       dataIndex: "id",
+      width: "5%",
       render: function (data: any) {
         return (
           <div className="">
