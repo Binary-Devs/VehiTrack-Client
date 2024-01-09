@@ -58,7 +58,7 @@ const AddFitness = ({ id }: { id?: string }) => {
               vehicleId: data.vehicleId,
               effectiveDate: data.effectiveDate,
               expiryDate: data.expiryDate ? data.expiryDate : undefined,
-              odometer: data.odometer ? data.odometer : undefined,
+              odoMeter: data.odoMeter ? data.odoMeter : undefined,
               daysToRemind: data.daysToRemind ? data.daysToRemind : undefined,
               paperType: data.paperType,
               fee: data.fee,
