@@ -109,7 +109,7 @@ const TripExpenseHeadPage = () => {
       <ActionBar title="Trip Expense Head List">
         <Input
           type="text"
-          size="large"
+          size="middle"
           placeholder="Search..."
           onChange={(e) => {
             setSearchTerm(e.target.value);
