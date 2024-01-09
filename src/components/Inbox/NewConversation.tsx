@@ -74,7 +74,7 @@ const NewConversation = ({ setShowModel }: { setShowModel: any }) => {
                     label: `${u.userName} (${u.role})`,
                     value: u.id,
                   }))}
-                  label="User Name"
+                  label="Unique UserId"
                   // placeholder="Select"
                   required={true}
                 />

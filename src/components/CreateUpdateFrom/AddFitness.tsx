@@ -32,6 +32,10 @@ const AddFitness = ({ id }: { id?: string }) => {
     };
   });
 
+  const newAccountHeadOptions = accountHeadOptions?.filter(
+    (item) => item.label === "Paper Expense"
+  );
+
   //Get
   const { data, isLoading: getLoad } = useGetSinglePaperWorkQuery(id ? id : "");
 
@@ -53,14 +57,14 @@ const AddFitness = ({ id }: { id?: string }) => {
               certificateNo: data.certificateNo,
               vehicleId: data.vehicleId,
               effectiveDate: data.effectiveDate,
-              expiryDate: data.expiryDate,
-              odometer: data.odometer,
-              daysToRemind: data.daysToRemind,
+              expiryDate: data.expiryDate ? data.expiryDate : undefined,
+              odometer: data.odometer ? data.odometer : undefined,
+              daysToRemind: data.daysToRemind ? data.daysToRemind : undefined,
               paperType: data.paperType,
               fee: data.fee,
-              otherAmount: data.otherAmount,
+              otherAmount: data.otherAmount ? data.otherAmount : undefined,
               totalAmount: data.totalAmount,
-              remarks: data.remarks,
+              remarks: data.remarks ? data.remarks : undefined,
               accountHeadId: data.accountHeadId,
             },
           }).unwrap()
@@ -94,7 +98,7 @@ const AddFitness = ({ id }: { id?: string }) => {
           }}
         >
           <p className="text-base lg:text-lg font-normal">
-            Fitness Information
+            Registration Information
           </p>
           <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
             <Col
@@ -109,6 +113,7 @@ const AddFitness = ({ id }: { id?: string }) => {
                 label="Date"
                 size="large"
                 disablePrevious={false}
+                required
               />
             </Col>
             <Col xs={24} md={12} lg={8}>
@@ -147,6 +152,7 @@ const AddFitness = ({ id }: { id?: string }) => {
                 label="Effective Date"
                 size="large"
                 disablePrevious={false}
+                required
               />
             </Col>
             <Col
@@ -168,7 +174,7 @@ const AddFitness = ({ id }: { id?: string }) => {
                 <FormSelectField
                   size="large"
                   name="accountHeadId"
-                  options={accountHeadOptions as any}
+                  options={newAccountHeadOptions as any}
                   label="Account Head"
                   placeholder="Select"
                   required={true}
@@ -189,7 +195,7 @@ const AddFitness = ({ id }: { id?: string }) => {
                 label="Odometer"
                 type="number"
                 size="large"
-                required={true}
+                required
               />
             </Col>
             <Col xs={24} md={12} lg={8}>
@@ -207,7 +213,6 @@ const AddFitness = ({ id }: { id?: string }) => {
                 label="daysToRemind"
                 type="number"
                 size="large"
-                required={true}
               />
             </Col>
             <Col xs={24} md={12} lg={8}>
@@ -216,7 +221,6 @@ const AddFitness = ({ id }: { id?: string }) => {
                 label="Other Amount"
                 type="number"
                 size="large"
-                required={true}
               />
             </Col>
             <Col xs={24} md={12} lg={8}>
@@ -234,7 +238,6 @@ const AddFitness = ({ id }: { id?: string }) => {
                 label="Remarks"
                 type="text"
                 size="large"
-                required={true}
               />
             </Col>
           </Row>
