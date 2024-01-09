@@ -54,6 +54,8 @@ const AllManagerList = () => {
       title: "",
       dataIndex: "profileImg",
       render: function (data: any) {
+        console.log(data);
+
         const image =
           data ||
           "https://res.cloudinary.com/dnzlgpcc3/image/upload/v1704419785/oiav6crzfltkswdrrrli.png";
@@ -137,8 +139,7 @@ const AllManagerList = () => {
   ];
 
   const { data, isLoading } = useGetAllAdminQuery({ ...query });
-  const AllAdminData = data?.admins || [];
-  const meta = data?.meta;
+  const AllAdminData = data?.admins?.filter((item) => item.isActive) || [];
 
   const onPaginationChange = (page: number, pageSize: number) => {
     // console.log("Page:", page, "PageSize:", pageSize);
@@ -182,22 +183,15 @@ const AllManagerList = () => {
       <br />
       <ActionBar title="Manager List">
         <Input
-          size="large"
+          size="middle"
           placeholder="Search"
+          value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
             width: "200px",
           }}
         />
-        <div>
-          <ModalComponent
-            showModel={showModel}
-            setShowModel={setShowModel}
-            buttonText="Create Manager"
-            icon={<IoMdAdd />}
-          >
-            <CreateManager />
-          </ModalComponent>
+        <div className="flex gap-2">
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
@@ -207,6 +201,14 @@ const AllManagerList = () => {
               <ReloadOutlined />
             </Button>
           )}
+          <ModalComponent
+            showModel={showModel}
+            setShowModel={setShowModel}
+            buttonText="Create Manager"
+            icon={<IoMdAdd />}
+          >
+            <CreateManager />
+          </ModalComponent>
         </div>
       </ActionBar>
       <br />
@@ -216,7 +218,7 @@ const AllManagerList = () => {
         columns={columns}
         dataSource={AllAdminData}
         pageSize={size}
-        totalPages={meta?.total}
+        totalPages={AllAdminData.length}
         showSizeChanger={true}
         onPaginationChange={onPaginationChange}
         onTableChange={onTableChange}

@@ -21,6 +21,7 @@ const AddUpdateDriver = ({ updateData }: { updateData?: any }) => {
 
   const onSubmit = async (values: any) => {
     message.loading(updateData ? "Updating...." : "Adding....");
+
     try {
       const res = updateData
         ? await updateDriver({
