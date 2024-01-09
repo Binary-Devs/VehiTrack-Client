@@ -45,7 +45,7 @@ const AddUpdateVehicle = ({
               regNo: values.regNo,
               vehicleValue: values.vehicleValue,
               driverId: values.driverId,
-              helperId: values.helperId,
+              helperId: values.helperId ? values.helperId : undefined,
               isActive: values.isActive,
               imageUrl: image,
             },

@@ -30,7 +30,7 @@ const AddUpdateDriver = ({ updateData }: { updateData?: any }) => {
               mobile: values.mobile,
               licenseNo: values.licenseNo,
               bloodGroup: values.bloodGroup,
-              address: values.address,
+              address: values.address ? values.address : undefined,
               profileImg: image,
             },
           }).unwrap()
@@ -124,7 +124,7 @@ const AddUpdateDriver = ({ updateData }: { updateData?: any }) => {
                         type="text"
                         name="userName"
                         size="large"
-                        label="User Name"
+                        label="Unique UserId"
                         required={true}
                         placeholder="Please enter driver user name"
                       />
@@ -215,7 +215,7 @@ const AddUpdateDriver = ({ updateData }: { updateData?: any }) => {
               >
                 <FormSelectField
                   size="large"
-                  name= "bloodGroup"
+                  name="bloodGroup"
                   options={bloodGroupOptions}
                   label="Blood Group"
                   placeholder="Select driver blood group"
@@ -233,7 +233,7 @@ const AddUpdateDriver = ({ updateData }: { updateData?: any }) => {
                 }}
               >
                 <FormTextArea
-                  name= "address"
+                  name="address"
                   label="Address"
                   rows={3}
                   placeholder="Enter driver address"

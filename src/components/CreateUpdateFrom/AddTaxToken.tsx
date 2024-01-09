@@ -31,6 +31,11 @@ const AddTaxToken = ({ id }: { id?: string }) => {
       value: accountHead?.id,
     };
   });
+
+  const newAccountHeadOptions = accountHeadOptions?.filter(
+    (item) => item.label === "Paper Expense"
+  );
+
   //Get
   const { data, isLoading: getLoad } = useGetSinglePaperWorkQuery(id ? id : "");
 
@@ -168,7 +173,7 @@ const AddTaxToken = ({ id }: { id?: string }) => {
                 <FormSelectField
                   size="large"
                   name="accountHeadId"
-                  options={accountHeadOptions as any}
+                  options={newAccountHeadOptions as any}
                   label="Account Head"
                   placeholder="Select"
                   required={true}

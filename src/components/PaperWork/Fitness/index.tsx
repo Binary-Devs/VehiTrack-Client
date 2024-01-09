@@ -96,6 +96,7 @@ const Fitness = () => {
     {
       title: "daysToRemind",
       dataIndex: "daysToRemind",
+      render: (data: string) => (data ? data : "N/A"),
     },
     {
       title: "paperType",
@@ -108,12 +109,13 @@ const Fitness = () => {
     {
       title: "remarks",
       dataIndex: "remarks",
+      render: (data: string) => (data ? data : "N/A"),
     },
     {
       title: "CreatedAt",
       dataIndex: "createdAt",
       render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+        return data && dayjs(data).format("MMM D, YYYY");
       },
       responsive: ["xxl"],
       sorter: true,

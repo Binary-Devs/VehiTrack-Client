@@ -13,13 +13,16 @@ import { useState } from "react";
 import dayjs from "dayjs";
 
 import AddUpdateDriver from "@/components/CreateUpdateFrom/AddUpdateDriver";
+import DeleteModal from "@/components/ui/DeleteModal";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
-import { useGetAllDriverQuery, useInactiveDriverMutation } from "@/redux/api/driver/driverApi";
+import {
+  useGetAllDriverQuery,
+  useInactiveDriverMutation,
+} from "@/redux/api/driver/driverApi";
 import Image from "next/image";
 import { IoMdAdd } from "react-icons/io";
-import DeleteModal from "@/components/ui/DeleteModal";
 
 const AllDriverList = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
@@ -129,7 +132,7 @@ const AllDriverList = () => {
       title: "Joined at",
       dataIndex: "createdAt",
       render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+        return data && dayjs(data).format("MMM D, YYYY");
       },
       sorter: true,
     },
