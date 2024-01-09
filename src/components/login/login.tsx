@@ -36,7 +36,7 @@ const LoginPage = () => {
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
-      const res:any = await login({ ...data }).unwrap();
+      const res: any = await login({ ...data }).unwrap();
       if (res?.accessToken) {
         router.push("/dashboard");
         message.success("User logged in successfully");
@@ -74,11 +74,12 @@ const LoginPage = () => {
     >
       <Image
         src={"/login.webp"}
-        width={500}
-        height={500}
+        width={1280}
+        height={1280}
         alt="login gif"
         className="absolute inset-0 object-cover w-full h-full"
         unoptimized
+        quality={100}
         priority
       />
       <motion.div
@@ -93,7 +94,7 @@ const LoginPage = () => {
           transition={{ delay: 1 }}
           className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20 "
         >
-          <div className="flex flex-col items-center justify-center h-[80vh]">
+          <div className="flex flex-col items-center justify-center h-[calc(100vh_-_160px)]">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

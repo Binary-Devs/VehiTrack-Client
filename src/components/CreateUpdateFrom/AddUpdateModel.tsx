@@ -5,16 +5,17 @@ import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import {
   useCreateModelMutation,
-  useGetSingleModelQuery,
   useUpdateModelMutation,
 } from "@/redux/api/model/modelApi";
 import { Button, Col, Row, message } from "antd";
-import Loader from "../Utlis/Loader";
 
-const AddUpdateModel = ({ id, brands }: { id?: string; brands?: any }) => {
-  //Get
-  const { data, isLoading: getLoad } = useGetSingleModelQuery(id ? id : "");
-
+const AddUpdateModel = ({
+  updateData,
+  brands,
+}: {
+  updateData?: any;
+  brands?: any;
+}) => {
   //Update
   const [updateModel, { isLoading: updateLoad }] = useUpdateModelMutation();
 
@@ -23,16 +24,19 @@ const AddUpdateModel = ({ id, brands }: { id?: string; brands?: any }) => {
 
   const onSubmit = async (values: any) => {
     const data = {
+      brandId: values.brandId,
       label: values.label,
     };
 
-    message.loading(id ? "Updating...." : "Adding....");
+    message.loading(updateData ? "Updating...." : "Adding....");
     try {
-      const res = id
-        ? await updateModel({ id, data }).unwrap()
+      const res = updateData
+        ? await updateModel({ id: updateData.id, data }).unwrap()
         : await createModel({ ...values }).unwrap();
       if (res.id) {
-        message.success(`Model ${id ? "updated" : "added"} successfully!`);
+        message.success(
+          `Model ${updateData ? "updated" : "added"} successfully!`
+        );
       } else {
         message.error(res.message);
       }
@@ -41,17 +45,17 @@ const AddUpdateModel = ({ id, brands }: { id?: string; brands?: any }) => {
     }
   };
 
-  if (id && getLoad) {
-    return <Loader className="h-[40vh] flex items-center justify-center" />;
-  }
   return (
     <div>
       <h1 className="text-center my-1 font-bold text-2xl">
-        {id ? "Update Model" : "Add Model"}
+        {updateData ? "Update Model" : "Add Model"}
       </h1>
       {/*  */}
       <div>
-        <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
+        <Form
+          submitHandler={onSubmit}
+          defaultValues={updateData ? { ...updateData } : {}}
+        >
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -64,8 +68,8 @@ const AddUpdateModel = ({ id, brands }: { id?: string; brands?: any }) => {
               <Col
                 className="gutter-row"
                 xs={24}
-                md={12}
-                lg={12}
+                md={24}
+                lg={24}
                 style={{
                   marginBottom: "10px",
                 }}
@@ -85,8 +89,8 @@ const AddUpdateModel = ({ id, brands }: { id?: string; brands?: any }) => {
               <Col
                 className="gutter-row"
                 xs={24}
-                md={12}
-                lg={12}
+                md={24}
+                lg={24}
                 style={{
                   marginBottom: "10px",
                 }}
@@ -106,8 +110,9 @@ const AddUpdateModel = ({ id, brands }: { id?: string; brands?: any }) => {
                 htmlType="submit"
                 type="primary"
                 disabled={createLoad || updateLoad}
+                style={{ width: "100%" }}
               >
-                {id ? "Update" : "Add"}
+                {updateData ? "Update" : "Add"}
               </Button>
             </div>
           </div>

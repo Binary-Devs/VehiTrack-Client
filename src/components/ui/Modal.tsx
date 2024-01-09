@@ -1,6 +1,6 @@
 "use client";
 import { Button, Modal } from "antd";
-import React from "react";
+import React, { useState } from "react";
 
 const ModalComponent = ({
   children,
@@ -21,20 +21,20 @@ const ModalComponent = ({
   icon?: any;
   width?: any;
 }) => {
-  // const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   //   const [confirmLoading, setConfirmLoading] = useState(false);
 
   const showModal = () => {
-    setShowModel(true);
+    setOpen(true);
   };
 
   const handleOk = () => {
     // setModalText("The modal will be closed after two seconds");
-    setShowModel(false);
+    setOpen(false);
   };
 
   const handleCancel = () => {
-    setShowModel(false);
+    setOpen(false);
   };
 
   return (
@@ -65,7 +65,7 @@ const ModalComponent = ({
         </div>
       </div>
       <Modal
-        open={showModel}
+        open={open}
         confirmLoading={loading ? loading : false}
         onCancel={handleCancel}
         //! when i went hidden ok and cancel button then it use

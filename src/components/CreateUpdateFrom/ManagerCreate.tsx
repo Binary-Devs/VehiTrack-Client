@@ -7,7 +7,7 @@ import FormTextArea from "../Forms/FormTextArea";
 import ButtonLoading from "../ui/Loader/ButtonLoading";
 
 const CreateManager = () => {
-  const [createAdmin,{isLoading}] = useCreateAdminMutation();
+  const [createAdmin, { isLoading }] = useCreateAdminMutation();
 
   const onSubmit = async (values: any) => {
     message.loading("Creating Manager!");
@@ -30,7 +30,7 @@ const CreateManager = () => {
       </h1>
 
       <div>
-        <Form submitHandler={onSubmit} >
+        <Form submitHandler={onSubmit}>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -147,7 +147,7 @@ const CreateManager = () => {
 
           <div className="flex justify-center items-center">
             <Button htmlType="submit" type="primary">
-             {isLoading? <ButtonLoading/>: "Create"}
+              {isLoading ? <ButtonLoading /> : "Create"}
             </Button>
           </div>
         </Form>

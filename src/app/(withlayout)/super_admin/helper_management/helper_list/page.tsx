@@ -7,7 +7,7 @@ import {
   EditOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { Button, Input } from "antd";
+import { Button, Input, message } from "antd";
 
 import { useState } from "react";
 
@@ -17,15 +17,17 @@ import AddUpdateHelper from "@/components/CreateUpdateFrom/AddUpdateHelper";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
-import { useGetAllHelperQuery } from "@/redux/api/helper/helperApi";
+import { useGetAllHelperQuery, useInactiveHelperMutation } from "@/redux/api/helper/helperApi";
 import Image from "next/image";
 import { IoMdAdd } from "react-icons/io";
+import DeleteModal from "@/components/ui/DeleteModal";
 
 const HelperListPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
   const query: Record<string, any> = {};
   const [showModel, setShowModel] = useState(false);
-
+  const [open, setOpen] = useState(false);
+  const [id, setId] = useState<string>("");
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
   const [sortBy, setSortBy] = useState<string>("");
@@ -46,15 +48,32 @@ const HelperListPage = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
+  const [inactiveHelper] = useInactiveHelperMutation();
+  //delete
+  const deleteHandler = async (id: string) => {
+    message.loading("Deleting.....");
+    try {
+      const res = await inactiveHelper(id);
+      if (!!res) {
+        message.success("delete successfully");
+        setOpen(false);
+      } else {
+        message.error("delete failed");
+      }
+    } catch (err: any) {
+      //   console.error(err.message);
+      message.error(err.message);
+    }
+  };
+
   const columns = [
     {
       title: "",
-
+      dataIndex: "profileImg",
       render: function (data: any) {
-        const image = `${
-          data?.imageUrl ||
-          "https://res.cloudinary.com/dnzlgpcc3/image/upload/v1704419785/oiav6crzfltkswdrrrli.png"
-        } `;
+        const image =
+          data ||
+          "https://res.cloudinary.com/dnzlgpcc3/image/upload/v1704419785/oiav6crzfltkswdrrrli.png";
         return (
           <Image
             src={image}
@@ -107,7 +126,6 @@ const HelperListPage = () => {
     },
     {
       title: "Action",
-
       // width: "15%",
       render: function (data: any) {
         return (
@@ -123,39 +141,35 @@ const HelperListPage = () => {
               }}
             >
               <ModalComponent
+                width={800}
                 showModel={showModel}
                 setShowModel={setShowModel}
                 icon={<EditOutlined />}
               >
-                <AddUpdateHelper id={data} />
+                <AddUpdateHelper updateData={data} />
               </ModalComponent>
             </div>
-            <div>
-              <ModalComponent
-                showModel={showModel}
-                setShowModel={setShowModel}
-                icon={<DeleteOutlined />}
-                buttonDanger={true}
-              >
-                <div>
-                  <h1 className="text-center my-1 font-bold text-2xl">
-                    Delete Helper
-                  </h1>
-                  <div className="flex justify-end items-center mt-[5px]">
-                    <Button htmlType="submit" type="primary">
-                      Ok
-                    </Button>
-                  </div>
-                </div>
-              </ModalComponent>
-            </div>
+            <Button
+              type="primary"
+              onClick={() => {
+                //  console.log(data?.id);
+                setOpen(true);
+                setId(data?.id);
+              }}
+              danger
+            >
+              <DeleteOutlined />
+            </Button>
           </div>
         );
       },
     },
   ];
 
-  const { data, isLoading } = useGetAllHelperQuery({ ...query });
+  const { data, isLoading } = useGetAllHelperQuery({
+    ...query,
+    isActive: true,
+  });
   const helpers = data?.helpers;
   const meta = data?.meta;
 
@@ -206,6 +220,7 @@ const HelperListPage = () => {
             </Button>
           )}
           <ModalComponent
+            width={800}
             showModel={showModel}
             setShowModel={setShowModel}
             buttonText="Add Helper"
@@ -228,14 +243,14 @@ const HelperListPage = () => {
         showPagination={true}
       />
 
-      {/* <UMModal
-        title="Remove admin"
+      <DeleteModal
+        title="Delete Helper"
         isOpen={open}
         closeModal={() => setOpen(false)}
-        handleOk={() => deleteGeneralUserHandler(adminId)}
+        handleOk={() => deleteHandler(id)}
       >
-        <p className="my-5">Do you want to remove this admin?</p>
-      </UMModal> */}
+        <p className="my-5">Do you want to delete this?</p>
+      </DeleteModal>
     </div>
   );
 };
