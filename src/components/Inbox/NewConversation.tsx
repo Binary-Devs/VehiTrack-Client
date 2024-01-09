@@ -16,8 +16,6 @@ const NewConversation = ({ setShowModel }: { setShowModel: any }) => {
 
   const users = userData?.users || [];
 
-  // console.log(users);
-
   //Create
   const [createConversation, { isLoading: createLoad }] =
     useCreateConversationMutation();
@@ -73,7 +71,7 @@ const NewConversation = ({ setShowModel }: { setShowModel: any }) => {
                   size="large"
                   name="receiverId"
                   options={users.map((u: any) => ({
-                    label: u.userName,
+                    label: `${u.userName} (${u.role})`,
                     value: u.id,
                   }))}
                   label="Unique UserId"
