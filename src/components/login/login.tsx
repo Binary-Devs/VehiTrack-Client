@@ -73,7 +73,7 @@ const LoginPage = () => {
       className="relative "
     >
       <Image
-        src={"/login1.webp"}
+        src={"/login2.gif"}
         width={720}
         height={720}
         alt="login gif"
@@ -105,7 +105,7 @@ const LoginPage = () => {
                 variants={formVariants}
                 initial="initial"
                 animate="animate"
-                className="bg-white rounded shadow-2xl p-7 sm:p-10"
+                className="bg-white rounded-lg shadow-2xl p-6 sm:p-10"
               >
                 <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
                   Login Dashboard
