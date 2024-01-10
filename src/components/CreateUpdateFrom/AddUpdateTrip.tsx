@@ -154,37 +154,57 @@ const AddUpdateTrip = ({ id }: { id?: string }) => {
               </div>
             </Col>
             <Col className="my-auto" xs={24} md={12} lg={8}>
-              <FormDatePicker name="startDate" label="startDate" required />
+              <div style={{ margin: "10px 0px" }}>
+                <FormDatePicker name="startDate" label="Start Date" required />
+              </div>
             </Col>
             <Col className="my-auto" xs={24} md={12} lg={8}>
-              <FormDatePicker name="endDate" label="endDate" required />
+              <div style={{ margin: "10px 0px" }}>
+                <FormDatePicker name="endDate" label="End Date" required />
+              </div>
             </Col>
             <Col xs={24} md={12} lg={8}>
-              <FormInput name="from" label="from" required />
+              <div style={{ margin: "10px 0px" }}>
+                <FormInput name="from" label="From" required />
+              </div>
             </Col>
             <Col xs={24} md={12} lg={8}>
-              <FormInput name="to" label="to" required />
+              <div style={{ margin: "10px 0px" }}>
+                <FormInput name="to" label="To" required />
+              </div>
             </Col>
             <Col xs={24} md={12} lg={8}>
-              <FormInput
-                name="distance"
-                label="distance"
-                type="number"
-                required
-              />
+              <div style={{ margin: "10px 0px" }}>
+                <FormInput
+                  name="distance"
+                  label="Distance"
+                  type="number"
+                  required
+                />
+              </div>
             </Col>
             <Col xs={24} md={12} lg={8}>
-              <FormInput name="amount" label="Amount" type="number" required />
+              <div style={{ margin: "10px 0px" }}>
+                <FormInput
+                  name="amount"
+                  label="Amount"
+                  type="number"
+                  required
+                />
+              </div>
             </Col>
             <Col xs={24} md={12} lg={8}>
-              <FormInput name="remarks" label="Remarks" />
+              <div style={{ margin: "10px 0px" }}>
+                <FormInput name="remarks" label="Remarks" />
+              </div>
             </Col>
           </Row>
-          <div className="flex justify-end items-center">
+          <div className="flex justify-end items-center mt-2">
             <Button
               htmlType="submit"
               type="primary"
               disabled={createLoad || updateLoad}
+              style={{ width: "100%" }}
             >
               {id ? "Update" : "Add"}
             </Button>

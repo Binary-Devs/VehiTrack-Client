@@ -41,6 +41,7 @@ const FuelStatus = () => {
 
   return (
     <Card
+      className="!bg-white !border !border-blue-200 !rounded-lg !shadow-md !shadow-blue-200"
       title="Fuel Status"
       extra={
         <Select
