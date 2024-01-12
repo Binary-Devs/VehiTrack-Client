@@ -5,9 +5,13 @@ const Loader = ({
   className,
   color,
   size,
+  width,
+  height,
 }: {
   className?: string;
   color?: string;
+  width?: number;
+  height?: number;
   size?: "small" | "large" | "default";
 }) => {
   return (
@@ -31,8 +35,8 @@ const Loader = ({
     >
       <Image
         priority
-        width={60}
-        height={60}
+        width={width ? width : 60}
+        height={height ? height : 60}
         src={"/loading.gif"}
         alt="loading"
       />

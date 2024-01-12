@@ -156,7 +156,7 @@ const TripListPage = () => {
   };
 
   return (
-    <div>
+    <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
       <ActionBar title="Trip List">
         <Input
           type="text"

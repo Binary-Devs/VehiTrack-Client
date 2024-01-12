@@ -31,7 +31,7 @@ const ProfilePage = () => {
   };
 
   if (isLoading) {
-    return <Loader />;
+    return <Loader className="h-[50vh] flex items-end justify-center" />;
   }
 
   return (
@@ -45,7 +45,7 @@ const ProfilePage = () => {
         <Row gutter={[30, 24]} className="flex justify-center">
           <Col md={10} className="w-full">
             <motion.div
-              className="w-full rounded-3xl bg-white shadow-xl p-4 mx-auto"
+              className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 w-full p-4 mx-auto"
               variants={infoVariants}
             >
               <motion.div
@@ -81,7 +81,7 @@ const ProfilePage = () => {
                 </p>
               </div>
 
-              <div className="p-6 border-2 py-8 rounded-3xl border-[#a18dff] m-3 md:m-6 space-y-4 ">
+              <div className="p-6 border-2 py-8 rounded-xl border-blue-400 m-3 md:m-6 space-y-4 ">
                 <div className="text-lg font-normal mx-2 flex items-center justify-between">
                   <span>Phone :</span>
                   <span className="">
@@ -118,7 +118,7 @@ const ProfilePage = () => {
                 <div className="">
                   <Row
                     gutter={[20, 20]}
-                    className="w-full rounded-3xl bg-white shadow-xl p-6 md:px-10 mx-auto !m-0"
+                    className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 w-full p-6 md:px-10 mx-auto !m-0"
                   >
                     <Col span={12} className="">
                       <Statistic
@@ -156,14 +156,14 @@ const ProfilePage = () => {
                     </Col>
                   </Row>
                 </div>
-                <div className="w-full rounded-3xl bg-white shadow-xl p-6  md:px-10 overflow-auto h-96">
+                <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 w-full p-6  md:px-10">
                   <div className="">
                     <Title level={5} className="text-center">
                       Trip History
                     </Title>
                   </div>
                   <Divider />
-                  <div className="overflow-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-blue-200 scrollbar-track-rounded-full scrollbar-thumb-rounded-full">
+                  <div className="overflow-auto h-[265px] scrollbar-thin scrollbar-track-transparent scrollbar-thumb-blue-200 scrollbar-track-rounded-full scrollbar-thumb-rounded-full">
                     <ul className="my-1 flex flex-col gap-2">
                       {data[data?.role]?.trips.map(
                         (trip: any, index: number) => (

@@ -179,7 +179,7 @@ const AllManagerList = () => {
   };
 
   return (
-    <div className="rounded-xl bg-white p-5 shadow-xl">
+    <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5">
       <br />
       <ActionBar title="Manager List">
         <Input
