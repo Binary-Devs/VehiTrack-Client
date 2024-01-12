@@ -1,12 +1,25 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import Image from "next/image";
+import { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 import projectImage from "../../../assets/all-devices-black.png";
 
 export default function ProjectDemo() {
+  const controls = useAnimation();
+  const [ref, inView] = useInView();
+
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible");
+    } else {
+      controls.start("hidden");
+    }
+  }, [inView, controls]);
+
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { duration: 0.8 } },
+    visible: { opacity: 1, transition: { duration: 0.8, delay: 0.2 } },
   };
 
   const textVariants = {
@@ -28,7 +41,8 @@ export default function ProjectDemo() {
       className="flex flex-col justify-center items-center py-24"
       variants={containerVariants}
       initial="hidden"
-      animate="visible"
+      animate={controls}
+      ref={ref}
     >
       <motion.div
         className="max-w-3xl text-center space-y-6"

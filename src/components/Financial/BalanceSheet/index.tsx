@@ -114,18 +114,21 @@ const BalanceSheet = () => {
   const totalEquity = totalAsset - (netIncome > 0 ? 0 : Math.abs(netIncome));
 
   return (
-    <Card style={{ paddingBottom: 40 }}>
+    <Card
+      style={{ paddingBottom: 40 }}
+      className="!bg-white !border !border-blue-200 !rounded-lg !shadow-md !shadow-blue-200"
+    >
       <Title
         style={{
           fontSize: 30,
-          textTransform: 'uppercase',
-          textAlign: 'center',
+          textTransform: "uppercase",
+          textAlign: "center",
           paddingBottom: 20,
         }}
       >
         Balance Sheet
       </Title>
-      <Row gutter={[36, 36]} style={{ maxWidth: 1100, margin: 'auto' }}>
+      <Row gutter={[36, 36]} style={{ maxWidth: 1100, margin: "auto" }}>
         <Col xs={24} md={12}>
           <Row gutter={[32, 36]}>
             <Col xs={24}>
@@ -205,7 +208,7 @@ const BalanceSheet = () => {
                 value={Math.abs(netIncome)}
               >
                 <CardItem
-                  title={netIncome > 0 ? 'Net Profit' : 'Net Loss'}
+                  title={netIncome > 0 ? "Net Profit" : "Net Loss"}
                   value={Math.abs(netIncome)}
                 />
               </SheetCard>
