@@ -5,9 +5,8 @@ import {
   DeleteOutlined,
   EditOutlined,
   ReloadOutlined,
-  UserOutlined,
 } from "@ant-design/icons";
-import { Avatar, Button, Input, Tag, message } from "antd";
+import { Button, Input, Tag, message } from "antd";
 import { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 
@@ -21,6 +20,7 @@ import {
   useInactiveAdminMutation,
 } from "@/redux/api/admin/adminApi";
 import { confirm_modal } from "@/utils/modalHook";
+import Image from "next/image";
 
 const AllManagerList = () => {
   const SUPER_ADMIN = USER_ROLE.SUPER_ADMIN;
@@ -51,13 +51,25 @@ const AllManagerList = () => {
 
   const columns = [
     {
-      title: "Image",
-
+      title: "",
+      dataIndex: "profileImg",
       render: function (data: any) {
-        return <Avatar size={48} icon={<UserOutlined />} />;
+        console.log(data);
+
+        const image =
+          data ||
+          "https://res.cloudinary.com/dnzlgpcc3/image/upload/v1704419785/oiav6crzfltkswdrrrli.png";
+        return (
+          <Image
+            src={image}
+            width={100}
+            height={100}
+            alt=""
+            style={{ width: "70px", height: "50px" }}
+          />
+          // <Avatar shape="square" size={64} icon={<CarOutlined />} />
+        );
       },
-      width: 100,
-      responsive: ["md"],
     },
     {
       title: "Name",
@@ -87,21 +99,25 @@ const AllManagerList = () => {
       dataIndex: "id",
       render: function (data: any) {
         return (
-          <>
+          <div className="flex">
             {/* <Link href={`/${SUPER_ADMIN}/manager/details/${data}`}>
               <Button onClick={() => console.log(data)} type="primary">
                 <EyeOutlined />
               </Button>
             </Link> */}
-
-            <ModalComponent
-              showModel={showModel}
-              setShowModel={setShowModel}
-              icon={<EditOutlined />}
+            <div
+              style={{
+                margin: "0px 5px",
+              }}
             >
-              <ManagerUpdate id={data} />
-            </ModalComponent>
-
+              <ModalComponent
+                showModel={showModel}
+                setShowModel={setShowModel}
+                icon={<EditOutlined />}
+              >
+                <ManagerUpdate id={data} />
+              </ModalComponent>
+            </div>
             {/* <Link href={`/${SUPER_ADMIN}/manager/edit/${data}`}>
               <Button
                 style={{
@@ -113,23 +129,17 @@ const AllManagerList = () => {
                 <EditOutlined />
               </Button>
             </Link> */}
-            <Button
-              style={{ margin: "7px" }}
-              onClick={() => handleDelete(data)}
-              type="primary"
-              danger
-            >
+            <Button onClick={() => handleDelete(data)} type="primary" danger>
               <DeleteOutlined />
             </Button>
-          </>
+          </div>
         );
       },
     },
   ];
 
   const { data, isLoading } = useGetAllAdminQuery({ ...query });
-  const AllAdminData = data?.admins || [];
-  const meta = data?.meta;
+  const AllAdminData = data?.admins?.filter((item) => item.isActive) || [];
 
   const onPaginationChange = (page: number, pageSize: number) => {
     // console.log("Page:", page, "PageSize:", pageSize);
@@ -169,26 +179,19 @@ const AllManagerList = () => {
   };
 
   return (
-    <div className="rounded-xl bg-white p-5 shadow-xl">
+    <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5">
       <br />
       <ActionBar title="Manager List">
         <Input
-          size="large"
+          size="middle"
           placeholder="Search"
+          value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
             width: "200px",
           }}
         />
-        <div>
-          <ModalComponent
-            showModel={showModel}
-            setShowModel={setShowModel}
-            buttonText="Create Manager"
-            icon={<IoMdAdd />}
-          >
-            <CreateManager />
-          </ModalComponent>
+        <div className="flex gap-2">
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
@@ -198,6 +201,14 @@ const AllManagerList = () => {
               <ReloadOutlined />
             </Button>
           )}
+          <ModalComponent
+            showModel={showModel}
+            setShowModel={setShowModel}
+            buttonText="Create Manager"
+            icon={<IoMdAdd />}
+          >
+            <CreateManager />
+          </ModalComponent>
         </div>
       </ActionBar>
       <br />
@@ -207,7 +218,7 @@ const AllManagerList = () => {
         columns={columns}
         dataSource={AllAdminData}
         pageSize={size}
-        totalPages={meta?.total}
+        totalPages={AllAdminData.length}
         showSizeChanger={true}
         onPaginationChange={onPaginationChange}
         onTableChange={onTableChange}

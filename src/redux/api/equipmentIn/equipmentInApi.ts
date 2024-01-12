@@ -5,7 +5,7 @@ import { baseApi } from '../baseApi';
 const EQUIPMENT_IN_URL = '/equipment-in';
 
 export const equipmentInApi = baseApi.injectEndpoints({
-  endpoints: (build: any) => ({
+  endpoints: (build) => ({
     // create
     createEquipmentIn: build.mutation({
       query: (data: any) => ({

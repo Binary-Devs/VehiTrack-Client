@@ -57,13 +57,14 @@ const TripExpenseHeadPage = () => {
       title: "Updated At",
       dataIndex: "updatedAt",
       render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+        return data && dayjs(data).format("MMM D, YYYY");
       },
       sorter: true,
     },
     {
       title: "Action",
       dataIndex: "id",
+      width: "5%",
       render: function (data: any) {
         return (
           <div className="">
@@ -105,11 +106,11 @@ const TripExpenseHeadPage = () => {
   };
 
   return (
-    <div>
+    <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
       <ActionBar title="Trip Expense Head List">
         <Input
           type="text"
-          size="large"
+          size="middle"
           placeholder="Search..."
           onChange={(e) => {
             setSearchTerm(e.target.value);

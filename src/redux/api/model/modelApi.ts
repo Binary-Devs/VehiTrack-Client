@@ -5,7 +5,7 @@ import { baseApi } from '../baseApi';
 const MODEL_URL = '/model';
 
 export const modelApi = baseApi.injectEndpoints({
-  endpoints: (build: any) => ({
+  endpoints: (build) => ({
     // create
     createModel: build.mutation({
       query: (data: any) => ({

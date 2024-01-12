@@ -464,7 +464,7 @@ export const sidebarItem = (role: string) => {
               Add New Manager
             </Link>
           ),
-          key: `${role}/manager/add_new_manager`,
+          key: `/${role}/manager/add_new_manager`,
         },
         {
           label: (
@@ -472,7 +472,7 @@ export const sidebarItem = (role: string) => {
               Manager List
             </Link>
           ),
-          key: `${role}/manager/manager_list`,
+          key: `/${role}/manager/manager_list`,
         },
       ],
     },

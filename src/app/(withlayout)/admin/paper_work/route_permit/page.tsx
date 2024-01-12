@@ -15,7 +15,7 @@ import {
   EditOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { Button, Input, message } from "antd";
+import { Button, Grid, Input, message } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
@@ -41,6 +41,9 @@ const RoutePermitPage = () => {
     searchQuery: searchTerm,
     delay: 600,
   });
+
+  const { useBreakpoint } = Grid;
+  const screens = useBreakpoint();
 
   if (!!debouncedTerm) {
     query["searchTerm"] = debouncedTerm;
@@ -110,8 +113,9 @@ const RoutePermitPage = () => {
       title: "CreatedAt",
       dataIndex: "createdAt",
       render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+        return data && dayjs(data).format("MMM D, YYYY");
       },
+      responsive: ["xxl"],
       sorter: true,
     },
     {
@@ -172,7 +176,7 @@ const RoutePermitPage = () => {
   };
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
-      <ActionBar inline title="Route permit List">
+      <ActionBar inline={screens.xs ? false : true} title="Route permit List">
         <div className="flex items-center justify-between flex-grow gap-2">
           <Input
             // size="large"

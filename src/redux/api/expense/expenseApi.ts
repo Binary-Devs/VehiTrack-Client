@@ -5,7 +5,7 @@ import { baseApi } from '../baseApi';
 const EXPENSE_URL = '/expense';
 
 export const expenseApi = baseApi.injectEndpoints({
-  endpoints: (build: any) => ({
+  endpoints: (build) => ({
     // create
     createExpense: build.mutation({
       query: (data: any) => ({

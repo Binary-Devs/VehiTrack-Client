@@ -5,7 +5,7 @@ import { baseApi } from "../baseApi";
 const BRAND_URL = "/brand";
 
 export const brandApi = baseApi.injectEndpoints({
-  endpoints: (build: any) => ({
+  endpoints: (build) => ({
     // create
     createBrand: build.mutation({
       query: (data: any) => ({

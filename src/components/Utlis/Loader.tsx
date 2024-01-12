@@ -5,9 +5,13 @@ const Loader = ({
   className,
   color,
   size,
+  width,
+  height,
 }: {
   className?: string;
   color?: string;
+  width?: number;
+  height?: number;
   size?: "small" | "large" | "default";
 }) => {
   return (
@@ -24,8 +28,18 @@ const Loader = ({
     //     size={50}
     //   /> */}
     // </div>
-    <div className="h-[50vh] flex items-end justify-center">
-      <Image width={100} height={100} src={"/loading.gif"} alt="loading" />
+    <div
+      className={`${
+        className ? className : "flex justify-center items-center"
+      }`}
+    >
+      <Image
+        priority
+        width={width ? width : 60}
+        height={height ? height : 60}
+        src={"/loading.gif"}
+        alt="loading"
+      />
     </div>
   );
 };

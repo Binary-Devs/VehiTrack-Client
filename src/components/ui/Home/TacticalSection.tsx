@@ -1,7 +1,8 @@
-"use client";
-import { motion, useAnimation, useInView } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
+
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 import one from "../../../assets/1h.png";
 import two from "../../../assets/2h.png";
 import trhee from "../../../assets/3h.png";
@@ -50,14 +51,13 @@ export default function TacticalSection() {
   ];
 
   const controls = useAnimation();
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, {});
+  const [ref, inView] = useInView();
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { duration: 0.5, staggerChildren: 0.2, delayChildren: 0.8 },
+      transition: { duration: 0.4, staggerChildren: 0.2, delayChildren: 0.5 },
     },
   };
 
@@ -67,19 +67,21 @@ export default function TacticalSection() {
   };
 
   useEffect(() => {
-    if (!inView) {
-      controls.start("hidden"); // Reset animation when not in view
+    if (inView) {
+      controls.start("visible");
+    } else {
+      controls.start("hidden");
     }
   }, [inView, controls]);
 
   return (
     <>
       <motion.div
-        className="container text-center mx-auto py-24 p-4"
+        className="container text-center mx-auto py-24 p-4 mt-4"
         variants={containerVariants}
         ref={ref}
         initial="hidden"
-        animate={"visible"}
+        animate={controls}
       >
         <h1 className="text-2xl md:text-4xl font-semibold mb-4">
           Welcome to VehiTrack
