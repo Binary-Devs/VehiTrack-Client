@@ -7,12 +7,13 @@ import {
   EditOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { Button, Input } from "antd";
+import { Button, Input, message } from "antd";
 import { useState } from "react";
 
 import dayjs from "dayjs";
 
 import AddUpdateVehicle from "@/components/CreateUpdateFrom/AddUpdateVehicle";
+import DeleteModal from "@/components/ui/DeleteModal";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
@@ -22,6 +23,7 @@ import { useGetAllHelperQuery } from "@/redux/api/helper/helperApi";
 import { useGetAllModelQuery } from "@/redux/api/model/modelApi";
 import {
   useGetAllVehicleQuery,
+  useInactiveVehicleMutation,
   useUpdateVehicleMutation,
 } from "@/redux/api/vehicle/vehicleApi";
 import Image from "next/image";
@@ -30,14 +32,14 @@ import { IoMdAdd } from "react-icons/io";
 const VehicleListPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
   const query: Record<string, any> = {};
-  const [showModel, setShowModel] = useState(false);
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState(false);
+  const [id, setId] = useState<string>("");
   const [adminId, setAdminId] = useState<string>("");
 
   query["limit"] = size;
@@ -53,6 +55,24 @@ const VehicleListPage = () => {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
+
+  const [inactiveVehicle] = useInactiveVehicleMutation();
+  //delete
+  const deleteHandler = async (id: string) => {
+    message.loading("Deleting.....");
+    try {
+      const res = await inactiveVehicle(id);
+      if (!!res) {
+        message.success("delete successfully");
+        setOpen(false);
+      } else {
+        message.error("delete failed");
+      }
+    } catch (err: any) {
+      //   console.error(err.message);
+      message.error(err.message);
+    }
+  };
 
   const { data, isLoading } = useGetAllVehicleQuery({
     ...query,
@@ -98,8 +118,7 @@ const VehicleListPage = () => {
       render: function (data: any) {
         const image =
           data ||
-          'https://res.cloudinary.com/dnzlgpcc3/image/upload/v1704419785/oiav6crzfltkswdrrrli.png';
-
+          "https://res.cloudinary.com/dnzlgpcc3/image/upload/v1704419785/oiav6crzfltkswdrrrli.png";
         return (
           <Image
             src={image}
@@ -108,7 +127,7 @@ const VehicleListPage = () => {
             alt=""
             style={{ width: "70px", height: "50px" }}
           />
-          // <Avatar shape="square" size={48} icon={<CarOutlined />} />
+          // <Avatar shape="square" size={64} icon={<CarOutlined />} />
         );
       },
     },
@@ -169,13 +188,12 @@ const VehicleListPage = () => {
       title: "Created at",
       dataIndex: "createdAt",
       render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+        return data && dayjs(data).format("MMM D, YYYY");
       },
       sorter: true,
     },
     {
       title: "Action",
-      dataIndex: "id",
       render: function (data: any) {
         return (
           <div className="flex">
@@ -189,13 +207,9 @@ const VehicleListPage = () => {
                 margin: "0px 5px",
               }}
             >
-              <ModalComponent
-                showModel={showModel}
-                setShowModel={setShowModel}
-                icon={<EditOutlined />}
-              >
+              <ModalComponent width={800} icon={<EditOutlined />}>
                 <AddUpdateVehicle
-                  id={data}
+                  updateData={data}
                   brands={brands}
                   models={models}
                   drivers={drivers}
@@ -204,8 +218,12 @@ const VehicleListPage = () => {
               </ModalComponent>
             </div>
             <Button
-              //   onClick={() => deleteGeneralUserHandler(data)}
               type="primary"
+              onClick={() => {
+                //  console.log(data?.id);
+                setOpen(true);
+                setId(data?.id);
+              }}
               danger
             >
               <DeleteOutlined />
@@ -256,6 +274,7 @@ const VehicleListPage = () => {
   // if (isLoading) {
   //   return <Loader className="h-[50vh] flex items-end justify-center" />;
   // }
+
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
       <ActionBar inline title="Vehicle List">
@@ -280,8 +299,7 @@ const VehicleListPage = () => {
             </Button>
           )}
           <ModalComponent
-            showModel={showModel}
-            setShowModel={setShowModel}
+            width={800}
             buttonText="Add Vehicle"
             icon={<IoMdAdd />}
           >
@@ -308,6 +326,14 @@ const VehicleListPage = () => {
         onTableChange={onTableChange}
         showPagination={true}
       />
+      <DeleteModal
+        title="Delete Vehicle"
+        isOpen={open}
+        closeModal={() => setOpen(false)}
+        handleOk={() => deleteHandler(id)}
+      >
+        <p className="my-5">Do you want to delete this?</p>
+      </DeleteModal>
     </div>
   );
 };

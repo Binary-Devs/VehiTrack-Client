@@ -5,30 +5,25 @@ import FormSelectField from "@/components/Forms/FormSelectField";
 import UploadImage from "@/components/ui/uploadImage";
 import {
   useCreateVehicleMutation,
-  useGetSingleVehicleQuery,
   useUpdateVehicleMutation,
 } from "@/redux/api/vehicle/vehicleApi";
 import { Button, Col, Row, message } from "antd";
 import { useState } from "react";
-import Loader from "../Utlis/Loader";
 
 const AddUpdateVehicle = ({
-  id,
+  updateData,
   brands,
   models,
   drivers,
   helpers,
 }: {
-  id?: string;
+  updateData?: any;
   brands?: any;
   models?: any;
   drivers?: any;
   helpers?: any;
 }) => {
-  const [image, setimage] = useState("");
-  //Get
-  // console.log(image);
-  const { data, isLoading: getLoad } = useGetSingleVehicleQuery(id ? id : "");
+  const [image, setimage] = useState(updateData ? updateData.imageUrl : "");
 
   //Update
   const [updateVehicle, { isLoading: updateLoad }] = useUpdateVehicleMutation();
@@ -39,27 +34,27 @@ const AddUpdateVehicle = ({
   const onSubmit = async (values: any) => {
     values.imageUrl = image;
 
-    console.log(values);
-
-    message.loading(id ? "Updating...." : "Adding....");
+    message.loading(updateData ? "Updating...." : "Adding....");
     try {
-      const res = id
+      const res = updateData
         ? await updateVehicle({
-            id,
+            id: updateData.id,
             data: {
               brandId: values.brandId,
               modelId: values.modelId,
               regNo: values.regNo,
               vehicleValue: values.vehicleValue,
               driverId: values.driverId,
-              helperId: values.helperId,
+              helperId: values.helperId ? values.helperId : undefined,
               isActive: values.isActive,
               imageUrl: image,
             },
           }).unwrap()
         : await createVehicle(values).unwrap();
       if (res.id) {
-        message.success(`Vehicle ${id ? "updated" : "added"} successfully!`);
+        message.success(
+          `Vehicle ${updateData ? "updated" : "added"} successfully!`
+        );
       } else {
         message.error(res.message);
       }
@@ -68,17 +63,16 @@ const AddUpdateVehicle = ({
     }
   };
 
-  if (id && getLoad) {
-    return <Loader className="h-[40vh] flex items-center justify-center" />;
-  }
-
   return (
     <div>
       <h1 className="text-center my-1 font-bold text-2xl">
-        {id ? "Update Vehicle" : "Add Vehicle"}
+        {updateData ? "Update Vehicle" : "Add Vehicle"}
       </h1>
       <div>
-        <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
+        <Form
+          submitHandler={onSubmit}
+          defaultValues={updateData ? { ...updateData } : {}}
+        >
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -105,7 +99,11 @@ const AddUpdateVehicle = ({
                 //   marginBottom: "10px",
                 // }}
               >
-                <UploadImage setImageStatus={setimage} name="imageUrl" />
+                <UploadImage
+                  setImageStatus={setimage}
+                  name="imageUrl"
+                  defaultImage={updateData ? updateData.imageUrl : ""}
+                />
               </Col>
 
               <Col
@@ -131,7 +129,6 @@ const AddUpdateVehicle = ({
                         label: b.label,
                         value: b.id,
                       }))}
-                      // defaultValue={priceTypeOptions[0]}
                       label="Brand"
                       placeholder="Select vehicle brand"
                       required={true}
@@ -149,7 +146,6 @@ const AddUpdateVehicle = ({
                         label: m.label,
                         value: m.id,
                       }))}
-                      // defaultValue={priceTypeOptions[0]}
                       label="Model"
                       placeholder="Select vehicle model"
                       required={true}
@@ -171,7 +167,6 @@ const AddUpdateVehicle = ({
                   type="text"
                   name="regNo"
                   size="large"
-                  // value=""
                   label="Registration No"
                   required={true}
                   placeholder="Please enter vehicle registration no"
@@ -191,7 +186,6 @@ const AddUpdateVehicle = ({
                   type="number"
                   name="vehicleValue"
                   size="large"
-                  // value=""
                   label="Vehicle Value"
                   required={true}
                   placeholder="Please enter vehicle value"
@@ -213,7 +207,6 @@ const AddUpdateVehicle = ({
                     label: d.fullName,
                     value: d.id,
                   }))}
-                  // defaultValue={priceTypeOptions[0]}
                   label="Driver"
                   placeholder="Select vehicle driver"
                   required={true}
@@ -264,10 +257,8 @@ const AddUpdateVehicle = ({
                       value: false,
                     },
                   ]}
-                  // defaultValue={priceTypeOptions[0]}
                   label="Vehicle Status"
                   placeholder="Select vehicle status"
-                  // required={true}
                 />
               </Col>
             </Row>
@@ -276,8 +267,9 @@ const AddUpdateVehicle = ({
                 htmlType="submit"
                 type="primary"
                 disabled={createLoad || updateLoad}
+                style={{ width: "100%" }}
               >
-                {id ? "Update" : "Add"}
+                {updateData ? "Update" : "Add"}
               </Button>
             </div>
           </div>

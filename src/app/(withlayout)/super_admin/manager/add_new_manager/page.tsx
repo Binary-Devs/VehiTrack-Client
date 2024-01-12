@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 const ManagerCreatePage = () => {
   return (
-    <div className="rounded-xl bg-white p-5 shadow-xl">
+    <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
       <CreateAndUpdateManager />
     </div>
   );

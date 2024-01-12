@@ -3,21 +3,17 @@ import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import { bloodGroupOptions } from "@/constants/global";
-import {
-  useGetSingleHelperQuery,
-  useUpdateHelperMutation,
-} from "@/redux/api/helper/helperApi";
+import { useUpdateHelperMutation } from "@/redux/api/helper/helperApi";
 import { useCreateHelperMutation } from "@/redux/api/user/userApi";
 import { Button, Col, Row, message } from "antd";
-import FormSelectField from "../Forms/FormSelectField";
-import Loader from "../Utlis/Loader";
-import UploadImage from "../ui/uploadImage";
 import { useState } from "react";
+import FormSelectField from "../Forms/FormSelectField";
+import UploadImage from "../ui/uploadImage";
 
-const AddUpdateHelper = ({ id }: { id?: any }) => {
-  const [image, setimage] = useState("");
-  //Get
-  const { data, isLoading: getLoad } = useGetSingleHelperQuery(id ? id : "");
+const AddUpdateHelper = ({ updateData }: { updateData?: any }) => {
+  const [image, setimage] = useState(updateData ? updateData.imageUrl : "");
+
+  console.log(updateData);
 
   //Update
   const [updateHelper, { isLoading: updateLoad }] = useUpdateHelperMutation();
@@ -25,26 +21,39 @@ const AddUpdateHelper = ({ id }: { id?: any }) => {
   //Create
   const [createHelper, { isLoading: createLoad }] = useCreateHelperMutation();
 
-  // console.log(id, data);
+  // console.log(updateData, data);
 
   const onSubmit = async (values: any) => {
-    message.loading(id ? "Updating...." : "Adding....");
-    // console.log(values);
+    message.loading(updateData ? "Updating...." : "Adding....");
+    console.log(values);
     values.imageUrl = image;
     try {
-      const res = id
+      const res = updateData
         ? await updateHelper({
-            id,
+            id: updateData,
             data: {
-              fullName: values.helper.fullName,
-              mobile: values.helper.mobile,
-              bloodGroup: values.helper.bloodGroup,
-              address: values.helper.address,
+              fullName: values.fullName,
+              mobile: values.mobile,
+              bloodGroup: values.bloodGroup,
+              address: values.address,
+              profileImg: image,
             },
           }).unwrap()
-        : await createHelper(values).unwrap();
+        : await createHelper({
+            userName: values.userName,
+            password: values.password,
+            helper: {
+              fullName: values.fullName,
+              mobile: values.mobile,
+              bloodGroup: values.bloodGroup,
+              address: values.address,
+              profileImg: image,
+            },
+          }).unwrap();
       if (res.id) {
-        message.success(`Helper ${id ? "updated" : "added"} successfully`);
+        message.success(
+          `Helper ${updateData ? "updated" : "added"} successfully`
+        );
       } else {
         message.error(res.message);
       }
@@ -53,18 +62,16 @@ const AddUpdateHelper = ({ id }: { id?: any }) => {
     }
   };
 
-  if (id && getLoad) {
-    return <Loader className="h-[40vh] flex items-center justify-center" />;
-  }
   return (
     <div>
       <h1 className="text-center my-1 font-bold text-2xl">
-        {id ? "Update Helper" : "Add Helper"}
+        {updateData ? "Update Helper" : "Add Helper"}
       </h1>
       <div>
-
-        <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
-
+        <Form
+          submitHandler={onSubmit}
+          defaultValues={updateData ? { ...updateData } : {}}
+        >
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -91,7 +98,11 @@ const AddUpdateHelper = ({ id }: { id?: any }) => {
                 //   marginBottom: "10px",
                 // }}
               >
-                <UploadImage setImageStatus={setimage} name="imageUrl" />
+                <UploadImage
+                  setImageStatus={setimage}
+                  name="imageUrl"
+                  defaultImage={image}
+                />
               </Col>
 
               <Col
@@ -110,12 +121,12 @@ const AddUpdateHelper = ({ id }: { id?: any }) => {
                       padding: "0px",
                     }}
                   >
-                    {!id && (
+                    {!updateData && (
                       <FormInput
                         type="text"
                         name="userName"
                         size="large"
-                        label="User Name"
+                        label="Unique UserId"
                         required={true}
                         placeholder="Please enter helper user name"
                       />
@@ -126,7 +137,7 @@ const AddUpdateHelper = ({ id }: { id?: any }) => {
                       padding: "0px",
                     }}
                   >
-                    {!id && (
+                    {!updateData && (
                       <FormInput
                         type="password"
                         name="password"
@@ -151,7 +162,7 @@ const AddUpdateHelper = ({ id }: { id?: any }) => {
               >
                 <FormInput
                   type="text"
-                  name="helper.fullName"
+                  name="fullName"
                   size="large"
                   label="Full Name"
                   required={true}
@@ -170,7 +181,7 @@ const AddUpdateHelper = ({ id }: { id?: any }) => {
               >
                 <FormInput
                   type="tel"
-                  name="helper.mobile"
+                  name="mobile"
                   size="large"
                   label="Mobile"
                   required={true}
@@ -207,9 +218,8 @@ const AddUpdateHelper = ({ id }: { id?: any }) => {
               >
                 <FormSelectField
                   size="large"
-                  name="helper.bloodGroup"
+                  name="bloodGroup"
                   options={bloodGroupOptions}
-                  // defaultValue={priceTypeOptions[0]}
                   label="Blood Group"
                   placeholder="Select helper blood group"
                   // required={true}
@@ -226,7 +236,7 @@ const AddUpdateHelper = ({ id }: { id?: any }) => {
                 }}
               >
                 <FormTextArea
-                  name="helper.address"
+                  name="address"
                   size="large"
                   label="Address"
                   rows={2}
@@ -240,8 +250,9 @@ const AddUpdateHelper = ({ id }: { id?: any }) => {
                 htmlType="submit"
                 type="primary"
                 disabled={createLoad || updateLoad}
+                style={{ width: "100%" }}
               >
-                {id ? "Update" : "Add"}
+                {updateData ? "Update" : "Add"}
               </Button>
             </div>
           </div>

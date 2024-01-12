@@ -37,7 +37,13 @@ const AddEquipment = ({ id }: { id?: string }) => {
     message.loading(id ? "Updating...." : "Adding....");
     try {
       const res = id
-        ? await updateEquipment({ id: id, body: data }).unwrap()
+        ? await updateEquipment({
+            id,
+            data: {
+              label: data.label,
+              uomId: data.uomId,
+            },
+          }).unwrap()
         : await createEquipment({ ...data }).unwrap();
       if (res.id) {
         message.success(`Equipment ${id ? "updated" : "added"} successfully!`);

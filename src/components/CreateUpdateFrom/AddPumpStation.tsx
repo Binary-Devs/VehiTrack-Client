@@ -26,7 +26,13 @@ const AddPumpStation = ({ id }: { id?: string }) => {
     message.loading(id ? "Updating...." : "Adding....");
     try {
       const res = id
-        ? await updateFuelStation({ id, data }).unwrap()
+        ? await updateFuelStation({
+            id,
+            data: {
+              label: data.label,
+              address: data.address,
+            },
+          }).unwrap()
         : await createFuelStation({ ...data }).unwrap();
       if (res.id) {
         message.success(
