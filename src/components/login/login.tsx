@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 import Form from "../Forms/Form";
 import FormInput from "../Forms/FormInput";
-import ButtonLoading from "../ui/Loader/ButtonLoading";
+import Loader from "../Utlis/Loader";
 
 type FormValues = {
   userName: string;
@@ -73,12 +73,12 @@ const LoginPage = () => {
       className="relative "
     >
       <Image
-        src={"/login.webp"}
-        width={1280}
-        height={1280}
+        src={"/login2.gif"}
+        width={720}
+        height={720}
         alt="login gif"
         className="absolute inset-0 object-cover w-full h-full"
-        unoptimized
+        // unoptimized
         quality={100}
         priority
       />
@@ -105,7 +105,7 @@ const LoginPage = () => {
                 variants={formVariants}
                 initial="initial"
                 animate="animate"
-                className="bg-white rounded shadow-2xl p-7 sm:p-10"
+                className="bg-white rounded-lg shadow-2xl p-6 sm:p-10"
               >
                 <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
                   Login Dashboard
@@ -145,7 +145,8 @@ const LoginPage = () => {
                         style={{ width: "100%" }}
                         size="large"
                       >
-                        <ButtonLoading />
+                        {/* <ButtonLoading /> */}
+                        <Loader width={25} height={25} />
                       </Button>
                     ) : (
                       <Button

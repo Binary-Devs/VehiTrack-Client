@@ -173,7 +173,7 @@ const CreateManager = () => {
             </Row>
           </div>
 
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center mt-3">
             <Button htmlType="submit" type="primary">
               {isLoading ? <ButtonLoading /> : "Create"}
             </Button>
