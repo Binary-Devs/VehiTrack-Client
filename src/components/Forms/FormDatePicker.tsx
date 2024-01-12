@@ -1,28 +1,30 @@
 import { DatePicker, DatePickerProps } from "antd";
-import dayjs, { Dayjs } from 'dayjs';
-import { Controller, useFormContext } from 'react-hook-form';
+import dayjs, { Dayjs } from "dayjs";
+import { Controller, useFormContext } from "react-hook-form";
 
 type UMDatePikerProps = {
   onChange?: (valOne: Dayjs | null, valTwo: string) => void;
   name: string;
   label?: string;
   value?: Dayjs;
-  size?: 'large' | 'small';
+  size?: "large" | "small";
   disablePrevious?: boolean;
   specificDates?: string[];
+  required?: boolean;
 };
 
 const FormDatePicker = ({
   name,
   label,
   onChange,
-  size = 'large',
+  size = "large",
   disablePrevious = true,
   specificDates,
+  required = false,
 }: UMDatePikerProps) => {
   const { control, setValue } = useFormContext();
 
-  const handleOnChange: DatePickerProps['onChange'] = (date, dateString) => {
+  const handleOnChange: DatePickerProps["onChange"] = (date, dateString) => {
     onChange ? onChange(date, dateString) : null;
     setValue(name, date);
   };
@@ -39,36 +41,47 @@ const FormDatePicker = ({
     return (
       current &&
       (current < today ||
-        specificDatesConvert?.some((date) => current.isSame(date, 'day')))
+        specificDatesConvert?.some((date) => current.isSame(date, "day")))
     );
   };
 
   return (
     <div className="">
       {label ? label : null}
+      {required && (
+        <span
+          style={{
+            color: "red",
+          }}
+        >
+          *
+        </span>
+      )}
 
       <Controller
         name={name}
         control={control}
-        render={({ field }) =>
-          disablePrevious ? (
+        render={({ field }) => {
+          let defaultValue = field.value ? dayjs(field.value) : undefined;
+
+          return disablePrevious ? (
             <DatePicker
-              defaultValue={dayjs(field.value)}
+              defaultValue={defaultValue}
               disabledDate={disabledDate}
               size={size}
               onChange={handleOnChange}
-              style={{ width: '100%' }}
+              style={{ width: "100%" }}
             />
           ) : (
             <DatePicker
-              defaultValue={dayjs(field.value)}
+              value={defaultValue}
               format="DD-MM-YYYY"
               size={size}
               onChange={handleOnChange}
-              style={{ width: '100%' }}
+              style={{ width: "100%" }}
             />
-          )
-        }
+          );
+        }}
       />
     </div>
   );

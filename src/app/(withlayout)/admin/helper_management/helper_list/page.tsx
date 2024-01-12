@@ -14,13 +14,16 @@ import { useState } from "react";
 import dayjs from "dayjs";
 
 import AddUpdateHelper from "@/components/CreateUpdateFrom/AddUpdateHelper";
+import DeleteModal from "@/components/ui/DeleteModal";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
-import { useGetAllHelperQuery, useInactiveHelperMutation } from "@/redux/api/helper/helperApi";
+import {
+  useGetAllHelperQuery,
+  useInactiveHelperMutation,
+} from "@/redux/api/helper/helperApi";
 import Image from "next/image";
 import { IoMdAdd } from "react-icons/io";
-import DeleteModal from "@/components/ui/DeleteModal";
 
 const HelperListPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
@@ -120,7 +123,7 @@ const HelperListPage = () => {
       title: "Joined at",
       dataIndex: "createdAt",
       render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+        return data && dayjs(data).format("MMM D, YYYY");
       },
       sorter: true,
     },

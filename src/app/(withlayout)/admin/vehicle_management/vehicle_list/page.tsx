@@ -13,6 +13,7 @@ import { useState } from "react";
 import dayjs from "dayjs";
 
 import AddUpdateVehicle from "@/components/CreateUpdateFrom/AddUpdateVehicle";
+import DeleteModal from "@/components/ui/DeleteModal";
 import ModalComponent from "@/components/ui/Modal";
 import UMTable from "@/components/ui/Table";
 import { USER_ROLE } from "@/constants/role";
@@ -27,7 +28,6 @@ import {
 } from "@/redux/api/vehicle/vehicleApi";
 import Image from "next/image";
 import { IoMdAdd } from "react-icons/io";
-import DeleteModal from "@/components/ui/DeleteModal";
 
 const VehicleListPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
@@ -188,7 +188,7 @@ const VehicleListPage = () => {
       title: "Created at",
       dataIndex: "createdAt",
       render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+        return data && dayjs(data).format("MMM D, YYYY");
       },
       sorter: true,
     },

@@ -57,7 +57,7 @@ export default function TacticalSection() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { duration: 0.5, staggerChildren: 0.2, delayChildren: 0.8 },
+      transition: { duration: 0.4, staggerChildren: 0.2, delayChildren: 0.5 },
     },
   };
 
@@ -77,7 +77,7 @@ export default function TacticalSection() {
   return (
     <>
       <motion.div
-        className="container text-center mx-auto py-24 p-4"
+        className="container text-center mx-auto py-24 p-4 mt-4"
         variants={containerVariants}
         ref={ref}
         initial="hidden"

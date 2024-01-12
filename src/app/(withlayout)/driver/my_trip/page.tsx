@@ -89,7 +89,7 @@ const MyTrip = () => {
     //   title: "CreatedAt",
     //   dataIndex: "createdAt",
     //   render: function (data: any) {
-    //     return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+    //     return data && dayjs(data).format("MMM D, YYYY");
     //   },
     //   sorter: true,
     // },

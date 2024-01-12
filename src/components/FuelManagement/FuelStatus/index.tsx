@@ -1,10 +1,10 @@
-'use client';
-import { totalSum } from '@/components/Utlis/needyFunction';
-import StatusCard from '@/components/ui/StatusCard';
-import { useFuelStatusQuery } from '@/redux/api/report/reportApi';
-import { useGetAllVehicleQuery } from '@/redux/api/vehicle/vehicleApi';
-import { Card, Col, Row, Select } from 'antd';
-import { useState } from 'react';
+"use client";
+import { totalSum } from "@/components/Utlis/needyFunction";
+import StatusCard from "@/components/ui/StatusCard";
+import { useFuelStatusQuery } from "@/redux/api/report/reportApi";
+import { useGetAllVehicleQuery } from "@/redux/api/vehicle/vehicleApi";
+import { Card, Col, Row, Select } from "antd";
+import { useState } from "react";
 
 const FuelStatus = () => {
   const [vehicle, setVehicle] = useState<string | null | undefined>(null);
@@ -17,7 +17,7 @@ const FuelStatus = () => {
 
   // end library
 
-  const { data, isLoading } = useFuelStatusQuery('', {
+  const { data, isLoading } = useFuelStatusQuery("", {
     refetchOnMountOrArgChange: true,
   });
   const allFuelStatus = data?.fuelStatus || [];
@@ -29,18 +29,19 @@ const FuelStatus = () => {
 
   // mapping
   const mapFuelStatus = filterFuelStatus.map((el: any) => ({
-    fuelAmount: totalSum(el.fuels || [], 'amount'),
-    expenseAmount: totalSum(el.expenses || [], 'amount'),
+    fuelAmount: totalSum(el.fuels || [], "amount"),
+    expenseAmount: totalSum(el.expenses || [], "amount"),
   }));
 
   // calculation
-  const totalFuel = totalSum(mapFuelStatus || [], 'fuelAmount');
-  const totalExpense = totalSum(mapFuelStatus || [], 'expenseAmount');
+  const totalFuel = totalSum(mapFuelStatus || [], "fuelAmount");
+  const totalExpense = totalSum(mapFuelStatus || [], "expenseAmount");
 
-  const available = totalFuel - totalExpense;
+  const available = totalFuel - totalExpense < 0 ? 0 : totalFuel - totalExpense;
 
   return (
     <Card
+      className="!bg-white !border !border-blue-200 !rounded-lg !shadow-md !shadow-blue-200"
       title="Fuel Status"
       extra={
         <Select
@@ -48,7 +49,7 @@ const FuelStatus = () => {
           allowClear
           style={{ width: 200 }}
           placeholder="Select a Vehicle"
-          fieldNames={{ label: 'regNo', value: 'id' }}
+          fieldNames={{ label: "regNo", value: "id" }}
           value={vehicle}
           onChange={(value) => setVehicle(value)}
           options={allVehicles}

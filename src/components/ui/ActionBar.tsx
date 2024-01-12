@@ -22,6 +22,7 @@ const ActionBar = ({ title, children, inline }: ActionBarProps) => {
           alignItems: "center",
           margin: "10px 0px",
         }}
+        className="gap-2"
       >
         {children}
       </div>

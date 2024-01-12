@@ -13,7 +13,7 @@ import UploadImage from "../ui/uploadImage";
 const AddUpdateHelper = ({ updateData }: { updateData?: any }) => {
   const [image, setimage] = useState(updateData ? updateData.imageUrl : "");
 
-console.log(updateData)
+  console.log(updateData);
 
   //Update
   const [updateHelper, { isLoading: updateLoad }] = useUpdateHelperMutation();
@@ -126,7 +126,7 @@ console.log(updateData)
                         type="text"
                         name="userName"
                         size="large"
-                        label="User Name"
+                        label="Unique UserId"
                         required={true}
                         placeholder="Please enter helper user name"
                       />
