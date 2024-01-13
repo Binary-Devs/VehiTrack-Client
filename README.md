@@ -33,7 +33,7 @@ VehiTrack is a comprehensive Vehicle Management System that optimizes resources,
 
   - Maintenance of helper details for coordination.
 
-- **Real-time Collaborative Chat System:**
+- **Real-Time Collaborative Chat System:**
 
   - Foster seamless communication among team members with an integrated chat system using Socket.io.
 
